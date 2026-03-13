@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Practice Mode List</title>
+  <link rel="icon"
+    href="https://cdn.discordapp.com/icons/1436100643830890508/0a554d4e0fa221058b8205840ac7ab48.webp?size=1024"
+    type="image/webp">
+  <style>
+    :root {
+      --bg: #08070f;
+      --surface: #0f0d1a;
+      --surface2: #161228;
+      --border: #231d3a;
+      --green: #22c55e;
+      --green-dim: #166534;
+      --purple: #8b5cf6;
+      --purple-bright: #a78bfa;
+      --purple-dim: #5b21b6;
+      --purple-glow: rgba(139, 92, 246, 0.35);
+      --gold: #ffd700;
+      --silver: #c0c0c0;
+      --bronze: #cd7f32;
+      --text: #ede9f8;
+      --text-muted: #6b6080;
+      --red: #ff4466;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Montserrat, sans-serif;
+      font-weight: 500;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 50% at 90% 110%, rgba(34, 197, 94, 0.10) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 75%),
+        radial-gradient(ellipse 40% 30% at 70% 20%, rgba(34, 197, 94, 0.05) 0%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      padding: 52px 0 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .site-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.2));
+    }
+
+    .header-badge {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--purple-bright);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      padding: 4px 16px;
+      margin-bottom: 20px;
+      background: rgba(168, 85, 247, 0.08);
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-family: Montserrat, sans-serif;
+      font-size: clamp(52px, 8vw, 96px);
+      letter-spacing: 3px;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 0 20px rgba(139, 92, 246, 0.25), 0 0 40px rgba(139, 92, 246, 0.1);
+    }
+
+    h1 .word-practice {
+      color: var(--purple-bright);
+      text-shadow: 0 0 12px rgba(139, 92, 246, 0.25), 0 0 30px rgba(139, 92, 246, 0.3);
+    }
+
+    h1 .word-mode {
+      color: var(--green);
+      text-shadow: 0 0 12px rgba(34, 197, 94, 0.25), 0 0 30px rgba(34, 197, 94, 0.2);
+    }
+
+    .subtitle {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-top: 14px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      margin-top: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 13px 32px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .nav-btn:hover {
+      color: var(--text);
+    }
+
+    .nav-btn.active {
+      color: var(--purple-bright);
+      border-bottom-color: var(--purple);
+      background: rgba(139, 92, 246, 0.05);
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 40px 0 20px;
+    }
+
+    .section-header h2 {
+      font-family: Montserrat, sans-serif;
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: var(--text);
+      white-space: nowrap;
+      text-shadow: 0 0 6px rgba(139, 92, 246, 0.2);
+    }
+
+    .section-header .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    .section-header .count {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      white-space: nowrap;
+      border-radius: 4px;
+    }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 12px;
+      background: rgba(30, 23, 45, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.12);
+      margin-bottom: 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(15px);
+    }
+
+    .stat-box {
+      background: rgba(24, 19, 36, 0.75);
+      padding: 22px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.45), 0 0 25px rgba(139, 92, 246, 0.2);
+      border-color: rgba(139, 92, 246, 0.25);
+    }
+
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(34, 197, 94, 0.08));
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .stat-box:hover::before {
+      opacity: 1;
+    }
+
+    .stat-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--purple), var(--green));
+      opacity: 0.6;
+    }
+
+    .stat-box .val {
+      font-family: Montserrat, sans-serif;
+      font-size: 40px;
+      background: linear-gradient(135deg, var(--purple-bright), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-box .lbl {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .level-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(139, 92, 246, 0.02) 100%);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 56px 1fr 110px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      margin-bottom: 10px;
+      animation: slideIn 0.4s ease both;
+      min-height: 110px;
+      border-radius: 12px;
+    }
+
+    .level-card:hover {
+      border-color: rgba(139, 92, 246, 0.45);
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.08), inset 0 0 40px rgba(139, 92, 246, 0.03);
+    }
+
+    .level-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--purple), var(--green));
+      box-shadow: 0 0 14px var(--purple-glow);
+      z-index: 2;
+    }
+
+    .rank-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rank-num {
+      font-family: Montserrat, sans-serif;
+      font-size: 22px;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    .info-col {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .level-name {
+      font-family: Montserrat, sans-serif;
+      font-size: 24px;
+      letter-spacing: 1px;
+      color: #fff;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .level-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .meta-pill {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      letter-spacing: 1px;
+      border-radius: 12px;
+    }
+
+    .meta-pill.creator {
+      color: var(--green);
+      border-color: rgba(34, 197, 94, 0.25);
+      background: rgba(34, 197, 94, 0.05);
+    }
+
+    .meta-pill.id {
+      color: var(--purple-bright);
+      border-color: rgba(139, 92, 246, 0.25);
+      background: rgba(139, 92, 246, 0.06);
+    }
+
+    .meta-pill.two-player {
+      color: var(--red);
+      border-color: rgba(255, 68, 102, 0.25);
+    }
+
+    .victor-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .victor-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .victor-name {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--purple-bright);
+    }
+
+    .victor-stats {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .thumb-col {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 55%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .thumb-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(1.0) saturate(1.2);
+      transition: filter 0.35s, transform 0.35s;
+    }
+
+    .thumb-col::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right,
+          var(--surface) 0%,
+          rgba(15, 13, 26, 0.88) 18%,
+          rgba(15, 13, 26, 0.5) 42%,
+          rgba(15, 13, 26, 0.15) 70%,
+          transparent 100%);
+      pointer-events: none;
+    }
+
+    .level-card:hover .thumb-col img {
+      filter: brightness(1.1) saturate(1.5);
+    }
+
+    .actions-col {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .actions-col::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: -160px;
+      background: linear-gradient(to right, transparent, var(--surface) 55%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .btn-expand {
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 9px 10px;
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: var(--purple-bright);
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 6px;
+    }
+
+    .btn-expand:hover {
+      background: rgba(139, 92, 246, 0.18);
+      border-color: var(--purple);
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.25);
+    }
+
+    .btn-video {
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 9px 10px;
+      background: rgba(34, 197, 94, 0.05);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: var(--green);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      border-radius: 6px;
+    }
+
+    .btn-video:hover {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: var(--green);
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+    }
+
+    .btn-video.no-link {
+      color: var(--text-muted);
+      border-color: var(--border);
+      background: transparent;
+      cursor: default;
+      font-size: 10px;
+    }
+
+    .expand-panel {
+      display: none;
+      background: var(--surface2);
+      border-top: 1px solid var(--border);
+      border-radius: 0 0 12px 12px;
+    }
+
+    .expand-panel.open {
+      display: block;
+    }
+
+    .expand-inner {
+      padding: 20px 24px;
+    }
+
+    .victors-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .victors-table th {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .victors-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(35, 29, 58, 0.5);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .victors-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .victors-table td.name-cell {
+      color: var(--purple-bright);
+      font-weight: 700;
+    }
+
+    .victors-table td.date-cell {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .victors-table td.stat-cell {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      color: var(--green);
+    }
+
+    .no-video {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .leaderboard-table th {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .leaderboard-table th:first-child {
+      width: 60px;
+      text-align: center;
+    }
+
+    .leaderboard-row {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      animation: slideIn 0.4s ease both;
+    }
+
+    .leaderboard-row:nth-child(even) {
+      background: rgba(139, 92, 246, 0.01);
+    }
+
+    .leaderboard-row:hover {
+      background: var(--surface2);
+    }
+
+    .leaderboard-row td {
+      padding: 14px 16px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .leaderboard-row td.rank-td {
+      text-align: center;
+      font-family: Montserrat, sans-serif;
+      font-size: 22px;
+      color: var(--text-muted);
+    }
+
+    .player-name {
+      font-weight: 700;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .score-val {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      color: var(--purple-bright);
+      text-align: right;
+    }
+
+    .completion-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .ctag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      padding: 2px 8px;
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      color: var(--purple-bright);
+      letter-spacing: 1px;
+      border-radius: 12px;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    .search-input,
+    .search-input-lb {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: Montserrat, sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 11px 18px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      border-radius: 8px;
+    }
+
+    .search-input:focus,
+    .search-input-lb:focus {
+      border-color: rgba(139, 92, 246, 0.5);
+      box-shadow: 0 0 16px rgba(139, 92, 246, 0.1);
+    }
+
+    .search-input::placeholder,
+    .search-input-lb::placeholder {
+      color: var(--text-muted);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    .footer {
+      margin-top: 80px;
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+    }
+
+    .footer .g {
+      color: var(--green);
+    }
+
+    .footer .p {
+      color: var(--purple-bright);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .level-card {
+        grid-template-columns: 48px 1fr 90px;
+      }
+
+      .thumb-col {
+        width: 40%;
+      }
+
+      .stats-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <header>
+      <img class="site-icon"
+        src="https://cdn.discordapp.com/icons/1436100643830890508/0a554d4e0fa221058b8205840ac7ab48.webp?size=1024"
+        alt="Site icon">
+      <h1>The <span class="word-practice">Practice</span> <span class="word-mode">Mode</span> List</h1>
+      <nav>
+        <button class="nav-btn active" onclick="showPage('list', this)"><span class="nav-icon">📜</span>The
+          List</button>
+        <button class="nav-btn" onclick="showPage('leaderboard', this)"><span class="nav-icon">🏆</span>Player
+          Leaderboard</button>
+        <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank"><span
+            class="nav-icon">💬</span>Discord</a>
+      </nav>
+    </header>
+
+    <div id="page-list" class="page active">
+      <div class="stats-strip" id="stats-strip"></div>
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search levels or creators..." id="list-search"
+          oninput="filterList()">
+      </div>
+      <div id="levels-container"></div>
+    </div>
+
+    <div id="page-leaderboard" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="search-bar">
+        <input class="search-input-lb" type="text" placeholder="Search players..." id="lb-search"
+          oninput="filterLeaderboard()">
+      </div>
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Levels Completed</th>
+          </tr>
+        </thead>
+        <tbody id="lb-body"></tbody>
+      </table>
+    </div>
+
+    <footer class="footer">
+      <span class="p">NOT AFFILIATED WITH <span class="g">ROBTOP GAMES</span> &nbsp;
+    </footer>
+  </div>
+
+  <script>
+    function parseTimeToSeconds(timeStr) {
+      if (!timeStr || timeStr.trim() === '') return Infinity;
+      const regex = /(\d+)h\s*(\d+)m\s*(\d+)s|(\d+)m\s*(\d+)s|(\d+)s|(\d+)h\s*(\d+)m|(\d+)m|(\d+)h/;
+      const match = timeStr.match(regex);
+      if (!match) return Infinity;
+      let h = 0, m = 0, s = 0;
+      if (match[1]) {
+        h = parseInt(match[1]);
+        m = parseInt(match[2]);
+        s = parseInt(match[3]);
+      } else if (match[4]) {
+        m = parseInt(match[4]);
+        s = parseInt(match[5]);
+      } else if (match[6]) {
+        s = parseInt(match[6]);
+      } else if (match[7]) {
+        h = parseInt(match[7]);
+        m = parseInt(match[8]);
+      } else if (match[9]) {
+        m = parseInt(match[9]);
+      } else if (match[10]) {
+        h = parseInt(match[10]);
+      }
+      return h * 3600 + m * 60 + s;
+    }
+
+    let levels = [];
+
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => {
+        function calculatePoints(rank, maxRank) {
+          if (!rank || !maxRank) return 0;
+          const base = 10;
+          const top = 360;
+          if (maxRank === 1) return top;
+          const ratio = Math.pow(top / base, 1 / (maxRank - 1));
+          return base * Math.pow(ratio, maxRank - rank);
+        }
+        function autoThumbnail(id, explicit) {
+          if (explicit && explicit.trim() !== '') return explicit;
+          const match = String(id).match(/^\d+/);
+          if (match) {
+            return `https://levelthumbs.prevter.me/thumbnail/${match[0]}`;
+          }
+          return '';
+        }
+
+        levels = data.filter(item => item.name).map(item => {
+          const victors = (item.victors || []).map(v => ({
+            name: v.name || "",
+            date: v.date || "",
+            wrTime: v.time || "",
+            wrAttempts: v.attempts || 0,
+            victorVideoUrl: v.video || "",
+          }));
+
+          return {
+            rank: item.rank,
+            name: item.name,
+            thumbnail: autoThumbnail(item.id, item.image),
+            id: item.id,
+            points: 0,
+            victors,
+            creator: item.creators,
+            is2Player: item.twoPlayer === "2 Player",
+            showcaseVideoUrl: item.showcaseVideo || ""
+          };
+        });
+        const maxRank = Math.max(...levels.map(l => l.rank));
+        levels.forEach(l => {
+          l.points = calculatePoints(l.rank, maxRank);
+        });
+        levels.forEach(level => {
+          let minTimeSec = Infinity;
+          let minAttempts = Infinity;
+          let wrTimeObj = null;
+          let wrAttemptsObj = null;
+          level.victors.forEach(victor => {
+            if (victor.wrTime) {
+              const sec = parseTimeToSeconds(victor.wrTime);
+              if (sec < minTimeSec) {
+                minTimeSec = sec;
+                wrTimeObj = { name: victor.name, time: victor.wrTime };
+              }
+            }
+            if (victor.wrAttempts > 0 && victor.wrAttempts < minAttempts) {
+              minAttempts = victor.wrAttempts;
+              wrAttemptsObj = { name: victor.name, attempts: victor.wrAttempts.toLocaleString() };
+            }
+          });
+          level.wrTime = wrTimeObj;
+          level.wrAttempts = wrAttemptsObj;
+        });
+
+        leaderboard = buildLeaderboard(levels);
+        maxScore = Math.max(...leaderboard.map(p => p.points));
+        renderStats();
+        renderLevels(levels);
+        renderLeaderboard(leaderboard);
+      });
+
+    function buildLeaderboard(lvls) {
+      const map = {};
+      lvls.forEach(lvl => {
+        lvl.victors.forEach((v, vi) => {
+          if (!map[v.name]) map[v.name] = { name: v.name, points: 0, levels: [] };
+          let mult = 1;
+
+          if (vi === 0) mult += 0.25;
+          if (lvl.wrTime && v.name === lvl.wrTime.name) mult += 0.25;
+          if (lvl.wrAttempts && v.name === lvl.wrAttempts.name) mult += 0.25;
+          map[v.name].points += lvl.points * mult;
+          map[v.name].levels.push(lvl.name);
+        });
+      });
+      return Object.values(map).sort((a, b) => b.points - a.points);
+    }
+
+    let leaderboard = [];
+    let maxScore = 1;
+
+    function renderStats() {
+      const totalVictors = new Set(levels.flatMap(l => l.victors.map(v => v.name))).size;
+      const totalCompletions = levels.reduce((s, l) => s + l.victors.length, 0);
+      document.getElementById('stats-strip').innerHTML = `
+    <div class="stat-box"><span class="val">${levels.length}</span><span class="lbl">Levels Ranked</span></div>
+    <div class="stat-box"><span class="val">${totalVictors}</span><span class="lbl">Unique Players</span></div>
+    <div class="stat-box"><span class="val">${totalCompletions}</span><span class="lbl">Total Completions</span></div>
+  `;
+    }
+
+    function renderLevels(data) {
+      const container = document.getElementById('levels-container');
+      if (!data.length) {
+        container.innerHTML = '<div class="empty-state">// NO LEVELS FOUND //</div>';
+        return;
+      }
+
+      const header = `
+    <div class="section-header">
+      <div class="line"></div>
+    </div>
+  `;
+
+      const cards = data.map((lvl, i) => {
+        const firstVictor = lvl.victors[0];
+        const hasVideo = lvl.showcaseVideoUrl && lvl.showcaseVideoUrl.trim() !== '';
+
+        return `
+      <div class="level-card" style="animation-delay:${i * 55}ms;" id="card-${lvl.id}">
+        <div class="rank-col">
+          <span class="rank-num">#${lvl.rank}</span>
+        </div>
+        <div class="info-col">
+          <div class="level-name">${lvl.name}</div>
+          <div class="level-meta">
+            <span class="meta-pill creator">${lvl.creator}</span>
+            <span class="meta-pill id">ID: ${lvl.id}</span>
+            ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ''}
+          </div>
+          ${lvl.wrTime || lvl.wrAttempts ? `
+            ${lvl.wrTime ? `
+              <div class="victor-row">
+                <span class="victor-label">WR Time:</span>
+                <span class="victor-name">${lvl.wrTime.name}</span>
+                <span class="victor-stats">${lvl.wrTime.time}</span>
+              </div>
+            ` : ''}
+            ${lvl.wrAttempts ? `
+              <div class="victor-row">
+                <span class="victor-label">WR Attempts:</span>
+                <span class="victor-name">${lvl.wrAttempts.name}</span>
+                <span class="victor-stats">${lvl.wrAttempts.attempts} atts</span>
+              </div>
+            ` : ''}
+          ` : ''}
+        </div>
+        ${lvl.thumbnail ? `
+        <div class="thumb-col">
+          <img src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="this.parentElement.style.display='none'">
+        </div>
+        ` : ''}
+        <div class="actions-col">
+          <button class="btn-expand" onclick="toggleExpand('${lvl.id}')">Victors ▾</button>
+          ${hasVideo
+            ? `<a class="btn-video" href="${lvl.showcaseVideoUrl}" target="_blank" rel="noopener">Video ↗</a>`
+            : `<span class="btn-video no-link">No video</span>`
+          }
+        </div>
+      </div>
+      <div class="expand-panel" id="expand-${lvl.id}">
+        <div class="expand-inner">
+          <table class="victors-table">
+            <thead>
+              <tr>
+                <th>#</th><th>Player</th><th>Date</th><th>Time</th><th>Attempts</th><th>Video</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${[...lvl.victors].sort((a, b) => new Date(a.date) - new Date(b.date)).map((v, vi) => `
+                <tr>
+                  <td class="stat-cell">${vi + 1}</td>
+                  <td class="name-cell">${v.name}</td>
+                  <td class="date-cell">${v.date}</td>
+                  <td class="stat-cell">${v.wrTime}</td>
+                  <td class="stat-cell">${v.wrAttempts.toLocaleString()}</td>
+                  <td>${v.victorVideoUrl
+              ? `<a href="${v.victorVideoUrl}" target="_blank" rel="noopener" style="color:var(--green)">Watch ↗</a>`
+              : '<span class="no-video">—</span>'
+            }</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+      }).join('');
+
+      container.innerHTML = header + cards;
+    }
+
+    function toggleExpand(id) {
+      const panel = document.getElementById('expand-' + id);
+      panel.classList.toggle('open');
+      const btn = document.querySelector(`#card-${id} .btn-expand`);
+      btn.textContent = panel.classList.contains('open') ? 'Victors ▴' : 'Victors ▾';
+    }
+
+    function filterList() {
+      const q = document.getElementById('list-search').value.toLowerCase();
+      renderLevels(levels.filter(l =>
+        l.name.toLowerCase().includes(q) ||
+        l.creator.toLowerCase().includes(q) ||
+        l.id.includes(q)
+      ));
+    }
+
+    function renderLeaderboard(data) {
+      const body = document.getElementById('lb-body');
+      if (!data.length) {
+        body.innerHTML = '<tr><td colspan="4" class="empty-state">// NO PLAYERS FOUND //</td></tr>';
+        return;
+      }
+      body.innerHTML = data.map((p, i) => {
+        const rank = leaderboard.indexOf(p) + 1;
+        return `
+      <tr class="leaderboard-row" style="animation-delay:${i * 40}ms">
+        <td class="rank-td">${rank}</td>
+        <td><span class="player-name">${p.name}</span></td>
+        <td><span class="score-val">${p.points.toFixed(1)}</span></td>
+        <td>
+          <div class="completion-tags">
+            ${p.levels.map(l => `<span class="ctag">${l}</span>`).join('')}
+          </div>
+        </td>
+      </tr>
+    `;
+      }).join('');
+    }
+
+    function filterLeaderboard() {
+      const q = document.getElementById('lb-search').value.toLowerCase();
+      renderLeaderboard(leaderboard.filter(p => p.name.toLowerCase().includes(q)));
+    }
+
+    function showPage(name, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+
+</html>
