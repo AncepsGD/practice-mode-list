@@ -5,9 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Practice Mode List</title>
-  <link rel="icon"
-    href="https://cdn.discordapp.com/icons/1436100643830890508/0a554d4e0fa221058b8205840ac7ab48.webp?size=1024"
-    type="image/webp">
   <style>
     :root {
       --bg: #08070f;
@@ -76,6 +73,8 @@
       border-radius: 16px;
       margin-bottom: 18px;
       filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.2));
+      background: linear-gradient(135deg, var(--purple-bright), var(--green));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     }
 
     .header-badge {
@@ -761,9 +760,7 @@
 
   <div class="container">
     <header>
-      <img class="site-icon"
-        src="https://cdn.discordapp.com/icons/1436100643830890508/0a554d4e0fa221058b8205840ac7ab48.webp?size=1024"
-        alt="Site icon">
+      <div class="site-icon" role="img" aria-label="Site icon"></div>
       <h1>The <span class="word-practice">Practice</span> <span class="word-mode">Mode</span> List</h1>
       <nav>
         <button class="nav-btn active" onclick="showPage('list', this)"><span class="nav-icon">📜</span>The
@@ -991,7 +988,7 @@
         </div>
         ${lvl.thumbnail ? `
         <div class="thumb-col">
-          <img src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="this.parentElement.style.display='none'">
+          <img class="lazy-thumb" data-src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="this.parentElement.style.display='none'">
         </div>
         ` : ''}
         <div class="actions-col">
@@ -1032,6 +1029,44 @@
       }).join('');
 
       container.innerHTML = header + cards;
+      initLazyThumbnails();
+    }
+
+    let thumbnailObserver;
+
+    function initLazyThumbnails() {
+      if (thumbnailObserver) {
+        thumbnailObserver.disconnect();
+      }
+
+      const lazyImages = Array.from(document.querySelectorAll('img.lazy-thumb[data-src]'));
+      if (!lazyImages.length) return;
+
+      if ('IntersectionObserver' in window) {
+        thumbnailObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const img = entry.target;
+            const src = img.dataset.src;
+            if (src) {
+              img.src = src;
+              img.removeAttribute('data-src');
+            }
+            thumbnailObserver.unobserve(img);
+          });
+        }, { rootMargin: '200px 0px', threshold: 0.1 });
+
+        lazyImages.forEach(img => thumbnailObserver.observe(img));
+      } else {
+
+        lazyImages.forEach(img => {
+          const src = img.dataset.src;
+          if (src) {
+            img.src = src;
+            img.removeAttribute('data-src');
+          }
+        });
+      }
     }
 
     function toggleExpand(id) {
