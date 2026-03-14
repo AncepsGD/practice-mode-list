@@ -1,881 +1,1460 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Practice Mode List</title>
+    <style>
+      :root {
+        --bg: #08070f;
+        --surface: #0f0d1a;
+        --surface2: #161228;
+        --border: #231d3a;
+        --green: #22c55e;
+        --green-dim: #166534;
+        --purple: #8b5cf6;
+        --purple-bright: #a78bfa;
+        --purple-dim: #5b21b6;
+        --purple-glow: rgba(139, 92, 246, 0.35);
+        --gold: #ffd700;
+        --silver: #c0c0c0;
+        --bronze: #cd7f32;
+        --text: #ede9f8;
+        --text-muted: #6b6080;
+        --red: #ff4466;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Practice Mode List</title>
-  <style>
-    :root {
-      --bg: #08070f;
-      --surface: #0f0d1a;
-      --surface2: #161228;
-      --border: #231d3a;
-      --green: #22c55e;
-      --green-dim: #166534;
-      --purple: #8b5cf6;
-      --purple-bright: #a78bfa;
-      --purple-dim: #5b21b6;
-      --purple-glow: rgba(139, 92, 246, 0.35);
-      --gold: #ffd700;
-      --silver: #c0c0c0;
-      --bronze: #cd7f32;
-      --text: #ede9f8;
-      --text-muted: #6b6080;
-      --red: #ff4466;
-    }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: Montserrat, sans-serif;
+        font-weight: 500;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: Montserrat, sans-serif;
-      font-weight: 500;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 10% 0%,
+            rgba(139, 92, 246, 0.15) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 70% 50% at 90% 110%,
+            rgba(34, 197, 94, 0.1) 0%,
+            transparent 65%
+          ),
+          radial-gradient(
+            ellipse 60% 40% at 50% 50%,
+            rgba(139, 92, 246, 0.08) 0%,
+            transparent 75%
+          ),
+          radial-gradient(
+            ellipse 40% 30% at 70% 20%,
+            rgba(34, 197, 94, 0.05) 0%,
+            transparent 80%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 70% 50% at 90% 110%, rgba(34, 197, 94, 0.10) 0%, transparent 65%),
-        radial-gradient(ellipse 60% 40% at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 75%),
-        radial-gradient(ellipse 40% 30% at 70% 20%, rgba(34, 197, 94, 0.05) 0%, transparent 80%);
-      pointer-events: none;
-      z-index: 0;
-    }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+      header {
+        padding: 52px 0 0;
+        text-align: center;
+        position: relative;
+      }
 
-    header {
-      padding: 52px 0 0;
-      text-align: center;
-      position: relative;
-    }
+      h1 {
+        font-family: Montserrat, sans-serif;
+        font-size: clamp(52px, 8vw, 96px);
+        letter-spacing: 3px;
+        line-height: 1;
+        color: #fff;
+        text-shadow:
+          0 0 20px rgba(139, 92, 246, 0.25),
+          0 0 40px rgba(139, 92, 246, 0.1);
+      }
 
-    .header-badge {
-      display: inline-block;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--purple-bright);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      padding: 4px 16px;
-      margin-bottom: 20px;
-      background: rgba(168, 85, 247, 0.08);
-      border-radius: 8px;
-    }
+      h1 .word-practice {
+        color: var(--purple-bright);
+        text-shadow:
+          0 0 12px rgba(139, 92, 246, 0.25),
+          0 0 30px rgba(139, 92, 246, 0.3);
+      }
 
-    h1 {
-      font-family: Montserrat, sans-serif;
-      font-size: clamp(52px, 8vw, 96px);
-      letter-spacing: 3px;
-      line-height: 1;
-      color: #fff;
-      text-shadow: 0 0 20px rgba(139, 92, 246, 0.25), 0 0 40px rgba(139, 92, 246, 0.1);
-    }
+      h1 .word-mode {
+        color: var(--green);
+        text-shadow:
+          0 0 12px rgba(34, 197, 94, 0.25),
+          0 0 30px rgba(34, 197, 94, 0.2);
+      }
 
-    h1 .word-practice {
-      color: var(--purple-bright);
-      text-shadow: 0 0 12px rgba(139, 92, 246, 0.25), 0 0 30px rgba(139, 92, 246, 0.3);
-    }
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        margin-top: 36px;
+        border-bottom: 1px solid var(--border);
+      }
 
-    h1 .word-mode {
-      color: var(--green);
-      text-shadow: 0 0 12px rgba(34, 197, 94, 0.25), 0 0 30px rgba(34, 197, 94, 0.2);
-    }
+      .nav-btn {
+        font-family: Montserrat, sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 13px 32px;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-    .subtitle {
-      font-family: 'Share Tech Mono', monospace;
-      color: var(--text-muted);
-      font-size: 12px;
-      letter-spacing: 3px;
-      margin-top: 14px;
-    }
+      .nav-icon {
+        font-size: 14px;
+        line-height: 1;
+      }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 2px;
-      margin-top: 36px;
-      border-bottom: 1px solid var(--border);
-    }
+      .nav-btn:hover {
+        color: var(--text);
+      }
 
-    .nav-btn {
-      font-family: Montserrat, sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 13px 32px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      border-radius: 4px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
+      .nav-btn.active {
+        color: var(--purple-bright);
+        border-bottom-color: var(--purple);
+        background: rgba(139, 92, 246, 0.05);
+      }
 
-    .nav-icon {
-      font-size: 14px;
-      line-height: 1;
-    }
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
 
-    .nav-btn:hover {
-      color: var(--text);
-    }
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 40px 0 20px;
+      }
 
-    .nav-btn.active {
-      color: var(--purple-bright);
-      border-bottom-color: var(--purple);
-      background: rgba(139, 92, 246, 0.05);
-    }
+      .section-header h2 {
+        font-family: Montserrat, sans-serif;
+        font-size: 26px;
+        letter-spacing: 2px;
+        color: var(--text);
+        white-space: nowrap;
+        text-shadow: 0 0 6px rgba(139, 92, 246, 0.2);
+      }
 
-    .page {
-      display: none;
-    }
+      .section-header .line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to right, var(--border), transparent);
+      }
 
-    .page.active {
-      display: block;
-    }
+      .stats-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        padding: 12px;
+        background: rgba(30, 23, 45, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.12);
+        margin-bottom: 40px;
+        border-radius: 16px;
+        overflow: hidden;
+      }
 
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 40px 0 20px;
-    }
+      .stat-box {
+        background: rgba(24, 19, 36, 0.75);
+        padding: 22px 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
 
-    .section-header h2 {
-      font-family: Montserrat, sans-serif;
-      font-size: 26px;
-      letter-spacing: 2px;
-      color: var(--text);
-      white-space: nowrap;
-      text-shadow: 0 0 6px rgba(139, 92, 246, 0.2);
-    }
+      .stat-box:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          0 18px 30px rgba(0, 0, 0, 0.45),
+          0 0 25px rgba(139, 92, 246, 0.2);
+        border-color: rgba(139, 92, 246, 0.25);
+      }
 
-    .section-header .line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, var(--border), transparent);
-    }
+      .stat-box::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(to right, var(--purple), var(--green));
+        opacity: 0.6;
+      }
 
-    .section-header .count {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 3px 10px;
-      white-space: nowrap;
-      border-radius: 4px;
-    }
+      .stat-box .val {
+        font-family: Montserrat, sans-serif;
+        font-size: 40px;
+        background: linear-gradient(135deg, var(--purple-bright), var(--green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        display: block;
+      }
 
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      padding: 12px;
-      background: rgba(30, 23, 45, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.12);
-      margin-bottom: 40px;
-      border-radius: 16px;
-      overflow: hidden;
-      backdrop-filter: blur(15px);
-    }
+      .stat-box .lbl {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        display: block;
+        margin-top: 5px;
+      }
 
-    .stat-box {
-      background: rgba(24, 19, 36, 0.75);
-      padding: 22px 20px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
+      .level-card {
+        background: linear-gradient(
+          135deg,
+          var(--surface) 0%,
+          rgba(139, 92, 246, 0.02) 100%
+        );
+        border: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 56px 1fr 110px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 10px;
+        min-height: 110px;
+        border-radius: 12px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
 
-    .stat-box:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.45), 0 0 25px rgba(139, 92, 246, 0.2);
-      border-color: rgba(139, 92, 246, 0.25);
-    }
+      .level-card:hover {
+        border-color: rgba(139, 92, 246, 0.45);
+        box-shadow:
+          0 0 30px rgba(139, 92, 246, 0.08),
+          inset 0 0 40px rgba(139, 92, 246, 0.03);
+      }
 
-    .stat-box::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(34, 197, 94, 0.08));
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      pointer-events: none;
-    }
+      .level-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--purple), var(--green));
+        box-shadow: 0 0 14px var(--purple-glow);
+        z-index: 2;
+      }
 
-    .stat-box:hover::before {
-      opacity: 1;
-    }
+      .rank-col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid var(--border);
+        flex-shrink: 0;
+        position: relative;
+        z-index: 1;
+      }
 
-    .stat-box::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(to right, var(--purple), var(--green));
-      opacity: 0.6;
-    }
+      .rank-num {
+        font-family: Montserrat, sans-serif;
+        font-size: 22px;
+        color: var(--text-muted);
+        line-height: 1;
+      }
 
-    .stat-box .val {
-      font-family: Montserrat, sans-serif;
-      font-size: 40px;
-      background: linear-gradient(135deg, var(--purple-bright), var(--green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-      display: block;
-    }
+      .info-col {
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 7px;
+        min-width: 0;
+        position: relative;
+        z-index: 1;
+      }
 
-    .stat-box .lbl {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      display: block;
-      margin-top: 5px;
-    }
+      .level-name {
+        font-family: Montserrat, sans-serif;
+        font-size: 24px;
+        letter-spacing: 1px;
+        color: #fff;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-    .level-card {
-      background: linear-gradient(135deg, var(--surface) 0%, rgba(139, 92, 246, 0.02) 100%);
-      border: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 56px 1fr 110px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s, box-shadow 0.25s;
-      margin-bottom: 10px;
-      animation: slideIn 0.4s ease both;
-      min-height: 110px;
-      border-radius: 12px;
-    }
+      .level-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
 
-    .level-card:hover {
-      border-color: rgba(139, 92, 246, 0.45);
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.08), inset 0 0 40px rgba(139, 92, 246, 0.03);
-    }
+      .meta-pill {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        color: var(--text-muted);
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        padding: 2px 8px;
+        letter-spacing: 1px;
+        border-radius: 12px;
+      }
 
-    .level-card::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, var(--purple), var(--green));
-      box-shadow: 0 0 14px var(--purple-glow);
-      z-index: 2;
-    }
+      .meta-pill.creator {
+        color: var(--green);
+        border-color: rgba(34, 197, 94, 0.25);
+        background: rgba(34, 197, 94, 0.05);
+      }
 
-    .rank-col {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-right: 1px solid var(--border);
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
-    }
+      .meta-pill.id {
+        color: var(--purple-bright);
+        border-color: rgba(139, 92, 246, 0.25);
+        background: rgba(139, 92, 246, 0.06);
+      }
 
-    .rank-num {
-      font-family: Montserrat, sans-serif;
-      font-size: 22px;
-      color: var(--text-muted);
-      line-height: 1;
-    }
+      .meta-pill.two-player {
+        color: var(--red);
+        border-color: rgba(255, 68, 102, 0.25);
+      }
 
-    .info-col {
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 7px;
-      min-width: 0;
-      position: relative;
-      z-index: 1;
-    }
+      .victor-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
 
-    .level-name {
-      font-family: Montserrat, sans-serif;
-      font-size: 24px;
-      letter-spacing: 1px;
-      color: #fff;
-      line-height: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+      .victor-label {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+      }
 
-    .level-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+      .victor-name {
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--purple-bright);
+      }
 
-    .meta-pill {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      padding: 2px 8px;
-      letter-spacing: 1px;
-      border-radius: 12px;
-    }
+      .victor-stats {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        color: var(--text-muted);
+      }
 
-    .meta-pill.creator {
-      color: var(--green);
-      border-color: rgba(34, 197, 94, 0.25);
-      background: rgba(34, 197, 94, 0.05);
-    }
+      .thumb-col {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 55%;
+        z-index: 0;
+        pointer-events: none;
+      }
 
-    .meta-pill.id {
-      color: var(--purple-bright);
-      border-color: rgba(139, 92, 246, 0.25);
-      background: rgba(139, 92, 246, 0.06);
-    }
+      .thumb-col img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
 
-    .meta-pill.two-player {
-      color: var(--red);
-      border-color: rgba(255, 68, 102, 0.25);
-    }
-
-    .victor-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .victor-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-    }
-
-    .victor-name {
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--purple-bright);
-    }
-
-    .victor-stats {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .thumb-col {
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 55%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .thumb-col img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: brightness(1.0) saturate(1.2);
-      transition: filter 0.35s, transform 0.35s;
-    }
-
-    .thumb-col::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right,
+      .thumb-col::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to right,
           var(--surface) 0%,
           rgba(15, 13, 26, 0.88) 18%,
           rgba(15, 13, 26, 0.5) 42%,
           rgba(15, 13, 26, 0.15) 70%,
-          transparent 100%);
-      pointer-events: none;
-    }
-
-    .level-card:hover .thumb-col img {
-      filter: brightness(1.1) saturate(1.5);
-    }
-
-    .actions-col {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-      gap: 8px;
-      padding: 16px 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .actions-col::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: -160px;
-      background: linear-gradient(to right, transparent, var(--surface) 55%);
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .btn-expand {
-      font-family: Montserrat, sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 9px 10px;
-      background: rgba(139, 92, 246, 0.08);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      color: var(--purple-bright);
-      cursor: pointer;
-      transition: all 0.2s;
-      border-radius: 6px;
-    }
-
-    .btn-expand:hover {
-      background: rgba(139, 92, 246, 0.18);
-      border-color: var(--purple);
-      box-shadow: 0 0 14px rgba(139, 92, 246, 0.25);
-    }
-
-    .btn-video {
-      font-family: Montserrat, sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 9px 10px;
-      background: rgba(34, 197, 94, 0.05);
-      border: 1px solid rgba(34, 197, 94, 0.2);
-      color: var(--green);
-      cursor: pointer;
-      transition: all 0.2s;
-      text-decoration: none;
-      text-align: center;
-      display: block;
-      border-radius: 6px;
-    }
-
-    .btn-video:hover {
-      background: rgba(34, 197, 94, 0.12);
-      border-color: var(--green);
-      box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
-    }
-
-    .btn-video.no-link {
-      color: var(--text-muted);
-      border-color: var(--border);
-      background: transparent;
-      cursor: default;
-      font-size: 10px;
-    }
-
-    .expand-panel {
-      display: none;
-      background: var(--surface2);
-      border-top: 1px solid var(--border);
-      border-radius: 0 0 12px 12px;
-    }
-
-    .expand-panel.open {
-      display: block;
-    }
-
-    .expand-inner {
-      padding: 20px 24px;
-    }
-
-    .victors-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    .victors-table th {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: left;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .victors-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(35, 29, 58, 0.5);
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .victors-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .victors-table td.name-cell {
-      color: var(--purple-bright);
-      font-weight: 700;
-    }
-
-    .victors-table td.date-cell {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .victors-table td.stat-cell {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      color: var(--green);
-    }
-
-    .no-video {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .leaderboard-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .leaderboard-table th {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: left;
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-    }
-
-    .leaderboard-table th:first-child {
-      width: 60px;
-      text-align: center;
-    }
-
-    .leaderboard-row {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-      animation: slideIn 0.4s ease both;
-    }
-
-    .leaderboard-row:nth-child(even) {
-      background: rgba(139, 92, 246, 0.01);
-    }
-
-    .leaderboard-row:hover {
-      background: var(--surface2);
-    }
-
-    .leaderboard-row td {
-      padding: 14px 16px;
-      font-weight: 600;
-      font-size: 15px;
-    }
-
-    .leaderboard-row td.rank-td {
-      text-align: center;
-      font-family: Montserrat, sans-serif;
-      font-size: 22px;
-      color: var(--text-muted);
-    }
-
-    .player-name {
-      font-weight: 700;
-      color: #fff;
-      font-size: 16px;
-    }
-
-    .score-val {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 13px;
-      color: var(--purple-bright);
-      text-align: right;
-    }
-
-    .completion-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .ctag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 10px;
-      padding: 2px 8px;
-      background: rgba(168, 85, 247, 0.08);
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      color: var(--purple-bright);
-      letter-spacing: 1px;
-      border-radius: 12px;
-    }
-
-    .search-bar {
-      margin-bottom: 20px;
-    }
-
-    .search-input,
-    .search-input-lb {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: Montserrat, sans-serif;
-      font-weight: 600;
-      font-size: 15px;
-      padding: 11px 18px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      border-radius: 8px;
-    }
-
-    .search-input:focus,
-    .search-input-lb:focus {
-      border-color: rgba(139, 92, 246, 0.5);
-      box-shadow: 0 0 16px rgba(139, 92, 246, 0.1);
-    }
-
-    .search-input::placeholder,
-    .search-input-lb::placeholder {
-      color: var(--text-muted);
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 48px;
-      color: var(--text-muted);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
-
-    .footer {
-      margin-top: 80px;
-      border-top: 1px solid var(--border);
-      padding: 32px 0;
-      text-align: center;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-    }
-
-    .footer .g {
-      color: var(--green);
-    }
-
-    .footer .p {
-      color: var(--purple-bright);
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
+          transparent 100%
+        );
+        pointer-events: none;
       }
 
-      to {
+      .actions-col {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 12px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .actions-col::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: -160px;
+        background: linear-gradient(to right, transparent, var(--surface) 55%);
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .btn-expand {
+        font-family: Montserrat, sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 9px 10px;
+        background: rgba(139, 92, 246, 0.08);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        color: var(--purple-bright);
+        cursor: pointer;
+        border-radius: 6px;
+        transition:
+          background 0.15s,
+          box-shadow 0.15s;
+      }
+
+      .btn-expand:hover {
+        background: rgba(139, 92, 246, 0.18);
+        border-color: var(--purple);
+        box-shadow: 0 0 14px rgba(139, 92, 246, 0.25);
+      }
+
+      .btn-video {
+        font-family: Montserrat, sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 9px 10px;
+        background: rgba(34, 197, 94, 0.05);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        color: var(--green);
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+        border-radius: 6px;
+        transition:
+          background 0.15s,
+          box-shadow 0.15s;
+      }
+
+      .btn-video:hover {
+        background: rgba(34, 197, 94, 0.12);
+        border-color: var(--green);
+        box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+      }
+
+      .btn-video.no-link {
+        color: var(--text-muted);
+        border-color: var(--border);
+        background: transparent;
+        cursor: default;
+        font-size: 10px;
+      }
+
+      .expand-panel {
+        display: none;
+        background: var(--surface2);
+        border-top: 1px solid var(--border);
+        border-radius: 0 0 12px 12px;
+      }
+
+      .expand-panel.open {
+        display: block;
+      }
+
+      .expand-inner {
+        padding: 20px 24px;
+      }
+
+      .victors-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .victors-table th {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-align: left;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .victors-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(35, 29, 58, 0.5);
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .victors-table tr:last-child td {
+        border-bottom: none;
+      }
+      .victors-table td.name-cell {
+        color: var(--purple-bright);
+        font-weight: 700;
+      }
+
+      .victors-table td.date-cell {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .victors-table td.stat-cell {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+        color: var(--green);
+      }
+
+      .no-video {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .leaderboard-table th {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-align: left;
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .leaderboard-table th:first-child {
+        width: 60px;
+        text-align: center;
+      }
+
+      .leaderboard-row {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .leaderboard-row:nth-child(even) {
+        background: rgba(139, 92, 246, 0.01);
+      }
+      .leaderboard-row:hover {
+        background: var(--surface2);
+      }
+
+      .leaderboard-row td {
+        padding: 14px 16px;
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .leaderboard-row td.rank-td {
+        text-align: center;
+        font-family: Montserrat, sans-serif;
+        font-size: 22px;
+        color: var(--text-muted);
+      }
+
+      .player-name {
+        font-weight: 700;
+        color: #fff;
+        font-size: 16px;
+      }
+
+      .score-val {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 13px;
+        color: var(--purple-bright);
+        text-align: right;
+      }
+
+      .completion-tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .ctag {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        padding: 2px 8px;
+        background: rgba(168, 85, 247, 0.08);
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        color: var(--purple-bright);
+        letter-spacing: 1px;
+        border-radius: 12px;
+      }
+
+      .search-bar {
+        margin-bottom: 20px;
+      }
+
+      .search-input,
+      .search-input-lb {
+        width: 100%;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-family: Montserrat, sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 11px 18px;
+        outline: none;
+        border-radius: 8px;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+
+      .search-input:focus,
+      .search-input-lb:focus {
+        border-color: rgba(139, 92, 246, 0.5);
+        box-shadow: 0 0 16px rgba(139, 92, 246, 0.1);
+      }
+
+      .search-input::placeholder,
+      .search-input-lb::placeholder {
+        color: var(--text-muted);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 48px;
+        color: var(--text-muted);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 2px;
+      }
+
+      .footer {
+        margin-top: 80px;
+        border-top: 1px solid var(--border);
+        padding: 32px 0;
+        text-align: center;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 2px;
+      }
+
+      .footer .g {
+        color: var(--green);
+      }
+      .footer .p {
+        color: var(--purple-bright);
+      }
+
+      @media (max-width: 700px) {
+        .level-card {
+          grid-template-columns: 48px 1fr 90px;
+        }
+        .thumb-col {
+          width: 40%;
+        }
+        .stats-strip {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      #edit-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9000;
+        background: rgba(8, 7, 15, 0.97);
+        overflow-y: auto;
+        animation: modalIn 0.18s ease;
+      }
+
+      #edit-modal.open {
+        display: block;
+      }
+
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .edit-wrap {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 36px 24px 80px;
+      }
+
+      .edit-topbar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 32px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .edit-topbar h2 {
+        font-family: Montserrat, sans-serif;
+        font-size: 28px;
+        letter-spacing: 2px;
+        color: var(--purple-bright);
+        flex: 1;
+      }
+
+      .edit-topbar .hint {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        color: var(--text-muted);
+        letter-spacing: 2px;
+      }
+
+      .edit-topbar-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .ebtn {
+        font-family: Montserrat, sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 9px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition:
+          background 0.15s,
+          box-shadow 0.15s;
+      }
+
+      .ebtn-ghost {
+        background: transparent;
+        border-color: var(--border);
+        color: var(--text-muted);
+      }
+
+      .ebtn-ghost:hover {
+        border-color: rgba(139, 92, 246, 0.4);
+        color: var(--purple-bright);
+      }
+
+      .ebtn-purple {
+        background: rgba(139, 92, 246, 0.12);
+        border-color: rgba(139, 92, 246, 0.4);
+        color: var(--purple-bright);
+      }
+
+      .ebtn-purple:hover {
+        background: rgba(139, 92, 246, 0.22);
+        box-shadow: 0 0 16px rgba(139, 92, 246, 0.3);
+      }
+
+      .ebtn-green {
+        background: rgba(34, 197, 94, 0.08);
+        border-color: rgba(34, 197, 94, 0.3);
+        color: var(--green);
+      }
+
+      .ebtn-green:hover {
+        background: rgba(34, 197, 94, 0.18);
+        box-shadow: 0 0 14px rgba(34, 197, 94, 0.2);
+      }
+
+      .ebtn-red {
+        background: rgba(255, 68, 102, 0.08);
+        border-color: rgba(255, 68, 102, 0.3);
+        color: var(--red);
+      }
+
+      .ebtn-red:hover {
+        background: rgba(255, 68, 102, 0.18);
+        box-shadow: 0 0 12px rgba(255, 68, 102, 0.2);
+      }
+
+      .ebtn-sm {
+        font-size: 10px;
+        padding: 5px 10px;
+        letter-spacing: 1px;
+      }
+
+      .edit-view {
+        display: none;
+      }
+      .edit-view.active {
+        display: block;
+      }
+
+      .edit-list-actions {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .edit-table-wrap {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .edit-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .edit-table th {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-align: left;
+        padding: 10px 14px;
+        background: var(--surface2);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .edit-table td {
+        padding: 11px 14px;
+        border-bottom: 1px solid rgba(35, 29, 58, 0.6);
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .edit-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .edit-table tr:hover td {
+        background: rgba(139, 92, 246, 0.04);
+      }
+
+      .edit-table td.rank-td {
+        font-family: "Share Tech Mono", monospace;
+        color: var(--text-muted);
+        font-size: 13px;
+        width: 52px;
+      }
+
+      .edit-table td.name-td {
+        color: #fff;
+      }
+
+      .edit-table td.creator-td {
+        color: var(--green);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+      }
+
+      .edit-table td.id-td {
+        color: var(--purple-bright);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+      }
+
+      .edit-table td.victors-td {
+        color: var(--text-muted);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 11px;
+      }
+
+      .edit-table td.actions-td {
+        white-space: nowrap;
+        text-align: right;
+      }
+
+      .edit-table td.actions-td {
+        display: flex;
+        gap: 6px;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      .form-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .form-header h3 {
+        font-family: Montserrat, sans-serif;
+        font-size: 22px;
+        letter-spacing: 1px;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      .form-grid.cols-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+
+      .form-label {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .form-input,
+      .form-select {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-family: Montserrat, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 9px 14px;
+        outline: none;
+        border-radius: 6px;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        width: 100%;
+      }
+
+      .form-input:focus,
+      .form-select:focus {
+        border-color: rgba(139, 92, 246, 0.5);
+        box-shadow: 0 0 12px rgba(139, 92, 246, 0.12);
+      }
+
+      .form-select option {
+        background: var(--surface2);
+      }
+
+      .victors-section {
+        margin-top: 8px;
+      }
+
+      .victors-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      .victors-section-title {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .victor-entry {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px;
+        margin-bottom: 10px;
+        position: relative;
+      }
+
+      .victor-entry-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .victor-entry-num {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+      }
+
+      .victor-entry-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .victor-entry-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .form-input.sm {
+        font-size: 13px;
+        padding: 7px 10px;
+      }
+
+      .form-label.sm {
+        font-size: 9px;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 10px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        margin-top: 24px;
+      }
+
+      .reset-notice {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 10px;
+        color: var(--red);
+        letter-spacing: 1px;
+        margin-bottom: 14px;
+        padding: 8px 12px;
+        border: 1px solid rgba(255, 68, 102, 0.2);
+        border-radius: 6px;
+        background: rgba(255, 68, 102, 0.05);
+        display: none;
+      }
+
+      .reset-notice.show {
+        display: block;
+      }
+
+      .save-flash {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.4);
+        color: var(--green);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        pointer-events: none;
+      }
+
+      .save-flash.show {
         opacity: 1;
         transform: translateY(0);
       }
-    }
 
-    @media (max-width: 700px) {
-      .level-card {
-        grid-template-columns: 48px 1fr 90px;
+      .drag-handle {
+        cursor: grab;
+        color: var(--text-muted);
+        font-size: 16px;
+        user-select: none;
+        padding: 0 4px;
       }
 
-      .thumb-col {
-        width: 40%;
+      .drag-handle:active {
+        cursor: grabbing;
       }
 
-      .stats-strip {
-        grid-template-columns: repeat(2, 1fr);
+      .edit-table tr.dragging {
+        opacity: 0.4;
       }
-    }
-  </style>
-</head>
+      .edit-table tr.drag-over td {
+        background: rgba(139, 92, 246, 0.1);
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          The <span class="word-practice">Practice</span>
+          <span class="word-mode">Mode</span> List
+        </h1>
+        <nav>
+          <button class="nav-btn active" onclick="showPage('list', this)">
+            <span class="nav-icon">📜</span>The List
+          </button>
+          <button class="nav-btn" onclick="showPage('leaderboard', this)">
+            <span class="nav-icon">🏆</span>Player Leaderboard
+          </button>
+          <a
+            class="nav-btn"
+            href="https://discord.gg/CECEzxRu28"
+            target="_blank"
+            ><span class="nav-icon">💬</span>Discord</a
+          >
+        </nav>
+      </header>
 
-  <div class="container">
-    <header>
-      <h1>The <span class="word-practice">Practice</span> <span class="word-mode">Mode</span> List</h1>
-      <nav>
-        <button class="nav-btn active" onclick="showPage('list', this)"><span class="nav-icon">📜</span>The
-          List</button>
-        <button class="nav-btn" onclick="showPage('leaderboard', this)"><span class="nav-icon">🏆</span>Player
-          Leaderboard</button>
-        <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank"><span
-            class="nav-icon">💬</span>Discord</a>
-      </nav>
-    </header>
-
-    <div id="page-list" class="page active">
-      <div class="stats-strip" id="stats-strip"></div>
-      <div class="search-bar">
-        <input class="search-input" type="text" placeholder="Search levels or creators..." id="list-search"
-          oninput="filterList()">
+      <div id="page-list" class="page active">
+        <div class="stats-strip" id="stats-strip"></div>
+        <div class="search-bar">
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Search levels or creators..."
+            id="list-search"
+            oninput="handleListSearch()"
+          />
+        </div>
+        <div id="levels-container"></div>
       </div>
-      <div id="levels-container"></div>
+
+      <div id="page-leaderboard" class="page">
+        <div class="section-header"><div class="line"></div></div>
+        <div class="search-bar">
+          <input
+            class="search-input-lb"
+            type="text"
+            placeholder="Search players..."
+            id="lb-search"
+            oninput="filterLeaderboard()"
+          />
+        </div>
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th>Points</th>
+              <th>Levels Completed</th>
+            </tr>
+          </thead>
+          <tbody id="lb-body"></tbody>
+        </table>
+      </div>
+
+      <footer class="footer">
+        <span class="p"
+          >NOT AFFILIATED WITH <span class="g">ROBTOP GAMES</span></span
+        >
+      </footer>
     </div>
 
-    <div id="page-leaderboard" class="page">
-      <div class="section-header">
-        <div class="line"></div>
+    <!-- EDIT MODAL -->
+    <div id="edit-modal">
+      <div class="edit-wrap">
+        <div class="edit-topbar">
+          <h2>✏️ Edit List</h2>
+          <span class="hint">SHIFT+M TO CLOSE</span>
+          <div class="edit-topbar-actions">
+            <button class="ebtn ebtn-ghost" onclick="resetToOriginal()">
+              Reset to Original
+            </button>
+            <button class="ebtn ebtn-green" onclick="exportJSON()">
+              Export JSON
+            </button>
+            <button class="ebtn ebtn-ghost" onclick="closeEditMenu()">
+              Close ✕
+            </button>
+          </div>
+        </div>
+
+        <div id="reset-notice" class="reset-notice">
+          ⚠ Local edits cleared. Reloading from data.json on next page load.
+        </div>
+
+        <!-- LIST VIEW -->
+        <div id="edit-view-list" class="edit-view active">
+          <div class="edit-list-actions">
+            <button class="ebtn ebtn-purple" onclick="openLevelForm(-1)">
+              + Add Level
+            </button>
+          </div>
+          <div class="edit-table-wrap">
+            <table class="edit-table" id="edit-level-table">
+              <thead>
+                <tr>
+                  <th style="width: 30px"></th>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Creator(s)</th>
+                  <th>ID</th>
+                  <th>Victors</th>
+                  <th style="text-align: right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="edit-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FORM VIEW -->
+        <div id="edit-view-form" class="edit-view">
+          <div class="form-header">
+            <button class="ebtn ebtn-ghost" onclick="showEditView('list')">
+              ← Back
+            </button>
+            <h3 id="form-title">Add Level</h3>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Level Name</label>
+              <input
+                class="form-input"
+                id="f-name"
+                type="text"
+                placeholder="e.g. Bloodbath"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Creator(s)</label>
+              <input
+                class="form-input"
+                id="f-creators"
+                type="text"
+                placeholder="e.g. Riot"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Level ID</label>
+              <input
+                class="form-input"
+                id="f-id"
+                type="text"
+                placeholder="e.g. 10672088"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rank</label>
+              <input
+                class="form-input"
+                id="f-rank"
+                type="number"
+                placeholder="e.g. 1"
+                min="1"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">2-Player?</label>
+              <select class="form-select" id="f-twoplayer">
+                <option value="">No</option>
+                <option value="2 Player">Yes</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Showcase Video URL</label>
+              <input
+                class="form-input"
+                id="f-showcase"
+                type="text"
+                placeholder="https://..."
+              />
+            </div>
+            <div class="form-group full">
+              <label class="form-label"
+                >Custom Thumbnail URL (leave blank for auto)</label
+              >
+              <input
+                class="form-input"
+                id="f-image"
+                type="text"
+                placeholder="https://... or leave blank"
+              />
+            </div>
+          </div>
+
+          <!-- Victors -->
+          <div class="victors-section">
+            <div class="victors-section-header">
+              <span class="victors-section-title">Victors</span>
+              <button class="ebtn ebtn-purple ebtn-sm" onclick="addVictorRow()">
+                + Add Victor
+              </button>
+            </div>
+            <div id="victors-list"></div>
+          </div>
+
+          <div class="form-actions">
+            <button class="ebtn ebtn-green" onclick="saveLevelForm()">
+              Save Level
+            </button>
+            <button class="ebtn ebtn-ghost" onclick="showEditView('list')">
+              Cancel
+            </button>
+            <button
+              class="ebtn ebtn-red"
+              id="form-delete-btn"
+              onclick="deleteCurrentLevel()"
+              style="margin-left: auto"
+            >
+              Delete Level
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="search-bar">
-        <input class="search-input-lb" type="text" placeholder="Search players..." id="lb-search"
-          oninput="filterLeaderboard()">
-      </div>
-      <table class="leaderboard-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th>Points</th>
-            <th>Levels Completed</th>
-          </tr>
-        </thead>
-        <tbody id="lb-body"></tbody>
-      </table>
     </div>
 
-    <footer class="footer">
-      <span class="p">NOT AFFILIATED WITH <span class="g">ROBTOP GAMES</span> &nbsp;
-    </footer>
-  </div>
+    <div class="save-flash" id="save-flash">✓ SAVED</div>
 
-  <script>
-    function parseTimeToSeconds(timeStr) {
-      if (!timeStr || timeStr.trim() === '') return Infinity;
-      const regex = /(\d+)h\s*(\d+)m\s*(\d+)s|(\d+)m\s*(\d+)s|(\d+)s|(\d+)h\s*(\d+)m|(\d+)m|(\d+)h/;
-      const match = timeStr.match(regex);
-      if (!match) return Infinity;
-      let h = 0, m = 0, s = 0;
-      if (match[1]) {
-        h = parseInt(match[1]);
-        m = parseInt(match[2]);
-        s = parseInt(match[3]);
-      } else if (match[4]) {
-        m = parseInt(match[4]);
-        s = parseInt(match[5]);
-      } else if (match[6]) {
-        s = parseInt(match[6]);
-      } else if (match[7]) {
-        h = parseInt(match[7]);
-        m = parseInt(match[8]);
-      } else if (match[9]) {
-        m = parseInt(match[9]);
-      } else if (match[10]) {
-        h = parseInt(match[10]);
+    <script>
+      const LOCAL_KEY = "pml_edit_data";
+      let rawData = [];
+      let levels = [];
+      let leaderboard = [];
+      let maxScore = 1;
+      let editingIndex = -1;
+
+      function parseTimeToSeconds(timeStr) {
+        if (!timeStr || timeStr.trim() === "") return Infinity;
+        const regex =
+          /(\d+)h\s*(\d+)m\s*(\d+)s|(\d+)m\s*(\d+)s|(\d+)s|(\d+)h\s*(\d+)m|(\d+)m|(\d+)h/;
+        const match = timeStr.match(regex);
+        if (!match) return Infinity;
+        let h = 0,
+          m = 0,
+          s = 0;
+        if (match[1]) {
+          h = parseInt(match[1]);
+          m = parseInt(match[2]);
+          s = parseInt(match[3]);
+        } else if (match[4]) {
+          m = parseInt(match[4]);
+          s = parseInt(match[5]);
+        } else if (match[6]) {
+          s = parseInt(match[6]);
+        } else if (match[7]) {
+          h = parseInt(match[7]);
+          m = parseInt(match[8]);
+        } else if (match[9]) {
+          m = parseInt(match[9]);
+        } else if (match[10]) {
+          h = parseInt(match[10]);
+        }
+        return h * 3600 + m * 60 + s;
       }
-      return h * 3600 + m * 60 + s;
-    }
 
-    let levels = [];
+      function loadData() {
+        const saved = localStorage.getItem(LOCAL_KEY);
+        if (saved) {
+          try {
+            return Promise.resolve(JSON.parse(saved));
+          } catch (e) {}
+        }
+        return fetch("data.json").then((r) => r.json());
+      }
 
-    fetch('data.json')
-      .then(res => res.json())
-      .then(data => {
+      function processRawData(data) {
+        rawData = data;
+
         function calculatePoints(rank, maxRank) {
           if (!rank || !maxRank) return 0;
-          const base = 10;
-          const top = 360;
+          const base = 10,
+            top = 360;
           if (maxRank === 1) return top;
           const ratio = Math.pow(top / base, 1 / (maxRank - 1));
           return base * Math.pow(ratio, maxRank - rank);
         }
+
         function autoThumbnail(id, explicit) {
-          if (explicit && explicit.trim() !== '') return explicit;
+          if (explicit && explicit.trim() !== "") return explicit;
           const match = String(id).match(/^\d+/);
-          if (match) {
-            return `https://levelthumbs.prevter.me/thumbnail/${match[0]}`;
-          }
-          return '';
+          return match
+            ? `https://levelthumbs.prevter.me/thumbnail/${match[0]}`
+            : "";
         }
 
-        levels = data.filter(item => item.name).map(item => {
-          const victors = (item.victors || []).map(v => ({
-            name: v.name || "",
-            date: v.date || "",
-            wrTime: v.time || "",
-            wrAttempts: v.attempts || 0,
-            victorVideoUrl: v.video || "",
-          }));
+        levels = data
+          .filter((item) => item.name)
+          .map((item) => {
+            const victors = (item.victors || []).map((v) => ({
+              name: v.name || "",
+              date: v.date || "",
+              wrTime: v.time || "",
+              wrAttempts: v.attempts || 0,
+              victorVideoUrl: v.video || "",
+            }));
+            return {
+              rank: item.rank,
+              name: item.name,
+              thumbnail: autoThumbnail(item.id, item.image),
+              id: item.id,
+              points: 0,
+              victors,
+              creator: item.creators,
+              is2Player: item.twoPlayer === "2 Player",
+              showcaseVideoUrl: item.showcaseVideo || "",
+            };
+          });
 
-          return {
-            rank: item.rank,
-            name: item.name,
-            thumbnail: autoThumbnail(item.id, item.image),
-            id: item.id,
-            points: 0,
-            victors,
-            creator: item.creators,
-            is2Player: item.twoPlayer === "2 Player",
-            showcaseVideoUrl: item.showcaseVideo || ""
-          };
-        });
-        const maxRank = Math.max(...levels.map(l => l.rank));
-        levels.forEach(l => {
+        const maxRank = Math.max(...levels.map((l) => l.rank));
+        levels.forEach((l) => {
           l.points = calculatePoints(l.rank, maxRank);
         });
-        levels.forEach(level => {
-          let minTimeSec = Infinity;
-          let minAttempts = Infinity;
-          let wrTimeObj = null;
-          let wrAttemptsObj = null;
-          level.victors.forEach(victor => {
+
+        levels.forEach((level) => {
+          let minTimeSec = Infinity,
+            minAttempts = Infinity;
+          let wrTimeObj = null,
+            wrAttemptsObj = null;
+          level.victors.forEach((victor) => {
             if (victor.wrTime) {
               const sec = parseTimeToSeconds(victor.wrTime);
               if (sec < minTimeSec) {
@@ -885,7 +1464,10 @@
             }
             if (victor.wrAttempts > 0 && victor.wrAttempts < minAttempts) {
               minAttempts = victor.wrAttempts;
-              wrAttemptsObj = { name: victor.name, attempts: victor.wrAttempts.toLocaleString() };
+              wrAttemptsObj = {
+                name: victor.name,
+                attempts: victor.wrAttempts.toLocaleString(),
+              };
             }
           });
           level.wrTime = wrTimeObj;
@@ -893,222 +1475,524 @@
         });
 
         leaderboard = buildLeaderboard(levels);
-        maxScore = Math.max(...leaderboard.map(p => p.points));
+        maxScore = Math.max(...leaderboard.map((p) => p.points), 1);
         renderStats();
         renderLevels(levels);
         renderLeaderboard(leaderboard);
-      });
-
-    function buildLeaderboard(lvls) {
-      const map = {};
-      lvls.forEach(lvl => {
-        lvl.victors.forEach((v, vi) => {
-          if (!map[v.name]) map[v.name] = { name: v.name, points: 0, levels: [] };
-          let mult = 1;
-
-          if (vi === 0) mult += 0.25;
-          if (lvl.wrTime && v.name === lvl.wrTime.name) mult += 0.25;
-          if (lvl.wrAttempts && v.name === lvl.wrAttempts.name) mult += 0.25;
-          map[v.name].points += lvl.points * mult;
-          map[v.name].levels.push(lvl.name);
-        });
-      });
-      return Object.values(map).sort((a, b) => b.points - a.points);
-    }
-
-    let leaderboard = [];
-    let maxScore = 1;
-
-    function renderStats() {
-      const totalVictors = new Set(levels.flatMap(l => l.victors.map(v => v.name))).size;
-      const totalCompletions = levels.reduce((s, l) => s + l.victors.length, 0);
-      document.getElementById('stats-strip').innerHTML = `
-    <div class="stat-box"><span class="val">${levels.length}</span><span class="lbl">Levels Ranked</span></div>
-    <div class="stat-box"><span class="val">${totalVictors}</span><span class="lbl">Unique Players</span></div>
-    <div class="stat-box"><span class="val">${totalCompletions}</span><span class="lbl">Total Completions</span></div>
-  `;
-    }
-
-    function renderLevels(data) {
-      const container = document.getElementById('levels-container');
-      if (!data.length) {
-        container.innerHTML = '<div class="empty-state">// NO LEVELS FOUND //</div>';
-        return;
       }
 
-      const header = `
-    <div class="section-header">
-      <div class="line"></div>
-    </div>
-  `;
+      loadData().then(processRawData);
 
-      const cards = data.map((lvl, i) => {
-        const firstVictor = lvl.victors[0];
-        const hasVideo = lvl.showcaseVideoUrl && lvl.showcaseVideoUrl.trim() !== '';
-
-        return `
-      <div class="level-card" style="animation-delay:${i * 55}ms;" id="card-${lvl.id}">
-        <div class="rank-col">
-          <span class="rank-num">#${lvl.rank}</span>
-        </div>
-        <div class="info-col">
-          <div class="level-name">${lvl.name}</div>
-          <div class="level-meta">
-            <span class="meta-pill creator">${lvl.creator}</span>
-            <span class="meta-pill id">ID: ${lvl.id}</span>
-            ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ''}
-          </div>
-          ${lvl.wrTime || lvl.wrAttempts ? `
-            ${lvl.wrTime ? `
-              <div class="victor-row">
-                <span class="victor-label">WR Time:</span>
-                <span class="victor-name">${lvl.wrTime.name}</span>
-                <span class="victor-stats">${lvl.wrTime.time}</span>
-              </div>
-            ` : ''}
-            ${lvl.wrAttempts ? `
-              <div class="victor-row">
-                <span class="victor-label">WR Attempts:</span>
-                <span class="victor-name">${lvl.wrAttempts.name}</span>
-                <span class="victor-stats">${lvl.wrAttempts.attempts} atts</span>
-              </div>
-            ` : ''}
-          ` : ''}
-        </div>
-        ${lvl.thumbnail ? `
-        <div class="thumb-col">
-          <img class="lazy-thumb" data-src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="this.parentElement.style.display='none'">
-        </div>
-        ` : ''}
-        <div class="actions-col">
-          <button class="btn-expand" onclick="toggleExpand('${lvl.id}')">Victors ▾</button>
-          ${hasVideo
-            ? `<a class="btn-video" href="${lvl.showcaseVideoUrl}" target="_blank" rel="noopener">Video ↗</a>`
-            : `<span class="btn-video no-link">No video</span>`
-          }
-        </div>
-      </div>
-      <div class="expand-panel" id="expand-${lvl.id}">
-        <div class="expand-inner">
-          <table class="victors-table">
-            <thead>
-              <tr>
-                <th>#</th><th>Player</th><th>Date</th><th>Time</th><th>Attempts</th><th>Video</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${[...lvl.victors].sort((a, b) => new Date(a.date) - new Date(b.date)).map((v, vi) => `
-                <tr>
-                  <td class="stat-cell">${vi + 1}</td>
-                  <td class="name-cell">${v.name}</td>
-                  <td class="date-cell">${v.date}</td>
-                  <td class="stat-cell">${v.wrTime}</td>
-                  <td class="stat-cell">${v.wrAttempts.toLocaleString()}</td>
-                  <td>${v.victorVideoUrl
-              ? `<a href="${v.victorVideoUrl}" target="_blank" rel="noopener" style="color:var(--green)">Watch ↗</a>`
-              : '<span class="no-video">—</span>'
-            }</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    `;
-      }).join('');
-
-      container.innerHTML = header + cards;
-      initLazyThumbnails();
-    }
-
-    let thumbnailObserver;
-
-    function initLazyThumbnails() {
-      if (thumbnailObserver) {
-        thumbnailObserver.disconnect();
-      }
-
-      const lazyImages = Array.from(document.querySelectorAll('img.lazy-thumb[data-src]'));
-      if (!lazyImages.length) return;
-
-      if ('IntersectionObserver' in window) {
-        thumbnailObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            const img = entry.target;
-            const src = img.dataset.src;
-            if (src) {
-              img.src = src;
-              img.removeAttribute('data-src');
-            }
-            thumbnailObserver.unobserve(img);
+      function buildLeaderboard(lvls) {
+        const map = {};
+        lvls.forEach((lvl) => {
+          lvl.victors.forEach((v, vi) => {
+            if (!map[v.name])
+              map[v.name] = { name: v.name, points: 0, levels: [] };
+            let mult = 1;
+            if (vi === 0) mult += 0.25;
+            if (lvl.wrTime && v.name === lvl.wrTime.name) mult += 0.25;
+            if (lvl.wrAttempts && v.name === lvl.wrAttempts.name) mult += 0.25;
+            map[v.name].points += lvl.points * mult;
+            map[v.name].levels.push(lvl.name);
           });
-        }, { rootMargin: '200px 0px', threshold: 0.1 });
+        });
+        return Object.values(map).sort((a, b) => b.points - a.points);
+      }
 
-        lazyImages.forEach(img => thumbnailObserver.observe(img));
-      } else {
+      function renderStats() {
+        const totalVictors = new Set(
+          levels.flatMap((l) => l.victors.map((v) => v.name)),
+        ).size;
+        const totalCompletions = levels.reduce(
+          (s, l) => s + l.victors.length,
+          0,
+        );
+        document.getElementById("stats-strip").innerHTML = `
+        <div class="stat-box"><span class="val">${levels.length}</span><span class="lbl">Levels Ranked</span></div>
+        <div class="stat-box"><span class="val">${totalVictors}</span><span class="lbl">Unique Players</span></div>
+        <div class="stat-box"><span class="val">${totalCompletions}</span><span class="lbl">Total Completions</span></div>
+      `;
+      }
 
-        lazyImages.forEach(img => {
-          const src = img.dataset.src;
-          if (src) {
-            img.src = src;
-            img.removeAttribute('data-src');
-          }
+      function renderLevels(data) {
+        const container = document.getElementById("levels-container");
+        if (!data.length) {
+          container.innerHTML =
+            '<div class="empty-state">// NO LEVELS FOUND //</div>';
+          return;
+        }
+
+        const header = `<div class="section-header"><div class="line"></div></div>`;
+
+        const cards = data
+          .map((lvl) => {
+            const hasVideo =
+              lvl.showcaseVideoUrl && lvl.showcaseVideoUrl.trim() !== "";
+            return `
+          <div class="level-card" id="card-${lvl.id}">
+            <div class="rank-col"><span class="rank-num">#${lvl.rank}</span></div>
+            <div class="info-col">
+              <div class="level-name">${lvl.name}</div>
+              <div class="level-meta">
+                <span class="meta-pill creator">${lvl.creator}</span>
+                <span class="meta-pill id">ID: ${lvl.id}</span>
+                ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ""}
+              </div>
+              ${lvl.wrTime ? `<div class="victor-row"><span class="victor-label">WR Time:</span><span class="victor-name">${lvl.wrTime.name}</span><span class="victor-stats">${lvl.wrTime.time}</span></div>` : ""}
+              ${lvl.wrAttempts ? `<div class="victor-row"><span class="victor-label">WR Attempts:</span><span class="victor-name">${lvl.wrAttempts.name}</span><span class="victor-stats">${lvl.wrAttempts.attempts} atts</span></div>` : ""}
+            </div>
+            ${lvl.thumbnail ? `<div class="thumb-col"><img class="lazy-thumb" data-src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ""}
+            <div class="actions-col">
+              <button class="btn-expand" onclick="toggleExpand('${lvl.id}')">Victors ▾</button>
+              ${
+                hasVideo
+                  ? `<a class="btn-video" href="${lvl.showcaseVideoUrl}" target="_blank" rel="noopener">Video ↗</a>`
+                  : `<span class="btn-video no-link">No video</span>`
+              }
+            </div>
+          </div>
+          <div class="expand-panel" id="expand-${lvl.id}">
+            <div class="expand-inner">
+              <table class="victors-table">
+                <thead><tr><th>#</th><th>Player</th><th>Date</th><th>Time</th><th>Attempts</th><th>Video</th></tr></thead>
+                <tbody>
+                  ${[...lvl.victors]
+                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+                    .map(
+                      (v, vi) => `
+                    <tr>
+                      <td class="stat-cell">${vi + 1}</td>
+                      <td class="name-cell">${v.name}</td>
+                      <td class="date-cell">${v.date}</td>
+                      <td class="stat-cell">${v.wrTime}</td>
+                      <td class="stat-cell">${v.wrAttempts.toLocaleString()}</td>
+                      <td>${v.victorVideoUrl ? `<a href="${v.victorVideoUrl}" target="_blank" rel="noopener" style="color:var(--green)">Watch ↗</a>` : '<span class="no-video">—</span>'}</td>
+                    </tr>
+                  `,
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+          })
+          .join("");
+
+        container.innerHTML = header + cards;
+        initLazyThumbnails();
+      }
+
+      let thumbnailObserver;
+
+      function initLazyThumbnails() {
+        if (thumbnailObserver) thumbnailObserver.disconnect();
+        const lazyImages = Array.from(
+          document.querySelectorAll("img.lazy-thumb[data-src]"),
+        );
+        if (!lazyImages.length) return;
+        if ("IntersectionObserver" in window) {
+          thumbnailObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const img = entry.target;
+                if (img.dataset.src) {
+                  img.src = img.dataset.src;
+                  img.removeAttribute("data-src");
+                }
+                thumbnailObserver.unobserve(img);
+              });
+            },
+            { rootMargin: "200px 0px", threshold: 0.1 },
+          );
+          lazyImages.forEach((img) => thumbnailObserver.observe(img));
+        } else {
+          lazyImages.forEach((img) => {
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute("data-src");
+            }
+          });
+        }
+      }
+
+      function toggleExpand(id) {
+        const panel = document.getElementById("expand-" + id);
+        panel.classList.toggle("open");
+        const btn = document.querySelector(`#card-${id} .btn-expand`);
+        btn.textContent = panel.classList.contains("open")
+          ? "Victors ▴"
+          : "Victors ▾";
+      }
+
+      function handleListSearch() {
+        const val = document.getElementById("list-search").value;
+        if (val.toLowerCase() === "edit") {
+          document.getElementById("list-search").value = "";
+          openEditMenu();
+          return;
+        }
+        filterList(val);
+      }
+
+      function filterList(q) {
+        q = (q || document.getElementById("list-search").value).toLowerCase();
+        renderLevels(
+          levels.filter(
+            (l) =>
+              l.name.toLowerCase().includes(q) ||
+              l.creator.toLowerCase().includes(q) ||
+              String(l.id).includes(q),
+          ),
+        );
+      }
+
+      function renderLeaderboard(data) {
+        const body = document.getElementById("lb-body");
+        if (!data.length) {
+          body.innerHTML =
+            '<tr><td colspan="4" class="empty-state">// NO PLAYERS FOUND //</td></tr>';
+          return;
+        }
+        body.innerHTML = data
+          .map((p) => {
+            const rank = leaderboard.indexOf(p) + 1;
+            return `
+          <tr class="leaderboard-row">
+            <td class="rank-td">${rank}</td>
+            <td><span class="player-name">${p.name}</span></td>
+            <td><span class="score-val">${p.points.toFixed(1)}</span></td>
+            <td><div class="completion-tags">${p.levels.map((l) => `<span class="ctag">${l}</span>`).join("")}</div></td>
+          </tr>
+        `;
+          })
+          .join("");
+      }
+
+      function filterLeaderboard() {
+        const q = document.getElementById("lb-search").value.toLowerCase();
+        renderLeaderboard(
+          leaderboard.filter((p) => p.name.toLowerCase().includes(q)),
+        );
+      }
+
+      function showPage(name, btn) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("page-" + name).classList.add("active");
+        btn.classList.add("active");
+      }
+      function openEditMenu() {
+        const modal = document.getElementById("edit-modal");
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("reset-notice").classList.remove("show");
+        showEditView("list");
+        renderEditTable();
+      }
+
+      function closeEditMenu() {
+        document.getElementById("edit-modal").classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      function showEditView(name) {
+        document
+          .querySelectorAll(".edit-view")
+          .forEach((v) => v.classList.remove("active"));
+        document.getElementById("edit-view-" + name).classList.add("active");
+      }
+
+      function renderEditTable() {
+        const tbody = document.getElementById("edit-table-body");
+        if (!rawData.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="7" class="empty-state" style="padding:24px">No data loaded</td></tr>';
+          return;
+        }
+        tbody.innerHTML = rawData
+          .map(
+            (item, i) => `
+        <tr draggable="true" data-index="${i}" ondragstart="dragStart(event,${i})" ondragover="dragOver(event,${i})" ondrop="dropRow(event,${i})" ondragleave="dragLeave(event)">
+          <td><span class="drag-handle" title="Drag to reorder">⠿</span></td>
+          <td class="rank-td">${item.rank || "—"}</td>
+          <td class="name-td">${item.name || "—"}</td>
+          <td class="creator-td">${item.creators || "—"}</td>
+          <td class="id-td">${item.id || "—"}</td>
+          <td class="victors-td">${(item.victors || []).length} victor${(item.victors || []).length !== 1 ? "s" : ""}</td>
+          <td class="actions-td">
+            <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>
+            <button class="ebtn ebtn-red ebtn-sm" onclick="deleteLevel(${i})">Delete</button>
+          </td>
+        </tr>
+      `,
+          )
+          .join("");
+      }
+
+      let dragSrcIndex = null;
+
+      function dragStart(e, index) {
+        dragSrcIndex = index;
+        e.currentTarget.classList.add("dragging");
+        e.dataTransfer.effectAllowed = "move";
+      }
+
+      function dragOver(e, index) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        document
+          .querySelectorAll("#edit-table-body tr")
+          .forEach((r) => r.classList.remove("drag-over"));
+        e.currentTarget.classList.add("drag-over");
+      }
+
+      function dragLeave(e) {
+        e.currentTarget.classList.remove("drag-over");
+      }
+
+      function dropRow(e, targetIndex) {
+        e.preventDefault();
+        if (dragSrcIndex === null || dragSrcIndex === targetIndex) return;
+        const moved = rawData.splice(dragSrcIndex, 1)[0];
+        rawData.splice(targetIndex, 0, moved);
+        rawData.forEach((item, i) => {
+          item.rank = i + 1;
+        });
+        document.querySelectorAll("#edit-table-body tr").forEach((r) => {
+          r.classList.remove("dragging");
+          r.classList.remove("drag-over");
+        });
+        dragSrcIndex = null;
+        renderEditTable();
+      }
+
+      function deleteLevel(index) {
+        if (!confirm(`Delete "${rawData[index].name}"?`)) return;
+        rawData.splice(index, 1);
+        rawData.forEach((item, i) => {
+          item.rank = i + 1;
+        });
+        saveAndRefresh();
+        renderEditTable();
+      }
+
+      function openLevelForm(index) {
+        editingIndex = index;
+        const isNew = index === -1;
+        document.getElementById("form-title").textContent = isNew
+          ? "Add Level"
+          : `Editing: ${rawData[index].name}`;
+        document.getElementById("form-delete-btn").style.display = isNew
+          ? "none"
+          : "";
+
+        const item = isNew
+          ? {
+              rank: rawData.length + 1,
+              name: "",
+              creators: "",
+              id: "",
+              twoPlayer: "",
+              showcaseVideo: "",
+              image: "",
+              victors: [],
+            }
+          : rawData[index];
+
+        document.getElementById("f-name").value = item.name || "";
+        document.getElementById("f-creators").value = item.creators || "";
+        document.getElementById("f-id").value = item.id || "";
+        document.getElementById("f-rank").value =
+          item.rank || rawData.length + 1;
+        document.getElementById("f-twoplayer").value = item.twoPlayer || "";
+        document.getElementById("f-showcase").value = item.showcaseVideo || "";
+        document.getElementById("f-image").value = item.image || "";
+
+        document.getElementById("victors-list").innerHTML = "";
+        (item.victors || []).forEach(() => addVictorRow());
+
+        const victorEntries = document.querySelectorAll(".victor-entry");
+        (item.victors || []).forEach((v, i) => {
+          if (!victorEntries[i]) return;
+          victorEntries[i].querySelector('[data-field="name"]').value =
+            v.name || "";
+          victorEntries[i].querySelector('[data-field="date"]').value =
+            v.date || "";
+          victorEntries[i].querySelector('[data-field="time"]').value =
+            v.time || "";
+          victorEntries[i].querySelector('[data-field="attempts"]').value =
+            v.attempts || "";
+          victorEntries[i].querySelector('[data-field="video"]').value =
+            v.video || "";
+        });
+
+        showEditView("form");
+      }
+
+      function addVictorRow() {
+        const list = document.getElementById("victors-list");
+        const num = list.children.length + 1;
+        const div = document.createElement("div");
+        div.className = "victor-entry";
+        div.innerHTML = `
+        <div class="victor-entry-header">
+          <span class="victor-entry-num">VICTOR #${num}</span>
+          <button class="ebtn ebtn-red ebtn-sm" style="margin-left:auto" onclick="this.closest('.victor-entry').remove(); renumberVictors()">Remove</button>
+        </div>
+        <div class="victor-entry-grid">
+          <div class="form-group">
+            <label class="form-label sm">Player Name</label>
+            <input class="form-input sm" data-field="name" type="text" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label class="form-label sm">Date</label>
+            <input class="form-input sm" data-field="date" type="text" placeholder="YYYY-MM-DD">
+          </div>
+          <div class="form-group">
+            <label class="form-label sm">Time</label>
+            <input class="form-input sm" data-field="time" type="text" placeholder="1h 30m 0s">
+          </div>
+        </div>
+        <div class="victor-entry-grid-2">
+          <div class="form-group">
+            <label class="form-label sm">Attempts</label>
+            <input class="form-input sm" data-field="attempts" type="number" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label sm">Video URL</label>
+            <input class="form-input sm" data-field="video" type="text" placeholder="https://...">
+          </div>
+        </div>
+      `;
+        list.appendChild(div);
+      }
+
+      function renumberVictors() {
+        document.querySelectorAll(".victor-entry").forEach((el, i) => {
+          const label = el.querySelector(".victor-entry-num");
+          if (label) label.textContent = `VICTOR #${i + 1}`;
         });
       }
-    }
 
-    function toggleExpand(id) {
-      const panel = document.getElementById('expand-' + id);
-      panel.classList.toggle('open');
-      const btn = document.querySelector(`#card-${id} .btn-expand`);
-      btn.textContent = panel.classList.contains('open') ? 'Victors ▴' : 'Victors ▾';
-    }
+      function saveLevelForm() {
+        const name = document.getElementById("f-name").value.trim();
+        if (!name) {
+          alert("Level name is required.");
+          return;
+        }
 
-    function filterList() {
-      const q = document.getElementById('list-search').value.toLowerCase();
-      renderLevels(levels.filter(l =>
-        l.name.toLowerCase().includes(q) ||
-        l.creator.toLowerCase().includes(q) ||
-        l.id.includes(q)
-      ));
-    }
+        const victors = Array.from(
+          document.querySelectorAll(".victor-entry"),
+        ).map((el) => ({
+          name: el.querySelector('[data-field="name"]').value.trim(),
+          date: el.querySelector('[data-field="date"]').value.trim(),
+          time: el.querySelector('[data-field="time"]').value.trim(),
+          attempts:
+            parseInt(el.querySelector('[data-field="attempts"]').value) || 0,
+          video: el.querySelector('[data-field="video"]').value.trim(),
+        }));
 
-    function renderLeaderboard(data) {
-      const body = document.getElementById('lb-body');
-      if (!data.length) {
-        body.innerHTML = '<tr><td colspan="4" class="empty-state">// NO PLAYERS FOUND //</td></tr>';
-        return;
+        const item = {
+          rank:
+            parseInt(document.getElementById("f-rank").value) ||
+            rawData.length + 1,
+          name,
+          creators: document.getElementById("f-creators").value.trim(),
+          id: document.getElementById("f-id").value.trim(),
+          twoPlayer: document.getElementById("f-twoplayer").value,
+          showcaseVideo: document.getElementById("f-showcase").value.trim(),
+          image: document.getElementById("f-image").value.trim(),
+          victors,
+        };
+
+        if (editingIndex === -1) {
+          rawData.push(item);
+        } else {
+          rawData[editingIndex] = item;
+        }
+
+        rawData.sort((a, b) => (a.rank || 999) - (b.rank || 999));
+        rawData.forEach((d, i) => {
+          d.rank = i + 1;
+        });
+
+        saveAndRefresh();
+        showEditView("list");
+        renderEditTable();
       }
-      body.innerHTML = data.map((p, i) => {
-        const rank = leaderboard.indexOf(p) + 1;
-        return `
-      <tr class="leaderboard-row" style="animation-delay:${i * 40}ms">
-        <td class="rank-td">${rank}</td>
-        <td><span class="player-name">${p.name}</span></td>
-        <td><span class="score-val">${p.points.toFixed(1)}</span></td>
-        <td>
-          <div class="completion-tags">
-            ${p.levels.map(l => `<span class="ctag">${l}</span>`).join('')}
-          </div>
-        </td>
-      </tr>
-    `;
-      }).join('');
-    }
 
-    function filterLeaderboard() {
-      const q = document.getElementById('lb-search').value.toLowerCase();
-      renderLeaderboard(leaderboard.filter(p => p.name.toLowerCase().includes(q)));
-    }
+      function deleteCurrentLevel() {
+        if (editingIndex === -1) return;
+        if (!confirm(`Delete "${rawData[editingIndex].name}"?`)) return;
+        rawData.splice(editingIndex, 1);
+        rawData.forEach((item, i) => {
+          item.rank = i + 1;
+        });
+        saveAndRefresh();
+        showEditView("list");
+        renderEditTable();
+      }
 
-    function showPage(name, btn) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('page-' + name).classList.add('active');
-      btn.classList.add('active');
-    }
-  </script>
-</body>
+      function saveAndRefresh() {
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(rawData));
+        processRawData(rawData);
+        flashSaved();
+      }
 
+      function flashSaved() {
+        const el = document.getElementById("save-flash");
+        el.classList.add("show");
+        setTimeout(() => el.classList.remove("show"), 2000);
+      }
+
+      function resetToOriginal() {
+        if (!confirm("Clear all local edits and reload from data.json?"))
+          return;
+        localStorage.removeItem(LOCAL_KEY);
+        document.getElementById("reset-notice").classList.add("show");
+        fetch("data.json")
+          .then((r) => r.json())
+          .then((data) => {
+            processRawData(data);
+            renderEditTable();
+            flashSaved();
+          });
+      }
+
+      function exportJSON() {
+        const blob = new Blob([JSON.stringify(rawData, null, 2)], {
+          type: "application/json",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "data.json";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.shiftKey && e.key === "M") {
+          const modal = document.getElementById("edit-modal");
+          if (modal.classList.contains("open")) {
+            closeEditMenu();
+          } else {
+            openEditMenu();
+          }
+        }
+        if (
+          e.key === "Escape" &&
+          document.getElementById("edit-modal").classList.contains("open")
+        ) {
+          closeEditMenu();
+        }
+      });
+    </script>
+  </body>
 </html>
