@@ -1952,6 +1952,16 @@
         setTimeout(() => el.classList.remove("show"), 2000);
       }
 
+      function flashCopied() {
+        const el = document.getElementById("save-flash");
+        el.textContent = "✓ COPIED TO CLIPBOARD";
+        el.classList.add("show");
+        setTimeout(() => {
+          el.classList.remove("show");
+          el.textContent = "✓ SAVED";
+        }, 2000);
+      }
+
       function resetToOriginal() {
         if (!confirm("Clear all local edits and reload from data.json?"))
           return;
@@ -1967,14 +1977,9 @@
       }
 
       function exportJSON() {
-        const blob = new Blob([JSON.stringify(rawData, null, 2)], {
-          type: "application/json",
+        navigator.clipboard.writeText(JSON.stringify(rawData, null, 2)).then(() => {
+          flashCopied();
         });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = "data.json";
-        a.click();
-        URL.revokeObjectURL(a.href);
       }
 
       document.addEventListener("keydown", (e) => {
