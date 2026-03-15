@@ -1542,7 +1542,7 @@
               ${lvl.wrTime ? `<div class="victor-row"><span class="victor-label">WR Time:</span><span class="victor-name">${lvl.wrTime.name}</span><span class="victor-stats">${lvl.wrTime.time}</span></div>` : ""}
               ${lvl.wrAttempts ? `<div class="victor-row"><span class="victor-label">WR Attempts:</span><span class="victor-name">${lvl.wrAttempts.name}</span><span class="victor-stats">${lvl.wrAttempts.attempts} atts</span></div>` : ""}
             </div>
-            ${lvl.thumbnail ? `<div class="thumb-col"><img class="lazy-thumb" data-src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ""}
+            ${lvl.thumbnail ? `<div class="thumb-col"><img class="lazy-thumb" data-src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="tryThumbnailFallback(this, '${lvl.id}')"></div>` : ""}
             <div class="actions-col">
               <button class="btn-expand" onclick="toggleExpand('${lvl.id}')">Victors ▾</button>
               ${
@@ -1616,6 +1616,11 @@
             }
           });
         }
+      }
+
+      function tryThumbnailFallback(img, id) {
+        img.src = `https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/${id}.webp`;
+        img.onerror = () => img.parentElement.style.display = 'none';
       }
 
       function toggleExpand(id) {
