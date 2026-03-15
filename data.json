@@ -145,98 +145,98 @@
   {
     "rank": 7,
     "name": "Silent Circles",
-    "image": "",
-    "id": "12169905",
     "creators": "Cyrillic, TheRealSailent",
+    "id": "12169905",
     "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/gJlP-V1DCfo",
+    "image": "",
     "victors": [
       {
         "name": "kl3hh",
+        "date": "",
         "time": "13m 15s",
         "attempts": 21639,
-        "video": "",
-        "date": ""
+        "video": ""
       },
       {
         "name": "Skeletonette",
+        "date": "",
         "time": "27m 8s",
         "attempts": 22319,
-        "video": "",
-        "date": ""
+        "video": ""
       },
       {
         "name": "Anceps",
+        "date": "",
         "time": "45m 42s",
         "attempts": 110407,
-        "video": "",
-        "date": ""
+        "video": ""
       },
       {
         "name": "FoldedZero",
+        "date": "",
         "time": "2h 55m 4s",
         "attempts": 12754,
-        "video": "",
-        "date": ""
+        "video": ""
       }
-    ],
-    "showcaseVideo": ""
+    ]
   },
   {
     "rank": 8,
     "name": "Deadly Silent Club",
-    "image": "",
-    "id": "126241846",
     "creators": "gw roadmc2",
+    "id": "126241846",
     "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/Dpl-hX-xNqE",
+    "image": "",
     "victors": [
       {
         "name": "Anceps",
+        "date": "",
         "time": "1h 17m 22s",
         "attempts": 101332,
-        "video": "",
-        "date": ""
+        "video": ""
       },
       {
         "name": "Duelo Maestro Guy",
+        "date": "",
         "time": "1h 24m 38s",
         "attempts": 93906,
-        "video": "",
-        "date": ""
+        "video": ""
       }
-    ],
-    "showcaseVideo": ""
+    ]
   },
   {
     "rank": 9,
     "name": "Sad Santa",
-    "image": "",
+    "creators": "0â€Ž70",
     "id": "66424814",
-    "creators": "0\u00e2\u20ac\u017d70",
     "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/GRuZUWuGIQQ",
+    "image": "",
     "victors": [
       {
         "name": "Duelo Maestro Guy",
+        "date": "",
         "time": "34m 36s",
         "attempts": 13220,
-        "video": "",
-        "date": ""
+        "video": ""
       },
       {
         "name": "kl3hh",
+        "date": "",
         "time": "36m 59s",
         "attempts": 95997,
-        "video": "",
-        "date": ""
+        "video": ""
       },
       {
         "name": "Skeletonette",
+        "date": "",
         "time": "1h 20s",
         "attempts": 34191,
-        "video": "",
-        "date": ""
+        "video": ""
       }
-    ],
-    "showcaseVideo": ""
+    ]
   },
   {
     "rank": 10,
@@ -295,27 +295,27 @@
   {
     "rank": 13,
     "name": "Six Paths of Pain (Old)",
-    "image": "",
-    "id": "63117908",
     "creators": "GionniBlood",
+    "id": "63117908",
     "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/1PxZ2OnBUO8",
+    "image": "",
     "victors": [
       {
         "name": "Duelo Maestro Guy",
+        "date": "",
         "time": "38m 24s",
         "attempts": 4504,
-        "video": "",
-        "date": ""
+        "video": ""
       },
       {
         "name": "Skeletonette",
+        "date": "",
         "time": "40m 25s",
         "attempts": 20355,
-        "video": "",
-        "date": ""
+        "video": ""
       }
-    ],
-    "showcaseVideo": ""
+    ]
   },
   {
     "rank": 14,
@@ -356,20 +356,20 @@
   {
     "rank": 16,
     "name": "Silent Circles XII",
-    "image": "",
-    "id": "80910910",
     "creators": "Nox Eternis",
+    "id": "80910910",
     "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/akjomKG2q0E",
+    "image": "",
     "victors": [
       {
         "name": "RMGD",
+        "date": "",
         "time": "37m 45s",
         "attempts": 3177,
-        "video": "",
-        "date": ""
+        "video": ""
       }
-    ],
-    "showcaseVideo": ""
+    ]
   },
   {
     "rank": 17,
@@ -793,7 +793,7 @@
     "name": "Empyrean",
     "image": "",
     "id": "66423298",
-    "creators": "0\u00e2\u20ac\u017d70",
+    "creators": "0â€Ž70",
     "twoPlayer": "",
     "victors": [
       {
