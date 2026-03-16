@@ -1620,7 +1620,10 @@
 
       function tryThumbnailFallback(img, id) {
         img.src = `https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/${id}.webp`;
-        img.onerror = () => img.parentElement.style.display = 'none';
+        img.onerror = () => {
+          img.src = `https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/${id}.png`;
+          img.onerror = () => img.parentElement.style.display = 'none';
+        };
       }
 
       function toggleExpand(id) {
