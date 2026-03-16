@@ -2,7 +2,7 @@
   {
     "rank": 1,
     "name": "Six Paths of Pain (Unnerfed) (Fixed)",
-    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/6popunnerfed.webp",
+    "image": "",
     "id": ".GMD",
     "creators": "GionniBlood",
     "twoPlayer": "",
@@ -51,21 +51,21 @@
   },
   {
     "rank": 3,
-    "name": "Challenge Circles 2p (Unintended)",
-    "creators": "RMGD",
-    "id": "128469175",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/zSu4HXDPkg4",
+    "name": "Challenge Circles 2p",
     "image": "",
+    "id": "128469175",
+    "creators": "RMGD",
+    "twoPlayer": "2 Player",
     "victors": [
       {
         "name": "kl3hh",
-        "date": "2025-11-23",
         "time": "48m 2s",
         "attempts": 77326,
-        "video": "https://www.youtube.com/watch?v=wsw_WjFowUE"
+        "video": "https://www.youtube.com/watch?v=wsw_WjFowUE",
+        "date": "2025-11-23"
       }
-    ]
+    ],
+    "showcaseVideo": "https://youtu.be/zSu4HXDPkg4"
   },
   {
     "rank": 4,
@@ -153,31 +153,31 @@
     "victors": [
       {
         "name": "kl3hh",
-        "date": "2025-11-18",
+        "date": "",
         "time": "13m 15s",
         "attempts": 21639,
-        "video": "https://www.youtube.com/live/r79ZX2IOCEI?t=201s"
+        "video": ""
       },
       {
         "name": "Skeletonette",
-        "date": "2025-11-08",
+        "date": "",
         "time": "27m 8s",
         "attempts": 22319,
-        "video": "https://www.youtube.com/watch?v=Rgg5gvl-uYM"
+        "video": ""
       },
       {
         "name": "Anceps",
-        "date": "2024-01-05",
+        "date": "",
         "time": "45m 42s",
         "attempts": 110407,
-        "video": "https://www.youtube.com/watch?v=a71e3SnQbes"
+        "video": ""
       },
       {
         "name": "FoldedZero",
-        "date": "2025-11-08",
+        "date": "",
         "time": "2h 55m 4s",
         "attempts": 12754,
-        "video": "https://www.youtube.com/watch?v=GL4LFJ29j2k"
+        "video": ""
       }
     ]
   },
@@ -192,17 +192,17 @@
     "victors": [
       {
         "name": "Anceps",
-        "date": "2025-11-08",
+        "date": "",
         "time": "1h 17m 22s",
         "attempts": 101332,
-        "video": "https://www.youtube.com/watch?v=8T4HFJJHR4E"
+        "video": ""
       },
       {
         "name": "Duelo Maestro Guy",
-        "date": "2025-12-05",
+        "date": "",
         "time": "1h 24m 38s",
         "attempts": 93906,
-        "video": "https://www.youtube.com/watch?v=Bw_7OW2SKhU"
+        "video": ""
       }
     ]
   },
@@ -217,119 +217,83 @@
     "victors": [
       {
         "name": "Duelo Maestro Guy",
-        "date": "2025-12-04",
+        "date": "",
         "time": "34m 36s",
         "attempts": 13220,
-        "video": "https://www.youtube.com/live/AxQ7an5N5PE"
+        "video": ""
       },
       {
         "name": "kl3hh",
-        "date": "2025-11-30",
+        "date": "",
         "time": "36m 59s",
         "attempts": 95997,
-        "video": "https://www.youtube.com/live/oIM6WCgZOqo"
+        "video": ""
       },
       {
         "name": "Skeletonette",
-        "date": "2025-11-07",
+        "date": "",
         "time": "1h 20s",
         "attempts": 34191,
-        "video": "https://www.youtube.com/watch?v=iaB7BV2wMCU"
-      }
-    ]
-  },
-  {
-    "rank": 10,
-    "name": "Blood in The Water (Unnerfed)",
-    "creators": "Skyyee",
-    "id": "97037045",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=LW84n-UfAJg",
-    "image": "https://levelthumbs.prevter.me/thumbnail/68553037",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-03-11",
-        "time": "1h 17m 9s",
-        "attempts": 7526,
-        "video": "https://youtu.be/4Nu389b08wU"
-      }
-    ]
-  },
-  {
-    "rank": 11,
-    "name": "The Descended (Nerfed)",
-    "creators": "Boomblox555",
-    "id": "128794273",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2025-11-29",
-        "time": "1h 15m 58s",
-        "attempts": 7222,
-        "video": "https://youtu.be/GNhYWlJnxMg"
-      }
-    ]
-  },
-  {
-    "rank": 12,
-    "name": "Sapphybu Demise",
-    "creators": "Anceps",
-    "id": "128866100",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/0Dt2ufL7hoY",
-    "image": "",
-    "victors": [
-      {
-        "name": "kl3hh",
-        "date": "2025-12-02",
-        "time": "10m 20s",
-        "attempts": 58827,
-        "video": "https://youtu.be/0Dt2ufL7hoY"
-      }
-    ]
-  },
-  {
-    "rank": 13,
-    "name": "Rampant Circles (1 Player Nerf)",
-    "creators": "NXISE",
-    "id": "132997477",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "https://levelthumbs.prevter.me/thumbnail/62543354",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-02-07",
-        "time": "1h 5m",
-        "attempts": 5796,
-        "video": "https://youtu.be/0wb79N2IhfQ"
-      }
-    ]
-  },
-  {
-    "rank": 14,
-    "name": "Kingdom of Miracalis (2022 15cps Fix)",
-    "creators": "gdmiracle",
-    "id": "127839106",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=NjjRRoun1eg",
-    "image": "",
-    "victors": [
-      {
-        "name": "qmicrowave",
-        "date": "2022-09-30",
-        "time": "4h 35m 13s",
-        "attempts": 29971,
         "video": ""
       }
     ]
   },
   {
-    "rank": 15,
+    "rank": 10,
+    "name": "The Descended (Nerfed)",
+    "image": "",
+    "id": "128794273",
+    "creators": "Boomblox555",
+    "twoPlayer": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "time": "1h 15m 58s",
+        "attempts": 7222,
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 11,
+    "name": "Sapphybu Demise",
+    "image": "",
+    "id": "128866100",
+    "creators": "Anceps",
+    "twoPlayer": "2 Player",
+    "victors": [
+      {
+        "name": "kl3hh",
+        "time": "10m 20s",
+        "attempts": 58827,
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 12,
+    "name": "Kingdom of Miracalis (2022 15cps Fix)",
+    "image": "",
+    "id": "127839106",
+    "creators": "gdmiracle",
+    "twoPlayer": "",
+    "victors": [
+      {
+        "name": "qmicrowave",
+        "time": "4h 35m 13s",
+        "attempts": 29971,
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 13,
     "name": "Six Paths of Pain (Old)",
     "creators": "GionniBlood",
     "id": "63117908",
@@ -339,741 +303,655 @@
     "victors": [
       {
         "name": "Duelo Maestro Guy",
-        "date": "2025-12-05",
+        "date": "",
         "time": "38m 24s",
         "attempts": 4504,
-        "video": "https://www.youtube.com/live/Bw_7OW2SKhU"
+        "video": ""
       },
       {
         "name": "Skeletonette",
-        "date": "2025-11-08",
+        "date": "",
         "time": "40m 25s",
         "attempts": 20355,
-        "video": "https://www.youtube.com/watch?v=izmz-U45ayc"
+        "video": ""
       }
     ]
   },
   {
-    "rank": 16,
+    "rank": 14,
     "name": "Thermal Radiation",
-    "creators": "Windogs",
+    "image": "",
     "id": "74208521",
+    "creators": "Windogs",
     "twoPlayer": "",
-    "showcaseVideo": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "time": "50m",
+        "attempts": 4615,
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 15,
+    "name": "Silent Nightfall",
+    "image": "",
+    "id": "129974620",
+    "creators": "RMGD",
+    "twoPlayer": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "time": "55m 35s",
+        "attempts": 5545,
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 16,
+    "name": "Silent Circles XII",
+    "creators": "Nox Eternis",
+    "id": "80910910",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/akjomKG2q0E",
     "image": "",
     "victors": [
       {
         "name": "RMGD",
-        "date": "2025-12-25",
-        "time": "50m",
-        "attempts": 4615,
-        "video": "https://youtu.be/VJhzZVNWYgE"
+        "date": "",
+        "time": "37m 45s",
+        "attempts": 3177,
+        "video": ""
       }
     ]
   },
   {
     "rank": 17,
-    "name": "Silent Nightfall",
-    "creators": "RMGD",
-    "id": "129974620",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2025-12-31",
-        "time": "55m 35s",
-        "attempts": 5545,
-        "video": "https://youtu.be/Av6Upp_TMtY"
-      }
-    ]
-  },
-  {
-    "rank": 18,
-    "name": "Silent Circles XII",
-    "creators": "Nox Eternis",
-    "id": "80910910",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=akjomKG2q0E",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2025-12-25",
-        "time": "37m 45s",
-        "attempts": 3177,
-        "video": "https://www.youtube.com/watch?v=40agUJm_-Tg"
-      }
-    ]
-  },
-  {
-    "rank": 19,
-    "name": "Challenge Circles 2p",
-    "creators": "RMGD",
-    "id": "128469175",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/zSu4HXDPkg4",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-02-21",
-        "time": "27m 15s",
-        "attempts": 2666,
-        "video": "https://youtu.be/48srWavZu7w"
-      },
-      {
-        "name": "fefe",
-        "date": "2026-03-07",
-        "time": "16m 49s",
-        "attempts": 9568,
-        "video": "27m 15s"
-      }
-    ]
-  },
-  {
-    "rank": 20,
     "name": "Silent Circles (Dual Skip)",
-    "creators": "Cyrillic, TheRealSailent",
+    "image": "",
     "id": "12169905",
+    "creators": "Cyrillic, TheRealSailent",
     "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=gJlP-V1DCfo",
-    "image": "https://levelthumbs.prevter.me/thumbnail/12995050",
     "victors": [
       {
         "name": "kl3hh",
-        "date": "2025-11-18",
         "time": "12m 9s",
         "attempts": 20520,
-        "video": "https://www.youtube.com/live/r79ZX2IOCEI?t=1916s"
+        "video": "",
+        "date": ""
       },
       {
         "name": "Skeletonette",
-        "date": "2025-11-08",
         "time": "14m 44s",
         "attempts": 11153,
-        "video": "https://www.youtube.com/watch?v=mkOceFgGH0c"
+        "video": "",
+        "date": ""
       },
       {
         "name": "Anceps",
-        "date": "2025-03-30",
         "time": "20m 19s",
         "attempts": 10278,
-        "video": "https://www.youtube.com/watch?v=-iOJ_TvEqGw"
+        "video": "",
+        "date": ""
       },
       {
         "name": "1st3y1",
-        "date": "2025-12-06",
         "time": "20m 51s",
         "attempts": 24658,
-        "video": "https://www.youtube.com/watch?v=F4bEu0ZQS2I"
+        "video": "",
+        "date": ""
       },
       {
         "name": "Emp",
-        "date": "2025-11-07",
         "time": "29m 4s",
         "attempts": 10278,
-        "video": "https://www.youtube.com/watch?v=kMxUEL1RXSk&t=3279s"
+        "video": "",
+        "date": ""
       },
       {
         "name": "Zoink",
-        "date": "2022-06-21",
         "time": "50m 26s",
         "attempts": 5600,
-        "video": "https://www.youtube.com/watch?v=MoKy7TAqqDo"
+        "video": "",
+        "date": ""
       },
       {
         "name": "OneAlphaHelix",
-        "date": "2022-06-16",
         "time": "1h 18m",
         "attempts": 8702,
-        "video": "https://www.youtube.com/watch?v=QpXk91JZh3A"
+        "video": "",
+        "date": ""
       },
       {
         "name": "Sashozz",
-        "date": "2024-01-30",
         "time": "2h 5m 33s",
         "attempts": 7115,
-        "video": "https://www.youtube.com/watch?v=Su8yEK_fGDU&t=57s"
+        "video": "",
+        "date": ""
       },
       {
         "name": "Valu Joy",
-        "date": "2024-02-14",
         "time": "2h 36m",
         "attempts": 8419,
-        "video": "https://www.youtube.com/watch?v=n-eBEg3ENnY&t=1174s"
+        "video": "",
+        "date": ""
       },
       {
         "name": "MathGenius",
-        "date": "2020-02-22",
         "time": "3h 8m 45s",
         "attempts": 10888,
-        "video": "https://www.youtube.com/watch?v=Usynacllk1I"
+        "video": "",
+        "date": ""
       },
       {
         "name": "nifty",
-        "date": "2024-11-01",
         "time": "",
         "attempts": 6883,
-        "video": "https://www.youtube.com/watch?v=zS7JgCPOf0Q&t=2021s"
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 18,
+    "name": "Silent Circles (EVW Nerf)",
+    "image": "",
+    "id": "127906018",
+    "creators": "Cyrillic, TheRealSailent",
+    "twoPlayer": "2 Player",
+    "victors": [
+      {
+        "name": "Skeletonette",
+        "time": "12m 44s",
+        "attempts": 9312,
+        "video": "",
+        "date": ""
+      },
+      {
+        "name": "EricVanWilderman",
+        "time": "2h 32m 15s",
+        "attempts": 8944,
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 19,
+    "name": "Bye Level (1p Nerf)",
+    "image": "",
+    "id": "128565339",
+    "creators": "jongaminggd",
+    "twoPlayer": "",
+    "victors": [
+      {
+        "name": "enxliv",
+        "time": "27m 41s",
+        "attempts": 25259,
+        "video": "",
+        "date": ""
+      }
+    ],
+    "showcaseVideo": ""
+  },
+  {
+    "rank": 20,
+    "name": "ALIKESUPREME",
+    "creators": "bigstarchman",
+    "id": "104757556",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/ZvfhxAABMlU",
+    "image": "",
+    "victors": [
+      {
+        "name": "Exiled_Shade",
+        "date": "",
+        "time": "19m 57s",
+        "attempts": 1601,
+        "video": ""
+      },
+      {
+        "name": "Duelo Maestro Guy",
+        "date": "",
+        "time": "34m 43s",
+        "attempts": 3812,
+        "video": ""
       }
     ]
   },
   {
     "rank": 21,
-    "name": "Silent Circles (EVW Nerf)",
-    "creators": "Cyrillic, TheRealSailent",
-    "id": "127906018",
+    "name": "Silent Skrillex (Dual Skip)",
+    "image": "",
+    "id": "73836744",
+    "creators": "DiosselMusic",
     "twoPlayer": "2 Player",
-    "showcaseVideo": "",
-    "image": "https://levelthumbs.prevter.me/thumbnail/12823778",
     "victors": [
       {
-        "name": "Skeletonette",
-        "date": "2025-11-08",
-        "time": "12m 44s",
-        "attempts": 9312,
-        "video": "https://www.youtube.com/watch?v=SJOp8Qhf0PE"
+        "name": "Duelo Maestro Guy",
+        "time": "15m 35s",
+        "attempts": 16766,
+        "video": "",
+        "date": ""
       },
       {
-        "name": "EricVanWilderman",
-        "date": "2019-11-18",
-        "time": "2h 32m 15s",
-        "attempts": 8944,
-        "video": "https://www.youtube.com/watch?v=kQ-r3nwf2uw"
+        "name": "kl3hh",
+        "time": "1h 12m 34s",
+        "attempts": 7750,
+        "video": "",
+        "date": ""
       }
-    ]
+    ],
+    "showcaseVideo": ""
   },
   {
     "rank": 22,
-    "name": "Bye Level (1p Nerf)",
-    "creators": "jongaminggd",
-    "id": "128565339",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/GRVh6XyrdZE",
+    "name": "silent silhouette (Unnerfed)",
+    "creators": "hhuuko, cairillic",
+    "id": "84145309",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/i1VdUCxNOTk",
     "image": "",
     "victors": [
       {
-        "name": "enxliv",
-        "date": "2025-11-18",
-        "time": "27m 41s",
-        "attempts": 25259,
-        "video": "https://www.youtube.com/watch?v=UQKFpxrI3v8"
+        "name": "Emp",
+        "date": "",
+        "time": "15m 17s",
+        "attempts": 6887,
+        "video": ""
+      },
+      {
+        "name": "Duelo Maestro Guy",
+        "date": "",
+        "time": "25m 32s",
+        "attempts": 4165,
+        "video": ""
       }
     ]
   },
   {
     "rank": 23,
-    "name": "ALIKESUPREME",
-    "creators": "bigstarchman",
-    "id": "104757556",
+    "name": "Sakupen End",
+    "creators": "Nick24",
+    "id": "100856004",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=50OWqfgi6IQ",
+    "showcaseVideo": "https://youtu.be/b6xFqKRsrUI",
     "image": "",
     "victors": [
       {
+        "name": "Skeletonette",
+        "date": "",
+        "time": "25m 24s",
+        "attempts": 5090,
+        "video": ""
+      },
+      {
+        "name": "LucaGMD",
+        "date": "",
+        "time": "37m 41s",
+        "attempts": 5153,
+        "video": ""
+      },
+      {
+        "name": "1st3y1",
+        "date": "",
+        "time": "43m 37s",
+        "attempts": 9374,
+        "video": ""
+      },
+      {
         "name": "Exiled_Shade",
-        "date": "2025-11-17",
-        "time": "19m 57s",
-        "attempts": 1601,
-        "video": "https://youtu.be/z4oZQxNkZQg"
+        "date": "",
+        "time": "49m 59s",
+        "attempts": 5624,
+        "video": ""
       },
       {
         "name": "Duelo Maestro Guy",
-        "date": "2025-12-08",
-        "time": "34m 43s",
-        "attempts": 3812,
-        "video": "https://www.youtube.com/live/wMqPFNeLBXA"
+        "date": "",
+        "time": "59m 56s",
+        "attempts": 4873,
+        "video": ""
+      },
+      {
+        "name": "nifty",
+        "date": "",
+        "time": "2h 37m 24s",
+        "attempts": 6972,
+        "video": ""
       }
     ]
   },
   {
     "rank": 24,
-    "name": "Silent Skrillex (Dual Skip)",
-    "creators": "DiosselMusic",
-    "id": "73836744",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=J-QyW9aNnOs",
+    "name": "Azure Flare",
+    "creators": "aedengmd",
+    "id": "126344104",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/mAJG_i9Vziw",
     "image": "",
     "victors": [
       {
-        "name": "Duelo Maestro Guy",
-        "date": "2025-11-30",
-        "time": "15m 35s",
-        "attempts": 16766,
-        "video": "https://www.youtube.com/watch?v=9qYOFFOO27M"
+        "name": "Exiled_Shade",
+        "date": "",
+        "time": "17m 13s",
+        "attempts": 1311,
+        "video": ""
       },
       {
         "name": "kl3hh",
-        "date": "2025-11-15",
-        "time": "1h 12m 34s",
-        "attempts": 7750,
-        "video": "https://www.youtube.com/watch?v=m7k36whIQjs"
+        "date": "",
+        "time": "36m 16s",
+        "attempts": 3541,
+        "video": ""
       }
     ]
   },
   {
     "rank": 25,
-    "name": "silent silhouette (Unnerfed)",
-    "creators": "hhuuko, cairillic",
-    "id": "84145309",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=i1VdUCxNOTk",
+    "name": "Sunix never clear",
+    "creators": "2A0L0I3",
+    "id": "67464742",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/wZlFljw3tRk",
     "image": "",
     "victors": [
       {
-        "name": "Emp",
-        "date": "2025-11-07",
-        "time": "15m 17s",
-        "attempts": 6887,
-        "video": "https://youtu.be/kMxUEL1RXSk?t=8079"
-      },
-      {
-        "name": "Duelo Maestro Guy",
-        "date": "2025-12-08",
-        "time": "25m 32s",
-        "attempts": 4165,
-        "video": "https://www.youtube.com/live/WDvC9aI8D-I"
+        "name": "RMGD",
+        "date": "",
+        "time": "16m 3s",
+        "attempts": 1103,
+        "video": ""
       }
     ]
   },
   {
     "rank": 26,
-    "name": "Sakupen End",
-    "creators": "Nick24",
-    "id": "100856004",
+    "name": "sailent clubstar",
+    "creators": "Nautilus2K",
+    "id": "10031383",
     "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/js4YQJCNP5c",
+    "showcaseVideo": "https://youtu.be/A1qRRZOXO2Y",
     "image": "",
     "victors": [
       {
-        "name": "Skeletonette",
-        "date": "2025-11-08",
-        "time": "25m 24s",
-        "attempts": 5090,
-        "video": "https://www.youtube.com/live/K9gFdW3GK_k&t=7119"
+        "name": "HaloZombies",
+        "date": "",
+        "time": "19m 41s",
+        "attempts": 1404,
+        "video": ""
       },
       {
-        "name": "LucaGMD",
-        "date": "2025-11-08",
-        "time": "37m 41s",
-        "attempts": 5153,
-        "video": "https://www.youtube.com/watch?v=jbXZHHAYgIg"
-      },
-      {
-        "name": "1st3y1",
-        "date": "2025-11-14",
-        "time": "43m 37s",
-        "attempts": 9374,
-        "video": "https://www.youtube.com/watch?v=Zrd4W-0mNXE"
-      },
-      {
-        "name": "Exiled_Shade",
-        "date": "2025-11-08",
-        "time": "49m 59s",
-        "attempts": 5624,
-        "video": "https://www.youtube.com/watch?v=fj6NwSgQTGk"
-      },
-      {
-        "name": "Duelo Maestro Guy",
-        "date": "2025-12-07",
-        "time": "59m 56s",
-        "attempts": 4873,
-        "video": "https://www.youtube.com/live/9ZdG9WuYEjA"
-      },
-      {
-        "name": "nifty",
-        "date": "2025-01-04",
-        "time": "2h 37m 24s",
-        "attempts": 6972,
-        "video": "https://www.youtube.com/watch?v=J3A8jwnm0Kk"
+        "name": "vleco",
+        "date": "",
+        "time": "40m 55s",
+        "attempts": 2187,
+        "video": ""
       }
     ]
   },
   {
     "rank": 27,
-    "name": "sailent clubstar",
-    "creators": "Nautilus2K",
-    "id": "10031383",
+    "name": "Comet Observatory",
+    "creators": "AnonIIExt",
+    "id": "77110935",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=A1qRRZOXO2Y",
+    "showcaseVideo": "https://youtu.be/Ybr00MUXd2g",
     "image": "",
     "victors": [
       {
-        "name": "HaloZombies",
-        "date": "2024-04-27",
-        "time": "19m 41s",
-        "attempts": 1404,
-        "video": "https://www.youtube.com/watch?v=88GdjyfHafk&t=8103s"
-      },
-      {
-        "name": "vleco",
-        "date": "2022-03-11",
-        "time": "40m 55s",
-        "attempts": 2187,
-        "video": "https://www.youtube.com/watch?v=gl0xPqy1Qfo"
+        "name": "Shween",
+        "date": "",
+        "time": "",
+        "attempts": 8238,
+        "video": ""
       }
     ]
   },
   {
     "rank": 28,
-    "name": "Acheron 50",
-    "creators": "RMGD, Riot, & more",
-    "id": "135243833",
+    "name": "ANTIUTOPIA",
+    "creators": "Devilism",
+    "id": "78662821",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=noL5OSmqkfc",
-    "image": "https://levelthumbs.prevter.me/thumbnail/73667628",
+    "showcaseVideo": "https://youtu.be/TzKdMJobK58",
+    "image": "",
     "victors": [
       {
         "name": "RMGD",
-        "date": "2026-03-08",
-        "time": "17m 16s",
-        "attempts": 1236,
-        "video": "https://youtu.be/bfHo3p5LtOM"
+        "date": "",
+        "time": "16m 3s",
+        "attempts": 1103,
+        "video": ""
       }
     ]
   },
   {
     "rank": 29,
-    "name": "Azure Flare (2025)",
-    "creators": "Aeden",
-    "id": "126344104",
+    "name": "water world",
+    "creators": "cheapyyyyy",
+    "id": "113279154",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=mAJG_i9Vziw",
+    "showcaseVideo": "https://youtu.be/NoiwMZrQsz0",
     "image": "",
     "victors": [
       {
         "name": "Exiled_Shade",
-        "date": "2025-11-08",
-        "time": "17m 13s",
-        "attempts": 1311,
-        "video": "https://www.youtube.com/watch?v=MSKDZ5wTfb8"
-      },
-      {
-        "name": "kl3hh",
-        "date": "2025-11-15",
-        "time": "36m 16s",
-        "attempts": 3541,
-        "video": "https://www.youtube.com/watch?v=Y5XbtX_EgNE"
-      },
-      {
-        "name": "RMGD",
-        "date": "2026-02-08",
-        "time": "15m 24s",
-        "attempts": 1197,
-        "video": "https://youtu.be/6i8pGkgcyPY"
+        "date": "",
+        "time": "27m 32s",
+        "attempts": 1727,
+        "video": ""
       }
     ]
   },
   {
     "rank": 30,
-    "name": "Sunix Never Clear",
-    "creators": "2A0L0I3",
-    "id": "67464742",
+    "name": "silent kirkles",
+    "image": "",
+    "id": "128767386",
+    "creators": "kartz, fern,\r\npiesy, 1st3y1",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=lwMJUiA8meE",
-    "image": "https://levelthumbs.prevter.me/thumbnail/78574504",
     "victors": [
       {
-        "name": "RMGD",
-        "date": "2026-01-21",
-        "time": "16m 3s",
-        "attempts": 1103,
-        "video": "https://youtu.be/szkQr4WhmDQ"
+        "name": "1st3y1",
+        "time": "9m 45s",
+        "attempts": 27029,
+        "video": "",
+        "date": ""
       }
-    ]
+    ],
+    "showcaseVideo": ""
   },
   {
     "rank": 31,
-    "name": "Wistfully",
-    "creators": "Fishavolo, RealDynamix",
-    "id": "101656380",
+    "name": "Heliopolis",
+    "creators": "MindCap & more",
+    "id": "N/A",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=MG39eJWPjlU",
+    "showcaseVideo": "https://youtu.be/sNl2Vg5RXv4",
     "image": "",
     "victors": [
       {
-        "name": "RMGD",
-        "date": "2026-02-20",
-        "time": "28m 54s",
-        "attempts": 2031,
-        "video": "https://youtu.be/gC2Uc5dfnAE"
+        "name": "Exiled_Shade",
+        "date": "",
+        "time": "17m 20s",
+        "attempts": 1101,
+        "video": ""
       }
     ]
   },
   {
     "rank": 32,
-    "name": "Comet Observatory",
-    "creators": "AnonIIExt",
-    "id": "77110935",
+    "name": "Empyrean",
+    "creators": "0â€Ž70",
+    "id": "66423298",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=Ybr00MUXd2g",
+    "showcaseVideo": "https://youtu.be/GUxcWS79BJA",
     "image": "",
     "victors": [
       {
-        "name": "Shween",
-        "date": "2024-11-01",
-        "time": "",
-        "attempts": 8238,
-        "video": "https://youtu.be/zS7JgCPOf0Q?t=554"
+        "name": "Zpayk",
+        "date": "",
+        "time": "9m 56s",
+        "attempts": 814,
+        "video": ""
+      },
+      {
+        "name": "RMGD",
+        "date": "",
+        "time": "22m 19s",
+        "attempts": 1827,
+        "video": ""
       }
     ]
   },
   {
     "rank": 33,
-    "name": "Silent Hyper Paracosm",
-    "creators": "Morta1l",
-    "id": "124746832",
+    "name": "Silent Dry",
+    "creators": "CDMusic",
+    "id": "69608644",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=aCS1TD5-4Pk",
+    "showcaseVideo": "https://youtu.be/z4ywBsYiZF0",
     "image": "",
     "victors": [
       {
-        "name": "RMGD",
-        "date": "2026-01-25",
-        "time": "18m 42s",
-        "attempts": 1327,
-        "video": "https://youtu.be/hlWOrs3Yx-s"
+        "name": "Exiled_Shade",
+        "date": "",
+        "time": "14m 35s",
+        "attempts": 1126,
+        "video": ""
+      },
+      {
+        "name": "kl3hh",
+        "date": "",
+        "time": "37m 33s",
+        "attempts": 36103,
+        "video": ""
       }
     ]
   },
   {
     "rank": 34,
-    "name": "ANTIUTOPIA",
-    "creators": "Devilism",
-    "id": "78662821",
+    "name": "Wrath of the Faraon",
+    "creators": "KidJolly",
+    "id": "66683722",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=TzKdMJobK58",
+    "showcaseVideo": "https://youtu.be/sOr0J2p-zkw",
     "image": "",
     "victors": [
       {
         "name": "RMGD",
-        "date": "2026-01-21",
-        "time": "16m 3s",
-        "attempts": 1103,
-        "video": "https://youtu.be/szkQr4WhmDQ"
+        "date": "",
+        "time": "14m 9s",
+        "attempts": 1077,
+        "video": ""
       }
     ]
   },
   {
     "rank": 35,
-    "name": "water world",
-    "creators": "cheapyyyyy",
-    "id": "113279154",
+    "name": "WOODKID 2018",
+    "creators": "Jakerz & more",
+    "id": "90312250",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=NoiwMZrQsz0",
+    "showcaseVideo": "https://youtu.be/APtwgnXfi3Y",
     "image": "",
     "victors": [
       {
         "name": "Exiled_Shade",
-        "date": "2025-11-09",
-        "time": "27m 32s",
-        "attempts": 1727,
-        "video": "https://www.youtube.com/watch?v=ycujX1qO64I"
+        "date": "",
+        "time": "16m 17s",
+        "attempts": 978,
+        "video": ""
+      },
+      {
+        "name": "kl3hh",
+        "date": "",
+        "time": "17m 59s",
+        "attempts": 6814,
+        "video": ""
+      },
+      {
+        "name": "1st3y1",
+        "date": "",
+        "time": "20m 00s",
+        "attempts": 2113,
+        "video": ""
+      },
+      {
+        "name": "RMGD",
+        "date": "",
+        "time": "23m 01s",
+        "attempts": 1504,
+        "video": ""
       }
     ]
   },
   {
     "rank": 36,
-    "name": "silent kirkles",
-    "creators": "kartz, fern,piesy, 1st3y1",
-    "id": "128767386",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "1st3y1",
-        "date": "2025-11-29",
-        "time": "9m 45s",
-        "attempts": 27029,
-        "video": "https://youtu.be/8JA9QSssyOo"
-      }
-    ]
-  },
-  {
-    "rank": 37,
-    "name": "Heliopolis",
-    "creators": "MindCap & more",
-    "id": "",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=sNl2Vg5RXv4",
-    "image": "https://levelthumbs.prevter.me/thumbnail/104860245",
-    "victors": [
-      {
-        "name": "Exiled_Shade",
-        "date": "2025-11-17",
-        "time": "17m 20s",
-        "attempts": 1101,
-        "video": "https://youtu.be/_1WBFYu3m6Q"
-      }
-    ]
-  },
-  {
-    "rank": 38,
-    "name": "Empyrean",
-    "creators": "070",
-    "id": "66423298",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=GUxcWS79BJA",
-    "image": "",
-    "victors": [
-      {
-        "name": "Zpayk",
-        "date": "2024-05-06",
-        "time": "9m 56s",
-        "attempts": 814,
-        "video": "https://youtu.be/4fKzl1wwWFQ"
-      },
-      {
-        "name": "RMGD",
-        "date": "2025-12-14",
-        "time": "22m 19s",
-        "attempts": 1827,
-        "video": "https://www.youtube.com/watch?v=MHGbZsAo0MQ"
-      }
-    ]
-  },
-  {
-    "rank": 39,
-    "name": "Silent Dry",
-    "creators": "CDMusic",
-    "id": "69608644",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=z4ywBsYiZF0",
-    "image": "",
-    "victors": [
-      {
-        "name": "Exiled_Shade",
-        "date": "2025-11-08",
-        "time": "14m 35s",
-        "attempts": 1126,
-        "video": "https://youtu.be/mQSc79mYdIQ"
-      },
-      {
-        "name": "kl3hh",
-        "date": "2025-11-28",
-        "time": "37m 33s",
-        "attempts": 36103,
-        "video": "https://www.youtube.com/watch?v=uxwEyL8hOVQ&t=10051s"
-      }
-    ]
-  },
-  {
-    "rank": 40,
-    "name": "Wrath of the Faraon",
-    "creators": "KidJolly",
-    "id": "66683722",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=sOr0J2p-zkw",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2025-12-16",
-        "time": "14m 9s",
-        "attempts": 1077,
-        "video": "https://youtu.be/jifrCrQaFCI"
-      }
-    ]
-  },
-  {
-    "rank": 41,
-    "name": "WOODKID 2018",
-    "creators": "Jakerz & more",
-    "id": "90312250",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=COgfilwUVDQ",
-    "image": "",
-    "victors": [
-      {
-        "name": "Exiled_Shade",
-        "date": "2025-11-16",
-        "time": "16m 17s",
-        "attempts": 978,
-        "video": "https://youtu.be/KY5o5Y-rAog"
-      },
-      {
-        "name": "kl3hh",
-        "date": "2025-11-28",
-        "time": "17m 59s",
-        "attempts": 6814,
-        "video": "https://www.youtube.com/watch?v=uxwEyL8hOVQ&t=7689s"
-      },
-      {
-        "name": "1st3y1",
-        "date": "2025-12-06",
-        "time": "20m",
-        "attempts": 2113,
-        "video": "https://www.youtube.com/watch?v=76Z4sfDwd48"
-      },
-      {
-        "name": "RMGD",
-        "date": "2025-11-12",
-        "time": "23m 01s",
-        "attempts": 1504,
-        "video": "https://www.youtube.com/watch?v=qEgjd-JOw5s"
-      }
-    ]
-  },
-  {
-    "rank": 42,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=H0WIku2Yjg8",
+    "showcaseVideo": "https://youtu.be/H0WIku2Yjg8",
     "image": "",
     "victors": [
       {
         "name": "RMGD",
-        "date": "2026-02-05",
+        "date": "",
         "time": "19m 45s",
         "attempts": 1511,
-        "video": "https://youtu.be/YNnpHiqD-gI"
+        "video": ""
       },
       {
         "name": "Exiled_Shade",
-        "date": "2025-11-07",
+        "date": "",
         "time": "23m 7s",
         "attempts": 1629,
-        "video": "https://www.youtube.com/watch?v=m-z2VPQLTt4"
+        "video": ""
       },
       {
         "name": "Skeletonette",
-        "date": "2025-11-08",
+        "date": "",
         "time": "28m 28s",
         "attempts": 3150,
-        "video": "https://www.youtube.com/live/K9gFdW3GK_k?t=5222s"
+        "video": ""
       },
       {
         "name": "kl3hh",
-        "date": "2025-11-28",
+        "date": "",
         "time": "33m 19s",
         "attempts": 29365,
-        "video": "https://www.youtube.com/watch?v=uxwEyL8hOVQ&t=197s"
+        "video": ""
       },
       {
         "name": "Skinniboi3",
-        "date": "2025-04-05",
+        "date": "",
         "time": "40m 14s",
         "attempts": 1852,
-        "video": "https://www.youtube.com/watch?v=tPO6V7Q-wYc"
+        "video": ""
       },
       {
         "name": "nifty",
-        "date": "2024-12-29",
+        "date": "",
         "time": "2h 3m 52s",
         "attempts": 6306,
-        "video": "https://www.youtube.com/watch?v=qA_fqgNLT0I"
+        "video": ""
       },
       {
         "name": "MaPieRk",
-        "date": "2024-03-20",
+        "date": "",
         "time": "",
         "attempts": 6765,
-        "video": "https://www.youtube.com/watch?v=Z9FkaWsakAo"
+        "video": ""
       }
     ]
   }
