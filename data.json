@@ -2,20 +2,20 @@
   {
     "rank": 1,
     "name": "Six Paths of Pain (Unnerfed) (Fixed)",
-    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/6popunnerfed.webp",
-    "id": ".GMD",
     "creators": "GionniBlood",
+    "id": ".GMD",
     "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/VD7iiE9diqs",
+    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/6popunnerfed.webp",
     "victors": [
       {
         "name": "kl3hh",
+        "date": "2025-11-21",
         "time": "1h 18m 57s",
         "attempts": 178920,
-        "video": "https://www.youtube.com/watch?v=4yOfjBfZMJc",
-        "date": "2025-11-21"
+        "video": "https://www.youtube.com/watch?v=4yOfjBfZMJc"
       }
-    ],
-    "showcaseVideo": ""
+    ]
   },
   {
     "rank": 2,
