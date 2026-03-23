@@ -930,24 +930,6 @@
   },
   {
     "rank": 39,
-    "name": "Heliopolis",
-    "creators": "MindCap & more",
-    "id": "",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=sNl2Vg5RXv4",
-    "image": "https://levelthumbs.prevter.me/thumbnail/104860245",
-    "victors": [
-      {
-        "name": "Exiled_Shade",
-        "date": "2025-11-17",
-        "time": "17m 20s",
-        "attempts": 1101,
-        "video": "https://youtu.be/_1WBFYu3m6Q"
-      }
-    ]
-  },
-  {
-    "rank": 40,
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
@@ -972,7 +954,7 @@
     ]
   },
   {
-    "rank": 41,
+    "rank": 40,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -997,7 +979,7 @@
     ]
   },
   {
-    "rank": 42,
+    "rank": 41,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -1015,7 +997,7 @@
     ]
   },
   {
-    "rank": 43,
+    "rank": 42,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -1054,7 +1036,7 @@
     ]
   },
   {
-    "rank": 44,
+    "rank": 43,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
