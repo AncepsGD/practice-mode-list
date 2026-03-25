@@ -688,6 +688,13 @@
         "time": "2h 37m 24s",
         "attempts": 6972,
         "video": "https://www.youtube.com/watch?v=J3A8jwnm0Kk"
+      },
+      {
+        "name": "JJ Reed",
+        "date": "2026-03-25",
+        "time": "31m 15s",
+        "attempts": 6252,
+        "video": "https://youtu.be/uRNRzM7Tf9c"
       }
     ]
   },
@@ -718,6 +725,24 @@
   },
   {
     "rank": 28,
+    "name": "Unnamed 666",
+    "creators": "TMco & more",
+    "id": "75284290",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/ByHrcniGsGM",
+    "image": "https://levelthumbs.prevter.me/thumbnail/75284290/high",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-02-11",
+        "time": "31m 15s",
+        "attempts": 1986,
+        "video": "https://www.youtube.com/playlist?list=PLkmf-ycfDOKe1i5yFkoSZBl_qIoeUaCuX"
+      }
+    ]
+  },
+  {
+    "rank": 29,
     "name": "Wistfully",
     "creators": "Fishavolo, RealDynamix",
     "id": "101656380",
@@ -735,7 +760,7 @@
     ]
   },
   {
-    "rank": 29,
+    "rank": 30,
     "name": "Six Paths of Pain (geometricks12)",
     "creators": "geometricks12",
     "id": "135434788",
@@ -753,7 +778,7 @@
     ]
   },
   {
-    "rank": 30,
+    "rank": 31,
     "name": "SWI mega hard",
     "creators": "Cyclic & more",
     "id": "129859038",
@@ -771,7 +796,7 @@
     ]
   },
   {
-    "rank": 31,
+    "rank": 32,
     "name": "Gloomiest Cavern",
     "creators": "vastaus",
     "id": "124108794",
@@ -789,7 +814,7 @@
     ]
   },
   {
-    "rank": 32,
+    "rank": 33,
     "name": "Acheron 50",
     "creators": "RMGD, Riot, & more",
     "id": "135243833",
@@ -807,7 +832,7 @@
     ]
   },
   {
-    "rank": 33,
+    "rank": 34,
     "name": "Azure Flare (2025)",
     "creators": "Aeden",
     "id": "126344104",
@@ -839,7 +864,7 @@
     ]
   },
   {
-    "rank": 34,
+    "rank": 35,
     "name": "Sunix Never Clear",
     "creators": "2A0L0I3",
     "id": "67464742",
@@ -857,7 +882,7 @@
     ]
   },
   {
-    "rank": 35,
+    "rank": 36,
     "name": "Comet Observatory",
     "creators": "AnonIIExt",
     "id": "77110935",
@@ -875,7 +900,7 @@
     ]
   },
   {
-    "rank": 36,
+    "rank": 37,
     "name": "Silent Hyper Paracosm",
     "creators": "Morta1l",
     "id": "124746832",
@@ -893,7 +918,7 @@
     ]
   },
   {
-    "rank": 37,
+    "rank": 38,
     "name": "ANTIUTOPIA",
     "creators": "Devilism",
     "id": "78662821",
@@ -911,7 +936,7 @@
     ]
   },
   {
-    "rank": 38,
+    "rank": 39,
     "name": "water world",
     "creators": "cheapyyyyy",
     "id": "113279154",
@@ -929,7 +954,7 @@
     ]
   },
   {
-    "rank": 39,
+    "rank": 40,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -947,7 +972,7 @@
     ]
   },
   {
-    "rank": 40,
+    "rank": 41,
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
@@ -972,7 +997,7 @@
     ]
   },
   {
-    "rank": 41,
+    "rank": 42,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -997,7 +1022,7 @@
     ]
   },
   {
-    "rank": 42,
+    "rank": 43,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -1015,7 +1040,7 @@
     ]
   },
   {
-    "rank": 43,
+    "rank": 44,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -1054,7 +1079,7 @@
     ]
   },
   {
-    "rank": 44,
+    "rank": 45,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
