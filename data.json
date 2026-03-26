@@ -865,7 +865,7 @@
   },
   {
     "rank": 35,
-    "name": "Sunix Never Clear",
+    "name": "Sunix never clear",
     "creators": "2A0L0I3",
     "id": "67464742",
     "twoPlayer": "",
@@ -878,6 +878,13 @@
         "time": "16m 3s",
         "attempts": 1103,
         "video": "https://youtu.be/szkQr4WhmDQ"
+      },
+      {
+        "name": "JJ Reed",
+        "date": "2026-03-25",
+        "time": "19m 22s",
+        "attempts": 1536,
+        "video": "https://youtu.be/X4R-ZmCF8Pw"
       }
     ]
   },
