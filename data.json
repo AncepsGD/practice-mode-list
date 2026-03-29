@@ -244,7 +244,7 @@
     "creators": "Skyyee",
     "id": "97037045",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=LW84n-UfAJg",
+    "showcaseVideo": "https://youtu.be/G5VQ5iMtWdA",
     "image": "https://levelthumbs.prevter.me/thumbnail/68553037",
     "victors": [
       {
@@ -1156,6 +1156,13 @@
         "time": "",
         "attempts": 6765,
         "video": "https://www.youtube.com/watch?v=Z9FkaWsakAo"
+      },
+      {
+        "name": "mewj13",
+        "date": "2026-03-28",
+        "time": "1h 6m 51s",
+        "attempts": 11264,
+        "video": "https://youtu.be/h3izgaMHWwE"
       }
     ]
   }
