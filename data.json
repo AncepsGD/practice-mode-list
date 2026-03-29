@@ -761,7 +761,7 @@
     "creators": "Fishavolo, RealDynamix",
     "id": "101656380",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=MG39eJWPjlU",
+    "showcaseVideo": "https://youtu.be/MG39eJWPjlU",
     "image": "",
     "victors": [
       {
@@ -770,6 +770,13 @@
         "time": "28m 54s",
         "attempts": 2031,
         "video": "https://youtu.be/gC2Uc5dfnAE"
+      },
+      {
+        "name": "mewj13",
+        "date": "2026-03-29",
+        "time": "59m 4s",
+        "attempts": 10525,
+        "video": "https://youtu.be/3QyrJdJjS4Y"
       }
     ]
   },
