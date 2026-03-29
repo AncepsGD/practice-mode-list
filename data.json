@@ -858,8 +858,8 @@
     "creators": "Aeden",
     "id": "126344104",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=mAJG_i9Vziw",
-    "image": "",
+    "showcaseVideo": "https://youtu.be/mAJG_i9Vziw",
+    "image": "https://levelthumbs.prevter.me/thumbnail/126344104/high",
     "victors": [
       {
         "name": "Exiled_Shade",
@@ -881,6 +881,13 @@
         "time": "15m 24s",
         "attempts": 1197,
         "video": "https://youtu.be/6i8pGkgcyPY"
+      },
+      {
+        "name": "mewj13",
+        "date": "2026-03-29",
+        "time": "34m 8s",
+        "attempts": 6350,
+        "video": "https://youtu.be/SCs6GgEiavY"
       }
     ]
   },
