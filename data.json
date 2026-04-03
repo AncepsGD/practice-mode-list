@@ -5,7 +5,7 @@
     "creators": "icedcave",
     "id": "137172240",
     "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/eUYtHhjgang",
+    "showcaseVideo": "",
     "image": "",
     "victors": [
       {
@@ -131,34 +131,41 @@
   {
     "rank": 7,
     "name": "Silent Skrillex",
-    "image": "",
-    "id": "73836744",
     "creators": "DiosselMusic",
+    "id": "73836744",
     "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/vGce-8ecomg",
+    "image": "",
     "victors": [
       {
         "name": "Duelo Maestro Guy",
+        "date": "2025-11-30",
         "time": "15m 35s",
         "attempts": 16766,
-        "video": "https://youtu.be/9qYOFFOO27M",
-        "date": "2025-11-30"
+        "video": "https://youtu.be/9qYOFFOO27M"
       },
       {
         "name": "Anceps",
+        "date": "2025-04-07",
         "time": "40m 7s",
         "attempts": 22486,
-        "video": "https://www.youtube.com/watch?v=fEIP3u_D5tQ",
-        "date": "2025-04-07"
+        "video": "https://www.youtube.com/watch?v=fEIP3u_D5tQ"
       },
       {
         "name": "kl3hh",
+        "date": "2025-11-15",
         "time": "1h 12m 34s",
         "attempts": 7750,
-        "video": "https://www.youtube.com/watch?v=m7k36whIQjs",
-        "date": "2025-11-15"
+        "video": "https://www.youtube.com/watch?v=m7k36whIQjs"
+      },
+      {
+        "name": "mewj13",
+        "date": "2026-04-01",
+        "time": "35m 41s",
+        "attempts": 13917,
+        "video": "https://youtu.be/lMDF-qVlszI"
       }
-    ],
-    "showcaseVideo": "https://www.youtube.com/watch?v=J-QyW9aNnOs"
+    ]
   },
   {
     "rank": 8,
