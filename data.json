@@ -991,7 +991,7 @@
     "id": "67464742",
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/jvqxtKUZzuQ",
-    "image": "",
+    "image": "https://levelthumbs.prevter.me/thumbnail/78574504",
     "victors": [
       {
         "name": "RMGD",
@@ -1047,6 +1047,24 @@
   },
   {
     "rank": 42,
+    "name": "The Burn",
+    "creators": "TheGreatBird",
+    "id": "46257656",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/9aaWDJFhEAk",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-04-04",
+        "time": "16m 49s",
+        "attempts": 1145,
+        "video": "https://youtu.be/w9rr-ePno-Y"
+      }
+    ]
+  },
+  {
+    "rank": 43,
     "name": "ANTIUTOPIA",
     "creators": "Devilism",
     "id": "78662821",
@@ -1064,7 +1082,7 @@
     ]
   },
   {
-    "rank": 43,
+    "rank": 44,
     "name": "water world",
     "creators": "cheapyyyyy",
     "id": "113279154",
@@ -1082,7 +1100,7 @@
     ]
   },
   {
-    "rank": 44,
+    "rank": 45,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -1100,7 +1118,7 @@
     ]
   },
   {
-    "rank": 45,
+    "rank": 46,
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
@@ -1125,7 +1143,7 @@
     ]
   },
   {
-    "rank": 46,
+    "rank": 47,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -1150,7 +1168,7 @@
     ]
   },
   {
-    "rank": 47,
+    "rank": 48,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -1175,7 +1193,7 @@
     ]
   },
   {
-    "rank": 48,
+    "rank": 49,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -1214,7 +1232,7 @@
     ]
   },
   {
-    "rank": 49,
+    "rank": 50,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
