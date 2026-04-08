@@ -94,6 +94,24 @@
   },
   {
     "rank": 5,
+    "name": "Fredrick Survive",
+    "creators": "ZoliReal",
+    "id": "133258360",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "mewj13",
+        "date": "2026-04-07",
+        "time": "39m 27s",
+        "attempts": 20473,
+        "video": "https://youtu.be/9H7EkVSYV10"
+      }
+    ]
+  },
+  {
+    "rank": 6,
     "name": "Singularity (Nerfed)",
     "image": "https://levelthumbs.prevter.me/thumbnail/67432669",
     "id": "128248909",
@@ -111,7 +129,7 @@
     "showcaseVideo": ""
   },
   {
-    "rank": 6,
+    "rank": 7,
     "name": "Lucidia (Unnerfed)",
     "creators": "2A0L0I3, AuraXalaiv",
     "id": "80523469",
@@ -143,7 +161,7 @@
     ]
   },
   {
-    "rank": 7,
+    "rank": 8,
     "name": "Silent Skrillex",
     "creators": "DiosselMusic",
     "id": "73836744",
@@ -182,7 +200,7 @@
     ]
   },
   {
-    "rank": 8,
+    "rank": 9,
     "name": "Silent Circles",
     "creators": "Cyrillic, TheRealSailent",
     "id": "12169905",
@@ -221,7 +239,7 @@
     ]
   },
   {
-    "rank": 9,
+    "rank": 10,
     "name": "Deadly Silent Club",
     "creators": "gw roadmc2",
     "id": "126241846",
@@ -246,7 +264,7 @@
     ]
   },
   {
-    "rank": 10,
+    "rank": 11,
     "name": "Sad Santa",
     "creators": "070",
     "id": "66424814",
@@ -278,7 +296,7 @@
     ]
   },
   {
-    "rank": 11,
+    "rank": 12,
     "name": "Blood in the Water (Unnerfed)",
     "creators": "Skyyee",
     "id": "97037045",
@@ -296,7 +314,7 @@
     ]
   },
   {
-    "rank": 12,
+    "rank": 13,
     "name": "The Descended (Nerfed)",
     "creators": "Boomblox555",
     "id": "128794273",
@@ -314,7 +332,7 @@
     ]
   },
   {
-    "rank": 13,
+    "rank": 14,
     "name": "Sapphybu Demise",
     "creators": "Anceps",
     "id": "128866100",
@@ -332,7 +350,7 @@
     ]
   },
   {
-    "rank": 14,
+    "rank": 15,
     "name": "Rampant Circles (1p)",
     "creators": "NXISE",
     "id": "132997477",
@@ -346,11 +364,18 @@
         "time": "1h 5m",
         "attempts": 5796,
         "video": "https://youtu.be/0wb79N2IhfQ"
+      },
+      {
+        "name": "kl3hh",
+        "date": "2026-04-04",
+        "time": "1h 53m 47s",
+        "attempts": 102045,
+        "video": "https://youtu.be/7JhhBSzsXxk"
       }
     ]
   },
   {
-    "rank": 15,
+    "rank": 16,
     "name": "Kingdom of Miracalis (2022 15cps Fix)",
     "creators": "gdmiracle",
     "id": "127839106",
@@ -368,7 +393,7 @@
     ]
   },
   {
-    "rank": 16,
+    "rank": 17,
     "name": "Six Paths of Pain (Old)",
     "creators": "GionniBlood",
     "id": "63117908",
@@ -393,7 +418,39 @@
     ]
   },
   {
-    "rank": 17,
+    "rank": 18,
+    "name": "Bye Level (1p)",
+    "creators": "jongaminggd",
+    "id": "128565339",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/GRVh6XyrdZE",
+    "image": "",
+    "victors": [
+      {
+        "name": "enxliv",
+        "date": "2025-11-18",
+        "time": "27m 41s",
+        "attempts": 25259,
+        "video": "https://www.youtube.com/watch?v=UQKFpxrI3v8"
+      },
+      {
+        "name": "mewj13",
+        "date": "2026-04-07",
+        "time": "28m 17s",
+        "attempts": 9005,
+        "video": "https://youtu.be/RRuQlhtmbxs"
+      },
+      {
+        "name": "kl3hh",
+        "date": "2025-11-29",
+        "time": "6m 28s",
+        "attempts": 25389,
+        "video": "https://www.youtube.com/watch?v=eaqpt3n105Y"
+      }
+    ]
+  },
+  {
+    "rank": 19,
     "name": "Mxlxstxtixn Chamber",
     "creators": "mewj13",
     "id": "137056361",
@@ -411,7 +468,7 @@
     ]
   },
   {
-    "rank": 18,
+    "rank": 20,
     "name": "Thermal Radiation",
     "creators": "Windogs",
     "id": "74208521",
@@ -429,7 +486,7 @@
     ]
   },
   {
-    "rank": 19,
+    "rank": 21,
     "name": "Silent Nightfall",
     "creators": "RMGD",
     "id": "129974620",
@@ -447,7 +504,7 @@
     ]
   },
   {
-    "rank": 20,
+    "rank": 22,
     "name": "Silent Circles XII",
     "creators": "Nox Eternis",
     "id": "80910910",
@@ -465,7 +522,7 @@
     ]
   },
   {
-    "rank": 21,
+    "rank": 23,
     "name": "Checkmate",
     "creators": "izofdoors",
     "id": "66586224",
@@ -483,7 +540,7 @@
     ]
   },
   {
-    "rank": 22,
+    "rank": 24,
     "name": "Challenge Circles 2p",
     "creators": "RMGD",
     "id": "128469175",
@@ -515,7 +572,7 @@
     ]
   },
   {
-    "rank": 23,
+    "rank": 25,
     "name": "Silent Circles (Dual Skip)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "12169905",
@@ -603,7 +660,7 @@
     ]
   },
   {
-    "rank": 24,
+    "rank": 26,
     "name": "Silent Circles (EVW Nerf)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "127906018",
@@ -628,32 +685,7 @@
     ]
   },
   {
-    "rank": 25,
-    "name": "Bye Level (1p)",
-    "creators": "jongaminggd",
-    "id": "128565339",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/GRVh6XyrdZE",
-    "image": "",
-    "victors": [
-      {
-        "name": "enxliv",
-        "date": "2025-11-18",
-        "time": "27m 41s",
-        "attempts": 25259,
-        "video": "https://www.youtube.com/watch?v=UQKFpxrI3v8"
-      },
-      {
-        "name": "mewj13",
-        "date": "2026-04-07",
-        "time": "28m 17s",
-        "attempts": 9005,
-        "video": "https://youtu.be/RRuQlhtmbxs"
-      }
-    ]
-  },
-  {
-    "rank": 26,
+    "rank": 27,
     "name": "ALIKESUPREME",
     "creators": "bigstarchman",
     "id": "104757556",
@@ -678,7 +710,7 @@
     ]
   },
   {
-    "rank": 27,
+    "rank": 28,
     "name": "Silent Skrillex (Dual Skip)",
     "creators": "DiosselMusic",
     "id": "73836744",
@@ -703,7 +735,7 @@
     ]
   },
   {
-    "rank": 28,
+    "rank": 29,
     "name": "silent silhouette (Unnerfed)",
     "creators": "hhuuko, cairillic",
     "id": "84145309",
@@ -728,7 +760,7 @@
     ]
   },
   {
-    "rank": 29,
+    "rank": 30,
     "name": "Sakupen End",
     "creators": "Nick24",
     "id": "100856004",
@@ -801,7 +833,7 @@
       },
       {
         "name": "Anceps",
-        "date": "2026-04-07",
+        "date": "2026-04-06",
         "time": "27m 10s",
         "attempts": 6398,
         "video": "https://youtu.be/Q5fbZYu1jJ8"
@@ -809,7 +841,7 @@
     ]
   },
   {
-    "rank": 30,
+    "rank": 31,
     "name": "sailent clubstar",
     "creators": "Nautilus2K",
     "id": "10031383",
@@ -834,7 +866,7 @@
     ]
   },
   {
-    "rank": 31,
+    "rank": 32,
     "name": "Unnamed 666",
     "creators": "TMco & more",
     "id": "75284290",
@@ -852,7 +884,7 @@
     ]
   },
   {
-    "rank": 32,
+    "rank": 33,
     "name": "Wistfully",
     "creators": "Fishavolo, RealDynamix",
     "id": "101656380",
@@ -877,7 +909,7 @@
     ]
   },
   {
-    "rank": 33,
+    "rank": 34,
     "name": "Silent Classic (1p)",
     "creators": "fancydoesgd",
     "id": "132704246",
@@ -895,7 +927,25 @@
     ]
   },
   {
-    "rank": 34,
+    "rank": 35,
+    "name": "Near The Satan",
+    "creators": "GogoOriginal, SakupinGMD, Dasemuu, Ligartoo",
+    "id": "115691382",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=YsH415Ut-Ds",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-02-08",
+        "time": "16m 59s",
+        "attempts": 1477,
+        "video": "https://youtu.be/jOYz995LPok"
+      }
+    ]
+  },
+  {
+    "rank": 36,
     "name": "SaTans Circles",
     "creators": "IIZebII",
     "id": "78868667",
@@ -919,21 +969,28 @@
       },
       {
         "name": "Anceps",
-        "date": "2026-04-06",
+        "date": "20260-4-07",
         "time": "24m 29s",
         "attempts": 6966,
         "video": "https://youtu.be/rc26GGk2RRc"
+      },
+      {
+        "name": "kl3hh",
+        "date": "2025-04-07",
+        "time": "24m 44s",
+        "attempts": 8517,
+        "video": "https://youtube.com/live/mrT-WkLhous"
       }
     ]
   },
   {
-    "rank": 35,
+    "rank": 37,
     "name": "Death Corridor (Oldest)",
     "creators": "KaotikJumper",
     "id": "95122145",
     "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/zlhz-xZJ3hI",
-    "image": "https://levelthumbs.prevter.me/thumbnail/95122145/high",
+    "showcaseVideo": "https://www.youtube.com/watch?v=zlhz-xZJ3hI",
+    "image": "",
     "victors": [
       {
         "name": "Anceps",
@@ -945,7 +1002,7 @@
     ]
   },
   {
-    "rank": 36,
+    "rank": 38,
     "name": "Six Paths of Pain (geometricks12)",
     "creators": "geometricks12",
     "id": "135434788",
@@ -963,7 +1020,7 @@
     ]
   },
   {
-    "rank": 37,
+    "rank": 39,
     "name": "SWI mega hard",
     "creators": "Cyclic & more",
     "id": "129859038",
@@ -981,7 +1038,7 @@
     ]
   },
   {
-    "rank": 38,
+    "rank": 40,
     "name": "BITSadmin",
     "creators": "Alephultra",
     "id": "123627676",
@@ -999,7 +1056,7 @@
     ]
   },
   {
-    "rank": 39,
+    "rank": 41,
     "name": "Gloomiest Cavern",
     "creators": "vastaus",
     "id": "124108794",
@@ -1017,7 +1074,7 @@
     ]
   },
   {
-    "rank": 40,
+    "rank": 42,
     "name": "White Abyss",
     "creators": "lights2419, noyogd",
     "id": "126535682",
@@ -1035,7 +1092,7 @@
     ]
   },
   {
-    "rank": 41,
+    "rank": 43,
     "name": "Acheron 50",
     "creators": "RMGD, Riot, & more",
     "id": "135243833",
@@ -1060,7 +1117,7 @@
     ]
   },
   {
-    "rank": 42,
+    "rank": 44,
     "name": "Azure Flare (2025)",
     "creators": "Aeden",
     "id": "126344104",
@@ -1095,24 +1152,17 @@
         "time": "34m 8s",
         "attempts": 6350,
         "video": "https://youtu.be/SCs6GgEiavY"
-      },
-      {
-        "name": "SupremeSDB",
-        "date": "2026-04-07",
-        "time": "30m 1s",
-        "attempts": 2679,
-        "video": "https://youtu.be/m6RPQ0B11yo"
       }
     ]
   },
   {
-    "rank": 43,
+    "rank": 45,
     "name": "Sunix never clear",
     "creators": "2A0L0I3",
     "id": "67464742",
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/jvqxtKUZzuQ",
-    "image": "https://levelthumbs.prevter.me/thumbnail/78574504",
+    "image": "",
     "victors": [
       {
         "name": "RMGD",
@@ -1131,21 +1181,21 @@
       {
         "name": "mewj13",
         "date": "2026-04-04",
-        "time": "34m 20s",
+        "time": "33m",
         "attempts": 5445,
         "video": "https://youtu.be/6ZyPcZPBOT0"
       },
       {
-        "name": "SupremeSDB",
+        "name": "kl3hh",
         "date": "2026-04-07",
-        "time": "34m 54s",
-        "attempts": 3022,
-        "video": "https://youtu.be/m6RPQ0B11yo"
+        "time": "24m 14s",
+        "attempts": 5608,
+        "video": "https://www.youtube.com/live/pWjUo4BEL60"
       }
     ]
   },
   {
-    "rank": 44,
+    "rank": 46,
     "name": "Comet Observatory",
     "creators": "AnonIIExt",
     "id": "77110935",
@@ -1163,7 +1213,7 @@
     ]
   },
   {
-    "rank": 45,
+    "rank": 47,
     "name": "Silent Hyper Paracosm",
     "creators": "Morta1l",
     "id": "124746832",
@@ -1181,7 +1231,7 @@
     ]
   },
   {
-    "rank": 46,
+    "rank": 48,
     "name": "The Burn",
     "creators": "TheGreatBird",
     "id": "46257656",
@@ -1195,11 +1245,18 @@
         "time": "16m 49s",
         "attempts": 1145,
         "video": "https://youtu.be/w9rr-ePno-Y"
+      },
+      {
+        "name": "kl3hh",
+        "date": "2026-04-07",
+        "time": "46m 57s",
+        "attempts": 10381,
+        "video": "https://www.youtube.com/live/pWjUo4BEL60"
       }
     ]
   },
   {
-    "rank": 47,
+    "rank": 49,
     "name": "ANTIUTOPIA",
     "creators": "Devilism",
     "id": "78662821",
@@ -1213,11 +1270,36 @@
         "time": "16m 3s",
         "attempts": 1103,
         "video": "https://youtu.be/szkQr4WhmDQ"
+      },
+      {
+        "name": "kl3hh",
+        "date": "2026-04-07",
+        "time": "38m 53s",
+        "attempts": 15810,
+        "video": "https://www.youtube.com/live/pWjUo4BEL60"
       }
     ]
   },
   {
-    "rank": 48,
+    "rank": 50,
+    "name": "Thanks Level (April Fools)",
+    "creators": "fancydoesgd, RMGD",
+    "id": "137217125",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-04-02",
+        "time": "15m 58s",
+        "attempts": 1432,
+        "video": "https://youtu.be/OvTD19oKcrE"
+      }
+    ]
+  },
+  {
+    "rank": 51,
     "name": "water world",
     "creators": "cheapyyyyy",
     "id": "113279154",
@@ -1235,7 +1317,7 @@
     ]
   },
   {
-    "rank": 49,
+    "rank": 52,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -1249,11 +1331,18 @@
         "time": "9m 45s",
         "attempts": 27029,
         "video": "https://youtu.be/8JA9QSssyOo"
+      },
+      {
+        "name": "kl3hh",
+        "date": "2026-04-07",
+        "time": "17m 11s",
+        "attempts": 32580,
+        "video": "https://www.youtube.com/live/5nVsqaHHzao"
       }
     ]
   },
   {
-    "rank": 50,
+    "rank": 53,
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
@@ -1276,16 +1365,16 @@
         "video": "https://www.youtube.com/watch?v=MHGbZsAo0MQ"
       },
       {
-        "name": "SupremeSDB",
+        "name": "kl3hh",
         "date": "2026-04-07",
-        "time": "24m 59s",
-        "attempts": 2420,
-        "video": "https://youtu.be/m6RPQ0B11yo"
+        "time": "23m 53s",
+        "attempts": 14401,
+        "video": "https://www.youtube.com/live/5nVsqaHHzao"
       }
     ]
   },
   {
-    "rank": 51,
+    "rank": 54,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -1310,7 +1399,25 @@
     ]
   },
   {
-    "rank": 52,
+    "rank": 55,
+    "name": "Bloodbath but good",
+    "creators": "Riot, 1st3y1 & more",
+    "id": "129081504",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "1st3y1",
+        "date": "2025-12-06",
+        "time": "13m 36s",
+        "attempts": 1475,
+        "video": "https://youtu.be/0jASZYW7qok"
+      }
+    ]
+  },
+  {
+    "rank": 56,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -1331,11 +1438,18 @@
         "time": "20m 18s",
         "attempts": 3849,
         "video": "https://youtu.be/h7FHVPBH_3I"
+      },
+      {
+        "name": "kl3hh",
+        "date": "2026-04-07",
+        "time": "13m 51s",
+        "attempts": 7934,
+        "video": "https://www.youtube.com/live/5nVsqaHHzao"
       }
     ]
   },
   {
-    "rank": 53,
+    "rank": 57,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -1374,7 +1488,7 @@
     ]
   },
   {
-    "rank": 54,
+    "rank": 58,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
@@ -1444,13 +1558,6 @@
         "time": "38m 7s",
         "attempts": 5518,
         "video": "https://youtu.be/QRAfLZGlEPM"
-      },
-      {
-        "name": "SupremeSDB",
-        "date": "2026-04-07",
-        "time": "45m 19s",
-        "attempts": 4413,
-        "video": "https://youtu.be/m6RPQ0B11yo"
       }
     ]
   }
