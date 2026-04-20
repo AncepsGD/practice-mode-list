@@ -1128,6 +1128,132 @@
     .edit-table tr.drag-over td {
       background: rgba(139, 92, 246, 0.1);
     }
+
+    .system-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .system-card {
+      background: rgba(24, 19, 36, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .system-card h3 {
+      font-family: Montserrat, sans-serif;
+      font-size: 18px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      color: var(--purple-bright);
+    }
+
+    .system-status {
+      font-family: "Share Tech Mono", monospace;
+      color: var(--text-muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .system-suggestion {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 10px;
+      align-items: stretch;
+      margin: 12px 0;
+    }
+
+    .system-level-btn {
+      background: rgba(15, 13, 26, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: Montserrat, sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .system-level-btn:hover:not(:disabled) {
+      border-color: var(--purple);
+      transform: translateY(-1px);
+    }
+
+    .system-level-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .system-vs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Share Tech Mono", monospace;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .system-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .system-btn {
+      border: 1px solid var(--border);
+      background: rgba(14, 12, 22, 0.9);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-family: "Share Tech Mono", monospace;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .system-btn:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .system-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+    }
+
+    .system-table th,
+    .system-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+      font-size: 12px;
+    }
+
+    .system-table th {
+      color: var(--text-muted);
+      font-family: "Share Tech Mono", monospace;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+
+    .system-tier {
+      text-transform: uppercase;
+      font-family: "Share Tech Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
   </style>
 </head>
 
@@ -1144,6 +1270,9 @@
         </button>
         <button class="nav-btn" onclick="showPage('leaderboard', this)">
           <span class="nav-icon">🏆</span>Player Leaderboard
+        </button>
+        <button class="nav-btn" onclick="showPage('system', this)">
+          <span class="nav-icon">⚙️</span>System Rankings
         </button>
         <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank"><span
             class="nav-icon">💬</span>Discord</a>
@@ -1178,6 +1307,46 @@
         </thead>
         <tbody id="lb-body"></tbody>
       </table>
+    </div>
+
+    <div id="page-system" class="page">
+      <div class="section-header">
+        <h2>DemonListSystem</h2>
+        <div class="line"></div>
+      </div>
+      <div class="system-grid">
+        <div class="system-card">
+          <h3>Comparison Lab</h3>
+          <div class="system-status" id="system-status">Initializing model...</div>
+          <div class="system-suggestion">
+            <button id="suggestion-a" class="system-level-btn" onclick="pickSuggestedWinner('a')" disabled>Select level A</button>
+            <div class="system-vs">VS</div>
+            <button id="suggestion-b" class="system-level-btn" onclick="pickSuggestedWinner('b')" disabled>Select level B</button>
+          </div>
+          <div class="system-actions">
+            <button class="system-btn" onclick="requestNewSuggestion()">new suggestion</button>
+            <button class="system-btn" onclick="resetModelState()">reset model state</button>
+          </div>
+        </div>
+        <div class="system-card">
+          <h3>Computed Rankings</h3>
+          <div class="stats-strip" id="system-stats-strip"></div>
+          <table class="system-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Level</th>
+                <th>Tier</th>
+                <th>Rating</th>
+                <th>Uncertainty</th>
+                <th>Score</th>
+                <th>Controversy</th>
+              </tr>
+            </thead>
+            <tbody id="system-rankings-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <footer class="footer">
@@ -1224,6 +1393,7 @@
                 <th>Name</th>
                 <th>Creator(s)</th>
                 <th>ID</th>
+                <th>FP</th>
                 <th>Victors</th>
                 <th style="text-align: right">Actions</th>
               </tr>
@@ -1258,6 +1428,10 @@
           <div class="form-group">
             <label class="form-label">Rank</label>
             <input class="form-input" id="f-rank" type="number" placeholder="e.g. 1" min="1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Frame Perfects</label>
+            <input class="form-input" id="f-frameperfects" type="number" placeholder="e.g. 120" min="0" />
           </div>
           <div class="form-group">
             <label class="form-label">2-Player?</label>
@@ -1304,13 +1478,20 @@
 
   <div class="save-flash" id="save-flash">✓ SAVED</div>
 
+  <script src="DemonListSystem.browser.js"></script>
   <script>
     const LOCAL_KEY = "pml_edit_data";
+    const MODEL_STATE_KEY = "pml_demon_system_state";
+    const MODEL_PLAYER_ID = "site-user";
     let rawData = [];
     let levels = [];
     let leaderboard = [];
     let maxScore = 1;
     let editingIndex = -1;
+    let demonSystem = null;
+    let systemRankings = [];
+    let currentSuggestionPair = null;
+    let levelMetaByModelId = new Map();
 
     function parseTimeToSeconds(timeStr) {
       if (!timeStr || timeStr.trim() === "") return Infinity;
@@ -1429,6 +1610,7 @@
       renderStats();
       renderLevels(levels);
       renderLeaderboard(leaderboard);
+      syncDemonSystemFromRawData();
     }
 
     loadData().then(processRawData);
@@ -1463,6 +1645,228 @@
         <div class="stat-box"><span class="val">${totalVictors}</span><span class="lbl">Unique Players</span></div>
         <div class="stat-box"><span class="val">${totalCompletions}</span><span class="lbl">Total Completions</span></div>
       `;
+    }
+
+    function getDatasetSignature() {
+      return rawData
+        .map((item, i) => `${String(item.id || item.name || "").trim()}::${i}`)
+        .join("|");
+    }
+
+    function createModelLevelRows() {
+      const seen = new Set();
+      const rows = [];
+      const rankMax = Math.max(...rawData.map((item) => Number(item.rank) || 1), 1);
+
+      rawData.forEach((item, idx) => {
+        const baseId = String(item.id || item.name || `level_${idx}`).trim() || `level_${idx}`;
+        const modelId = seen.has(baseId) ? `${baseId}__${idx}` : baseId;
+        seen.add(modelId);
+
+        const victors = Array.isArray(item.victors) ? item.victors : [];
+        const framePerfects = Math.max(0, Number(item.framePerfects) || 0);
+        const attemptValues = victors
+          .map((v) => Number(v.attempts) || 0)
+          .filter((n) => n > 0)
+          .sort((a, b) => a - b);
+        const medianAttempt = attemptValues.length
+          ? attemptValues[Math.floor(attemptValues.length / 2)]
+          : 1000;
+
+        const rank = Number(item.rank) || (idx + 1);
+        const normalizedRank = Math.max(0, Math.min(1, (rankMax - rank) / Math.max(rankMax - 1, 1)));
+        const framePerfectBoost = Math.min(1.5, framePerfects / 120);
+        const avgDifficulty = Math.min(10, 3 + normalizedRank * 7 + framePerfectBoost);
+        const completionRate = Math.max(0.05, Math.min(1, victors.length / 6));
+        const inputDensity = Math.min(3, 1 + framePerfects / 300);
+
+        rows.push({
+          modelId,
+          displayName: item.name || modelId,
+          attrs: {
+            avgDifficulty,
+            framePerfects,
+            lengthSeconds: 60,
+            attemptsMedian: medianAttempt,
+            inputDensity,
+            completionRate
+          }
+        });
+      });
+
+      return rows;
+    }
+
+    function saveModelState(signature) {
+      if (!demonSystem) return;
+      localStorage.setItem(
+        MODEL_STATE_KEY,
+        JSON.stringify({
+          signature,
+          levels: demonSystem.exportLevelStates(),
+          comparisons: demonSystem.exportComparisons()
+        }),
+      );
+    }
+
+    function loadSavedModelState() {
+      const raw = localStorage.getItem(MODEL_STATE_KEY);
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch (err) {
+        return null;
+      }
+    }
+
+    function applySavedComparisons(comparisons, validIds) {
+      if (!Array.isArray(comparisons)) return;
+      comparisons.forEach((comp) => {
+        if (!comp) return;
+        if (!validIds.has(comp.levelA) || !validIds.has(comp.levelB)) return;
+        if (comp.winnerId !== comp.levelA && comp.winnerId !== comp.levelB) return;
+        demonSystem.addComparison(comp.levelA, comp.levelB, comp.winnerId, MODEL_PLAYER_ID);
+        const created = demonSystem.comparisons[demonSystem.comparisons.length - 1];
+        if (created && Number.isFinite(Number(comp.timestamp))) {
+          created.timestamp = Number(comp.timestamp);
+        }
+        if (created && typeof comp.id === "string" && comp.id) {
+          created.id = comp.id;
+        }
+      });
+    }
+
+    function syncDemonSystemFromRawData() {
+      if (typeof window.DemonListSystem !== "function") {
+        renderSystemUnavailable("DemonListSystem script failed to load.");
+        return;
+      }
+
+      const levelRows = createModelLevelRows();
+      const validIds = new Set(levelRows.map((row) => row.modelId));
+      levelMetaByModelId = new Map(levelRows.map((row) => [row.modelId, row.displayName]));
+      const signature = getDatasetSignature();
+      const saved = loadSavedModelState();
+
+      demonSystem = new window.DemonListSystem();
+      demonSystem.addPlayer(MODEL_PLAYER_ID);
+      levelRows.forEach((row) => {
+        demonSystem.addLevel(row.modelId, row.attrs);
+      });
+
+      if (saved && saved.signature === signature) {
+        const safeLevelStates = Array.isArray(saved.levels)
+          ? saved.levels.filter((lvl) => lvl && validIds.has(lvl.id))
+          : [];
+        demonSystem.importLevels(safeLevelStates);
+        applySavedComparisons(saved.comparisons, validIds);
+      }
+
+      demonSystem.fit();
+      saveModelState(signature);
+      refreshSystemViews();
+    }
+
+    function refreshSystemViews() {
+      if (!demonSystem) return;
+      systemRankings = demonSystem
+        .exportRankings()
+        .map((row) => ({ ...row, name: levelMetaByModelId.get(row.id) || row.id }));
+      renderSystemRankings(systemRankings);
+      requestNewSuggestion(false);
+    }
+
+    function renderSystemUnavailable(message) {
+      const status = document.getElementById("system-status");
+      const body = document.getElementById("system-rankings-body");
+      const stats = document.getElementById("system-stats-strip");
+      status.textContent = message;
+      body.innerHTML = '<tr><td colspan="7" class="empty-state">// SYSTEM UNAVAILABLE //</td></tr>';
+      stats.innerHTML = `
+        <div class="stat-box"><span class="val">0</span><span class="lbl">Tracked Levels</span></div>
+        <div class="stat-box"><span class="val">0</span><span class="lbl">Comparisons</span></div>
+        <div class="stat-box"><span class="val">0</span><span class="lbl">Model Players</span></div>
+      `;
+      document.getElementById("suggestion-a").disabled = true;
+      document.getElementById("suggestion-b").disabled = true;
+    }
+
+    function renderSystemRankings(rows) {
+      const body = document.getElementById("system-rankings-body");
+      const stats = document.getElementById("system-stats-strip");
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="7" class="empty-state">// NO RANKINGS AVAILABLE //</td></tr>';
+      } else {
+        body.innerHTML = rows
+          .map((row, idx) => `
+            <tr>
+              <td>${idx + 1}</td>
+              <td>${row.name}</td>
+              <td><span class="system-tier">${row.tier}</span></td>
+              <td>${row.rating.toFixed(1)}</td>
+              <td>${row.uncertainty.toFixed(1)}</td>
+              <td>${row.score.toFixed(1)}</td>
+              <td>${row.controversyScore.toFixed(4)}</td>
+            </tr>
+          `)
+          .join("");
+      }
+
+      const comparisons = demonSystem ? demonSystem.comparisons.length : 0;
+      const players = demonSystem ? demonSystem.players.size : 0;
+      stats.innerHTML = `
+        <div class="stat-box"><span class="val">${rows.length}</span><span class="lbl">Tracked Levels</span></div>
+        <div class="stat-box"><span class="val">${comparisons}</span><span class="lbl">Comparisons</span></div>
+        <div class="stat-box"><span class="val">${players}</span><span class="lbl">Model Players</span></div>
+      `;
+    }
+
+    function renderSuggestion() {
+      const status = document.getElementById("system-status");
+      const btnA = document.getElementById("suggestion-a");
+      const btnB = document.getElementById("suggestion-b");
+
+      if (!demonSystem || !currentSuggestionPair) {
+        status.textContent = "Need at least two levels for suggestions.";
+        btnA.textContent = "No suggestion available";
+        btnB.textContent = "No suggestion available";
+        btnA.disabled = true;
+        btnB.disabled = true;
+        return;
+      }
+
+      const [idA, idB] = currentSuggestionPair;
+      btnA.textContent = levelMetaByModelId.get(idA) || idA;
+      btnB.textContent = levelMetaByModelId.get(idB) || idB;
+      btnA.disabled = false;
+      btnB.disabled = false;
+      status.textContent = "Pick which level is harder to improve the system rankings.";
+    }
+
+    function requestNewSuggestion(save = true) {
+      if (!demonSystem) {
+        renderSuggestion();
+        return;
+      }
+      currentSuggestionPair = demonSystem.suggestComparison();
+      renderSuggestion();
+      if (save) saveModelState(getDatasetSignature());
+    }
+
+    function pickSuggestedWinner(side) {
+      if (!demonSystem || !currentSuggestionPair) return;
+      const [idA, idB] = currentSuggestionPair;
+      const winner = side === "a" ? idA : idB;
+      demonSystem.addComparison(idA, idB, winner, MODEL_PLAYER_ID);
+      demonSystem.fit();
+      saveModelState(getDatasetSignature());
+      refreshSystemViews();
+    }
+
+    function resetModelState() {
+      if (!confirm("Reset all DemonListSystem comparisons and recalculated state?")) return;
+      localStorage.removeItem(MODEL_STATE_KEY);
+      syncDemonSystemFromRawData();
     }
 
     function renderLevels(data) {
@@ -1682,6 +2086,7 @@
           <td class="name-td">${item.name || "—"}</td>
           <td class="creator-td">${item.creators || "—"}</td>
           <td class="id-td">${item.id || "—"}</td>
+          <td class="stat-cell">${Math.max(0, Number(item.framePerfects) || 0)}</td>
           <td class="victors-td">${(item.victors || []).length} victor${(item.victors || []).length !== 1 ? "s" : ""}</td>
           <td class="actions-td">
             <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>
@@ -1756,6 +2161,7 @@
           name: "",
           creators: "",
           id: "",
+          framePerfects: 0,
           twoPlayer: "",
           showcaseVideo: "",
           image: "",
@@ -1768,6 +2174,8 @@
       document.getElementById("f-id").value = item.id || "";
       document.getElementById("f-rank").value =
         item.rank || rawData.length + 1;
+      document.getElementById("f-frameperfects").value =
+        Math.max(0, Number(item.framePerfects) || 0);
       document.getElementById("f-twoplayer").value = item.twoPlayer || "";
       document.getElementById("f-showcase").value = item.showcaseVideo || "";
       document.getElementById("f-image").value = item.image || "";
@@ -1863,6 +2271,10 @@
         name,
         creators: document.getElementById("f-creators").value.trim(),
         id: document.getElementById("f-id").value.trim(),
+        framePerfects: Math.max(
+          0,
+          parseInt(document.getElementById("f-frameperfects").value) || 0,
+        ),
         twoPlayer: document.getElementById("f-twoplayer").value,
         showcaseVideo: document.getElementById("f-showcase").value.trim(),
         image: document.getElementById("f-image").value.trim(),
