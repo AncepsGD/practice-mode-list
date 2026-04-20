@@ -509,6 +509,7 @@
     "name": "Silent Circles XII",
     "creators": "Nox Eternis",
     "id": "80910910",
+    "framePerfects": 0,
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://www.youtube.com/watch?v=akjomKG2q0E",
     "image": "",
@@ -519,6 +520,13 @@
         "time": "37m 45s",
         "attempts": 3177,
         "video": "https://www.youtube.com/watch?v=40agUJm_-Tg"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-19",
+        "time": "1h 5m 44s",
+        "attempts": 9766,
+        "video": "https://youtu.be/HeQbiDqWmEI"
       }
     ]
   },
@@ -527,6 +535,7 @@
     "name": "Checkmate",
     "creators": "izofdoors",
     "id": "66586224",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=ytmTdzUgjG8",
     "image": "",
@@ -537,6 +546,13 @@
         "time": "30m 37s",
         "attempts": 2691,
         "video": "https://youtu.be/jGmurZ154SQ"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-19",
+        "time": "49m 46s",
+        "attempts": 5700,
+        "video": "https://youtu.be/HeQbiDqWmEI"
       }
     ]
   },
@@ -784,6 +800,7 @@
     "name": "Sakupen End",
     "creators": "Nick24",
     "id": "100856004",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/js4YQJCNP5c",
     "image": "",
@@ -857,6 +874,13 @@
         "time": "27m 10s",
         "attempts": 6398,
         "video": "https://youtu.be/Q5fbZYu1jJ8"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "40m 39s",
+        "attempts": 4016,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -908,6 +932,7 @@
     "name": "Wistfully",
     "creators": "Fishavolo, RealDynamix",
     "id": "101656380",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/MG39eJWPjlU",
     "image": "",
@@ -925,6 +950,13 @@
         "time": "59m 4s",
         "attempts": 10525,
         "video": "https://youtu.be/3QyrJdJjS4Y"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "27m 48s",
+        "attempts": 4079,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -988,6 +1020,7 @@
     "name": "SaTans Circles",
     "creators": "IIZebII",
     "id": "78868667",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/4AJGABF_YwA",
     "image": "https://levelthumbs.prevter.me/thumbnail/78868667/high",
@@ -1008,7 +1041,7 @@
       },
       {
         "name": "Anceps",
-        "date": "20260-4-07",
+        "date": "2026-4-07",
         "time": "24m 29s",
         "attempts": 6966,
         "video": "https://youtu.be/rc26GGk2RRc"
@@ -1019,6 +1052,13 @@
         "time": "24m 44s",
         "attempts": 8517,
         "video": "https://youtube.com/live/mrT-WkLhous"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "22m 56s",
+        "attempts": 3365,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1160,6 +1200,7 @@
     "name": "Azure Flare (2025)",
     "creators": "Aeden",
     "id": "126344104",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/mAJG_i9Vziw",
     "image": "https://levelthumbs.prevter.me/thumbnail/126344104/high",
@@ -1198,6 +1239,13 @@
         "time": "30m 1s",
         "attempts": 2679,
         "video": "https://youtu.be/m6RPQ0B11yo"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "17m 18s",
+        "attempts": 2313,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1270,6 +1318,7 @@
     "name": "Silent Hyper Paracosm",
     "creators": "Morta1l",
     "id": "124746832",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=aCS1TD5-4Pk",
     "image": "",
@@ -1280,6 +1329,13 @@
         "time": "18m 42s",
         "attempts": 1327,
         "video": "https://youtu.be/hlWOrs3Yx-s"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "15m 25s",
+        "attempts": 1620,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1288,6 +1344,7 @@
     "name": "The Burn",
     "creators": "TheGreatBird",
     "id": "46257656",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/9aaWDJFhEAk",
     "image": "",
@@ -1305,6 +1362,13 @@
         "time": "46m 57s",
         "attempts": 10381,
         "video": "https://www.youtube.com/live/pWjUo4BEL60"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "17m 59s",
+        "attempts": 1317,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1313,6 +1377,7 @@
     "name": "ANTIUTOPIA",
     "creators": "Devilism",
     "id": "78662821",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=TzKdMJobK58",
     "image": "",
@@ -1330,6 +1395,13 @@
         "time": "38m 53s",
         "attempts": 15810,
         "video": "https://www.youtube.com/live/pWjUo4BEL60"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "12m 53s",
+        "attempts": 914,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1356,6 +1428,7 @@
     "name": "water world",
     "creators": "cheapyyyyy",
     "id": "113279154",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=NoiwMZrQsz0",
     "image": "",
@@ -1366,6 +1439,13 @@
         "time": "27m 32s",
         "attempts": 1727,
         "video": "https://www.youtube.com/watch?v=ycujX1qO64I"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "26m 26s",
+        "attempts": 1631,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1399,6 +1479,7 @@
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=GUxcWS79BJA",
     "image": "",
@@ -1430,6 +1511,13 @@
         "time": "23m 53s",
         "attempts": 14401,
         "video": "https://www.youtube.com/live/5nVsqaHHzao"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "14m 11s",
+        "attempts": 2064,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1438,6 +1526,7 @@
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=z4ywBsYiZF0",
     "image": "",
@@ -1455,6 +1544,13 @@
         "time": "37m 33s",
         "attempts": 36103,
         "video": "https://www.youtube.com/watch?v=uxwEyL8hOVQ&t=10051s"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "24m 10s",
+        "attempts": 1622,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   },
@@ -1481,6 +1577,7 @@
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=sOr0J2p-zkw",
     "image": "",
@@ -1505,6 +1602,13 @@
         "time": "13m 51s",
         "attempts": 7934,
         "video": "https://www.youtube.com/live/5nVsqaHHzao"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "16m 14s",
+        "attempts": 2016,
+        "video": ""
       }
     ]
   },
@@ -1552,6 +1656,7 @@
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=H0WIku2Yjg8",
     "image": "",
@@ -1625,6 +1730,13 @@
         "time": "45m 19s",
         "attempts": 4413,
         "video": "https://youtu.be/m6RPQ0B11yo"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "26m 49s",
+        "attempts": 2159,
+        "video": "https://youtu.be/qg3byk_5VBU"
       }
     ]
   }
