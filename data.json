@@ -939,6 +939,25 @@
   },
   {
     "rank": 36,
+    "name": "PSYCHO",
+    "creators": "SureFir3",
+    "id": "108590404",
+    "framePerfects": 0,
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/49PZUs5gpXY",
+    "image": "https://levelthumbs.prevter.me/thumbnail/108590404/high",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-04-12",
+        "time": "16m 4s",
+        "attempts": 1400,
+        "video": "https://youtu.be/SSnC6ZXMm0A"
+      }
+    ]
+  },
+  {
+    "rank": 37,
     "name": "SaTans Circles",
     "creators": "IIZebII",
     "id": "78868667",
@@ -977,7 +996,7 @@
     ]
   },
   {
-    "rank": 37,
+    "rank": 38,
     "name": "Death Corridor (Oldest)",
     "creators": "KaotikJumper",
     "id": "95122145",
@@ -995,7 +1014,7 @@
     ]
   },
   {
-    "rank": 38,
+    "rank": 39,
     "name": "Six Paths of Pain (geometricks12)",
     "creators": "geometricks12",
     "id": "135434788",
@@ -1013,7 +1032,7 @@
     ]
   },
   {
-    "rank": 39,
+    "rank": 40,
     "name": "SWI mega hard",
     "creators": "Cyclic & more",
     "id": "129859038",
@@ -1031,7 +1050,7 @@
     ]
   },
   {
-    "rank": 40,
+    "rank": 41,
     "name": "BITSadmin",
     "creators": "Alephultra",
     "id": "123627676",
@@ -1049,7 +1068,7 @@
     ]
   },
   {
-    "rank": 41,
+    "rank": 42,
     "name": "Gloomiest Cavern",
     "creators": "vastaus",
     "id": "124108794",
@@ -1067,7 +1086,7 @@
     ]
   },
   {
-    "rank": 42,
+    "rank": 43,
     "name": "White Abyss",
     "creators": "lights2419, noyogd",
     "id": "126535682",
@@ -1085,7 +1104,7 @@
     ]
   },
   {
-    "rank": 43,
+    "rank": 44,
     "name": "Acheron 50",
     "creators": "RMGD, Riot, & more",
     "id": "135243833",
@@ -1110,7 +1129,7 @@
     ]
   },
   {
-    "rank": 44,
+    "rank": 45,
     "name": "Azure Flare (2025)",
     "creators": "Aeden",
     "id": "126344104",
@@ -1156,7 +1175,7 @@
     ]
   },
   {
-    "rank": 45,
+    "rank": 46,
     "name": "Sunix never clear",
     "creators": "2A0L0I3",
     "id": "67464742",
@@ -1202,7 +1221,7 @@
     ]
   },
   {
-    "rank": 46,
+    "rank": 47,
     "name": "Comet Observatory",
     "creators": "AnonIIExt",
     "id": "77110935",
@@ -1220,7 +1239,7 @@
     ]
   },
   {
-    "rank": 47,
+    "rank": 48,
     "name": "Silent Hyper Paracosm",
     "creators": "Morta1l",
     "id": "124746832",
@@ -1238,7 +1257,7 @@
     ]
   },
   {
-    "rank": 48,
+    "rank": 49,
     "name": "The Burn",
     "creators": "TheGreatBird",
     "id": "46257656",
@@ -1263,7 +1282,7 @@
     ]
   },
   {
-    "rank": 49,
+    "rank": 50,
     "name": "ANTIUTOPIA",
     "creators": "Devilism",
     "id": "78662821",
@@ -1288,7 +1307,7 @@
     ]
   },
   {
-    "rank": 50,
+    "rank": 51,
     "name": "Thanks Level (April Fools)",
     "creators": "fancydoesgd, RMGD",
     "id": "137217125",
@@ -1306,7 +1325,7 @@
     ]
   },
   {
-    "rank": 51,
+    "rank": 52,
     "name": "water world",
     "creators": "cheapyyyyy",
     "id": "113279154",
@@ -1324,7 +1343,7 @@
     ]
   },
   {
-    "rank": 52,
+    "rank": 53,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -1349,7 +1368,7 @@
     ]
   },
   {
-    "rank": 53,
+    "rank": 54,
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
@@ -1388,7 +1407,7 @@
     ]
   },
   {
-    "rank": 54,
+    "rank": 55,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -1413,7 +1432,7 @@
     ]
   },
   {
-    "rank": 55,
+    "rank": 56,
     "name": "Bloodbath but good",
     "creators": "Riot, 1st3y1 & more",
     "id": "129081504",
@@ -1431,7 +1450,7 @@
     ]
   },
   {
-    "rank": 56,
+    "rank": 57,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -1463,7 +1482,7 @@
     ]
   },
   {
-    "rank": 57,
+    "rank": 58,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -1502,7 +1521,7 @@
     ]
   },
   {
-    "rank": 58,
+    "rank": 59,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
