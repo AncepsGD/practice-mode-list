@@ -165,6 +165,7 @@
     "name": "Silent Skrillex",
     "creators": "DiosselMusic",
     "id": "73836744",
+    "framePerfects": 0,
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://youtu.be/vGce-8ecomg",
     "image": "",
@@ -196,6 +197,13 @@
         "time": "35m 41s",
         "attempts": 13917,
         "video": "https://youtu.be/lMDF-qVlszI"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-19",
+        "time": "29m 23s",
+        "attempts": 6918,
+        "video": "https://youtu.be/V801rFAfu9c"
       }
     ]
   },
