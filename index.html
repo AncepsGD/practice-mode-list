@@ -1161,6 +1161,17 @@
       margin-bottom: 10px;
     }
 
+    .system-help {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 10px;
+      background: rgba(139, 92, 246, 0.08);
+      color: var(--text);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
     .system-suggestion {
       display: grid;
       grid-template-columns: 1fr 60px 1fr;
@@ -1271,9 +1282,6 @@
         <button class="nav-btn" onclick="showPage('leaderboard', this)">
           <span class="nav-icon">🏆</span>Player Leaderboard
         </button>
-        <button class="nav-btn" onclick="showPage('system', this)">
-          <span class="nav-icon">⚙️</span>System Rankings
-        </button>
         <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank"><span
             class="nav-icon">💬</span>Discord</a>
       </nav>
@@ -1309,46 +1317,6 @@
       </table>
     </div>
 
-    <div id="page-system" class="page">
-      <div class="section-header">
-        <h2>DemonListSystem</h2>
-        <div class="line"></div>
-      </div>
-      <div class="system-grid">
-        <div class="system-card">
-          <h3>Comparison Lab</h3>
-          <div class="system-status" id="system-status">Initializing model...</div>
-          <div class="system-suggestion">
-            <button id="suggestion-a" class="system-level-btn" onclick="pickSuggestedWinner('a')" disabled>Select level A</button>
-            <div class="system-vs">VS</div>
-            <button id="suggestion-b" class="system-level-btn" onclick="pickSuggestedWinner('b')" disabled>Select level B</button>
-          </div>
-          <div class="system-actions">
-            <button class="system-btn" onclick="requestNewSuggestion()">new suggestion</button>
-            <button class="system-btn" onclick="resetModelState()">reset model state</button>
-          </div>
-        </div>
-        <div class="system-card">
-          <h3>Computed Rankings</h3>
-          <div class="stats-strip" id="system-stats-strip"></div>
-          <table class="system-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Level</th>
-                <th>Tier</th>
-                <th>Rating</th>
-                <th>Uncertainty</th>
-                <th>Score</th>
-                <th>Controversy</th>
-              </tr>
-            </thead>
-            <tbody id="system-rankings-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
     <footer class="footer">
       <span class="p">NOT AFFILIATED WITH <span class="g">ROBTOP GAMES</span></span>
     </footer>
@@ -1361,6 +1329,12 @@
         <h2>✏️ Edit List</h2>
         <span class="hint">SHIFT+M TO CLOSE</span>
         <div class="edit-topbar-actions">
+          <button class="ebtn ebtn-purple" onclick="showEditView('system')">
+            System Rankings
+          </button>
+          <button class="ebtn ebtn-ghost" onclick="showEditView('list')">
+            List Editor
+          </button>
           <button class="ebtn ebtn-ghost" onclick="resetToOriginal()">
             Reset to Original
           </button>
@@ -1400,6 +1374,50 @@
             </thead>
             <tbody id="edit-table-body"></tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- SYSTEM VIEW -->
+      <div id="edit-view-system" class="edit-view">
+        <div class="section-header">
+          <h2>DemonListSystem</h2>
+          <div class="line"></div>
+        </div>
+        <div class="system-grid">
+          <div class="system-card">
+            <h3>Comparison Lab</h3>
+            <div class="system-help">
+              Choose the harder level between the two options. Each pick is saved as one comparison and rankings update immediately.
+            </div>
+            <div class="system-status" id="system-status">Initializing model...</div>
+            <div class="system-suggestion">
+              <button id="suggestion-a" class="system-level-btn" onclick="pickSuggestedWinner('a')" disabled>Select level A</button>
+              <div class="system-vs">VS</div>
+              <button id="suggestion-b" class="system-level-btn" onclick="pickSuggestedWinner('b')" disabled>Select level B</button>
+            </div>
+            <div class="system-actions">
+              <button class="system-btn" onclick="requestNewSuggestion()">Suggest New Pair</button>
+              <button class="system-btn" onclick="resetModelState()">Reset Comparisons</button>
+            </div>
+          </div>
+          <div class="system-card">
+            <h3>Computed Rankings</h3>
+            <div class="stats-strip" id="system-stats-strip"></div>
+            <table class="system-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Level</th>
+                  <th>Tier</th>
+                  <th>Rating</th>
+                  <th>Uncertainty</th>
+                  <th>Score</th>
+                  <th>Controversy</th>
+                </tr>
+              </thead>
+              <tbody id="system-rankings-body"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -1492,6 +1510,7 @@
     let systemRankings = [];
     let currentSuggestionPair = null;
     let levelMetaByModelId = new Map();
+    let systemBusy = false;
 
     function parseTimeToSeconds(timeStr) {
       if (!timeStr || timeStr.trim() === "") return Infinity;
@@ -1737,8 +1756,10 @@
     }
 
     function syncDemonSystemFromRawData() {
+      setSystemBusy(true);
       if (typeof window.DemonListSystem !== "function") {
-        renderSystemUnavailable("DemonListSystem script failed to load.");
+        renderSystemUnavailable("System unavailable: ranking engine failed to load.");
+        setSystemBusy(false);
         return;
       }
 
@@ -1765,6 +1786,7 @@
       demonSystem.fit();
       saveModelState(signature);
       refreshSystemViews();
+      setSystemBusy(false);
     }
 
     function refreshSystemViews() {
@@ -1781,7 +1803,7 @@
       const body = document.getElementById("system-rankings-body");
       const stats = document.getElementById("system-stats-strip");
       status.textContent = message;
-      body.innerHTML = '<tr><td colspan="7" class="empty-state">// SYSTEM UNAVAILABLE //</td></tr>';
+      body.innerHTML = '<tr><td colspan="7" class="empty-state">// SYSTEM OFFLINE //</td></tr>';
       stats.innerHTML = `
         <div class="stat-box"><span class="val">0</span><span class="lbl">Tracked Levels</span></div>
         <div class="stat-box"><span class="val">0</span><span class="lbl">Comparisons</span></div>
@@ -1826,10 +1848,37 @@
       const btnA = document.getElementById("suggestion-a");
       const btnB = document.getElementById("suggestion-b");
 
-      if (!demonSystem || !currentSuggestionPair) {
-        status.textContent = "Need at least two levels for suggestions.";
-        btnA.textContent = "No suggestion available";
-        btnB.textContent = "No suggestion available";
+      if (!demonSystem) {
+        status.textContent = "System unavailable: initialize rankings first.";
+        btnA.textContent = "System unavailable";
+        btnB.textContent = "System unavailable";
+        btnA.disabled = true;
+        btnB.disabled = true;
+        return;
+      }
+
+      if (systemBusy) {
+        status.textContent = "Working... updating rankings and suggestions.";
+        btnA.textContent = "Please wait...";
+        btnB.textContent = "Please wait...";
+        btnA.disabled = true;
+        btnB.disabled = true;
+        return;
+      }
+
+      if (demonSystem.levels.size < 2) {
+        status.textContent = "Need at least two levels in the list to generate a comparison.";
+        btnA.textContent = "Not enough levels";
+        btnB.textContent = "Not enough levels";
+        btnA.disabled = true;
+        btnB.disabled = true;
+        return;
+      }
+
+      if (!currentSuggestionPair) {
+        status.textContent = "No high-value pair available right now. Try Suggest New Pair.";
+        btnA.textContent = "No pair available";
+        btnB.textContent = "No pair available";
         btnA.disabled = true;
         btnB.disabled = true;
         return;
@@ -1840,33 +1889,70 @@
       btnB.textContent = levelMetaByModelId.get(idB) || idB;
       btnA.disabled = false;
       btnB.disabled = false;
-      status.textContent = "Pick which level is harder to improve the system rankings.";
+      status.textContent = "Choose the harder level. Your choice is saved and rankings recalculate.";
+    }
+
+    function setSystemBusy(isBusy) {
+      systemBusy = isBusy;
+      const btnA = document.getElementById("suggestion-a");
+      const btnB = document.getElementById("suggestion-b");
+      if (btnA) btnA.disabled = isBusy || !currentSuggestionPair;
+      if (btnB) btnB.disabled = isBusy || !currentSuggestionPair;
+    }
+
+    function setSystemStatus(message) {
+      const status = document.getElementById("system-status");
+      if (status) status.textContent = message;
     }
 
     function requestNewSuggestion(save = true) {
+      if (systemBusy) return;
       if (!demonSystem) {
+        setSystemStatus("System unavailable: ranking engine not ready.");
         renderSuggestion();
         return;
       }
       currentSuggestionPair = demonSystem.suggestComparison();
       renderSuggestion();
+      if (currentSuggestionPair) {
+        const [idA, idB] = currentSuggestionPair;
+        setSystemStatus(`New pair ready: ${levelMetaByModelId.get(idA) || idA} vs ${levelMetaByModelId.get(idB) || idB}. Choose the harder level.`);
+      } else {
+        setSystemStatus("Could not find a useful pair. Add more levels or reset comparisons.");
+      }
       if (save) saveModelState(getDatasetSignature());
     }
 
     function pickSuggestedWinner(side) {
-      if (!demonSystem || !currentSuggestionPair) return;
+      if (systemBusy) return;
+      if (!demonSystem) {
+        setSystemStatus("System unavailable: ranking engine not ready.");
+        return;
+      }
+      if (!currentSuggestionPair) {
+        setSystemStatus("No active pair selected. Click Suggest New Pair first.");
+        return;
+      }
       const [idA, idB] = currentSuggestionPair;
       const winner = side === "a" ? idA : idB;
+      const loser = side === "a" ? idB : idA;
+      const winnerName = levelMetaByModelId.get(winner) || winner;
+      const loserName = levelMetaByModelId.get(loser) || loser;
       demonSystem.addComparison(idA, idB, winner, MODEL_PLAYER_ID);
       demonSystem.fit();
       saveModelState(getDatasetSignature());
       refreshSystemViews();
+      setSystemStatus(`Recorded: ${winnerName} > ${loserName}. Rankings updated and a new pair is ready.`);
     }
 
     function resetModelState() {
-      if (!confirm("Reset all DemonListSystem comparisons and recalculated state?")) return;
+      if (systemBusy) return;
+      if (!confirm("Reset all recorded comparison choices and return rankings to baseline?")) return;
+      setSystemBusy(true);
+      setSystemStatus("Resetting comparison history and rebuilding baseline rankings...");
       localStorage.removeItem(MODEL_STATE_KEY);
       syncDemonSystemFromRawData();
+      setSystemStatus("Reset complete. Baseline rankings restored.");
     }
 
     function renderLevels(data) {
@@ -2074,7 +2160,7 @@
       const tbody = document.getElementById("edit-table-body");
       if (!rawData.length) {
         tbody.innerHTML =
-          '<tr><td colspan="7" class="empty-state" style="padding:24px">No data loaded</td></tr>';
+          '<tr><td colspan="8" class="empty-state" style="padding:24px">No data loaded</td></tr>';
         return;
       }
       tbody.innerHTML = rawData
