@@ -152,6 +152,7 @@
     "name": "Lucidia (Unnerfed)",
     "creators": "2A0L0I3, AuraXalaiv",
     "id": "80523469",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=8mqG9qISurY",
     "image": "",
@@ -176,6 +177,13 @@
         "time": "1h 4m 44s",
         "attempts": 15305,
         "video": "https://youtu.be/Cngo_0tUdmQ"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-04-22",
+        "time": "56m 10s",
+        "attempts": 4626,
+        "video": "https://www.youtube.com/playlist?list=PLkmf-ycfDOKeEFhWiiOUaIuYzcVPi5j1e"
       }
     ]
   },
