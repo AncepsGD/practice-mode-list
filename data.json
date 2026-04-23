@@ -487,6 +487,7 @@
     "name": "Bye Level (1p)",
     "creators": "jongaminggd",
     "id": "128565339",
+    "framePerfects": 0,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/GRVh6XyrdZE",
     "image": "",
@@ -511,6 +512,13 @@
         "time": "6m 28s",
         "attempts": 25389,
         "video": "https://www.youtube.com/watch?v=eaqpt3n105Y"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-23",
+        "time": "29m 54s",
+        "attempts": 6802,
+        "video": "https://www.youtube.com/watch?v=tBc60e_NiOQ"
       }
     ]
   },
@@ -1244,6 +1252,13 @@
         "time": "19m 50s",
         "attempts": 1505,
         "video": "https://youtu.be/ynU_NqVI_lI"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-23",
+        "time": "26m 49s",
+        "attempts": 2502,
+        "video": "https://www.youtube.com/watch?v=tBc60e_NiOQ"
       }
     ]
   },
