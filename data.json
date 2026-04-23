@@ -58,34 +58,42 @@
   {
     "rank": 4,
     "name": "Divine Geometry",
-    "image": "",
-    "id": "13973215",
     "creators": "Cyrillic",
+    "id": "13973215",
+    "framePerfects": 0,
     "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/cP0QWX2o4Lg",
+    "image": "",
     "victors": [
       {
         "name": "kl3hh",
+        "date": "2025-11-16",
         "time": "2h 29m 26s",
         "attempts": 131896,
-        "video": "https://www.youtube.com/watch?v=W9BttMaiQ40",
-        "date": "2025-11-16"
+        "video": "https://www.youtube.com/watch?v=W9BttMaiQ40"
       },
       {
         "name": "Duelo Maestro Guy",
+        "date": "2025-12-07",
         "time": "2h 39m 57s",
         "attempts": 59544,
-        "video": "https://youtube.com/live/eK7v6gKC-dw",
-        "date": "2025-12-07"
+        "video": "https://youtube.com/live/eK7v6gKC-dw"
       },
       {
         "name": "Anceps",
+        "date": "2025-11-06",
         "time": "8h 57m 13s",
         "attempts": 277414,
-        "video": "https://youtu.be/v02Xxxze7Xc",
-        "date": "2025-11-06"
+        "video": "https://youtu.be/v02Xxxze7Xc"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-22",
+        "time": "3h 49m 7s",
+        "attempts": 57750,
+        "video": "https://youtu.be/tBc60e_NiOQ"
       }
-    ],
-    "showcaseVideo": "https://youtu.be/cP0QWX2o4Lg"
+    ]
   },
   {
     "rank": 5,
