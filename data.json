@@ -753,6 +753,7 @@
     "name": "Silent Circles (EVW Nerf)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "127906018",
+    "framePerfects": 0,
     "twoPlayer": "2 Player",
     "showcaseVideo": "",
     "image": "https://levelthumbs.prevter.me/thumbnail/12823778",
@@ -770,6 +771,13 @@
         "time": "2h 32m 15s",
         "attempts": 8944,
         "video": "https://www.youtube.com/watch?v=kQ-r3nwf2uw"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-23",
+        "time": "29m 41s",
+        "attempts": 8047,
+        "video": "https://www.youtube.com/watch?v=tBc60e_NiOQ"
       }
     ]
   },
