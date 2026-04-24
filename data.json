@@ -58,42 +58,34 @@
   {
     "rank": 4,
     "name": "Divine Geometry",
-    "creators": "Cyrillic",
-    "id": "13973215",
-    "framePerfects": 0,
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/cP0QWX2o4Lg",
     "image": "",
+    "id": "13973215",
+    "creators": "Cyrillic",
+    "twoPlayer": "",
     "victors": [
       {
         "name": "kl3hh",
-        "date": "2025-11-16",
         "time": "2h 29m 26s",
         "attempts": 131896,
-        "video": "https://www.youtube.com/watch?v=W9BttMaiQ40"
+        "video": "https://www.youtube.com/watch?v=W9BttMaiQ40",
+        "date": "2025-11-16"
       },
       {
         "name": "Duelo Maestro Guy",
-        "date": "2025-12-07",
         "time": "2h 39m 57s",
         "attempts": 59544,
-        "video": "https://youtube.com/live/eK7v6gKC-dw"
+        "video": "https://youtube.com/live/eK7v6gKC-dw",
+        "date": "2025-12-07"
       },
       {
         "name": "Anceps",
-        "date": "2025-11-06",
         "time": "8h 57m 13s",
         "attempts": 277414,
-        "video": "https://youtu.be/v02Xxxze7Xc"
-      },
-      {
-        "name": "Sashozz",
-        "date": "2026-04-22",
-        "time": "3h 49m 7s",
-        "attempts": 57750,
-        "video": "https://youtu.be/tBc60e_NiOQ"
+        "video": "https://youtu.be/v02Xxxze7Xc",
+        "date": "2025-11-06"
       }
-    ]
+    ],
+    "showcaseVideo": "https://youtu.be/cP0QWX2o4Lg"
   },
   {
     "rank": 5,
@@ -374,25 +366,6 @@
   },
   {
     "rank": 15,
-    "name": "The Descended (Nerfed)",
-    "creators": "Boomblox555",
-    "id": "128794273",
-    "framePerfects": 0,
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/UF8-K70gAts",
-    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/asdas768d.webp",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2025-11-29",
-        "time": "1h 15m 58s",
-        "attempts": 7222,
-        "video": "https://youtu.be/GNhYWlJnxMg"
-      }
-    ]
-  },
-  {
-    "rank": 16,
     "name": "Sapphybu Demise",
     "creators": "Anceps",
     "id": "128866100",
@@ -410,7 +383,7 @@
     ]
   },
   {
-    "rank": 17,
+    "rank": 16,
     "name": "Rampant Circles (1p)",
     "creators": "NXISE",
     "id": "132997477",
@@ -429,7 +402,7 @@
     ]
   },
   {
-    "rank": 18,
+    "rank": 17,
     "name": "Kingdom of Miracalis (2022 15cps Fix)",
     "creators": "gdmiracle",
     "id": "127839106",
@@ -447,7 +420,7 @@
     ]
   },
   {
-    "rank": 19,
+    "rank": 18,
     "name": "Six Paths of Pain (Old)",
     "creators": "GionniBlood",
     "id": "63117908",
@@ -472,7 +445,7 @@
     ]
   },
   {
-    "rank": 20,
+    "rank": 19,
     "name": "Haunted Corridor (Old)",
     "creators": "KaotikJumper & more",
     "id": "124228891",
@@ -491,7 +464,7 @@
     ]
   },
   {
-    "rank": 21,
+    "rank": 20,
     "name": "Bye Level (1p)",
     "creators": "jongaminggd",
     "id": "128565339",
@@ -531,7 +504,7 @@
     ]
   },
   {
-    "rank": 22,
+    "rank": 21,
     "name": "Mxlxstxtixn Chamber",
     "creators": "mewj13",
     "id": "137056361",
@@ -549,7 +522,7 @@
     ]
   },
   {
-    "rank": 23,
+    "rank": 22,
     "name": "Thermal Radiation",
     "creators": "Windogs",
     "id": "74208521",
@@ -567,7 +540,7 @@
     ]
   },
   {
-    "rank": 24,
+    "rank": 23,
     "name": "Silent Nightfall",
     "creators": "RMGD",
     "id": "129974620",
@@ -585,7 +558,7 @@
     ]
   },
   {
-    "rank": 25,
+    "rank": 24,
     "name": "Silent Circles XII",
     "creators": "Nox Eternis",
     "id": "80910910",
@@ -611,7 +584,7 @@
     ]
   },
   {
-    "rank": 26,
+    "rank": 25,
     "name": "Checkmate",
     "creators": "izofdoors",
     "id": "66586224",
@@ -637,7 +610,7 @@
     ]
   },
   {
-    "rank": 27,
+    "rank": 26,
     "name": "Challenge Circles 2p",
     "creators": "RMGD",
     "id": "128469175",
@@ -669,7 +642,7 @@
     ]
   },
   {
-    "rank": 28,
+    "rank": 27,
     "name": "Silent Circles (Dual Skip)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "12169905",
@@ -757,7 +730,7 @@
     ]
   },
   {
-    "rank": 29,
+    "rank": 28,
     "name": "Silent Circles (EVW Nerf)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "127906018",
@@ -786,6 +759,25 @@
         "time": "29m 41s",
         "attempts": 8047,
         "video": "https://www.youtube.com/watch?v=tBc60e_NiOQ"
+      }
+    ]
+  },
+  {
+    "rank": 29,
+    "name": "The Descended (Nerfed)",
+    "creators": "Boomblox555",
+    "id": "128794273",
+    "framePerfects": 0,
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/UF8-K70gAts",
+    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/asdas768d.webp",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2025-11-29",
+        "time": "1h 15m 58s",
+        "attempts": 7222,
+        "video": "https://youtu.be/GNhYWlJnxMg"
       }
     ]
   },
