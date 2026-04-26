@@ -1754,24 +1754,6 @@
   },
   {
     "rank": 64,
-    "name": "Bloodbath but good",
-    "creators": "Riot, 1st3y1 & more",
-    "id": "129081504",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "1st3y1",
-        "date": "2025-12-06",
-        "time": "13m 36s",
-        "attempts": 1475,
-        "video": "https://youtu.be/0jASZYW7qok"
-      }
-    ]
-  },
-  {
-    "rank": 65,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -1811,7 +1793,7 @@
     ]
   },
   {
-    "rank": 66,
+    "rank": 65,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -1850,7 +1832,7 @@
     ]
   },
   {
-    "rank": 67,
+    "rank": 66,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
