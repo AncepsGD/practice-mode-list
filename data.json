@@ -168,6 +168,63 @@
   },
   {
     "rank": 8,
+    "name": "kataTARTARUS",
+    "creators": "ultraharos",
+    "id": "79864749",
+    "framePerfects": 0,
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/UWl8haXonPg",
+    "image": "https://levelthumbs.prevter.me/thumbnail/39685177/high",
+    "victors": [
+      {
+        "name": "mewj13",
+        "date": "2026-04-20",
+        "time": "1h 36m",
+        "attempts": 13566,
+        "video": "https://youtu.be/-axqaApls2Y"
+      }
+    ]
+  },
+  {
+    "rank": 9,
+    "name": "Singularity (Nerfed)",
+    "creators": "070",
+    "id": "128248909",
+    "framePerfects": 0,
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
+    "image": "https://levelthumbs.prevter.me/thumbnail/67432669",
+    "victors": [
+      {
+        "name": "kl3hh",
+        "date": "2025-11-17",
+        "time": "39m 28s",
+        "attempts": 12081,
+        "video": "https://www.youtube.com/watch?v=Rf-cc6P3L3o"
+      }
+    ]
+  },
+  {
+    "rank": 10,
+    "name": "Fredrick Survive",
+    "creators": "ZoliReal",
+    "id": "133258360",
+    "framePerfects": 0,
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/sda7y7sd.webp",
+    "victors": [
+      {
+        "name": "mewj13",
+        "date": "2026-04-07",
+        "time": "39m 27s",
+        "attempts": 20473,
+        "video": "https://youtu.be/9H7EkVSYV10"
+      }
+    ]
+  },
+  {
+    "rank": 11,
     "name": "Cyber Raptor (Unnerfed)",
     "creators": "Robotition & more",
     "id": "86038554",
@@ -189,63 +246,6 @@
         "time": "46m 45s",
         "attempts": 2658,
         "video": "https://youtu.be/nORp22JJ6Yk"
-      }
-    ]
-  },
-  {
-    "rank": 9,
-    "name": "kataTARTARUS",
-    "creators": "ultraharos",
-    "id": "79864749",
-    "framePerfects": 0,
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/UWl8haXonPg",
-    "image": "https://levelthumbs.prevter.me/thumbnail/39685177/high",
-    "victors": [
-      {
-        "name": "mewj13",
-        "date": "2026-04-20",
-        "time": "1h 36m",
-        "attempts": 13566,
-        "video": "https://youtu.be/-axqaApls2Y"
-      }
-    ]
-  },
-  {
-    "rank": 10,
-    "name": "Singularity (Nerfed)",
-    "creators": "070",
-    "id": "128248909",
-    "framePerfects": 0,
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "",
-    "image": "https://levelthumbs.prevter.me/thumbnail/67432669",
-    "victors": [
-      {
-        "name": "kl3hh",
-        "date": "2025-11-17",
-        "time": "39m 28s",
-        "attempts": 12081,
-        "video": "https://www.youtube.com/watch?v=Rf-cc6P3L3o"
-      }
-    ]
-  },
-  {
-    "rank": 11,
-    "name": "Fredrick Survive",
-    "creators": "ZoliReal",
-    "id": "133258360",
-    "framePerfects": 0,
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/sda7y7sd.webp",
-    "victors": [
-      {
-        "name": "mewj13",
-        "date": "2026-04-07",
-        "time": "39m 27s",
-        "attempts": 20473,
-        "video": "https://youtu.be/9H7EkVSYV10"
       }
     ]
   },
