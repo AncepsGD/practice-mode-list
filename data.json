@@ -659,25 +659,6 @@
   },
   {
     "rank": 26,
-    "name": "wane",
-    "creators": "TurboPacks",
-    "id": "74641212",
-    "framePerfects": 0,
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/PepPw2Mc93Q",
-    "image": "https://levelthumbs.prevter.me/thumbnail/74641212/high",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-04-24",
-        "time": "29m 27s",
-        "attempts": 2467,
-        "video": "https://youtu.be/9fRWFtYMcKk"
-      }
-    ]
-  },
-  {
-    "rank": 27,
     "name": "Silent Circles XII",
     "creators": "Nox Eternis",
     "id": "80910910",
@@ -699,6 +680,25 @@
         "time": "1h 5m 44s",
         "attempts": 9766,
         "video": "https://youtu.be/HeQbiDqWmEI"
+      }
+    ]
+  },
+  {
+    "rank": 27,
+    "name": "wane",
+    "creators": "TurboPacks",
+    "id": "74641212",
+    "framePerfects": 0,
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/PepPw2Mc93Q",
+    "image": "https://levelthumbs.prevter.me/thumbnail/74641212/high",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-04-24",
+        "time": "29m 27s",
+        "attempts": 2467,
+        "video": "https://youtu.be/9fRWFtYMcKk"
       }
     ]
   },
