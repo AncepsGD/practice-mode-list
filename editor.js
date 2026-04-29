@@ -241,10 +241,4 @@ function deleteCurrentLevel() {
   renderEditTable();
 }
 
-document.addEventListener("keydown", (e) => {
-  const isOpen = document.getElementById("edit-modal").classList.contains("open");
-
-  if (e.key === "Escape" && isOpen) {
-    closeEditMenu();
-  }
-});
+loadData().then(processRawData);
