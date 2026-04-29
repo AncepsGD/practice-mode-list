@@ -1,5 +1,6 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
+let editingIndex = -1;
 
 function openEditMenu() {
   const modal = document.getElementById("edit-modal");
@@ -268,6 +269,13 @@ document.addEventListener("keydown", (e) => {
     }
   }
   if (e.key === "Escape" && document.getElementById("edit-modal").classList.contains("open")) {
+    closeEditMenu();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById("edit-modal");
+  if (!modal.contains(e.target)) {
     closeEditMenu();
   }
 });
