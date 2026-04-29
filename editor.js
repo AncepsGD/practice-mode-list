@@ -161,23 +161,23 @@ function deleteVerification(index) {
   renderVerificationTable();
 }
 
-async function loadVerifications() {
-  try {
-    const res = await fetch("./verifications.json");
-    if (!res.ok) throw new Error("HTTP " + res.status);
+async function loadVerificationsFromStorage() {
 
-    rawVerifications = await res.json();
-    console.log("Loaded verifications:", rawVerifications.length);
-  } catch (e) {
-    console.error("Failed loading verifications:", e);
-    rawVerifications = [];
+  const saved = localStorage.getItem("pml_verifications_data");
+  if (saved) {
+    try {
+      rawVerifications = JSON.parse(saved);
+      console.log("Loaded verifications from storage:", rawVerifications.length);
+      return;
+    } catch (e) { }
   }
+  rawVerifications = [];
 }
 
 async function init() {
   await loadData();
   processRawData();
-  await loadVerifications();
+  await loadVerificationsFromStorage();
 }
 
 init();
