@@ -1,12 +1,35 @@
 let dragSrcIndex = null;
+let editingSource = "levels";
+let rawVerifications = [];
+let dataReady = false;
+
+loadData().then(() => {
+  processRawData();
+  dataReady = true;
+});
+
+function setEditingSource(source) {
+  editingSource = source;
+
+  if (source === "verifications") renderVerificationTable();
+  else renderEditTable();
+}
+
+window.setEditingSource = setEditingSource;
 
 function openEditMenu() {
   const modal = document.getElementById("edit-modal");
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
   document.getElementById("reset-notice").classList.remove("show");
+
   showEditView("list");
-  renderEditTable();
+
+  if (!dataReady) {
+    setTimeout(renderEditTable, 50);
+  } else {
+    renderEditTable();
+  }
 }
 
 function closeEditMenu() {
@@ -20,34 +43,144 @@ function showEditView(name) {
 }
 
 function renderEditTable() {
+  if (editingSource === "verifications") {
+    renderVerificationTable();
+    return;
+  }
+
   const tbody = document.getElementById("edit-table-body");
+
   if (!rawData.length) {
     tbody.innerHTML =
       '<tr><td colspan="9" class="empty-state" style="padding:24px">No data loaded</td></tr>';
     return;
   }
+
   tbody.innerHTML = rawData
     .map(
       (item, i) => `
       <tr draggable="true" data-index="${i}" ondragstart="dragStart(event,${i})" ondragover="dragOver(event,${i})" ondrop="dropRow(event,${i})" ondragleave="dragLeave(event)">
-        <td><span class="drag-handle" title="Drag to reorder">⠿</span></td>
+        <td><span class="drag-handle">⠿</span></td>
         <td class="rank-td">${item.rank || "—"}</td>
         <td class="name-td">${item.name || "—"}</td>
         <td class="creator-td">${item.creators || "—"}</td>
         <td class="id-td">${item.id || "—"}</td>
         <td class="stat-cell">${Math.max(0, Number(item.framePerfects) || 0)}</td>
         <td class="stat-cell">${Math.max(1, Number(item.lengthSeconds) || 60)}</td>
-        <td class="victors-td">${(item.victors || []).length} victor${(item.victors || []).length !== 1 ? "s" : ""}</td>
+        <td class="victors-td">${(item.victors || []).length}</td>
         <td class="actions-td">
           <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>
           <button class="ebtn ebtn-red ebtn-sm" onclick="deleteLevel(${i})">Delete</button>
         </td>
       </tr>
-    `,
+    `
     )
     .join("");
 }
 
+function renderVerificationTable() {
+  const tbody = document.getElementById("edit-table-body");
+
+  if (!rawVerifications.length) {
+    tbody.innerHTML =
+      '<tr><td colspan="7" class="empty-state" style="padding:24px">No verifications loaded</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rawVerifications
+    .map(
+      (v, i) => `
+      <tr data-index="${i}">
+        <td></td>
+        <td>${v.levelName || "—"}</td>
+        <td>${v.player || "—"}</td>
+        <td>${v.date || "—"}</td>
+        <td>${v.status || "pending"}</td>
+        <td>${v.verifier || "—"}</td>
+        <td class="actions-td">
+          <button class="ebtn ebtn-ghost ebtn-sm" onclick="openVerificationForm(${i})">Edit</button>
+          <button class="ebtn ebtn-red ebtn-sm" onclick="deleteVerification(${i})">Delete</button>
+        </td>
+      </tr>
+    `
+    )
+    .join("");
+}
+
+function openVerificationForm(index) {
+  editingIndex = index;
+
+  const isNew = index === -1;
+
+  const item = isNew
+    ? {
+      levelName: "",
+      player: "",
+      date: "",
+      status: "pending",
+      verifier: ""
+    }
+    : rawVerifications[index];
+
+  showEditView("form");
+
+  document.getElementById("form-title").textContent = isNew
+    ? "Add Verification"
+    : `Editing: ${item.levelName}`;
+
+  document.getElementById("v-level").value = item.levelName || "";
+  document.getElementById("v-player").value = item.player || "";
+  document.getElementById("v-date").value = item.date || "";
+  document.getElementById("v-status").value = item.status || "pending";
+  document.getElementById("v-verifier").value = item.verifier || "";
+}
+
+function saveVerificationForm() {
+  const item = {
+    levelName: document.getElementById("v-level").value.trim(),
+    player: document.getElementById("v-player").value.trim(),
+    date: document.getElementById("v-date").value.trim(),
+    status: document.getElementById("v-status").value,
+    verifier: document.getElementById("v-verifier").value.trim()
+  };
+
+  if (!item.levelName) return;
+
+  if (editingIndex === -1) rawVerifications.push(item);
+  else rawVerifications[editingIndex] = item;
+
+  saveAndRefresh();
+  showEditView("list");
+  renderVerificationTable();
+}
+
+function deleteVerification(index) {
+  if (!confirm("Delete this verification?")) return;
+  rawVerifications.splice(index, 1);
+  saveAndRefresh();
+  renderVerificationTable();
+}
+
+async function loadVerifications() {
+  try {
+    const res = await fetch("./verifications.json");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+
+    rawVerifications = await res.json();
+    console.log("Loaded verifications:", rawVerifications.length);
+  } catch (e) {
+    console.error("Failed loading verifications:", e);
+    rawVerifications = [];
+  }
+}
+
+async function init() {
+  await loadData();
+  processRawData();
+  await loadVerifications();
+}
+
+init();
 function dragStart(e, index) {
   dragSrcIndex = index;
   e.currentTarget.classList.add("dragging");
@@ -101,17 +234,17 @@ function openLevelForm(index) {
 
   const item = isNew
     ? {
-        rank: rawData.length + 1,
-        name: "",
-        creators: "",
-        id: "",
-        framePerfects: 0,
-        lengthSeconds: 60,
-        twoPlayer: "",
-        showcaseVideo: "",
-        image: "",
-        victors: [],
-      }
+      rank: rawData.length + 1,
+      name: "",
+      creators: "",
+      id: "",
+      framePerfects: 0,
+      lengthSeconds: 60,
+      twoPlayer: "",
+      showcaseVideo: "",
+      image: "",
+      victors: [],
+    }
     : rawData[index];
 
   document.getElementById("f-name").value = item.name || "";
