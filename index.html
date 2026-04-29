@@ -88,8 +88,11 @@
           <button class="ebtn ebtn-purple" onclick="showEditView('system')">
             System Rankings
           </button>
-          <button class="ebtn ebtn-ghost" onclick="showEditView('list')">
-            List Editor
+          <button class="ebtn ebtn-ghost" onclick="showEditView('list'); setEditingSource('levels')">
+            Levels Editor
+          </button>
+          <button class="ebtn ebtn-ghost" onclick="showEditView('list'); setEditingSource('verifications')">
+            Verifications Editor
           </button>
           <button class="ebtn ebtn-ghost" onclick="resetToOriginal()">
             Reset to Original
@@ -258,7 +261,10 @@
   <div class="save-flash" id="save-flash">✓ SAVED</div>
 
   <script src="DemonListSystem.browser.js"></script>
-  <script src="script.js"></script>
+  <script src="data.js"></script>
+  <script src="ui.js"></script>
+  <script src="editor.js"></script>
+  <script src="model.js"></script>
 </body>
 
 </html>
