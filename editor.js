@@ -240,26 +240,3 @@ function deleteCurrentLevel() {
   showEditView("list");
   renderEditTable();
 }
-
-document.addEventListener("keydown", (e) => {
-  const isOpen = modal.classList.contains("open");
-
-  const isShiftM =
-    e.shiftKey &&
-    e.key.toLowerCase() === "m" &&
-    !e.ctrlKey &&
-    !e.altKey &&
-    !e.metaKey;
-
-  if (isShiftM) {
-    e.preventDefault();
-    isOpen ? closeEditMenu() : openEditMenu();
-    return;
-  }
-
-  if (e.key === "Escape" && isOpen) {
-    closeEditMenu();
-  }
-});
-
-loadData().then(processRawData);
