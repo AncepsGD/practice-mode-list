@@ -342,7 +342,15 @@ function deleteCurrentLevel() {
 document.addEventListener("keydown", (e) => {
   const isOpen = modal.classList.contains("open");
 
-  if (e.shiftKey && e.key === "M") {
+  const isShiftM =
+    e.shiftKey &&
+    e.key.toLowerCase() === "m" &&
+    !e.ctrlKey &&
+    !e.altKey &&
+    !e.metaKey;
+
+  if (isShiftM) {
+    e.preventDefault();
     isOpen ? closeEditMenu() : openEditMenu();
     return;
   }
