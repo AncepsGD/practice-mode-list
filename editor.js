@@ -1,6 +1,5 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
-let editingIndex = -1;
 
 function openEditMenu() {
   const modal = document.getElementById("edit-modal");
@@ -60,6 +59,8 @@ function renderEditTable() {
     .join("");
 }
 
+const tableBody = document.getElementById("edit-table-body");
+
 function dragStart(e, index) {
   dragSrcIndex = index;
   e.currentTarget.classList.add("dragging");
@@ -68,9 +69,14 @@ function dragStart(e, index) {
 
 function dragOver(e, index) {
   e.preventDefault();
-  e.dataTransfer.dropEffect = "move";
-  document.querySelectorAll("#edit-table-body tr").forEach((r) => r.classList.remove("drag-over"));
+
+  const rows = tableBody.querySelectorAll("tr");
+  for (let i = 0; i < rows.length; i++) {
+    rows[i].classList.remove("drag-over");
+  }
+
   e.currentTarget.classList.add("drag-over");
+  e.dataTransfer.dropEffect = "move";
 }
 
 function dragLeave(e) {
@@ -79,18 +85,26 @@ function dragLeave(e) {
 
 function dropRow(e, targetIndex) {
   e.preventDefault();
+
   if (dragSrcIndex === null || dragSrcIndex === targetIndex) return;
-  const currentData = getCurrentEditData();
-  const moved = currentData.splice(dragSrcIndex, 1)[0];
-  currentData.splice(targetIndex, 0, moved);
-  currentData.forEach((item, i) => {
-    item.rank = i + 1;
-  });
-  document.querySelectorAll("#edit-table-body tr").forEach((r) => {
-    r.classList.remove("dragging");
-    r.classList.remove("drag-over");
-  });
+
+  const data = getCurrentEditData();
+
+  const moved = data.splice(dragSrcIndex, 1)[0];
+  data.splice(targetIndex, 0, moved);
+
+  for (let i = 0; i < data.length; i++) {
+    data[i].rank = i + 1;
+  }
+
+  const rows = tableBody.querySelectorAll("tr");
+
+  for (let i = 0; i < rows.length; i++) {
+    rows[i].classList.remove("dragging", "drag-over");
+  }
+
   dragSrcIndex = null;
+
   saveAndRefresh();
   renderEditTable();
 }
@@ -156,15 +170,18 @@ function openLevelForm(index) {
   showEditView("form");
 }
 
+const list = document.getElementById("victors-list");
+
 function addVictorRow() {
-  const list = document.getElementById("victors-list");
   const num = list.children.length + 1;
+
   const div = document.createElement("div");
   div.className = "victor-entry";
-  div.innerHTML = `
+
+  const html = `
     <div class="victor-entry-header">
       <span class="victor-entry-num">VICTOR #${num}</span>
-      <button class="ebtn ebtn-red ebtn-sm" style="margin-left:auto" onclick="this.closest('.victor-entry').remove(); renumberVictors()">Remove</button>
+      <button class="ebtn ebtn-red ebtn-sm remove-victor" style="margin-left:auto">Remove</button>
     </div>
     <div class="victor-entry-grid">
       <div class="form-group">
@@ -191,91 +208,146 @@ function addVictorRow() {
       </div>
     </div>
   `;
+
+  div.innerHTML = html;
   list.appendChild(div);
 }
 
+list.addEventListener("click", (e) => {
+  const btn = e.target.closest(".remove-victor");
+  if (!btn) return;
+
+  const entry = btn.closest(".victor-entry");
+  if (!entry) return;
+
+  entry.remove();
+  renumberVictors();
+});
+
 function renumberVictors() {
-  document.querySelectorAll(".victor-entry").forEach((el, i) => {
-    const label = el.querySelector(".victor-entry-num");
+  const entries = list.children;
+
+  for (let i = 0; i < entries.length; i++) {
+    const label = entries[i].querySelector(".victor-entry-num");
     if (label) label.textContent = `VICTOR #${i + 1}`;
-  });
+  }
 }
 
 function saveLevelForm() {
-  const name = document.getElementById("f-name").value.trim();
+  const get = (id) => document.getElementById(id);
+
+  const nameInput = get("f-name");
+  const name = nameInput.value.trim();
   if (!name) {
     alert("Level name is required.");
     return;
   }
 
-  const victors = Array.from(document.querySelectorAll(".victor-entry")).map((el) => ({
-    name: el.querySelector('[data-field="name"]').value.trim(),
-    date: el.querySelector('[data-field="date"]').value.trim(),
-    time: el.querySelector('[data-field="time"]').value.trim(),
-    attempts: parseInt(el.querySelector('[data-field="attempts"]').value) || 0,
-    video: el.querySelector('[data-field="video"]').value.trim(),
-  }));
+  const rankInput = get("f-rank");
+  const creatorsInput = get("f-creators");
+  const idInput = get("f-id");
+  const fpInput = get("f-frameperfects");
+  const lengthInput = get("f-lengthseconds");
+  const twoPlayerInput = get("f-twoplayer");
+  const showcaseInput = get("f-showcase");
+  const imageInput = get("f-image");
 
-  const item = {
-    rank: parseInt(document.getElementById("f-rank").value) || getCurrentEditData().length + 1,
-    name,
-    creators: document.getElementById("f-creators").value.trim(),
-    id: document.getElementById("f-id").value.trim(),
-    framePerfects: Math.max(0, parseInt(document.getElementById("f-frameperfects").value) || 0),
-    lengthSeconds: Math.max(1, parseInt(document.getElementById("f-lengthseconds").value) || 60),
-    twoPlayer: document.getElementById("f-twoplayer").value,
-    showcaseVideo: document.getElementById("f-showcase").value.trim(),
-    image: document.getElementById("f-image").value.trim(),
-    victors,
-  };
+  const victorNodes = document.querySelectorAll(".victor-entry");
+  const victors = new Array(victorNodes.length);
+
+  for (let i = 0; i < victorNodes.length; i++) {
+    const el = victorNodes[i];
+    const fields = el.querySelectorAll("[data-field]");
+
+    let name = "", date = "", time = "", attempts = 0, video = "";
+
+    for (let j = 0; j < fields.length; j++) {
+      const f = fields[j];
+      const val = f.value.trim();
+      switch (f.dataset.field) {
+        case "name": name = val; break;
+        case "date": date = val; break;
+        case "time": time = val; break;
+        case "attempts": attempts = parseInt(val) || 0; break;
+        case "video": video = val; break;
+      }
+    }
+
+    victors[i] = { name, date, time, attempts, video };
+  }
 
   const currentData = getCurrentEditData();
+
+  const item = {
+    rank: parseInt(rankInput.value) || currentData.length + 1,
+    name,
+    creators: creatorsInput.value.trim(),
+    id: idInput.value.trim(),
+    framePerfects: Math.max(0, parseInt(fpInput.value) || 0),
+    lengthSeconds: Math.max(1, parseInt(lengthInput.value) || 60),
+    twoPlayer: twoPlayerInput.value,
+    showcaseVideo: showcaseInput.value.trim(),
+    image: imageInput.value.trim(),
+    victors
+  };
+
   if (editingIndex === -1) {
     currentData.push(item);
   } else {
     currentData[editingIndex] = item;
   }
 
-  currentData.sort((a, b) => (a.rank || 999) - (b.rank || 999));
-  currentData.forEach((d, i) => {
-    d.rank = i + 1;
-  });
+  let needsSort = false;
+  for (let i = 1; i < currentData.length; i++) {
+    if ((currentData[i - 1].rank || 999) > (currentData[i].rank || 999)) {
+      needsSort = true;
+      break;
+    }
+  }
+
+  if (needsSort) {
+    currentData.sort((a, b) => (a.rank || 999) - (b.rank || 999));
+  }
+
+  for (let i = 0; i < currentData.length; i++) {
+    currentData[i].rank = i + 1;
+  }
 
   saveAndRefresh();
   showEditView("list");
   renderEditTable();
 }
 
+const modal = document.getElementById("edit-modal");
+
 function deleteCurrentLevel() {
   if (editingIndex === -1) return;
+
   const currentData = getCurrentEditData();
-  if (!confirm(`Delete "${currentData[editingIndex].name}"?`)) return;
+  const item = currentData[editingIndex];
+
+  if (!confirm(`Delete "${item.name}"?`)) return;
+
   currentData.splice(editingIndex, 1);
-  currentData.forEach((item, i) => {
-    item.rank = i + 1;
-  });
+
+  for (let i = 0; i < currentData.length; i++) {
+    currentData[i].rank = i + 1;
+  }
+
   saveAndRefresh();
   showEditView("list");
   renderEditTable();
 }
 
 document.addEventListener("keydown", (e) => {
-  if (e.shiftKey && e.key === "M") {
-    const modal = document.getElementById("edit-modal");
-    if (modal.classList.contains("open")) {
-      closeEditMenu();
-    } else {
-      openEditMenu();
-    }
-  }
-  if (e.key === "Escape" && document.getElementById("edit-modal").classList.contains("open")) {
-    closeEditMenu();
-  }
-});
+  const isOpen = modal.classList.contains("open");
 
-document.addEventListener('click', (e) => {
-  const modal = document.getElementById("edit-modal");
-  if (!modal.contains(e.target)) {
+  if (e.shiftKey && e.key === "M") {
+    isOpen ? closeEditMenu() : openEditMenu();
+    return;
+  }
+
+  if (e.key === "Escape" && isOpen) {
     closeEditMenu();
   }
 });
