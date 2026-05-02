@@ -1,3 +1,45 @@
+let lastSuggestionPair = null;
+let lastComparisonSnapshot = null;
+const MAX_SKIPPED_PAIRS = 20;
+let skippedPairs = new Set();
+let skippedPairOrder = [];
+
+function pairKey(a, b) {
+  return a < b ? `${a}||${b}` : `${b}||${a}`;
+}
+
+function rememberSkippedPair(key) {
+  if (skippedPairs.has(key)) return;
+  skippedPairs.add(key);
+  skippedPairOrder.push(key);
+  while (skippedPairOrder.length > MAX_SKIPPED_PAIRS) {
+    skippedPairs.delete(skippedPairOrder.shift());
+  }
+}
+
+function clearSkippedPairs() {
+  skippedPairs.clear();
+  skippedPairOrder.length = 0;
+}
+
+function selectSuggestedComparison(excludedKeys = new Set()) {
+  if (!demonSystem || !demonSystem.levels) return null;
+
+  const ids = [...demonSystem.levels.keys()];
+  const candidates = [];
+
+  for (let i = 0; i < ids.length; i++) {
+    for (let j = i + 1; j < ids.length; j++) {
+      const key = pairKey(ids[i], ids[j]);
+      if (excludedKeys.has(key)) continue;
+      candidates.push([ids[i], ids[j]]);
+    }
+  }
+
+  if (candidates.length === 0) return null;
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
 function applySavedComparisons(comparisons, validIds) {
   if (!Array.isArray(comparisons)) return;
   comparisons.forEach((comp) => {
@@ -43,6 +85,9 @@ function syncDemonSystemFromRawData() {
     applySavedComparisons(saved.comparisons, validIds);
   }
 
+  lastSuggestionPair = null;
+  lastComparisonSnapshot = null;
+  clearSkippedPairs();
   demonSystem.fit();
   saveModelState(signature);
   refreshSystemViews();
@@ -65,17 +110,47 @@ function requestNewSuggestion(save = true) {
     renderSuggestion();
     return;
   }
-  currentSuggestionPair = demonSystem.suggestComparison();
-  renderSuggestion();
+
+  const raw = demonSystem.suggestComparison();
+  let suggested = raw ? [...raw] : null;
+  const excludedKeys = new Set(skippedPairs);
+  if (suggested) {
+    const rawKey = pairKey(suggested[0], suggested[1]);
+    if (excludedKeys.has(rawKey)) {
+      const alt = selectSuggestedComparison(excludedKeys);
+      suggested = alt || suggested;
+    }
+  }
+  currentSuggestionPair = suggested;
+
   if (currentSuggestionPair) {
+    const isSamePair =
+      lastSuggestionPair &&
+      ((currentSuggestionPair[0] === lastSuggestionPair[0] &&
+        currentSuggestionPair[1] === lastSuggestionPair[1]) ||
+        (currentSuggestionPair[0] === lastSuggestionPair[1] &&
+          currentSuggestionPair[1] === lastSuggestionPair[0]));
+    if (isSamePair || Math.random() > 0.5) {
+      currentSuggestionPair = [currentSuggestionPair[1], currentSuggestionPair[0]];
+    }
+    lastSuggestionPair = currentSuggestionPair;
     const [idA, idB] = currentSuggestionPair;
+    const compCount = Array.isArray(demonSystem.comparisons) ? demonSystem.comparisons.length : 0;
     setSystemStatus(
-      `New pair ready: ${levelMetaByModelId.get(idA) || idA} vs ${levelMetaByModelId.get(idB) || idB}. Choose the harder level.`,
+      `#${compCount + 1} — ${levelMetaByModelId.get(idA) || idA} vs ${levelMetaByModelId.get(idB) || idB}. Choose the harder level.`,
     );
   } else {
-    setSystemStatus("Could not find a useful pair. Add more levels or reset comparisons.");
+    setSystemStatus("No more useful pairs to compare. Rankings are well-determined.");
   }
+
+  renderSuggestion();
   if (save) saveModelState(getDatasetSignature());
+}
+
+function skipSuggestion() {
+  if (systemBusy || !currentSuggestionPair) return;
+  rememberSkippedPair(pairKey(currentSuggestionPair[0], currentSuggestionPair[1]));
+  requestNewSuggestion(false);
 }
 
 function pickSuggestedWinner(side) {
@@ -93,11 +168,35 @@ function pickSuggestedWinner(side) {
   const loser = side === "a" ? idB : idA;
   const winnerName = levelMetaByModelId.get(winner) || winner;
   const loserName = levelMetaByModelId.get(loser) || loser;
+
+  lastComparisonSnapshot = {
+    pair: [idA, idB],
+    comparisons: demonSystem.comparisons.map((c) => ({ ...c })),
+  };
+  rememberSkippedPair(pairKey(idA, idB));
+
   demonSystem.addComparison(idA, idB, winner, MODEL_PLAYER_ID);
   demonSystem.fit();
   saveModelState(getDatasetSignature());
   refreshSystemViews();
-  setSystemStatus(`Recorded: ${winnerName} > ${loserName}. Rankings updated and a new pair is ready.`);
+  setSystemStatus(`Recorded: ${winnerName} > ${loserName}. Rankings updated.`);
+}
+
+function undoLastComparison() {
+  if (systemBusy) return;
+  if (!lastComparisonSnapshot) {
+    setSystemStatus("Nothing to undo.");
+    return;
+  }
+  setSystemBusy(true);
+  const snapshot = lastComparisonSnapshot;
+  lastComparisonSnapshot = null;
+  demonSystem.comparisons = snapshot.comparisons;
+  demonSystem.fit();
+  saveModelState(getDatasetSignature());
+  refreshSystemViews();
+  setSystemStatus("Last comparison undone. Rankings reverted.");
+  setSystemBusy(false);
 }
 
 function resetModelState() {
