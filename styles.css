@@ -1313,16 +1313,6 @@ nav {
   background: #45a049;
 }
 
-.verification-notice {
-  margin-top: 8px;
-  padding: 6px 10px;
-  background: rgba(255, 193, 7, 0.2);
-  border-left: 3px solid #ffc107;
-  color: #ffb300;
-  font-size: 12px;
-  border-radius: 2px;
-}
-
 @media (max-width: 768px) {
   .verifications-header {
     flex-direction: column;
