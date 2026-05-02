@@ -167,7 +167,7 @@ function openLevelForm(id) {
   document.getElementById("f-name").value = item.name || "";
   document.getElementById("f-creators").value = item.creators || "";
   document.getElementById("f-id").value = item.id || "";
-  document.getElementById("f-rank").value = item.rank || rawData.length + 1;
+  document.getElementById("f-rank").value = item.rank || data.length + 1;
   document.getElementById("f-frameperfects").value = item.framePerfects !== undefined && item.framePerfects !== null ? item.framePerfects : "";
   document.getElementById("f-lengthseconds").value = item.lengthSeconds !== undefined && item.lengthSeconds !== null ? item.lengthSeconds : "";
   document.getElementById("f-twoplayer").value = item.twoPlayer || "";
@@ -301,14 +301,15 @@ function saveLevelForm() {
 
 function deleteCurrentLevel() {
   if (!editingId) return;
-  const index = rawData.findIndex(l => l.id === editingId);
+  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const index = data.findIndex(l => l.id === editingId);
   if (index === -1) {
     alert("Level not found.");
     return;
   }
-  if (!confirm(`Delete "${rawData[index].name}"?`)) return;
-  rawData.splice(index, 1);
-  rawData.forEach((item, i) => {
+  if (!confirm(`Delete "${data[index].name}"?`)) return;
+  data.splice(index, 1);
+  data.forEach((item, i) => {
     item.rank = i + 1;
   });
   saveAndRefresh();
