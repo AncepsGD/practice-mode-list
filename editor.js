@@ -1,7 +1,7 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
-let rawVerifications = [];
 let dataReady = false;
+let editingId = null;
 
 loadData().then(() => {
   processRawData();
@@ -11,8 +11,7 @@ loadData().then(() => {
 function setEditingSource(source) {
   editingSource = source;
 
-  if (source === "verifications") renderVerificationTable();
-  else renderEditTable();
+  renderEditTable();
 }
 
 window.setEditingSource = setEditingSource;
@@ -43,20 +42,18 @@ function showEditView(name) {
 }
 
 function renderEditTable() {
-  if (editingSource === "verifications") {
-    renderVerificationTable();
-    return;
-  }
+  const data = editingSource === "verifications" ? window.verifications : rawData;
 
   const tbody = document.getElementById("edit-table-body");
 
-  if (!rawData.length) {
+  if (!data.length) {
+    const msg = editingSource === "verifications" ? "No verifications loaded" : "No data loaded";
     tbody.innerHTML =
-      '<tr><td colspan="9" class="empty-state" style="padding:24px">No data loaded</td></tr>';
+      `<tr><td colspan="9" class="empty-state" style="padding:24px">${msg}</td></tr>`;
     return;
   }
 
-  tbody.innerHTML = rawData
+  tbody.innerHTML = data
     .map(
       (item, i) => `
       <tr draggable="true" data-index="${i}" ondragstart="dragStart(event,${i})" ondragover="dragOver(event,${i})" ondrop="dropRow(event,${i})" ondragleave="dragLeave(event)">
@@ -65,119 +62,21 @@ function renderEditTable() {
         <td class="name-td">${item.name || "—"}</td>
         <td class="creator-td">${item.creators || "—"}</td>
         <td class="id-td">${item.id || "—"}</td>
-        <td class="stat-cell">${Math.max(0, Number(item.framePerfects) || 0)}</td>
-        <td class="stat-cell">${Math.max(1, Number(item.lengthSeconds) || 60)}</td>
+        <td class="stat-cell">${Math.max(0, Number(item.framePerfects) || "")}</td>
+        <td class="stat-cell">${Math.max(1, Number(item.lengthSeconds) || "")}</td>
         <td class="victors-td">${(item.victors || []).length}</td>
         <td class="actions-td">
-          <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>
-          <button class="ebtn ebtn-red ebtn-sm" onclick="deleteLevel(${i})">Delete</button>
+          <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm('${item.id}')">Edit</button>
+          <button class="ebtn ebtn-red ebtn-sm" onclick="deleteLevel('${item.id}')">Delete</button>
         </td>
       </tr>
     `
     )
     .join("");
 }
-
-function renderVerificationTable() {
-  const tbody = document.getElementById("edit-table-body");
-
-  if (!rawVerifications.length) {
-    tbody.innerHTML =
-      '<tr><td colspan="7" class="empty-state" style="padding:24px">No verifications loaded</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = rawVerifications
-    .map(
-      (v, i) => `
-      <tr data-index="${i}">
-        <td></td>
-        <td>${v.levelName || "—"}</td>
-        <td>${v.player || "—"}</td>
-        <td>${v.date || "—"}</td>
-        <td>${v.status || "pending"}</td>
-        <td>${v.verifier || "—"}</td>
-        <td class="actions-td">
-          <button class="ebtn ebtn-ghost ebtn-sm" onclick="openVerificationForm(${i})">Edit</button>
-          <button class="ebtn ebtn-red ebtn-sm" onclick="deleteVerification(${i})">Delete</button>
-        </td>
-      </tr>
-    `
-    )
-    .join("");
-}
-
-function openVerificationForm(index) {
-  editingIndex = index;
-
-  const isNew = index === -1;
-
-  const item = isNew
-    ? {
-      levelName: "",
-      player: "",
-      date: "",
-      status: "pending",
-      verifier: ""
-    }
-    : rawVerifications[index];
-
-  showEditView("form");
-
-  document.getElementById("form-title").textContent = isNew
-    ? "Add Verification"
-    : `Editing: ${item.levelName}`;
-
-  document.getElementById("v-level").value = item.levelName || "";
-  document.getElementById("v-player").value = item.player || "";
-  document.getElementById("v-date").value = item.date || "";
-  document.getElementById("v-status").value = item.status || "pending";
-  document.getElementById("v-verifier").value = item.verifier || "";
-}
-
-function saveVerificationForm() {
-  const item = {
-    levelName: document.getElementById("v-level").value.trim(),
-    player: document.getElementById("v-player").value.trim(),
-    date: document.getElementById("v-date").value.trim(),
-    status: document.getElementById("v-status").value,
-    verifier: document.getElementById("v-verifier").value.trim()
-  };
-
-  if (!item.levelName) return;
-
-  if (editingIndex === -1) rawVerifications.push(item);
-  else rawVerifications[editingIndex] = item;
-
-  saveAndRefresh();
-  showEditView("list");
-  renderVerificationTable();
-}
-
-function deleteVerification(index) {
-  if (!confirm("Delete this verification?")) return;
-  rawVerifications.splice(index, 1);
-  saveAndRefresh();
-  renderVerificationTable();
-}
-
-async function loadVerificationsFromStorage() {
-
-  const saved = localStorage.getItem("pml_verifications_data");
-  if (saved) {
-    try {
-      rawVerifications = JSON.parse(saved);
-      console.log("Loaded verifications from storage:", rawVerifications.length);
-      return;
-    } catch (e) { }
-  }
-  rawVerifications = [];
-}
-
 async function init() {
   await loadData();
   processRawData();
-  await loadVerificationsFromStorage();
 }
 
 init();
@@ -201,9 +100,10 @@ function dragLeave(e) {
 function dropRow(e, targetIndex) {
   e.preventDefault();
   if (dragSrcIndex === null || dragSrcIndex === targetIndex) return;
-  const moved = rawData.splice(dragSrcIndex, 1)[0];
-  rawData.splice(targetIndex, 0, moved);
-  rawData.forEach((item, i) => {
+  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const moved = data.splice(dragSrcIndex, 1)[0];
+  data.splice(targetIndex, 0, moved);
+  data.forEach((item, i) => {
     item.rank = i + 1;
   });
   document.querySelectorAll("#edit-table-body tr").forEach((r) => {
@@ -214,45 +114,62 @@ function dropRow(e, targetIndex) {
   renderEditTable();
 }
 
-function deleteLevel(index) {
-  if (!confirm(`Delete "${rawData[index].name}"?`)) return;
-  rawData.splice(index, 1);
-  rawData.forEach((item, i) => {
+function deleteLevel(id) {
+  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const index = data.findIndex(l => l.id === id);
+  if (index === -1) {
+    alert("Level not found");
+    return;
+  }
+  if (!confirm(`Delete "${data[index].name}"?`)) return;
+  data.splice(index, 1);
+  data.forEach((item, i) => {
     item.rank = i + 1;
   });
   saveAndRefresh();
   renderEditTable();
 }
 
-function openLevelForm(index) {
-  editingIndex = index;
-  const isNew = index === -1;
-  document.getElementById("form-title").textContent = isNew
-    ? "Add Level"
-    : `Editing: ${rawData[index].name}`;
+function openLevelForm(id) {
+  editingId = null;
+  const isNew = id === -1;
+
   document.getElementById("form-delete-btn").style.display = isNew ? "none" : "";
 
-  const item = isNew
-    ? {
-      rank: rawData.length + 1,
+  const data = editingSource === "verifications" ? window.verifications : rawData;
+
+  let item;
+  if (isNew) {
+    document.getElementById("form-title").textContent = "Add Level";
+    item = {
+      rank: data.length + 1,
       name: "",
       creators: "",
       id: "",
-      framePerfects: 0,
-      lengthSeconds: 60,
+      framePerfects: "",
+      lengthSeconds: "",
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
       victors: [],
+    };
+  } else {
+    const index = data.findIndex(l => l.id === id);
+    if (index === -1) {
+      alert("Level not found");
+      return;
     }
-    : rawData[index];
+    editingId = id;
+    document.getElementById("form-title").textContent = `Editing: ${data[index].name}`;
+    item = data[index];
+  }
 
   document.getElementById("f-name").value = item.name || "";
   document.getElementById("f-creators").value = item.creators || "";
   document.getElementById("f-id").value = item.id || "";
   document.getElementById("f-rank").value = item.rank || rawData.length + 1;
-  document.getElementById("f-frameperfects").value = Math.max(0, Number(item.framePerfects) || 0);
-  document.getElementById("f-lengthseconds").value = Math.max(1, Number(item.lengthSeconds) || 60);
+  document.getElementById("f-frameperfects").value = Math.max(0, Number(item.framePerfects) || "");
+  document.getElementById("f-lengthseconds").value = Math.max(1, Number(item.lengthSeconds) || "");
   document.getElementById("f-twoplayer").value = item.twoPlayer || "";
   document.getElementById("f-showcase").value = item.showcaseVideo || "";
   document.getElementById("f-image").value = item.image || "";
@@ -325,6 +242,21 @@ function saveLevelForm() {
     return;
   }
 
+  const id = document.getElementById("f-id").value.trim();
+  if (!id) {
+    alert("Level ID is required.");
+    return;
+  }
+
+  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const existingIndex = data.findIndex(l => l.id === id);
+  const currentIndex = editingId ? data.findIndex(l => l.id === editingId) : -1;
+
+  if (existingIndex !== -1 && existingIndex !== currentIndex) {
+    alert("A level with this ID already exists.");
+    return;
+  }
+
   const victors = Array.from(document.querySelectorAll(".victor-entry")).map((el) => ({
     name: el.querySelector('[data-field="name"]').value.trim(),
     date: el.querySelector('[data-field="date"]').value.trim(),
@@ -334,26 +266,26 @@ function saveLevelForm() {
   }));
 
   const item = {
-    rank: parseInt(document.getElementById("f-rank").value) || rawData.length + 1,
+    rank: parseInt(document.getElementById("f-rank").value) || data.length + 1,
     name,
     creators: document.getElementById("f-creators").value.trim(),
-    id: document.getElementById("f-id").value.trim(),
-    framePerfects: Math.max(0, parseInt(document.getElementById("f-frameperfects").value) || 0),
-    lengthSeconds: Math.max(1, parseInt(document.getElementById("f-lengthseconds").value) || 60),
+    id,
+    framePerfects: Math.max(0, parseInt(document.getElementById("f-frameperfects").value) || ""),
+    lengthSeconds: Math.max(1, parseInt(document.getElementById("f-lengthseconds").value) || ""),
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),
     victors,
   };
 
-  if (editingIndex === -1) {
-    rawData.push(item);
+  if (currentIndex === -1) {
+    data.push(item);
   } else {
-    rawData[editingIndex] = item;
+    data[currentIndex] = item;
   }
 
-  rawData.sort((a, b) => (a.rank || 999) - (b.rank || 999));
-  rawData.forEach((d, i) => {
+  data.sort((a, b) => (a.rank || 999) - (b.rank || 999));
+  data.forEach((d, i) => {
     d.rank = i + 1;
   });
 
@@ -363,9 +295,14 @@ function saveLevelForm() {
 }
 
 function deleteCurrentLevel() {
-  if (editingIndex === -1) return;
-  if (!confirm(`Delete "${rawData[editingIndex].name}"?`)) return;
-  rawData.splice(editingIndex, 1);
+  if (!editingId) return;
+  const index = rawData.findIndex(l => l.id === editingId);
+  if (index === -1) {
+    alert("Level not found.");
+    return;
+  }
+  if (!confirm(`Delete "${rawData[index].name}"?`)) return;
+  rawData.splice(index, 1);
   rawData.forEach((item, i) => {
     item.rank = i + 1;
   });
