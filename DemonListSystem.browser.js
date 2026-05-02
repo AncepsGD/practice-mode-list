@@ -359,30 +359,17 @@
     }
 
     suggestComparison() {
-      const pool = [...this.levels.values()]
-        .sort((a, b) => b.sigma - a.sigma)
-        .slice(0, this.suggestionPoolSize);
-      const n = pool.length;
+      const ids = [...this.levels.keys()];
+      const candidates = [];
 
-      let best = -Infinity;
-      let bestPair = null;
-
-      for (let i = 0; i < n; i++) {
-        for (let j = i + 1; j < n; j++) {
-          const A = pool[i];
-          const B = pool[j];
-
-          const { p: P } = this.expectedWithC(A, B);
-          const score = P * (1 - P) * (A.sigma + B.sigma);
-
-          if (score > best) {
-            best = score;
-            bestPair = [A.id, B.id];
-          }
+      for (let i = 0; i < ids.length; i++) {
+        for (let j = i + 1; j < ids.length; j++) {
+          candidates.push([ids[i], ids[j]]);
         }
       }
 
-      return bestPair;
+      if (candidates.length === 0) return null;
+      return candidates[Math.floor(Math.random() * candidates.length)];
     }
 
     getRankings() {
@@ -396,7 +383,8 @@
           id: l.id,
           rating: l.mu,
           uncertainty: l.sigma,
-          score: l.mu - 0.75 * l.sigma,
+
+          score: l.mu - 0.3 * l.sigma,
           controversyScore: l.controversyScore
         }))
         .sort((a, b) => b.score - a.score);
