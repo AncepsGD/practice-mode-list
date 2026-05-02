@@ -3,7 +3,7 @@ const MODEL_STATE_KEY = "pml_demon_system_state";
 const MODEL_PLAYER_ID = "site-user";
 let rawData = [];
 let levels = [];
-let verifications = [];
+window.verifications = [];
 let leaderboard = [];
 let maxScore = 1;
 let editingIndex = -1;
@@ -59,9 +59,14 @@ function loadData() {
   if (saved) {
     try {
       return Promise.resolve(JSON.parse(saved));
-    } catch (e) {}
+    } catch (e) { }
   }
-  return fetch("levels.json").then((r) => r.json());
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+
+  return fetch("levels.json", { signal: controller.signal })
+    .then((r) => r.json())
+    .finally(() => clearTimeout(timeout));
 }
 
 function processRawData(data) {
@@ -123,8 +128,20 @@ function processRawData(data) {
   renderStats();
   renderLevels(levels);
   renderLeaderboard(leaderboard);
-  
-  fetch("verifications.json")
+
+  const savedVerifications = localStorage.getItem("pml_verifications_data");
+  if (savedVerifications) {
+    try {
+      verifications = JSON.parse(savedVerifications);
+      initializeVerifications();
+      syncDemonSystemFromRawData();
+      return;
+    } catch (e) { }
+  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+
+  fetch("verifications.json", { signal: controller.signal })
     .then((r) => r.json())
     .then((data) => {
       verifications = data
@@ -150,13 +167,14 @@ function processRawData(data) {
           };
         });
       initializeVerifications();
+      syncDemonSystemFromRawData();
     })
     .catch(() => {
       console.log("No verifications.json found, using levels with no victors");
       initializeVerifications();
-    });
-  
-  syncDemonSystemFromRawData();
+      syncDemonSystemFromRawData();
+    })
+    .finally(() => clearTimeout(timeout));
 }
 
 function buildLeaderboard(lvls) {
@@ -260,7 +278,7 @@ function saveAndRefresh() {
   } else {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(rawData));
   }
-  
+
   if (editingSource === "verifications") {
     initializeVerifications();
   } else {
