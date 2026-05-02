@@ -62,8 +62,8 @@ function renderEditTable() {
         <td class="name-td">${item.name || "—"}</td>
         <td class="creator-td">${item.creators || "—"}</td>
         <td class="id-td">${item.id || "—"}</td>
-        <td class="stat-cell">${Math.max(0, Number(item.framePerfects) || "")}</td>
-        <td class="stat-cell">${Math.max(1, Number(item.lengthSeconds) || "")}</td>
+        <td class="stat-cell">${item.framePerfects !== undefined && item.framePerfects !== "" ? Number(item.framePerfects) : ""}</td>
+        <td class="stat-cell">${item.lengthSeconds !== undefined && item.lengthSeconds !== "" ? Number(item.lengthSeconds) : ""}</td>
         <td class="victors-td">${(item.victors || []).length}</td>
         <td class="actions-td">
           <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm('${item.id}')">Edit</button>
@@ -168,8 +168,8 @@ function openLevelForm(id) {
   document.getElementById("f-creators").value = item.creators || "";
   document.getElementById("f-id").value = item.id || "";
   document.getElementById("f-rank").value = item.rank || rawData.length + 1;
-  document.getElementById("f-frameperfects").value = Math.max(0, Number(item.framePerfects) || "");
-  document.getElementById("f-lengthseconds").value = Math.max(1, Number(item.lengthSeconds) || "");
+  document.getElementById("f-frameperfects").value = item.framePerfects !== undefined && item.framePerfects !== null ? item.framePerfects : "";
+  document.getElementById("f-lengthseconds").value = item.lengthSeconds !== undefined && item.lengthSeconds !== null ? item.lengthSeconds : "";
   document.getElementById("f-twoplayer").value = item.twoPlayer || "";
   document.getElementById("f-showcase").value = item.showcaseVideo || "";
   document.getElementById("f-image").value = item.image || "";
@@ -265,13 +265,18 @@ function saveLevelForm() {
     video: el.querySelector('[data-field="video"]').value.trim(),
   }));
 
+  const framePerfectsRaw = document.getElementById("f-frameperfects").value.trim();
+  const lengthSecondsRaw = document.getElementById("f-lengthseconds").value.trim();
+  const framePerfects = framePerfectsRaw === "" ? "" : Number.isFinite(Number(framePerfectsRaw)) ? Math.max(0, parseInt(framePerfectsRaw, 10)) : "";
+  const lengthSeconds = lengthSecondsRaw === "" ? "" : Number.isFinite(Number(lengthSecondsRaw)) ? Math.max(1, parseInt(lengthSecondsRaw, 10)) : "";
+
   const item = {
     rank: parseInt(document.getElementById("f-rank").value) || data.length + 1,
     name,
     creators: document.getElementById("f-creators").value.trim(),
     id,
-    framePerfects: Math.max(0, parseInt(document.getElementById("f-frameperfects").value) || ""),
-    lengthSeconds: Math.max(1, parseInt(document.getElementById("f-lengthseconds").value) || ""),
+    framePerfects,
+    lengthSeconds,
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),
