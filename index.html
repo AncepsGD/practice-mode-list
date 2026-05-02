@@ -67,7 +67,8 @@
       </div>
       <div class="verifications-header">
         <h2>Levels Pending Verification</h2>
-        <p class="verifications-subtitle">Random selection of levels with no verified completions yet. Refresh to see a new set.</p>
+        <p class="verifications-subtitle">Random selection of levels with no verified completions yet. Refresh to see a
+          new set.</p>
         <button class="btn-refresh-verifications" onclick="shuffleVerifications()">🔄 Refresh List</button>
       </div>
       <div id="verifications-container"></div>
@@ -83,7 +84,6 @@
     <div class="edit-wrap">
       <div class="edit-topbar">
         <h2>✏️ Edit List</h2>
-        <span class="hint">SHIFT+M TO CLOSE</span>
         <div class="edit-topbar-actions">
           <button class="ebtn ebtn-purple" onclick="showEditView('system')">
             System Rankings
@@ -147,17 +147,24 @@
           <div class="system-card">
             <h3>Comparison Lab</h3>
             <div class="system-help">
-              Choose the harder level between the two options. Each pick is saved as one comparison and rankings update immediately.
+              Choose the harder level between the two options. Each pick is saved as one comparison and rankings update
+              immediately.
             </div>
             <div class="system-status" id="system-status">Initializing model...</div>
+            <div class="system-details" id="system-details">Waiting for the first comparison suggestion.</div>
             <div class="system-suggestion">
-              <button id="suggestion-a" class="system-level-btn" onclick="pickSuggestedWinner('a')" disabled>Select level A</button>
+              <button id="suggestion-a" class="system-level-btn" onclick="pickSuggestedWinner('a')" disabled>Select
+                level A</button>
               <div class="system-vs">VS</div>
-              <button id="suggestion-b" class="system-level-btn" onclick="pickSuggestedWinner('b')" disabled>Select level B</button>
+              <button id="suggestion-b" class="system-level-btn" onclick="pickSuggestedWinner('b')" disabled>Select
+                level B</button>
             </div>
             <div class="system-actions">
-              <button class="system-btn" onclick="requestNewSuggestion()">Suggest New Pair</button>
-              <button class="system-btn" onclick="resetModelState()">Reset Comparisons</button>
+              <button class="system-btn allow-when-no-pair" onclick="requestNewSuggestion()">Suggest New Pair</button>
+              <button class="system-btn system-requires-pair" onclick="skipSuggestion()">Skip Pair</button>
+              <button id="undo-btn" class="system-btn allow-when-no-pair" onclick="undoLastComparison()" disabled>Undo
+                Last Pick</button>
+              <button class="system-btn allow-when-no-pair" onclick="resetModelState()">Reset Comparisons</button>
             </div>
           </div>
           <div class="system-card">
