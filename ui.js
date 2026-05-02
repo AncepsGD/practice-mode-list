@@ -1,8 +1,19 @@
 let thumbnailObserver;
 
 function setSystemBusy(isBusy) {
-  const systemBtns = document.querySelectorAll('.system-btn');
-  systemBtns.forEach(btn => btn.disabled = isBusy || !currentSuggestionPair);
+  const pairButtons = document.querySelectorAll('.system-btn.system-requires-pair');
+  pairButtons.forEach(btn => btn.disabled = isBusy || !currentSuggestionPair);
+
+  const alwaysButtons = document.querySelectorAll('.system-btn.allow-when-no-pair');
+  alwaysButtons.forEach(btn => btn.disabled = isBusy);
+
+  updateUndoButtonState();
+}
+
+function updateUndoButtonState() {
+  const undoBtn = document.getElementById('undo-btn');
+  if (!undoBtn) return;
+  undoBtn.disabled = systemBusy || !lastComparisonSnapshot;
 }
 
 function setSystemStatus(message) {
@@ -163,8 +174,10 @@ function renderSystemUnavailable(message) {
   const status = document.getElementById('system-status');
   const body = document.getElementById('system-rankings-body');
   const stats = document.getElementById('system-stats-strip');
+  const details = document.getElementById('system-details');
 
   status.textContent = message;
+  if (details) details.textContent = '';
   body.innerHTML = '<tr><td colspan="7" class="empty-state">// SYSTEM OFFLINE //</td></tr>';
   stats.innerHTML = `
     <div class="stat-box"><span class="val">0</span><span class="lbl">Tracked Levels</span></div>
@@ -239,12 +252,15 @@ function renderSuggestion() {
     return;
   }
 
+  const details = document.getElementById('system-details');
   if (!currentSuggestionPair) {
     status.textContent = 'No high-value pair available right now. Try Suggest New Pair.';
     [btnA, btnB].forEach(btn => {
       btn.textContent = 'No pair available';
       btn.disabled = true;
     });
+    if (details) details.textContent = 'No suggested comparison available yet.';
+    setSystemBusy(systemBusy);
     return;
   }
 
@@ -252,7 +268,21 @@ function renderSuggestion() {
   btnA.textContent = levelMetaByModelId.get(idA) || idA;
   btnB.textContent = levelMetaByModelId.get(idB) || idB;
   [btnA, btnB].forEach(btn => btn.disabled = false);
+
+  if (details && demonSystem) {
+    const A = demonSystem.levels.get(idA);
+    const B = demonSystem.levels.get(idB);
+    if (A && B && typeof demonSystem.expectedWithC === 'function') {
+      const { p, c } = demonSystem.expectedWithC(A, B);
+      const score = (p * (1 - p) * (A.sigma + B.sigma)).toFixed(1);
+      details.textContent = `Estimated win probability: ${ (p * 100).toFixed(1) }% / ${(100 - p * 100).toFixed(1)}% · uncertainty ${c.toFixed(1)} · pair score ${score}`;
+    } else {
+      details.textContent = 'Suggested pair details pending model data.';
+    }
+  }
+
   status.textContent = 'Choose the harder level. Your choice is saved and rankings recalculate.';
+  setSystemBusy(systemBusy);
 }
 
 function showPage(name, btn) {
@@ -333,7 +363,6 @@ function renderVerifications(data) {
             <span class="meta-pill id">ID: ${lvl.id}</span>
             ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ''}
           </div>
-          <div class="verification-notice">⚠ No verified completions yet</div>
         </div>
         ${lvl.thumbnail ? `<div class="thumb-col"><img class="lazy-thumb" data-src="${lvl.thumbnail}" alt="${lvl.name}" loading="lazy" onerror="tryThumbnailFallback(this, '${lvl.id}')"></div>` : ''}
         <div class="actions-col">
