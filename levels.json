@@ -828,9 +828,11 @@
   },
   {
     "rank": 31,
-    "name": "Silent Circles (EVW Nerf)",
+    "name": "Silent Circles (No Dual)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "127906018",
+    "framePerfects": "",
+    "lengthSeconds": 69,
     "twoPlayer": "2 Player",
     "showcaseVideo": "",
     "image": "https://levelthumbs.prevter.me/thumbnail/12823778",
@@ -855,6 +857,13 @@
         "time": "29m 41s",
         "attempts": 8047,
         "video": "https://www.youtube.com/watch?v=tBc60e_NiOQ"
+      },
+      {
+        "name": "MozaiK",
+        "date": "2016-07-29",
+        "time": "2h 43m 23s",
+        "attempts": 8672,
+        "video": "https://www.youtube.com/watch?v=8zX8e_nWsbw"
       }
     ]
   },
@@ -1668,6 +1677,8 @@
     "name": "Bakemonogatari",
     "creators": "hhuuko",
     "id": "95927517",
+    "framePerfects": "",
+    "lengthSeconds": 62,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/OokFQclUH-I",
     "image": "",
@@ -1678,6 +1689,13 @@
         "time": "14m 26s",
         "attempts": 1725,
         "video": "https://youtu.be/PTFsm4_-0wI"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-04-30",
+        "time": "7m 1s",
+        "attempts": 511,
+        "video": "https://youtu.be/Yp26c-5VP-4"
       }
     ]
   },
