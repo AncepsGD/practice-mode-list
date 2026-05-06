@@ -2017,6 +2017,8 @@
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
+    "framePerfects": "",
+    "lengthSeconds": "",
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=H0WIku2Yjg8",
     "image": "",
@@ -2104,6 +2106,13 @@
         "time": "1h 47m 32s",
         "attempts": 4215,
         "video": "https://www.youtube.com/watch?v=wn2yEOwX5YI"
+      },
+      {
+        "name": "ZoliReal",
+        "date": "2026-05-06",
+        "time": "36m 2s",
+        "attempts": 6406,
+        "video": "https://drive.google.com/file/d/1QQap8-ry14p8ZyrgtbR8GU0bToPVMgYl/view?usp=sharing"
       }
     ]
   }
