@@ -1716,33 +1716,6 @@
   },
   {
     "rank": 62,
-    "name": "Bakemonogatari",
-    "creators": "hhuuko",
-    "id": "95927517",
-    "framePerfects": "",
-    "lengthSeconds": 62,
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/OokFQclUH-I",
-    "image": "",
-    "victors": [
-      {
-        "name": "Sashozz",
-        "date": "2026-04-20",
-        "time": "14m 26s",
-        "attempts": 1725,
-        "video": "https://youtu.be/PTFsm4_-0wI"
-      },
-      {
-        "name": "RMGD",
-        "date": "2026-04-30",
-        "time": "7m 1s",
-        "attempts": 511,
-        "video": "https://youtu.be/Yp26c-5VP-4"
-      }
-    ]
-  },
-  {
-    "rank": 63,
     "name": "Silent Hyper Paracosm",
     "creators": "Morta1l",
     "id": "124746832",
@@ -1767,7 +1740,7 @@
     ]
   },
   {
-    "rank": 64,
+    "rank": 63,
     "name": "The Burn",
     "creators": "TheGreatBird",
     "id": "46257656",
@@ -1799,7 +1772,7 @@
     ]
   },
   {
-    "rank": 65,
+    "rank": 64,
     "name": "ANTIUTOPIA",
     "creators": "Devilism",
     "id": "78662821",
@@ -1831,7 +1804,7 @@
     ]
   },
   {
-    "rank": 66,
+    "rank": 65,
     "name": "Thanks Level (April Fools)",
     "creators": "fancydoesgd, RMGD",
     "id": "137217125",
@@ -1849,7 +1822,7 @@
     ]
   },
   {
-    "rank": 67,
+    "rank": 66,
     "name": "water world",
     "creators": "cheapyyyyy",
     "id": "113279154",
@@ -1874,7 +1847,7 @@
     ]
   },
   {
-    "rank": 68,
+    "rank": 67,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -1899,7 +1872,7 @@
     ]
   },
   {
-    "rank": 69,
+    "rank": 68,
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
@@ -1945,7 +1918,7 @@
     ]
   },
   {
-    "rank": 70,
+    "rank": 69,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -1977,7 +1950,7 @@
     ]
   },
   {
-    "rank": 71,
+    "rank": 70,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -2016,7 +1989,7 @@
     ]
   },
   {
-    "rank": 72,
+    "rank": 71,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -2055,7 +2028,7 @@
     ]
   },
   {
-    "rank": 73,
+    "rank": 72,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
