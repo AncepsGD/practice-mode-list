@@ -83,8 +83,8 @@ function renderLevels(data) {
             <thead><tr><th>#</th><th>Player</th><th>Date</th><th>Time</th><th>Attempts</th><th>Video</th></tr></thead>
             <tbody>
               ${lvl.victors
-                .sort((a, b) => new Date(a.date) - new Date(b.date))
-                .map((v, vi) => `
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .map((v, vi) => `
                   <tr>
                     <td class="stat-cell">${vi + 1}</td>
                     <td class="name-cell">${v.name}</td>
@@ -275,7 +275,7 @@ function renderSuggestion() {
     if (A && B && typeof demonSystem.expectedWithC === 'function') {
       const { p, c } = demonSystem.expectedWithC(A, B);
       const score = (p * (1 - p) * (A.sigma + B.sigma)).toFixed(1);
-      details.textContent = `Estimated win probability: ${ (p * 100).toFixed(1) }% / ${(100 - p * 100).toFixed(1)}% · uncertainty ${c.toFixed(1)} · pair score ${score}`;
+      details.textContent = `Estimated win probability: ${(p * 100).toFixed(1)}% / ${(100 - p * 100).toFixed(1)}% · uncertainty ${c.toFixed(1)} · pair score ${score}`;
     } else {
       details.textContent = 'Suggested pair details pending model data.';
     }
