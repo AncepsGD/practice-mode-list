@@ -1,7 +1,7 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
 let dataReady = false;
-let editingId = null;
+let editingIndex = -1;
 
 loadData().then(() => {
   processRawData();
@@ -62,12 +62,10 @@ function renderEditTable() {
         <td class="name-td">${item.name || "—"}</td>
         <td class="creator-td">${item.creators || "—"}</td>
         <td class="id-td">${item.id || "—"}</td>
-        <td class="stat-cell">${item.framePerfects !== undefined && item.framePerfects !== "" ? Number(item.framePerfects) : ""}</td>
-        <td class="stat-cell">${item.lengthSeconds !== undefined && item.lengthSeconds !== "" ? Number(item.lengthSeconds) : ""}</td>
         <td class="victors-td">${(item.victors || []).length}</td>
         <td class="actions-td">
-          <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm('${item.id}')">Edit</button>
-          <button class="ebtn ebtn-red ebtn-sm" onclick="deleteLevel('${item.id}')">Delete</button>
+          <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>
+          <button class="ebtn ebtn-red ebtn-sm" onclick="deleteLevel(${i})">Delete</button>
         </td>
       </tr>
     `
@@ -114,10 +112,9 @@ function dropRow(e, targetIndex) {
   renderEditTable();
 }
 
-function deleteLevel(id) {
+function deleteLevel(index) {
   const data = editingSource === "verifications" ? window.verifications : rawData;
-  const index = data.findIndex(l => l.id === id);
-  if (index === -1) {
+  if (index < 0 || index >= data.length) {
     alert("Level not found");
     return;
   }
@@ -130,9 +127,9 @@ function deleteLevel(id) {
   renderEditTable();
 }
 
-function openLevelForm(id) {
-  editingId = null;
-  const isNew = id === -1;
+function openLevelForm(index) {
+  editingIndex = -1;
+  const isNew = index === -1;
 
   document.getElementById("form-delete-btn").style.display = isNew ? "none" : "";
 
@@ -146,20 +143,17 @@ function openLevelForm(id) {
       name: "",
       creators: "",
       id: "",
-      framePerfects: "",
-      lengthSeconds: "",
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
       victors: [],
     };
   } else {
-    const index = data.findIndex(l => l.id === id);
-    if (index === -1) {
+    if (index < 0 || index >= data.length) {
       alert("Level not found");
       return;
     }
-    editingId = id;
+    editingIndex = index;
     document.getElementById("form-title").textContent = `Editing: ${data[index].name}`;
     item = data[index];
   }
@@ -168,8 +162,6 @@ function openLevelForm(id) {
   document.getElementById("f-creators").value = item.creators || "";
   document.getElementById("f-id").value = item.id || "";
   document.getElementById("f-rank").value = item.rank || data.length + 1;
-  document.getElementById("f-frameperfects").value = item.framePerfects !== undefined && item.framePerfects !== null ? item.framePerfects : "";
-  document.getElementById("f-lengthseconds").value = item.lengthSeconds !== undefined && item.lengthSeconds !== null ? item.lengthSeconds : "";
   document.getElementById("f-twoplayer").value = item.twoPlayer || "";
   document.getElementById("f-showcase").value = item.showcaseVideo || "";
   document.getElementById("f-image").value = item.image || "";
@@ -250,7 +242,7 @@ function saveLevelForm() {
 
   const data = editingSource === "verifications" ? window.verifications : rawData;
   const existingIndex = data.findIndex(l => l.id === id);
-  const currentIndex = editingId ? data.findIndex(l => l.id === editingId) : -1;
+  const currentIndex = editingIndex;
 
   if (existingIndex !== -1 && existingIndex !== currentIndex) {
     alert("A level with this ID already exists.");
@@ -265,18 +257,11 @@ function saveLevelForm() {
     video: el.querySelector('[data-field="video"]').value.trim(),
   }));
 
-  const framePerfectsRaw = document.getElementById("f-frameperfects").value.trim();
-  const lengthSecondsRaw = document.getElementById("f-lengthseconds").value.trim();
-  const framePerfects = framePerfectsRaw === "" ? "" : Number.isFinite(Number(framePerfectsRaw)) ? Math.max(0, parseInt(framePerfectsRaw, 10)) : "";
-  const lengthSeconds = lengthSecondsRaw === "" ? "" : Number.isFinite(Number(lengthSecondsRaw)) ? Math.max(1, parseInt(lengthSecondsRaw, 10)) : "";
-
   const item = {
     rank: parseInt(document.getElementById("f-rank").value) || data.length + 1,
     name,
     creators: document.getElementById("f-creators").value.trim(),
     id,
-    framePerfects,
-    lengthSeconds,
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),
@@ -300,15 +285,14 @@ function saveLevelForm() {
 }
 
 function deleteCurrentLevel() {
-  if (!editingId) return;
+  if (editingIndex === -1) return;
   const data = editingSource === "verifications" ? window.verifications : rawData;
-  const index = data.findIndex(l => l.id === editingId);
-  if (index === -1) {
+  if (editingIndex < 0 || editingIndex >= data.length) {
     alert("Level not found.");
     return;
   }
-  if (!confirm(`Delete "${data[index].name}"?`)) return;
-  data.splice(index, 1);
+  if (!confirm(`Delete "${data[editingIndex].name}"?`)) return;
+  data.splice(editingIndex, 1);
   data.forEach((item, i) => {
     item.rank = i + 1;
   });
