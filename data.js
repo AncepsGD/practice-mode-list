@@ -7,11 +7,9 @@ window.verifications = [];
 let leaderboard = [];
 let maxScore = 1;
 let editingIndex = -1;
-let demonSystem = null;
-let systemRankings = [];
-let currentSuggestionPair = null;
-let levelMetaByModelId = new Map();
-let systemBusy = false;
+
+function syncDemonSystemFromRawData() {
+}
 
 function parseTimeToSeconds(timeStr) {
   if (!timeStr || timeStr.trim() === "") return Infinity;
