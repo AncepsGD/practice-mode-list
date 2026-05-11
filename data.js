@@ -198,9 +198,7 @@ function getDatasetSignature() {
     .map((item, i) => {
       const idPart = String(item.id || item.name || "").trim();
       const rank = Number(item.rank) || 0;
-      const framePerfects = Math.max(0, Number(item.framePerfects) || 0);
-      const lengthSeconds = Math.max(1, Number(item.lengthSeconds) || 60);
-      return `${idPart}::${i}::${rank}::${framePerfects}::${lengthSeconds}`;
+      return `${idPart}::${i}::${rank}`;
     })
     .join("|");
 }
@@ -216,8 +214,6 @@ function createModelLevelRows() {
     seen.add(modelId);
 
     const victors = Array.isArray(item.victors) ? item.victors : [];
-    const framePerfects = Math.max(0, Number(item.framePerfects) || 0);
-    const lengthSeconds = Math.max(1, Number(item.lengthSeconds) || 60);
     const attemptValues = victors
       .map((v) => Number(v.attempts) || 0)
       .filter((n) => n > 0)
@@ -228,18 +224,15 @@ function createModelLevelRows() {
 
     const rank = Number(item.rank) || (idx + 1);
     const normalizedRank = Math.max(0, Math.min(1, (rankMax - rank) / Math.max(rankMax - 1, 1)));
-    const framePerfectBoost = Math.min(1.5, framePerfects / 120);
-    const avgDifficulty = Math.min(10, 3 + normalizedRank * 7 + framePerfectBoost);
+    const avgDifficulty = Math.min(10, 3 + normalizedRank * 7);
     const completionRate = Math.max(0.05, Math.min(1, victors.length / 6));
-    const inputDensity = Math.min(3, 1 + framePerfects / 300);
+    const inputDensity = 1;
 
     rows.push({
       modelId,
       displayName: item.name || modelId,
       attrs: {
         avgDifficulty,
-        framePerfects,
-        lengthSeconds,
         attemptsMedian: medianAttempt,
         inputDensity,
         completionRate,
