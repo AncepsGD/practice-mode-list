@@ -1,12 +1,6 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
 let dataReady = false;
-let editingIndex = -1;
-
-loadData().then(() => {
-  processRawData();
-  dataReady = true;
-});
 
 function setEditingSource(source) {
   editingSource = source;
@@ -73,8 +67,9 @@ function renderEditTable() {
     .join("");
 }
 async function init() {
-  await loadData();
-  processRawData();
+  const data = await loadData();
+  processRawData(data);
+  dataReady = true;
 }
 
 init();
@@ -300,5 +295,3 @@ function deleteCurrentLevel() {
   showEditView("list");
   renderEditTable();
 }
-
-loadData().then(processRawData);
