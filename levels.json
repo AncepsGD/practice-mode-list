@@ -1621,10 +1621,10 @@
     "victors": [
       {
         "name": "RMGD",
-        "date": "13-03-2026",
+        "date": "2026-03-13",
         "time": "23m 42s",
         "attempts": 1776,
-        "video": ""
+        "video": "https://youtu.be/2Fwcies5UBg"
       },
       {
         "name": "Sashozz",
@@ -1662,6 +1662,31 @@
   },
   {
     "rank": 61,
+    "name": "Satanic Circles (Nerf)",
+    "creators": "huuko, Cairillic",
+    "id": "127953111",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=nojQKotVagk",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2025-11-11",
+        "time": "16m 49s",
+        "attempts": 1483,
+        "video": "https://youtu.be/wXWZ8OM7PPk"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-25",
+        "time": "14m 52s",
+        "attempts": 2220,
+        "video": "https://youtu.be/nORp22JJ6Yk?t=21"
+      }
+    ]
+  },
+  {
+    "rank": 62,
     "name": "Blacksick",
     "creators": "Anceps",
     "id": "108984939",
@@ -1686,7 +1711,7 @@
     ]
   },
   {
-    "rank": 62,
+    "rank": 63,
     "name": "Slaughterhouse 1p5",
     "creators": "Anceps",
     "id": "114130329",
@@ -1711,7 +1736,7 @@
     ]
   },
   {
-    "rank": 63,
+    "rank": 64,
     "name": "Gloomiest Cavern",
     "creators": "vastaus",
     "id": "124108794",
@@ -1729,7 +1754,7 @@
     ]
   },
   {
-    "rank": 64,
+    "rank": 65,
     "name": "White Abyss",
     "creators": "lights2419, noyogd",
     "id": "126535682",
@@ -1754,7 +1779,7 @@
     ]
   },
   {
-    "rank": 65,
+    "rank": 66,
     "name": "Acheron 50",
     "creators": "RMGD, Riot, & more",
     "id": "135243833",
@@ -1786,7 +1811,7 @@
     ]
   },
   {
-    "rank": 66,
+    "rank": 67,
     "name": "Azure Flare (2025)",
     "creators": "Aeden",
     "id": "126344104",
@@ -1839,7 +1864,7 @@
     ]
   },
   {
-    "rank": 67,
+    "rank": 68,
     "name": "Sunix never clear",
     "creators": "2A0L0I3",
     "id": "67464742",
@@ -1892,7 +1917,7 @@
     ]
   },
   {
-    "rank": 68,
+    "rank": 69,
     "name": "i D K",
     "creators": "RezerdPrime, Relayne",
     "id": "72959089",
@@ -1910,7 +1935,7 @@
     ]
   },
   {
-    "rank": 69,
+    "rank": 70,
     "name": "Silent Hyper Paracosm",
     "creators": "Morta1l",
     "id": "124746832",
@@ -1935,7 +1960,7 @@
     ]
   },
   {
-    "rank": 70,
+    "rank": 71,
     "name": "The Burn",
     "creators": "TheGreatBird",
     "id": "46257656",
@@ -1967,7 +1992,7 @@
     ]
   },
   {
-    "rank": 71,
+    "rank": 72,
     "name": "ANTIUTOPIA",
     "creators": "Devilism",
     "id": "78662821",
@@ -1999,7 +2024,7 @@
     ]
   },
   {
-    "rank": 72,
+    "rank": 73,
     "name": "Thanks Level (April Fools)",
     "creators": "fancydoesgd, RMGD",
     "id": "137217125",
@@ -2017,7 +2042,7 @@
     ]
   },
   {
-    "rank": 73,
+    "rank": 74,
     "name": "water world",
     "creators": "cheapyyyyy",
     "id": "113279154",
@@ -2042,7 +2067,7 @@
     ]
   },
   {
-    "rank": 74,
+    "rank": 75,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -2067,7 +2092,7 @@
     ]
   },
   {
-    "rank": 75,
+    "rank": 76,
     "name": "Empyrean",
     "creators": "070",
     "id": "66423298",
@@ -2113,7 +2138,7 @@
     ]
   },
   {
-    "rank": 76,
+    "rank": 77,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -2152,7 +2177,7 @@
     ]
   },
   {
-    "rank": 77,
+    "rank": 78,
     "name": "Heliopolis       (Thnndr)",
     "creators": "MindCap & more",
     "id": "136548016",
@@ -2170,7 +2195,7 @@
     ]
   },
   {
-    "rank": 78,
+    "rank": 79,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -2209,7 +2234,7 @@
     ]
   },
   {
-    "rank": 79,
+    "rank": 80,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -2255,7 +2280,7 @@
     ]
   },
   {
-    "rank": 80,
+    "rank": 81,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
