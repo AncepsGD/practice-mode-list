@@ -2185,6 +2185,24 @@
   },
   {
     "rank": 78,
+    "name": "Allegiance (Unnerfed, Buffed, Extended)",
+    "creators": "nikroplays, EndLevel, K3Cy",
+    "id": "76263919",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/qUYBYI3t0HU",
+    "image": "",
+    "victors": [
+      {
+        "name": "Exiled_Shade",
+        "date": "2026-05-12",
+        "time": "12m 21s",
+        "attempts": 925,
+        "video": "https://youtu.be/Xp6QNHCZV5s"
+      }
+    ]
+  },
+  {
+    "rank": 79,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -2223,7 +2241,7 @@
     ]
   },
   {
-    "rank": 79,
+    "rank": 80,
     "name": "Heliopolis       (Thnndr)",
     "creators": "MindCap & more",
     "id": "136548016",
@@ -2241,7 +2259,7 @@
     ]
   },
   {
-    "rank": 80,
+    "rank": 81,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -2280,7 +2298,7 @@
     ]
   },
   {
-    "rank": 81,
+    "rank": 82,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -2326,7 +2344,7 @@
     ]
   },
   {
-    "rank": 82,
+    "rank": 83,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
@@ -2431,24 +2449,6 @@
         "time": "53m 23s",
         "attempts": 4419,
         "video": "https://youtu.be/OLxIreVtReQ"
-      }
-    ]
-  },
-  {
-    "rank": 83,
-    "name": "Allegiance (Unnerfed, Buffed, Extended)",
-    "creators": "nikroplays, EndLevel, K3Cy",
-    "id": "76263919",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/qUYBYI3t0HU",
-    "image": "",
-    "victors": [
-      {
-        "name": "Exiled_Shade",
-        "date": "2026-05-12",
-        "time": "12m 21s",
-        "attempts": 925,
-        "video": "https://youtu.be/Xp6QNHCZV5s"
       }
     ]
   }
