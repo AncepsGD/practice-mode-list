@@ -1293,6 +1293,13 @@
         "time": "51m 22s",
         "attempts": 14119,
         "video": "https://youtu.be/LzFo3PfWz7c"
+      },
+      {
+        "name": "Violet",
+        "date": "2026-05-16",
+        "time": "1h 20m 34s",
+        "attempts": 5489,
+        "video": "https://youtu.be/HwSeJa5dmg0"
       }
     ]
   },
@@ -2424,6 +2431,24 @@
         "time": "53m 23s",
         "attempts": 4419,
         "video": "https://youtu.be/OLxIreVtReQ"
+      }
+    ]
+  },
+  {
+    "rank": 83,
+    "name": "Allegiance (Unnerfed, Buffed, Extended)",
+    "creators": "nikroplays, EndLevel, K3Cy",
+    "id": "76263919",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/qUYBYI3t0HU",
+    "image": "",
+    "victors": [
+      {
+        "name": "Exiled_Shade",
+        "date": "2026-05-12",
+        "time": "12m 21s",
+        "attempts": 925,
+        "video": "https://youtu.be/Xp6QNHCZV5s"
       }
     ]
   }
