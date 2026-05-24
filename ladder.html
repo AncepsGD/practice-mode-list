@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Practice Mode List Optimized Ladder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100">
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useMemo, useState, useEffect, useCallback } = React;
+
+    const LOCAL_KEY = "pml_edit_data";
+    function parseTimeToSeconds(timeStr) {
+      if (!timeStr || timeStr.trim() === "") return Infinity;
+      const regex =
+        /(\d+)h\s*(\d+)m\s*(\d+)s|(\d+)m\s*(\d+)s|(\d+)s|(\d+)h\s*(\d+)m|(\d+)m|(\d+)h/;
+      const match = timeStr.match(regex);
+      if (!match) return Infinity;
+      let h = 0, m = 0, s = 0;
+      if (match[1]) { h = +match[1]; m = +match[2]; s = +match[3]; }
+      else if (match[4]) { m = +match[4]; s = +match[5]; }
+      else if (match[6]) { s = +match[6]; }
+      else if (match[7]) { h = +match[7]; m = +match[8]; }
+      else if (match[9]) { m = +match[9]; }
+      else if (match[10]) { h = +match[10]; }
+      return h * 3600 + m * 60 + s;
+    }
+    function calculatePoints(rank, maxRank) {
+      if (!rank || !maxRank) return 0;
+      const base = 10, top = 360;
+      if (maxRank === 1) return top;
+      const ratio = Math.pow(top / base, 1 / (maxRank - 1));
+      return base * Math.pow(ratio, maxRank - rank);
+    }
+    function loadLevelsJson() {
+      const saved = localStorage.getItem(LOCAL_KEY);
+      if (saved) {
+        try {
+          return Promise.resolve(JSON.parse(saved));
+        } catch (_) { }
+      }
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      return fetch("levels.json", { signal: controller.signal })
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .finally(() => clearTimeout(timeout));
+    }
+    function processRawData(data) {
+      const rawLevels = data
+        .filter((item) => item.name)
+        .map((item) => {
+          const victors = (item.victors || []).map((v) => ({
+            name: v.name || "",
+            date: v.date || "",
+            wrTime: v.time || "",
+            wrAttempts: v.attempts || 0,
+            victorVideoUrl: v.video || "",
+          }));
+          return {
+            rank: item.rank,
+            name: item.name,
+            id: item.id,
+            points: 0,
+            victors,
+            creator: item.creators,
+          };
+        });
+
+      const maxRank = Math.max(...rawLevels.map((l) => l.rank), 1);
+      rawLevels.forEach((l) => {
+        l.points = calculatePoints(l.rank, maxRank);
+      });
+
+      rawLevels.forEach((level) => {
+        let minTimeSec = Infinity, minAttempts = Infinity;
+        let wrTimeObj = null, wrAttemptsObj = null;
+        level.victors.forEach((v) => {
+          if (v.wrTime) {
+            const sec = parseTimeToSeconds(v.wrTime);
+            if (sec < minTimeSec) {
+              minTimeSec = sec;
+              wrTimeObj = { name: v.name, time: v.wrTime };
+            }
+          }
+          if (v.wrAttempts > 0 && v.wrAttempts < minAttempts) {
+            minAttempts = v.wrAttempts;
+            wrAttemptsObj = { name: v.name, attempts: v.wrAttempts };
+          }
+        });
+        level.wrTime = wrTimeObj;
+        level.wrAttempts = wrAttemptsObj;
+      });
+
+      return rawLevels;
+    }
+    function buildLeaderboard(levels) {
+      const map = {};
+      levels.forEach((lvl) => {
+        lvl.victors.forEach((v, vi) => {
+          if (!v.name) return;
+          if (!map[v.name]) map[v.name] = { name: v.name, points: 0, levels: [] };
+          let mult = 1;
+          if (vi === 0) mult += 0.25;
+          if (lvl.wrTime && v.name === lvl.wrTime.name) mult += 0.25;
+          if (lvl.wrAttempts && v.name === lvl.wrAttempts.name) mult += 0.25;
+          map[v.name].points += lvl.points * mult;
+          map[v.name].levels.push(lvl.name);
+        });
+      });
+      return Object.values(map).sort((a, b) => b.points - a.points);
+    }
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    function median(arr) {
+      if (!arr.length) return null;
+      const s = [...arr].sort((a, b) => a - b);
+      const m = Math.floor(s.length / 2);
+      return s.length % 2 === 0 ? (s[m - 1] + s[m]) / 2 : s[m];
+    }
+
+    function average(arr) {
+      if (!arr.length) return null;
+      return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
+
+    function formatHours(hours) {
+      if (hours < 1) return `${(hours * 60).toFixed(1)}m`;
+      return `${hours.toFixed(2)}h`;
+    }
+
+    function calculatePlayerSkill(levels, playerName) {
+      const times = [];
+      levels.forEach((lvl) => {
+        lvl.victors.forEach((v) => {
+          if (v.name !== playerName) return;
+
+          const t = parseTimeToSeconds(v.wrTime);
+          if (t && t !== Infinity && t > 0) times.push(t);
+        });
+      });
+      if (!times.length) return 1;
+      return clamp(median(times) / 1800, 0.5, 3);
+    }
+    function estimateLevelTime(level, skillMultiplier) {
+      const victorTimes = level.victors
+        .map((v) => parseTimeToSeconds(v.wrTime))
+        .filter((t) => t && t !== Infinity && t > 0);
+
+      let baseTime;
+      if (victorTimes.length > 0) {
+        baseTime = average(victorTimes);
+      } else {
+        baseTime = parseTimeToSeconds(level.wrTime?.time);
+        baseTime = (!baseTime || baseTime === Infinity) ? 7200 : baseTime;
+        baseTime *= 1.8;
+      }
+
+      return baseTime * skillMultiplier;
+    }
+
+    function estimateSuccessProbability(level) {
+      const n = level.victors.length;
+      return clamp(0.95 - 1 / (n + 2), 0.15, 0.95);
+    }
+    function buildRecommendations(levels, player) {
+      if (!player) return [];
+      const beaten = new Set(player.levels);
+      const skill = calculatePlayerSkill(levels, player.name);
+
+      return levels
+        .filter((lvl) => !beaten.has(lvl.name))
+        .map((lvl) => {
+          const basePoints = lvl.points || 0;
+          if (basePoints <= 0) return null;
+
+          const expectedSeconds = estimateLevelTime(lvl, skill);
+          if (!expectedSeconds || expectedSeconds <= 0 || expectedSeconds === Infinity) return null;
+
+          const expectedHours = expectedSeconds / 3600;
+          const successProbability = estimateSuccessProbability(lvl);
+
+          let projectedMult = 1.0;
+          if (lvl.victors.length === 0) projectedMult += 0.25;
+
+          const projectedPoints = basePoints * projectedMult;
+          const expectedValue = (projectedPoints * successProbability) / expectedHours;
+
+          return {
+            level: lvl.name,
+            basePoints,
+            projectedMult,
+            projectedPoints,
+            expectedHours,
+            successProbability,
+            expectedValue,
+            victorCount: lvl.victors.length,
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.expectedValue - a.expectedValue);
+    }
+    function optimizeRoute(recommendations, targetPoints) {
+      if (!recommendations.length || targetPoints <= 0) return { time: 0, picks: [] };
+
+      const scale = 10;
+      const scaledTarget = Math.ceil(targetPoints * scale);
+
+      const dp = new Array(scaledTarget + 1).fill(null);
+      dp[0] = { time: 0, parentIdx: -1, rec: null };
+
+      for (const rec of recommendations) {
+        const pts = Math.round(rec.projectedPoints * scale);
+        for (let p = scaledTarget; p >= 0; p--) {
+          if (!dp[p]) continue;
+          const next = Math.min(p + pts, scaledTarget);
+          const nextTime = dp[p].time + rec.expectedHours;
+          if (!dp[next] || nextTime < dp[next].time) {
+            dp[next] = { time: nextTime, parentIdx: p, rec };
+          }
+        }
+      }
+
+      if (!dp[scaledTarget]) return { time: 0, picks: [] };
+
+      const picks = [];
+      let cur = scaledTarget;
+      while (dp[cur] && dp[cur].rec !== null) {
+        picks.unshift(dp[cur].rec);
+        cur = dp[cur].parentIdx;
+      }
+      return { time: dp[scaledTarget].time, picks };
+    }
+
+    function defaultTarget(leaderboard, currentName) {
+      return leaderboard.find((p) => p.name !== currentName) || null;
+    }
+    function App() {
+      const [status, setStatus] = useState("loading");
+      const [errorMsg, setErrorMsg] = useState("");
+      const [levels, setLevels] = useState([]);
+      const [selectedPlayer, setSelectedPlayer] = useState("");
+      const [targetPlayerName, setTargetPlayerName] = useState("");
+
+      useEffect(() => {
+        loadLevelsJson()
+          .then((raw) => {
+            const processed = processRawData(raw);
+            setLevels(processed);
+            setStatus("ready");
+          })
+          .catch((err) => {
+            setErrorMsg(err.name === "AbortError"
+              ? "Request timed out. Make sure levels.json is in the same folder."
+              : `Failed to load levels.json: ${err.message}`);
+            setStatus("error");
+          });
+      }, []);
+
+      const leaderboard = useMemo(() => buildLeaderboard(levels), [levels]);
+      useEffect(() => {
+        if (leaderboard.length === 0) {
+          setSelectedPlayer("");
+          setTargetPlayerName("");
+          return;
+        }
+        let resolved = selectedPlayer;
+        if (!leaderboard.some((p) => p.name === selectedPlayer)) {
+          resolved = leaderboard[0].name;
+          setSelectedPlayer(resolved);
+        }
+        const targetValid =
+          leaderboard.some((p) => p.name === targetPlayerName) &&
+          targetPlayerName !== resolved;
+        if (!targetValid) {
+          setTargetPlayerName(defaultTarget(leaderboard, resolved)?.name || "");
+        }
+      }, [leaderboard]);
+
+      function handleSelectPlayer(name) {
+        setSelectedPlayer(name);
+        if (targetPlayerName === name) {
+          setTargetPlayerName(defaultTarget(leaderboard, name)?.name || "");
+        }
+      }
+
+      function handleSetTarget(name) {
+        if (name === selectedPlayer) return;
+        setTargetPlayerName(name);
+      }
+
+      const currentPlayer = leaderboard.find((p) => p.name === selectedPlayer) || null;
+      const targetPlayer = leaderboard.find((p) => p.name === targetPlayerName) || null;
+
+      const recommendations = useMemo(
+        () => buildRecommendations(levels, currentPlayer),
+        [levels, currentPlayer]
+      );
+
+      const pointsNeeded = Math.max(
+        0,
+        (targetPlayer?.points || 0) - (currentPlayer?.points || 0)
+      );
+
+      const optimized = useMemo(
+        () => optimizeRoute(recommendations, pointsNeeded),
+        [recommendations, pointsNeeded]
+      );
+
+      const projectedPath = optimized?.picks || [];
+      const totalPoints = projectedPath.reduce((a, b) => a + b.projectedPoints, 0);
+      const totalHours = projectedPath.reduce((a, b) => a + b.expectedHours, 0);
+      const targetRank = leaderboard.findIndex((p) => p.name === targetPlayerName) + 1;
+      if (status === "loading") {
+        return (
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center space-y-3">
+              <div className="w-8 h-8 border-2 border-zinc-600 border-t-zinc-300 rounded-full animate-spin mx-auto"></div>
+              <p className="text-zinc-400 text-sm">Loading levels.json…</p>
+            </div>
+          </div>
+        );
+      }
+
+      if (status === "error") {
+        return (
+          <div className="min-h-screen flex items-center justify-center p-6">
+            <div className="bg-zinc-900 border border-red-900 rounded-2xl p-6 max-w-md text-center space-y-3">
+              <div className="text-red-400 text-2xl">⚠</div>
+              <p className="font-semibold text-red-300">Could not load data</p>
+              <p className="text-zinc-400 text-sm">{errorMsg}</p>
+              <p className="text-zinc-500 text-xs">
+                Make sure <code className="text-zinc-300">efficiency.html</code> and{" "}
+                <code className="text-zinc-300">levels.json</code> are in the same folder
+                and served over HTTP (not opened as a local file).
+              </p>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div className="min-h-screen p-6">
+          <div className="max-w-7xl mx-auto space-y-6">
+
+            <div className="flex items-end justify-between">
+              <div>
+                <h1 className="text-4xl font-bold">Practice Mode List Optimized Ladder</h1>
+              </div>
+              <div className="text-right text-sm text-zinc-500">
+                <div>{levels.length} levels loaded</div>
+                <div>{leaderboard.length} players</div>
+              </div>
+            </div>
+
+            <div className="bg-zinc-900 rounded-2xl p-4 border border-zinc-800">
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-xl font-semibold">Leaderboard</h2>
+                <div className="flex items-center gap-3 text-xs text-zinc-500">
+                  <span className="flex items-center gap-1.5">
+                    <span className="inline-block w-2 h-2 rounded-sm bg-blue-600"></span>
+                    You
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="inline-block w-2 h-2 rounded-sm bg-amber-600"></span>
+                    Target
+                  </span>
+                </div>
+              </div>
+
+              {leaderboard.length === 0 ? (
+                <div className="text-zinc-500 text-sm text-center py-10">
+                  No player data found in levels.json.
+                </div>
+              ) : (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1.5 max-h-72 overflow-auto pr-1">
+                  {leaderboard.map((player, i) => {
+                    const isMe = player.name === selectedPlayer;
+                    const isTarget = player.name === targetPlayerName;
+                    return (
+                      <div
+                        key={player.name}
+                        className={`flex items-center gap-2 rounded-xl border px-3 py-2 transition-colors ${isMe && isTarget ? "bg-zinc-800 border-zinc-600"
+                          : isMe ? "bg-blue-950 border-blue-800"
+                            : isTarget ? "bg-amber-950 border-amber-800"
+                              : "bg-zinc-950 border-zinc-800"
+                          }`}
+                      >
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-sm truncate">
+                            <span className="text-zinc-500 mr-1">#{i + 1}</span>
+                            {player.name}
+                          </div>
+                          <div className="text-xs text-zinc-400">
+                            {player.levels.length} · {player.points.toFixed(1)} pts
+                          </div>
+                        </div>
+                        <div className="flex gap-1 shrink-0">
+                          <button
+                            onClick={() => handleSelectPlayer(player.name)}
+                            className={`px-2 py-0.5 rounded-md text-xs font-semibold transition-colors ${isMe
+                              ? "bg-blue-600 text-white"
+                              : "bg-zinc-800 text-zinc-400 hover:bg-blue-900 hover:text-blue-300"
+                              }`}
+                          >
+                            Me
+                          </button>
+                          <button
+                            onClick={() => handleSetTarget(player.name)}
+                            disabled={isMe}
+                            className={`px-2 py-0.5 rounded-md text-xs font-semibold transition-colors ${isTarget ? "bg-amber-600 text-white"
+                              : isMe ? "bg-zinc-900 text-zinc-700 cursor-not-allowed"
+                                : "bg-zinc-800 text-zinc-400 hover:bg-amber-900 hover:text-amber-300"
+                              }`}
+                          >
+                            Target
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {currentPlayer && (
+              <div className="bg-zinc-900 rounded-2xl p-4 border border-zinc-800">
+                <div className="flex flex-wrap items-baseline justify-between gap-2 mb-6">
+                  <h2 className="text-2xl font-semibold">Optimal Route</h2>
+                  {targetPlayer ? (
+                    <span className="text-sm text-zinc-400">
+                      <span className="text-zinc-500">Targeting </span>
+                      <span className="text-amber-400 font-medium">
+                        #{targetRank} {targetPlayer.name}
+                      </span>
+                      <span className="text-zinc-500"> — {targetPlayer.points.toFixed(1)} pts</span>
+                    </span>
+                  ) : (
+                    <span className="text-sm text-zinc-500">No target selected</span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  {[
+                    { label: "Your Points", value: currentPlayer.points.toFixed(1) },
+                    { label: "Points Needed", value: pointsNeeded.toFixed(1) },
+                    { label: "Route Gain", value: totalPoints.toFixed(1) },
+                    { label: "Est. Time", value: formatHours(totalHours) },
+                  ].map(({ label, value }) => (
+                    <div key={label} className="bg-zinc-950 rounded-xl p-4 border border-zinc-800">
+                      <div className="text-xs text-zinc-400 uppercase tracking-wide">{label}</div>
+                      <div className="text-2xl font-bold mt-1">{value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {projectedPath.length === 0 ? (
+                  <div className="text-zinc-500 text-center py-10">
+                    {!targetPlayer
+                      ? "Select a target player to generate a route."
+                      : pointsNeeded === 0
+                        ? `${currentPlayer.name} already meets or exceeds ${targetPlayer.name}'s score.`
+                        : "No viable route found — not enough unbeaten levels with point data."}
+                  </div>
+                ) : (
+                  <div className="overflow-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-zinc-800 text-left text-xs uppercase tracking-wide text-zinc-500">
+                          <th className="pb-3 pr-4">Level</th>
+                          <th className="pb-3 pr-4">Victors</th>
+                          <th className="pb-3 pr-4">Base Pts</th>
+                          <th className="pb-3 pr-4">Mult</th>
+                          <th className="pb-3 pr-4">Proj. Pts</th>
+                          <th className="pb-3 pr-4">Success</th>
+                          <th className="pb-3 pr-4">Avg Time</th>
+                          <th className="pb-3">EV</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {projectedPath.map((rec) => (
+                          <tr key={rec.level} className="border-b border-zinc-900 hover:bg-zinc-950 transition-colors">
+                            <td className="py-3 pr-4 font-medium">{rec.level}</td>
+                            <td className="py-3 pr-4 text-zinc-400">{rec.victorCount}</td>
+                            <td className="py-3 pr-4 text-zinc-400">{rec.basePoints.toFixed(1)}</td>
+                            <td className="py-3 pr-4 text-zinc-400">{rec.projectedMult.toFixed(2)}×</td>
+                            <td className="py-3 pr-4">{rec.projectedPoints.toFixed(1)}</td>
+                            <td className="py-3 pr-4">{(rec.successProbability * 100).toFixed(0)}%</td>
+                            <td className="py-3 pr-4">{formatHours(rec.expectedHours)}</td>
+                            <td className="py-3 font-bold text-blue-400">{rec.expectedValue.toFixed(2)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )}
+
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+
+</html>
