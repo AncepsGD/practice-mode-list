@@ -1183,6 +1183,13 @@
         "time": "",
         "attempts": 6883,
         "video": "https://www.youtube.com/watch?v=zS7JgCPOf0Q&t=2021s"
+          },
+      {
+        "name": "TheEscaderGD",
+        "date": "2026-05-08",
+        "time": "2h 42m 28s",
+        "attempts": 6607,
+        "video": "https://youtu.be/7kjwWJU7sco"
       }
     ]
   },
@@ -1429,6 +1436,13 @@
         "time": "25m 32s",
         "attempts": 4165,
         "video": "https://www.youtube.com/live/WDvC9aI8D-I"
+      },
+      {
+        "name": "onibiinakanakafu",
+        "date": "2026-05-25",
+        "time": "35m 35s",
+        "attempts": 10923,
+        "video": "https://youtu.be/cTSEM2q9Ou4"
       }
     ]
   },
@@ -3242,6 +3256,13 @@
         "time": "31m 23s",
         "attempts": 2398,
         "video": "https://youtu.be/rU74KlUu-eM"
+      },
+      {
+        "name": "Vanouper",
+        "date": "2026-05-25",
+        "time": "48m 23s",
+        "attempts": 6264,
+        "video": "https://youtu.be/CNbXUALHTFY"
       }
     ]
   }
