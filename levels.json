@@ -993,6 +993,31 @@
   },
   {
     "rank": 39,
+    "name": "LiGHtmArE",
+    "creators": "eightos",
+    "id": "77233362",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/a37y9M8rCIU",
+    "image": "https://levelthumbs.prevter.me/thumbnail/77233362/high",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-04-25",
+        "time": "41m 32s",
+        "attempts": 2902,
+        "video": "https://youtu.be/2jERHhuYF60"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-25",
+        "time": "1h 5m 48s",
+        "attempts": 3128,
+        "video": "https://www.youtube.com/live/Bdpzlds3YJo?si=2rG36GJxcaSBp0zl"
+      }
+    ]
+  },
+  {
+    "rank": 40,
     "name": "wane",
     "creators": "TurboPacks",
     "id": "74641212",
@@ -1017,7 +1042,7 @@
     ]
   },
   {
-    "rank": 40,
+    "rank": 41,
     "name": "Silent lake",
     "creators": "2tim",
     "id": "13648950",
@@ -1035,7 +1060,7 @@
     ]
   },
   {
-    "rank": 41,
+    "rank": 42,
     "name": "Checkmate",
     "creators": "izofdoors",
     "id": "66586224",
@@ -1067,7 +1092,7 @@
     ]
   },
   {
-    "rank": 42,
+    "rank": 43,
     "name": "Challenge Circles 2p",
     "creators": "RMGD",
     "id": "139503282",
@@ -1099,7 +1124,7 @@
     ]
   },
   {
-    "rank": 43,
+    "rank": 44,
     "name": "Silent Circles (Dual Skip)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "12169905",
@@ -1194,7 +1219,7 @@
     ]
   },
   {
-    "rank": 44,
+    "rank": 45,
     "name": "Silent Circles (No Dual)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "127906018",
@@ -1233,7 +1258,7 @@
     ]
   },
   {
-    "rank": 45,
+    "rank": 46,
     "name": "The Descended (Nerfed)",
     "creators": "Boomblox555",
     "id": "128794273",
@@ -1258,7 +1283,7 @@
     ]
   },
   {
-    "rank": 46,
+    "rank": 47,
     "name": "ALIKESUPREME",
     "creators": "bigstarchman",
     "id": "104757556",
@@ -1290,7 +1315,7 @@
     ]
   },
   {
-    "rank": 47,
+    "rank": 48,
     "name": "realm of bloodshadow (Oldest)",
     "creators": "gdmiracle",
     "id": "119141644",
@@ -1308,7 +1333,7 @@
     ]
   },
   {
-    "rank": 48,
+    "rank": 49,
     "name": "Silent Skrillex (Dual Skip)",
     "creators": "DiosselMusic",
     "id": "73836744",
@@ -1340,7 +1365,7 @@
     ]
   },
   {
-    "rank": 49,
+    "rank": 50,
     "name": "Disquietude",
     "creators": "Thycket",
     "id": "140724097",
@@ -1372,7 +1397,7 @@
     ]
   },
   {
-    "rank": 50,
+    "rank": 51,
     "name": "01ILLg21 Night",
     "creators": "Nxaelevend",
     "id": "78319371",
@@ -1390,7 +1415,7 @@
     ]
   },
   {
-    "rank": 51,
+    "rank": 52,
     "name": "Silent Cycles",
     "creators": "DRshai, Oktavian",
     "id": "80137830",
@@ -1415,7 +1440,7 @@
     ]
   },
   {
-    "rank": 52,
+    "rank": 53,
     "name": "silent silhouette (Unnerfed)",
     "creators": "hhuuko, cairillic",
     "id": "84145309",
@@ -1447,7 +1472,7 @@
     ]
   },
   {
-    "rank": 53,
+    "rank": 54,
     "name": "Monodia",
     "creators": "Armadeus",
     "id": "57262123",
@@ -1472,7 +1497,7 @@
     ]
   },
   {
-    "rank": 54,
+    "rank": 55,
     "name": "Ripple",
     "creators": "eightos",
     "id": "74601642",
@@ -1486,31 +1511,6 @@
         "time": "46m 11s",
         "attempts": 3462,
         "video": "https://youtu.be/thPsnDqSZSg"
-      }
-    ]
-  },
-  {
-    "rank": 55,
-    "name": "LiGHtmArE",
-    "creators": "eightos",
-    "id": "77233362",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/a37y9M8rCIU",
-    "image": "https://levelthumbs.prevter.me/thumbnail/77233362/high",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-04-25",
-        "time": "41m 32s",
-        "attempts": 2902,
-        "video": "https://youtu.be/2jERHhuYF60"
-      },
-      {
-        "name": "Sashozz",
-        "date": "2026-04-25",
-        "time": "1h 5m 48s",
-        "attempts": 3128,
-        "video": "https://www.youtube.com/live/Bdpzlds3YJo?si=2rG36GJxcaSBp0zl"
       }
     ]
   },
