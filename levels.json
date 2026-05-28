@@ -3131,6 +3131,24 @@
   },
   {
     "rank": 108,
+    "name": "Shatter Synapse",
+    "creators": "AngelEffect",
+    "id": "111005000",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/HqickeagddA",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-05-28",
+        "time": "16m 16s",
+        "attempts": 1065,
+        "video": "https://youtu.be/GspBlUjEVm8"
+      }
+    ]
+  },
+  {
+    "rank": 109,
     "name": "Evolution",
     "creators": "cheapyyyyy",
     "id": "89893566",
@@ -3155,7 +3173,7 @@
     ]
   },
   {
-    "rank": 109,
+    "rank": 110,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
