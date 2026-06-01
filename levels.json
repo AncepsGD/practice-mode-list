@@ -132,6 +132,13 @@
         "time": "1h 33m 11s",
         "attempts": 13900,
         "video": "https://youtu.be/5GMD2wuLDe8"
+      },
+      {
+        "name": "totalgd",
+        "date": "2026-06-01",
+        "time": "1h 7m 14s",
+        "attempts": 8899,
+        "video": ""
       }
     ]
   },
@@ -214,6 +221,13 @@
         "time": "22m 19s",
         "attempts": 2169,
         "video": "https://youtu.be/rlt896R9l4w"
+      },
+      {
+        "name": "totalgd",
+        "date": "2026-06-01",
+        "time": "57m 10s",
+        "attempts": 4650,
+        "video": "https://youtu.be/3fzbwwsZcPc"
       }
     ]
   },
@@ -1620,6 +1634,13 @@
         "time": "52m 50s",
         "attempts": 2200,
         "video": "https://youtu.be/A9zlQtGuiag"
+      },
+      {
+        "name": "totalgd",
+        "date": "2026-05-30",
+        "time": "27m 59s",
+        "attempts": 2219,
+        "video": "https://youtu.be/cMF-acLVRpQ"
       }
     ]
   },
