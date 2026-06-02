@@ -107,6 +107,13 @@
         "time": "4h 6m 42s",
         "attempts": 57750,
         "video": "https://www.youtube.com/live/tBc60e_NiOQ&t=9970"
+      },
+      {
+        "name": "OtherChris",
+        "date": "2026-05-31",
+        "time": "1h 57m 44s",
+        "attempts": 84687,
+        "video": "https://youtu.be/o0TKnNVcpyo"
       }
     ]
   },
@@ -1666,6 +1673,13 @@
         "time": "27m 59s",
         "attempts": 2219,
         "video": "https://youtu.be/cMF-acLVRpQ"
+      },
+      {
+        "name": "OtherChris",
+        "date": "2026-06-02",
+        "time": "16m 58s",
+        "attempts": 3049,
+        "video": "https://youtu.be/TGLdWENpH8E"
       }
     ]
   },
