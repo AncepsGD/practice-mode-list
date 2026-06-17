@@ -2268,24 +2268,6 @@
   },
   {
     "rank": 83,
-    "name": "SanTas Circles",
-    "creators": "IIZebII, RMGD",
-    "id": "142804857",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-06-16",
-        "time": "10m 32s",
-        "attempts": 895,
-        "video": "https://youtu.be/73tipQUOgKc"
-      }
-    ]
-  },
-  {
-    "rank": 84,
     "name": "SaTans Circles",
     "creators": "IIZebII",
     "id": "78868667",
@@ -2348,6 +2330,24 @@
         "time": "7m 24s",
         "attempts": 2542,
         "video": "https://youtu.be/MFHc1-6wtpI"
+      }
+    ]
+  },
+  {
+    "rank": 84,
+    "name": "SanTas Circles",
+    "creators": "IIZebII, RMGD",
+    "id": "142804857",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-06-16",
+        "time": "10m 32s",
+        "attempts": 895,
+        "video": "https://youtu.be/73tipQUOgKc"
       }
     ]
   },
@@ -2744,6 +2744,13 @@
         "time": "18m 9s",
         "attempts": 1472,
         "video": "https://youtu.be/5GMD2wuLDe8"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-06-16",
+        "time": "22m 37s",
+        "attempts": 1731,
+        "video": "https://youtu.be/TKDU3aKx1dA"
       }
     ]
   },
@@ -3114,6 +3121,13 @@
         "time": "10m 15s",
         "attempts": 307,
         "video": "https://youtu.be/ku4W7PuToY4"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-06-16",
+        "time": "23m 31s",
+        "attempts": 1411,
+        "video": "https://youtu.be/igXiDvMt3ek"
       }
     ]
   },
