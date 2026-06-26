@@ -3107,6 +3107,13 @@
         "time": "10m 14s",
         "attempts": 699,
         "video": "https://youtu.be/PTFsm4_-0wI"
+      },
+      {
+        "name": "HawkGMD",
+        "date": "2026-06-25",
+        "time": "41m 58s",
+        "attempts": 3040,
+        "video": "https://drive.google.com/file/d/1I4GsjEKWt-BWh81PDxB7PEF5hcHvUqeS/view?usp=sharing"
       }
     ]
   },
@@ -3528,24 +3535,6 @@
   },
   {
     "rank": 125,
-    "name": "Hush (Unnerfed)",
-    "creators": "Ariwl",
-    "id": "126079844",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/VJD2SzehVUU",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-06-26",
-        "time": "15m 34s",
-        "attempts": 1154,
-        "video": "https://youtube.com/playlist?list=PLF8cOJfZPH_0&si=cv4mazPZ6isc-H1T"
-      }
-    ]
-  },
-  {
-    "rank": 126,
     "name": "Silent poltergeist v666",
     "creators": "TheRealSailent, RMGD",
     "id": "143298563",
@@ -3563,7 +3552,7 @@
     ]
   },
   {
-    "rank": 127,
+    "rank": 126,
     "name": "Shatter Synapse",
     "creators": "AngelEffect",
     "id": "111005000",
@@ -3581,7 +3570,7 @@
     ]
   },
   {
-    "rank": 128,
+    "rank": 127,
     "name": "Evolution",
     "creators": "cheapyyyyy",
     "id": "142171111",
@@ -3606,7 +3595,7 @@
     ]
   },
   {
-    "rank": 129,
+    "rank": 128,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
@@ -3750,7 +3739,7 @@
     ]
   },
   {
-    "rank": 130,
+    "rank": 129,
     "name": "Viridian",
     "creators": "Bordonn",
     "id": "66137361",
@@ -3764,6 +3753,24 @@
         "time": "13m 41s",
         "attempts": 1162,
         "video": "https://youtu.be/BOcW14ekcd4"
+      }
+    ]
+  },
+  {
+    "rank": 130,
+    "name": "Hush (Unnerfed)",
+    "creators": "Ariwl",
+    "id": "126079844",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/VJD2SzehVUU",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-06-26",
+        "time": "15m 34s",
+        "attempts": 1154,
+        "video": "https://youtube.com/playlist?list=PLF8cOJfZPH_0&si=cv4mazPZ6isc-H1T"
       }
     ]
   }
