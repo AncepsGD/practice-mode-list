@@ -3380,45 +3380,6 @@
   },
   {
     "rank": 123,
-    "name": "Allegiance (Unnerfed, Buffed, Extended)",
-    "creators": "nikroplays, EndLevel, K3Cy",
-    "id": "76263919",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/qUYBYI3t0HU",
-    "image": "",
-    "victors": [
-      {
-        "name": "Exiled_Shade",
-        "date": "2026-05-12",
-        "time": "12m 21s",
-        "attempts": 925,
-        "video": "https://youtu.be/Xp6QNHCZV5s"
-      },
-      {
-        "name": "Sashozz",
-        "date": "2026-05-06",
-        "time": "15m 56s",
-        "attempts": 1109,
-        "video": "https://youtu.be/EdYEKdarIaM"
-      },
-      {
-        "name": "RMGD",
-        "date": "2026-06-07",
-        "time": "11m 01s",
-        "attempts": 687,
-        "video": "https://youtu.be/A36XfgUg3i0"
-      },
-      {
-        "name": "Aiden2644",
-        "date": "2026-06-01",
-        "time": "35m 24s",
-        "attempts": 2350,
-        "video": "https://youtu.be/9qA-ErRRvLA"
-      }
-    ]
-  },
-  {
-    "rank": 124,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -3457,7 +3418,7 @@
     ]
   },
   {
-    "rank": 125,
+    "rank": 124,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -3517,7 +3478,7 @@
     ]
   },
   {
-    "rank": 126,
+    "rank": 125,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -3577,7 +3538,7 @@
     ]
   },
   {
-    "rank": 127,
+    "rank": 126,
     "name": "Hush (Unnerfed)",
     "creators": "Ariwl",
     "id": "126079844",
@@ -3595,7 +3556,7 @@
     ]
   },
   {
-    "rank": 128,
+    "rank": 127,
     "name": "Silent poltergeist v666",
     "creators": "TheRealSailent, RMGD",
     "id": "143298563",
@@ -3613,7 +3574,7 @@
     ]
   },
   {
-    "rank": 129,
+    "rank": 128,
     "name": "Shatter Synapse",
     "creators": "AngelEffect",
     "id": "111005000",
@@ -3631,7 +3592,7 @@
     ]
   },
   {
-    "rank": 130,
+    "rank": 129,
     "name": "Evolution",
     "creators": "cheapyyyyy",
     "id": "142171111",
@@ -3656,7 +3617,7 @@
     ]
   },
   {
-    "rank": 131,
+    "rank": 130,
     "name": "REISHIKI",
     "creators": "sincos",
     "id": "127321260",
@@ -3674,7 +3635,7 @@
     ]
   },
   {
-    "rank": 132,
+    "rank": 131,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
