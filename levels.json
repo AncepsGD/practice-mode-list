@@ -658,6 +658,24 @@
   },
   {
     "rank": 27,
+    "name": "The Descended (Unnerfed)",
+    "creators": "BoomBlox555",
+    "id": "77338939",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/vlziq-2_H5U",
+    "image": "",
+    "victors": [
+      {
+        "name": "mewj13",
+        "date": "2026-06-02",
+        "time": "20m 18s",
+        "attempts": 6952,
+        "video": "https://youtu.be/Y6nkqLHa2mY"
+      }
+    ]
+  },
+  {
+    "rank": 28,
     "name": "Silent Skrillex",
     "creators": "DiosselMusic",
     "id": "73836744",
@@ -692,24 +710,6 @@
         "time": "35m 41s",
         "attempts": 13917,
         "video": "https://youtu.be/lMDF-qVlszI"
-      }
-    ]
-  },
-  {
-    "rank": 28,
-    "name": "The Descended (Unnerfed)",
-    "creators": "BoomBlox555",
-    "id": "77338939",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/vlziq-2_H5U",
-    "image": "",
-    "victors": [
-      {
-        "name": "mewj13",
-        "date": "2026-06-02",
-        "time": "20m 18s",
-        "attempts": 6952,
-        "video": "https://youtu.be/Y6nkqLHa2mY"
       }
     ]
   },
