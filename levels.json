@@ -2754,24 +2754,6 @@
   },
   {
     "rank": 103,
-    "name": "BP Impossible Buff",
-    "creators": "RobTop, Exiled_Shade, RMGD",
-    "id": "144006747",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/sNXYeJYZfP0",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-07-05",
-        "time": "17m 37s",
-        "attempts": 1438,
-        "video": "https://youtu.be/5OoW4IaURhI"
-      }
-    ]
-  },
-  {
-    "rank": 104,
     "name": "lobotomy",
     "creators": "maxfs",
     "id": "67322789",
@@ -2796,7 +2778,7 @@
     ]
   },
   {
-    "rank": 105,
+    "rank": 104,
     "name": "Satanic Circles (Nerfed)",
     "creators": "huuko, Cairillic",
     "id": "127953111",
@@ -2821,7 +2803,7 @@
     ]
   },
   {
-    "rank": 106,
+    "rank": 105,
     "name": "Blacksick",
     "creators": "Anceps",
     "id": "108984939",
@@ -2846,7 +2828,7 @@
     ]
   },
   {
-    "rank": 107,
+    "rank": 106,
     "name": "Slaughterhouse 1p5",
     "creators": "Anceps",
     "id": "114130329",
@@ -2871,7 +2853,7 @@
     ]
   },
   {
-    "rank": 108,
+    "rank": 107,
     "name": "BRITNEY NO SCLEARS (Unnerfed)",
     "creators": "wabas",
     "id": "139903937",
@@ -2896,7 +2878,7 @@
     ]
   },
   {
-    "rank": 109,
+    "rank": 108,
     "name": "Gloomiest Cavern",
     "creators": "vastaus",
     "id": "124108794",
@@ -2928,7 +2910,7 @@
     ]
   },
   {
-    "rank": 110,
+    "rank": 109,
     "name": "Heliopolis       (Thnndr)",
     "creators": "MindCap & more",
     "id": "140000535",
@@ -2967,7 +2949,7 @@
     ]
   },
   {
-    "rank": 111,
+    "rank": 110,
     "name": "All I Need",
     "creators": "ivyteal",
     "id": "79393829",
@@ -2988,6 +2970,24 @@
         "time": "22m 37s",
         "attempts": 1731,
         "video": "https://youtu.be/TKDU3aKx1dA"
+      }
+    ]
+  },
+  {
+    "rank": 111,
+    "name": "Eternal",
+    "creators": "Calegar, tueml, equinoxis",
+    "id": "143295058",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/MqNyEuw7li4",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-05",
+        "time": "19m 39s",
+        "attempts": 1472,
+        "video": "https://youtu.be/_oc0D4BQpJs"
       }
     ]
   },
@@ -3901,6 +3901,24 @@
         "time": "",
         "attempts": 1479,
         "video": "https://youtu.be/WUL-V661UWk"
+      }
+    ]
+  },
+  {
+    "rank": 139,
+    "name": "BP Impossible Buff",
+    "creators": "RobTop, Exiled_Shade, RMGD",
+    "id": "144006747",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/sNXYeJYZfP0",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-05",
+        "time": "17m 37s",
+        "attempts": 1438,
+        "video": "https://youtu.be/5OoW4IaURhI"
       }
     ]
   }
