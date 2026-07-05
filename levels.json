@@ -2736,24 +2736,6 @@
   },
   {
     "rank": 102,
-    "name": "Viridian",
-    "creators": "Bordonn",
-    "id": "66137361",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/vH2ikG5aBa8",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-06-25",
-        "time": "13m 41s",
-        "attempts": 1162,
-        "video": "https://youtu.be/BOcW14ekcd4"
-      }
-    ]
-  },
-  {
-    "rank": 103,
     "name": "BP Impossible Buff",
     "creators": "RobTop, Exiled_Shade, RMGD",
     "id": "144006747",
@@ -2767,6 +2749,24 @@
         "time": "17m 37s",
         "attempts": 1438,
         "video": "https://youtu.be/5OoW4IaURhI"
+      }
+    ]
+  },
+  {
+    "rank": 103,
+    "name": "Viridian",
+    "creators": "Bordonn",
+    "id": "66137361",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/vH2ikG5aBa8",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-06-25",
+        "time": "13m 41s",
+        "attempts": 1162,
+        "video": "https://youtu.be/BOcW14ekcd4"
       }
     ]
   },
