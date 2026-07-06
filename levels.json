@@ -173,24 +173,6 @@
   },
   {
     "rank": 9,
-    "name": "Infernoplex",
-    "creators": "cheapyyyyy",
-    "id": "141735424",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/FLeS4LOky5A?si=6ui-mDhGxobFJgAN",
-    "image": "https://youtu.be/FLeS4LOky5A?si=oQ_elDbHAWM6wvuo",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-06-20",
-        "time": "1h 12m 12s",
-        "attempts": 4609,
-        "video": "https://youtu.be/ari54omUgc4?si=OKIa-bCAK2wZU38O"
-      }
-    ]
-  },
-  {
-    "rank": 10,
     "name": "Blood in the Water (Unnerfed)",
     "creators": "Skyyee",
     "id": "97037045",
@@ -218,6 +200,24 @@
         "time": "1h 7m 14s",
         "attempts": 8899,
         "video": ""
+      }
+    ]
+  },
+  {
+    "rank": 10,
+    "name": "Infernoplex",
+    "creators": "cheapyyyyy",
+    "id": "141735424",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/FLeS4LOky5A?si=6ui-mDhGxobFJgAN",
+    "image": "https://youtu.be/FLeS4LOky5A?si=oQ_elDbHAWM6wvuo",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-06-20",
+        "time": "1h 12m 12s",
+        "attempts": 4609,
+        "video": "https://youtu.be/ari54omUgc4?si=OKIa-bCAK2wZU38O"
       }
     ]
   },
