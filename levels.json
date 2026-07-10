@@ -19,24 +19,6 @@
   },
   {
     "rank": 2,
-    "name": "Minus World (Old, 1P, Skip)",
-    "creators": "icedcave",
-    "id": "139501388",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=eUYtHhjgang",
-    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/minusworld.webp",
-    "victors": [
-      {
-        "name": "kalonikada",
-        "date": "2026-04-02",
-        "time": "3h 06m 59s",
-        "attempts": 198717,
-        "video": ""
-      }
-    ]
-  },
-  {
-    "rank": 3,
     "name": "As world caves in",
     "creators": "mizcr",
     "id": "79940793",
@@ -50,6 +32,24 @@
         "time": "3h 52m 6s",
         "attempts": 152707,
         "video": "https://youtu.be/T_2j37XTVvw"
+      }
+    ]
+  },
+  {
+    "rank": 3,
+    "name": "Minus World (Old, 1P, Skip)",
+    "creators": "icedcave",
+    "id": "139501388",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=eUYtHhjgang",
+    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/minusworld.webp",
+    "victors": [
+      {
+        "name": "kalonikada",
+        "date": "2026-04-02",
+        "time": "3h 06m 59s",
+        "attempts": 198717,
+        "video": ""
       }
     ]
   },
