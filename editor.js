@@ -68,6 +68,25 @@ function renderEditTable() {
 }
 async function init() {
   const data = await loadData();
+
+  window.playerCountries = {};
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const res = await fetch('players_countries.json', { signal: controller.signal });
+    if (res && res.ok) {
+      try {
+        const mapping = await res.json();
+        if (mapping && typeof mapping === 'object') window.playerCountries = mapping;
+      } catch (e) {
+        console.warn('Failed to parse players_countries.json', e);
+      }
+    }
+    clearTimeout(timeout);
+  } catch (e) {
+
+  }
+
   processRawData(data);
   dataReady = true;
 }

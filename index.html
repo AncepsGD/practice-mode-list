@@ -5,6 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Practice Mode List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -17,16 +24,22 @@
       </h1>
       <nav>
         <button class="nav-btn active" onclick="showPage('list', this)">
-          <span class="nav-icon">📜</span>The List
+          <span class="nav-icon"><i class="fa-solid fa-list"></i></span>The List
         </button>
         <button class="nav-btn" onclick="showPage('leaderboard', this)">
-          <span class="nav-icon">🏆</span>Player Leaderboard
+          <span class="nav-icon"><i class="fa-solid fa-trophy"></i></span>Leaderboard
         </button>
         <button class="nav-btn" onclick="showPage('verifications', this)">
-          <span class="nav-icon">✅</span>Verifications
+          <span class="nav-icon"><i class="fa-solid fa-circle-check"></i></span>Unverified List
+        </button>
+        <button class="nav-btn" onclick="showPage('timeline', this)">
+          <span class="nav-icon"><i class="fa-solid fa-clock"></i></span>Timeline
+        </button>
+        <button class="nav-btn" onclick="showPage('optimizer', this)">
+          <span class="nav-icon"><i class="fa-solid fa-route"></i></span>Ladder
         </button>
         <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank">
-          <span class="nav-icon">💬</span>Discord
+          <span class="nav-icon"><i class="fa-brands fa-discord"></i></span>Discord
         </a>
       </nav>
     </header>
@@ -44,9 +57,12 @@
       <div class="section-header">
         <div class="line"></div>
       </div>
-      <div class="search-bar">
-        <input class="search-input-lb" type="text" placeholder="Search players..." id="lb-search"
-          oninput="filterLeaderboard()" />
+      <div class="leaderboard-toolbar">
+        <label class="leaderboard-label" for="lb-search">Search players</label>
+        <div class="search-bar">
+          <input class="search-input-lb" type="text" placeholder="Search players, levels, or scores..." id="lb-search"
+            oninput="filterLeaderboard()" />
+        </div>
       </div>
       <table class="leaderboard-table">
         <thead>
@@ -69,25 +85,34 @@
         <h2>Levels Pending Verification</h2>
         <p class="verifications-subtitle">Random selection of levels with no verified completions yet. Refresh to see a
           new set.</p>
-        <button class="btn-refresh-verifications" onclick="shuffleVerifications()">🔄 Refresh List</button>
+        <button class="btn-refresh-verifications" onclick="shuffleVerifications()"><i
+            class="fa-solid fa-rotate-right"></i> Refresh List</button>
       </div>
       <div id="verifications-container"></div>
     </div>
 
-    <footer class="footer">
-      <span class="p">NOT AFFILIATED WITH <span class="g">ROBTOP GAMES</span></span>
-    </footer>
+    <div id="page-timeline" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div id="timeline-container"></div>
+    </div>
+
+    <div id="page-optimizer" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="optimizer-frame-wrap">
+        <iframe class="optimizer-frame" src="efficiency.html" title="Practice Mode List Optimized Ladder"></iframe>
+      </div>
+    </div>
   </div>
 
-  <!-- EDIT MODAL -->
   <div id="edit-modal">
     <div class="edit-wrap">
       <div class="edit-topbar">
         <h2>✏️ Edit List</h2>
         <div class="edit-topbar-actions">
-          <button class="ebtn ebtn-purple" onclick="showEditView('system')">
-            System Rankings
-          </button>
           <button class="ebtn ebtn-ghost" onclick="showEditView('list'); setEditingSource('levels')">
             Levels Editor
           </button>
@@ -110,7 +135,6 @@
         ⚠ Local edits cleared. Reloading from levels.json on next page load.
       </div>
 
-      <!-- LIST VIEW -->
       <div id="edit-view-list" class="edit-view active">
         <div class="edit-list-actions">
           <button class="ebtn ebtn-purple" onclick="openLevelForm(-1)">
@@ -126,8 +150,6 @@
                 <th>Name</th>
                 <th>Creator(s)</th>
                 <th>ID</th>
-                <th>FP</th>
-                <th>Len(s)</th>
                 <th>Victors</th>
                 <th style="text-align: right">Actions</th>
               </tr>
@@ -137,58 +159,6 @@
         </div>
       </div>
 
-      <!-- SYSTEM VIEW -->
-      <div id="edit-view-system" class="edit-view">
-        <div class="section-header">
-          <h2>DemonListSystem</h2>
-          <div class="line"></div>
-        </div>
-        <div class="system-grid">
-          <div class="system-card">
-            <h3>Comparison Lab</h3>
-            <div class="system-help">
-              Choose the harder level between the two options. Each pick is saved as one comparison and rankings update
-              immediately.
-            </div>
-            <div class="system-status" id="system-status">Initializing model...</div>
-            <div class="system-details" id="system-details">Waiting for the first comparison suggestion.</div>
-            <div class="system-suggestion">
-              <button id="suggestion-a" class="system-level-btn" onclick="pickSuggestedWinner('a')" disabled>Select
-                level A</button>
-              <div class="system-vs">VS</div>
-              <button id="suggestion-b" class="system-level-btn" onclick="pickSuggestedWinner('b')" disabled>Select
-                level B</button>
-            </div>
-            <div class="system-actions">
-              <button class="system-btn allow-when-no-pair" onclick="requestNewSuggestion()">Suggest New Pair</button>
-              <button class="system-btn system-requires-pair" onclick="skipSuggestion()">Skip Pair</button>
-              <button id="undo-btn" class="system-btn allow-when-no-pair" onclick="undoLastComparison()" disabled>Undo
-                Last Pick</button>
-              <button class="system-btn allow-when-no-pair" onclick="resetModelState()">Reset Comparisons</button>
-            </div>
-          </div>
-          <div class="system-card">
-            <h3>Computed Rankings</h3>
-            <div class="stats-strip" id="system-stats-strip"></div>
-            <table class="system-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Level</th>
-                  <th>Tier</th>
-                  <th>Rating</th>
-                  <th>Uncertainty</th>
-                  <th>Score</th>
-                  <th>Controversy</th>
-                </tr>
-              </thead>
-              <tbody id="system-rankings-body"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- FORM VIEW -->
       <div id="edit-view-form" class="edit-view">
         <div class="form-header">
           <button class="ebtn ebtn-ghost" onclick="showEditView('list')">
@@ -215,14 +185,6 @@
             <input class="form-input" id="f-rank" type="number" placeholder="e.g. 1" min="1" />
           </div>
           <div class="form-group">
-            <label class="form-label">Frame Perfects</label>
-            <input class="form-input" id="f-frameperfects" type="number" placeholder="e.g. 120" min="0" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Length (Seconds)</label>
-            <input class="form-input" id="f-lengthseconds" type="number" placeholder="e.g. 95" min="1" />
-          </div>
-          <div class="form-group">
             <label class="form-label">2-Player?</label>
             <select class="form-select" id="f-twoplayer">
               <option value="">No</option>
@@ -239,7 +201,6 @@
           </div>
         </div>
 
-        <!-- Victors -->
         <div class="victors-section">
           <div class="victors-section-header">
             <span class="victors-section-title">Victors</span>
@@ -267,11 +228,10 @@
 
   <div class="save-flash" id="save-flash">✓ SAVED</div>
 
-  <script src="DemonListSystem.browser.js"></script>
+  <script src="format.js"></script>
   <script src="data.js"></script>
   <script src="ui.js"></script>
   <script src="editor.js"></script>
-  <script src="model.js"></script>
 </body>
 
-</html>
+</html>>

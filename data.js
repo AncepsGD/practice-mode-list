@@ -1,6 +1,5 @@
 const LOCAL_KEY = "pml_edit_data";
 const MODEL_STATE_KEY = "pml_demon_system_state";
-const MODEL_PLAYER_ID = "site-user";
 let rawData = [];
 let levels = [];
 window.verifications = [];
@@ -11,31 +10,64 @@ let editingIndex = -1;
 function syncDemonSystemFromRawData() {
 }
 
+function fetchWithTimeout(url, timeoutMs = 10000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timeout));
+}
+
 function parseTimeToSeconds(timeStr) {
   if (!timeStr || timeStr.trim() === "") return Infinity;
   const regex =
-    /(\d+)h\s*(\d+)m\s*(\d+)s|(\d+)m\s*(\d+)s|(\d+)s|(\d+)h\s*(\d+)m|(\d+)m|(\d+)h/;
+    /(\d+)h\s*(\d+)m\s*(\d+)s|(\d+)h\s*(\d+)s|(\d+)m\s*(\d+)s|(\d+)s|(\d+)h\s*(\d+)m|(\d+)m|(\d+)h/;
   const match = timeStr.match(regex);
   if (!match) return Infinity;
   let h = 0, m = 0, s = 0;
   if (match[1]) {
-    h = parseInt(match[1]);
-    m = parseInt(match[2]);
-    s = parseInt(match[3]);
+    h = parseInt(match[1], 10);
+    m = parseInt(match[2], 10);
+    s = parseInt(match[3], 10);
   } else if (match[4]) {
-    m = parseInt(match[4]);
-    s = parseInt(match[5]);
+    h = parseInt(match[4], 10);
+    s = parseInt(match[5], 10);
   } else if (match[6]) {
-    s = parseInt(match[6]);
-  } else if (match[7]) {
-    h = parseInt(match[7]);
-    m = parseInt(match[8]);
+    m = parseInt(match[6], 10);
+    s = parseInt(match[7], 10);
+  } else if (match[8]) {
+    s = parseInt(match[8], 10);
   } else if (match[9]) {
-    m = parseInt(match[9]);
-  } else if (match[10]) {
-    h = parseInt(match[10]);
+    h = parseInt(match[9], 10);
+    m = parseInt(match[10], 10);
+  } else if (match[11]) {
+    m = parseInt(match[11], 10);
+  } else if (match[12]) {
+    h = parseInt(match[12], 10);
   }
   return h * 3600 + m * 60 + s;
+}
+
+function getDemonSystem() {
+  return typeof window !== "undefined" ? window.demonSystem : null;
+}
+
+function getVictorSortValue(victor) {
+  if (!victor || typeof victor !== "object") return null;
+  const rawDate = victor.date;
+  if (typeof rawDate !== "string" || rawDate.trim() === "") return null;
+  const parsed = Date.parse(rawDate);
+  return Number.isNaN(parsed) ? null : parsed;
+}
+
+function sortVictorsByDate(victors) {
+  return [...victors].sort((a, b) => {
+    const aValue = getVictorSortValue(a);
+    const bValue = getVictorSortValue(b);
+
+    if (aValue == null && bValue == null) return 0;
+    if (aValue == null) return 1;
+    if (bValue == null) return -1;
+    return aValue - bValue;
+  });
 }
 
 function calculatePoints(rank, maxRank) {
@@ -46,10 +78,60 @@ function calculatePoints(rank, maxRank) {
   return base * Math.pow(ratio, maxRank - rank);
 }
 
-function autoThumbnail(id, explicit) {
+function getTierByName(name) {
+  if (typeof name !== "string") return "";
+  const normalized = name.toLowerCase();
+  const mapping = {
+    "WEINERclub": "Novice",
+    "Rainstorm": "Intermediate",
+    "Sakupen End": "Advanced",
+    "Under The Sea": "Insane",
+    "kataTARTARUS": "Legendary",
+    "Bloodiest Water": "Master",
+    "Six Paths of Pain (Unnerfed)": "Divine",
+    "Sashozz Geometry": "Transcendent"
+  };
+  for (const key in mapping) {
+    if (normalized.includes(key.toLowerCase())) return mapping[key];
+  }
+  return "";
+}
+
+function assignTiers(levelsList) {
+  if (!Array.isArray(levelsList) || !levelsList.length) return;
+  const markers = [
+    { key: "WEINERclub", tier: "Novice" },
+    { key: "Rainstorm", tier: "Intermediate" },
+    { key: "Sakupen End", tier: "Advanced" },
+    { key: "Under The Sea", tier: "Insane" },
+    { key: "kataTARTARUS", tier: "Legendary" },
+    { key: "Bloodiest Water", tier: "Master" },
+    { key: "Six Paths of Pain (Unnerfed)", tier: "Divine" },
+    { key: "Sashozz Geometry", tier: "Transcendent" }
+  ];
+
+  const names = levelsList.map((l) => (l.name || "").toLowerCase());
+  const found = markers
+    .map((m) => ({ ...m, index: names.findIndex((n) => n.includes(m.key.toLowerCase())) }))
+    .filter((m) => m.index !== -1)
+    .sort((a, b) => a.index - b.index);
+
+  found.forEach((marker, i) => {
+    const start = marker.index;
+    const end = i + 1 < found.length ? found[i + 1].index : levelsList.length;
+    for (let k = start; k < end; k++) {
+      levelsList[k].tier = marker.tier;
+    }
+  });
+
+  levelsList.forEach((lvl) => {
+    if (!lvl.tier) lvl.tier = getTierByName(lvl.name);
+  });
+}
+
+function autoThumbnail(explicit) {
   if (explicit && explicit.trim() !== "") return explicit;
-  const match = String(id).match(/^\d+/);
-  return match ? `https://levelthumbs.prevter.me/thumbnail/${match[0]}` : "";
+  return "";
 }
 
 function loadData() {
@@ -59,12 +141,12 @@ function loadData() {
       return Promise.resolve(JSON.parse(saved));
     } catch (e) { }
   }
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
-
-  return fetch("levels.json", { signal: controller.signal })
+  return fetchWithTimeout("levels.json")
     .then((r) => r.json())
-    .finally(() => clearTimeout(timeout));
+    .catch((err) => {
+      console.error("Failed to load levels.json", err);
+      return [];
+    });
 }
 
 function processRawData(data) {
@@ -80,22 +162,37 @@ function processRawData(data) {
         wrAttempts: v.attempts || 0,
         victorVideoUrl: v.video || "",
       }));
+      const sortedVictors = sortVictorsByDate(victors);
+      const firstVictor = sortedVictors.find((v) => v.name) || null;
       return {
         rank: item.rank,
         name: item.name,
-        thumbnail: autoThumbnail(item.id, item.image),
+        thumbnail: autoThumbnail(item.image),
         id: item.id,
         points: 0,
         victors,
+        firstVictor: firstVictor ? { name: firstVictor.name, date: firstVictor.date } : null,
         creator: item.creators,
         is2Player: item.twoPlayer === "2 Player",
         showcaseVideoUrl: item.showcaseVideo || "",
+        tier: "",
       };
     });
 
-  const maxRank = Math.max(...levels.map((l) => l.rank));
+  try {
+    assignTiers(levels);
+  } catch (e) {
+    console.error("Failed to assign tiers", e);
+  }
+
+  const rankValues = levels
+    .map((l) => Number(l.rank))
+    .filter((r) => Number.isFinite(r));
+  const maxRank = rankValues.length ? Math.max(...rankValues, 1) : 1;
   levels.forEach((l) => {
-    l.points = calculatePoints(l.rank, maxRank);
+    const rankValue = Number(l.rank);
+    const safeRank = Number.isFinite(rankValue) ? rankValue : maxRank;
+    l.points = calculatePoints(safeRank, maxRank);
   });
 
   levels.forEach((level) => {
@@ -126,23 +223,22 @@ function processRawData(data) {
   renderStats();
   renderLevels(levels);
   renderLeaderboard(leaderboard);
+  initializeTimeline();
 
   const savedVerifications = localStorage.getItem("pml_verifications_data");
   if (savedVerifications) {
     try {
-      verifications = JSON.parse(savedVerifications);
+      window.verifications = JSON.parse(savedVerifications);
       initializeVerifications();
       syncDemonSystemFromRawData();
       return;
     } catch (e) { }
   }
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
 
-  fetch("verifications.json", { signal: controller.signal })
+  fetchWithTimeout("verifications.json")
     .then((r) => r.json())
     .then((data) => {
-      verifications = data
+      const verificationsList = data
         .filter((item) => item.name)
         .map((item) => {
           const victors = (item.victors || []).map((v) => ({
@@ -155,15 +251,22 @@ function processRawData(data) {
           return {
             rank: item.rank || "?",
             name: item.name,
-            thumbnail: autoThumbnail(item.id, item.image),
+            thumbnail: autoThumbnail(item.image),
             id: item.id,
             points: 0,
             victors,
             creator: item.creators,
             is2Player: item.twoPlayer === "2 Player",
             showcaseVideoUrl: item.showcaseVideo || "",
+            tier: "",
           };
         });
+      try {
+        assignTiers(verificationsList);
+      } catch (e) {
+        console.error("Failed to assign tiers to verifications", e);
+      }
+      window.verifications = verificationsList;
       initializeVerifications();
       syncDemonSystemFromRawData();
     })
@@ -171,14 +274,15 @@ function processRawData(data) {
       console.log("No verifications.json found, using levels with no victors");
       initializeVerifications();
       syncDemonSystemFromRawData();
-    })
-    .finally(() => clearTimeout(timeout));
+    });
 }
 
 function buildLeaderboard(lvls) {
   const map = {};
   lvls.forEach((lvl) => {
-    lvl.victors.forEach((v, vi) => {
+    const sortedVictors = sortVictorsByDate(lvl.victors);
+
+    sortedVictors.forEach((v, vi) => {
       if (!map[v.name]) map[v.name] = { name: v.name, points: 0, levels: [] };
       let mult = 1;
       if (vi === 0) mult += 0.25;
@@ -242,13 +346,14 @@ function createModelLevelRows() {
 }
 
 function saveModelState(signature) {
-  if (!demonSystem) return;
+  const system = getDemonSystem();
+  if (!system) return;
   localStorage.setItem(
     MODEL_STATE_KEY,
     JSON.stringify({
       signature,
-      levels: demonSystem.exportLevelStates(),
-      comparisons: demonSystem.exportComparisons(),
+      levels: system.exportLevelStates(),
+      comparisons: system.exportComparisons(),
     }),
   );
 }
@@ -265,7 +370,7 @@ function loadSavedModelState() {
 
 function saveAndRefresh() {
   if (editingSource === "verifications") {
-    localStorage.setItem("pml_verifications_data", JSON.stringify(verifications));
+    localStorage.setItem("pml_verifications_data", JSON.stringify(window.verifications));
   } else {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(rawData));
   }
@@ -281,18 +386,26 @@ function saveAndRefresh() {
 function resetToOriginal() {
   if (!confirm("Clear all local edits and reload from levels.json?")) return;
   localStorage.removeItem(LOCAL_KEY);
+  localStorage.removeItem("pml_verifications_data");
+  window.verifications = [];
   document.getElementById("reset-notice").classList.add("show");
-  fetch("levels.json")
+  fetchWithTimeout("levels.json")
     .then((r) => r.json())
     .then((data) => {
       processRawData(data);
+      renderEditTable();
+      flashSaved();
+    })
+    .catch((err) => {
+      console.error("Failed to reload levels.json after reset", err);
+      processRawData([]);
       renderEditTable();
       flashSaved();
     });
 }
 
 function exportJSON() {
-  const data = editingSource === "verifications" ? verifications : rawData;
+  const data = editingSource === "verifications" ? window.verifications : rawData;
   navigator.clipboard.writeText(JSON.stringify(data, null, 2)).then(() => {
     flashCopied();
   });
