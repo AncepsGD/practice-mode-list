@@ -284,7 +284,12 @@ function buildLeaderboard(lvls) {
 
     sortedVictors.forEach((v, vi) => {
       const playerName = String(v.name || "").trim();
-      if (!playerName || playerName === "-") return;
+      const isPlaceholderPlayer =
+        !playerName ||
+        playerName === "-" ||
+        /^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(playerName) ||
+        /^[-+]?\d+(?:\.\d+)?$/.test(playerName);
+      if (isPlaceholderPlayer) return;
 
       if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
       let mult = 1;
