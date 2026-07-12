@@ -107,7 +107,7 @@ function assignTiers(levelsList) {
     { key: "kataTARTARUS", tier: "Legendary" },
     { key: "Bloodiest Water", tier: "Master" },
     { key: "Six Paths of Pain (Unnerfed)", tier: "Divine" },
-    { key: "Sashozz Geometry", tier: "Transcendent" }
+    { key: "Kingdom of Miracalis (Unnerfed)", tier: "Transcendent" }
   ];
 
   const names = levelsList.map((l) => (l.name || "").toLowerCase());
@@ -283,13 +283,16 @@ function buildLeaderboard(lvls) {
     const sortedVictors = sortVictorsByDate(lvl.victors);
 
     sortedVictors.forEach((v, vi) => {
-      if (!map[v.name]) map[v.name] = { name: v.name, points: 0, levels: [] };
+      const playerName = String(v.name || "").trim();
+      if (!playerName || playerName === "-") return;
+
+      if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
       let mult = 1;
       if (vi === 0) mult += 0.25;
-      if (lvl.wrTime && v.name === lvl.wrTime.name) mult += 0.25;
-      if (lvl.wrAttempts && v.name === lvl.wrAttempts.name) mult += 0.25;
-      map[v.name].points += lvl.points * mult;
-      map[v.name].levels.push(lvl.name);
+      if (lvl.wrTime && playerName === lvl.wrTime.name) mult += 0.25;
+      if (lvl.wrAttempts && playerName === lvl.wrAttempts.name) mult += 0.25;
+      map[playerName].points += lvl.points * mult;
+      map[playerName].levels.push(lvl.name);
     });
   });
   return Object.values(map).sort((a, b) => b.points - a.points);
