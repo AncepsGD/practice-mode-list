@@ -45,7 +45,7 @@
   {
     "rank": 3,
     "name": "Marine Geometry",
-    "creators": "Cyrillic, Redacted Player #2",
+    "creators": "Cyrillic, kalonikada",
     "id": "138842938",
     "twoPlayer": "",
     "showcaseVideo": "",
@@ -638,8 +638,8 @@
   },
   {
     "rank": 29,
-    "name": "Singularity (Redacted Player #2)",
-    "creators": "070, Redacted Player #2",
+    "name": "Singularity (kalonikada)",
+    "creators": "070, kalonikada",
     "id": "139503221",
     "twoPlayer": "2 Player",
     "showcaseVideo": "",
@@ -2025,6 +2025,24 @@
   },
   {
     "rank": 73,
+    "name": "Eruption",
+    "creators": "hurmichael",
+    "id": "144744379",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/DwBVih7thfY?si=bM3rnA8zTOqrGaBS",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-12",
+        "time": "23m 32s",
+        "attempts": 1772,
+        "video": "https://youtu.be/y9uVavnjggs?si=if-zJzFZ-Je7oXo-"
+      }
+    ]
+  },
+  {
+    "rank": 74,
     "name": "Battle of the Shades",
     "creators": "Jester",
     "id": "13536376",
@@ -2042,7 +2060,7 @@
     ]
   },
   {
-    "rank": 74,
+    "rank": 75,
     "name": "XSatan",
     "creators": "IiIOpTiCaLIiI",
     "id": "121511843",
@@ -2060,7 +2078,7 @@
     ]
   },
   {
-    "rank": 75,
+    "rank": 76,
     "name": "Silent Jawbreaker (Unnerfed)",
     "creators": "thecyberr, jcob, evileyegalaxy",
     "id": "136063350",
@@ -2074,24 +2092,6 @@
         "time": "22m 46s",
         "attempts": 1962,
         "video": "https://youtu.be/TlYa2DQwl-Y?si=OeFc5CRo03WIbG1f"
-      }
-    ]
-  },
-  {
-    "rank": 76,
-    "name": "Silent Factory",
-    "creators": "icedcave",
-    "id": "93285321",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/WB40Yh-IABU",
-    "image": "https://levelthumbs.prevter.me/thumbnail/80307362/high",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-07-12",
-        "time": "19m 6s",
-        "attempts": 1318,
-        "video": "https://youtu.be/41mW_1jmRgs"
       }
     ]
   },
