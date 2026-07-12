@@ -4034,24 +4034,6 @@
   },
   {
     "rank": 150,
-    "name": "REISHIKI",
-    "creators": "sincos",
-    "id": "127321260",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/C_JGH2NhxJc",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-06-27",
-        "time": "10m 47s",
-        "attempts": 963,
-        "video": "https://youtu.be/mUDW5oAQcQM"
-      }
-    ]
-  },
-  {
-    "rank": 151,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
