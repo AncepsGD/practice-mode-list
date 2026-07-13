@@ -633,6 +633,13 @@
         "time": "20m 40s",
         "attempts": 10547,
         "video": "https://youtu.be/GIm-ZReOk4Q"
+      },
+      {
+        "name": "Awaor",
+        "date": "2026-07-13",
+        "time": "52m 41s",
+        "attempts": 43256,
+        "video": "https://youtu.be/ZFSJlapwawE"
       }
     ]
   },
@@ -1195,6 +1202,13 @@
         "time": "6m 52s",
         "attempts": 5681,
         "video": "https://youtu.be/q-VZbjL4erQ"
+      },
+      {
+        "name": "Flyingfish9",
+        "date": "2026-07-13",
+        "time": "18m 31s",
+        "attempts": 13626,
+        "video": "https://youtu.be/CABpjr0Fifw"
       }
     ]
   },
@@ -3165,6 +3179,24 @@
   },
   {
     "rank": 120,
+    "name": "Satanic Hell",
+    "creators": "IIIspitfireIII",
+    "id": "63837087",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/I0ZZk2_MqNI",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-13",
+        "time": "17m 17s",
+        "attempts": 1253,
+        "video": "https://youtu.be/WUxSzPWCXlE"
+      }
+    ]
+  },
+  {
+    "rank": 121,
     "name": "Heliopolis       (Thnndr)",
     "creators": "MindCap & more",
     "id": "140000535",
@@ -3203,7 +3235,7 @@
     ]
   },
   {
-    "rank": 121,
+    "rank": 122,
     "name": "All I Need",
     "creators": "ivyteal",
     "id": "79393829",
@@ -3228,7 +3260,7 @@
     ]
   },
   {
-    "rank": 122,
+    "rank": 123,
     "name": "supremesdb tob odin",
     "creators": "RMGD",
     "id": "143735899",
@@ -3253,7 +3285,7 @@
     ]
   },
   {
-    "rank": 123,
+    "rank": 124,
     "name": "Eternal",
     "creators": "Calegar, tueml, equinoxis",
     "id": "143295058",
@@ -3271,7 +3303,7 @@
     ]
   },
   {
-    "rank": 124,
+    "rank": 125,
     "name": "White Abyss",
     "creators": "lights2419, noyogd",
     "id": "126535682",
@@ -3296,7 +3328,7 @@
     ]
   },
   {
-    "rank": 125,
+    "rank": 126,
     "name": "nyctophilia",
     "creators": "maxfs",
     "id": "66477534",
@@ -3314,7 +3346,7 @@
     ]
   },
   {
-    "rank": 126,
+    "rank": 127,
     "name": "WEINERclub",
     "creators": "RMGD",
     "id": "129168258",
@@ -3339,7 +3371,7 @@
     ]
   },
   {
-    "rank": 127,
+    "rank": 128,
     "name": "Starbleed",
     "creators": "Darksive",
     "id": "128210782",
@@ -3371,7 +3403,7 @@
     ]
   },
   {
-    "rank": 128,
+    "rank": 129,
     "name": "ErratiC sTuPID",
     "creators": "Anceps",
     "id": "91359491",
@@ -3399,11 +3431,18 @@
         "time": "17m 26s",
         "attempts": 1637,
         "video": "https://youtu.be/v3wW09kiGT8"
+      },
+      {
+        "name": "LunaCarrot",
+        "date": "2026-07-12",
+        "time": "43m 55s",
+        "attempts": 3487,
+        "video": "https://youtu.be/CF1tZ9w3iyw"
       }
     ]
   },
   {
-    "rank": 129,
+    "rank": 130,
     "name": "Acheron 50",
     "creators": "RMGD, Riot, & more",
     "id": "135243833",
@@ -3435,7 +3474,7 @@
     ]
   },
   {
-    "rank": 130,
+    "rank": 131,
     "name": "Asterios (Unnerfed)",
     "creators": "Exen, buragoz & more",
     "id": "130142951",
@@ -3474,7 +3513,7 @@
     ]
   },
   {
-    "rank": 131,
+    "rank": 132,
     "name": "Nierenbaum",
     "creators": "glitchi",
     "id": "67661018",
@@ -3506,7 +3545,7 @@
     ]
   },
   {
-    "rank": 132,
+    "rank": 133,
     "name": "Azure Flare (2025)",
     "creators": "Aeden",
     "id": "126344104",
@@ -3559,7 +3598,7 @@
     ]
   },
   {
-    "rank": 133,
+    "rank": 134,
     "name": "i D K",
     "creators": "RezerdPrime, Relayne",
     "id": "72959089",
@@ -3584,7 +3623,7 @@
     ]
   },
   {
-    "rank": 134,
+    "rank": 135,
     "name": "Silent Hyper Paracosm",
     "creators": "Morta1l",
     "id": "124746832",
@@ -3609,7 +3648,7 @@
     ]
   },
   {
-    "rank": 135,
+    "rank": 136,
     "name": "The Burn",
     "creators": "TheGreatBird",
     "id": "46257656",
@@ -3641,7 +3680,7 @@
     ]
   },
   {
-    "rank": 136,
+    "rank": 137,
     "name": "difficulty experiment",
     "creators": "KaiGuy",
     "id": "79039551",
@@ -3666,7 +3705,7 @@
     ]
   },
   {
-    "rank": 137,
+    "rank": 138,
     "name": "Thanks Level D",
     "creators": "fancydoesgd, RMGD",
     "id": "137217125",
@@ -3691,7 +3730,7 @@
     ]
   },
   {
-    "rank": 138,
+    "rank": 139,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -3716,7 +3755,7 @@
     ]
   },
   {
-    "rank": 139,
+    "rank": 140,
     "name": "DIE IMBECIEL",
     "creators": "RMGD",
     "id": "142927911",
@@ -3734,7 +3773,7 @@
     ]
   },
   {
-    "rank": 140,
+    "rank": 141,
     "name": "TCD Builds a Top 1",
     "creators": "TCDofficial",
     "id": "126701660",
@@ -3752,7 +3791,7 @@
     ]
   },
   {
-    "rank": 141,
+    "rank": 142,
     "name": "Hells Born",
     "creators": "IIZebII",
     "id": "125260682",
@@ -3777,7 +3816,7 @@
     ]
   },
   {
-    "rank": 142,
+    "rank": 143,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -3816,7 +3855,7 @@
     ]
   },
   {
-    "rank": 143,
+    "rank": 144,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -3876,7 +3915,7 @@
     ]
   },
   {
-    "rank": 144,
+    "rank": 145,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -3936,7 +3975,7 @@
     ]
   },
   {
-    "rank": 145,
+    "rank": 146,
     "name": "Hush (Unnerfed)",
     "creators": "Ariwl",
     "id": "126079844",
@@ -3954,7 +3993,7 @@
     ]
   },
   {
-    "rank": 146,
+    "rank": 147,
     "name": "Silent poltergeist v666",
     "creators": "TheRealSailent, RMGD",
     "id": "143298563",
@@ -3972,7 +4011,7 @@
     ]
   },
   {
-    "rank": 147,
+    "rank": 148,
     "name": "Shatter Synapse",
     "creators": "AngelEffect",
     "id": "111005000",
@@ -3990,7 +4029,25 @@
     ]
   },
   {
-    "rank": 148,
+    "rank": 149,
+    "name": "rare (Old)",
+    "creators": "greafer",
+    "id": "95647061",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/xCVLSlk_d8E",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-13",
+        "time": "15m 45s",
+        "attempts": 993,
+        "video": "https://youtu.be/i39RPNnEfPY"
+      }
+    ]
+  },
+  {
+    "rank": 150,
     "name": "Evolution",
     "creators": "cheapyyyyy",
     "id": "142171111",
@@ -4015,7 +4072,7 @@
     ]
   },
   {
-    "rank": 149,
+    "rank": 151,
     "name": "Paralox",
     "creators": "Spamdrew",
     "id": "136427413",
@@ -4033,7 +4090,7 @@
     ]
   },
   {
-    "rank": 150,
+    "rank": 152,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
