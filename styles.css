@@ -1646,6 +1646,71 @@ nav {
   font-weight: 700;
 }
 
+.optimizer-skill-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.optimizer-skill-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.optimizer-skill-label {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.optimizer-skill-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--violet-bright);
+}
+
+.optimizer-skill-details {
+  text-align: right;
+}
+
+.optimizer-skill-classification {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.optimizer-skill-comparison {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.optimizer-skill-breakdown {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.optimizer-skill-breakdown span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .optimizer-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1788,5 +1853,14 @@ nav {
 
   .optimizer-action-btn {
     flex: 1;
+  }
+
+  .optimizer-skill-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .optimizer-skill-details {
+    text-align: left;
   }
 }
