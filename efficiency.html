@@ -172,30 +172,94 @@
       return `${hours.toFixed(2)}h`;
     }
 
-    function calculateGlobalBaseline(levels) {
-      const allTimes = [];
-      levels.forEach(lvl => {
-        lvl.victors.forEach(v => {
-          const t = parseTimeToSeconds(v.time);
-          if (t !== null && t > 0) allTimes.push(t);
-        });
-      });
-      return geometricMean(allTimes) || 1800;
+    function formatSkillMultiplier(skill) {
+      return `${skill.toFixed(2)}×`;
     }
 
-    function calculatePlayerSkill(levels, playerName, globalBaseline) {
-      const times = [];
+    function classifySkill(skill) {
+      if (skill < 0.75) return "Elite";
+      if (skill < 1) return "Above average";
+      if (skill <= 1.25) return "Average";
+      return "Below average";
+    }
+
+    function describeSkillRelative(skill) {
+      if (skill <= 1) {
+        const pct = Math.round((1 - skill) * 100);
+        return pct > 0 ? `Compared to average victor: ${pct}% faster` : "Compared to average victor: on par";
+      }
+
+      const pct = Math.round((skill - 1) * 100);
+      return `Compared to average victor: ${pct}% slower`;
+    }
+
+    function calculateSkillComponents(levels, playerName) {
+      const speedRatios = [];
+      const attemptRatios = [];
+      const weights = [];
+
       levels.forEach(lvl => {
-        lvl.victors.forEach(v => {
-          if (v.name !== playerName) return;
-          const t = parseTimeToSeconds(v.time);
-          if (t !== null && t > 0) times.push(t);
-        });
+        const parsedEntries = lvl.victors
+          .map(v => ({
+            name: v.name,
+            sec: parseTimeToSeconds(v.time),
+            attempts: Number.isFinite(Number(v.attempts)) ? Number(v.attempts) : null,
+          }))
+          .filter(v => v.sec !== null && v.sec > 0);
+        if (parsedEntries.length < 2) return;
+
+        const playerEntry = parsedEntries.find(v => v.name === playerName);
+        if (!playerEntry) return;
+
+        const timeBaseline = trimmedMean(parsedEntries.map(v => v.sec), 0.2);
+        const attemptsWithData = parsedEntries.filter(v => v.attempts !== null && v.attempts > 0);
+        const attemptBaseline = attemptsWithData.length
+          ? trimmedMean(attemptsWithData.map(v => v.attempts), 0.2)
+          : null;
+
+        if (!timeBaseline || timeBaseline <= 0) return;
+
+        const speedRatio = playerEntry.sec / timeBaseline;
+        speedRatios.push(speedRatio);
+
+        if (attemptBaseline && attemptBaseline > 0 && playerEntry.attempts !== null && playerEntry.attempts > 0) {
+          const attemptRatio = playerEntry.attempts / attemptBaseline;
+          attemptRatios.push(attemptRatio);
+        }
+
+        weights.push(Math.min(1.6, 0.35 + parsedEntries.length * 0.2));
       });
-      if (!times.length) return 1;
-      const gm = geometricMean(times);
-      if (gm === null) return 1;
-      return clamp(gm / globalBaseline, 0.5, 3);
+
+      const combinedSpeed = speedRatios.length
+        ? (() => {
+          const weightedMean = speedRatios.reduce((sum, ratio, index) => sum + ratio * weights[index], 0)
+            / weights.reduce((sum, weight) => sum + weight, 0);
+          const robustRatio = trimmedMean(speedRatios, 0.25) ?? weightedMean;
+          return (weightedMean * 0.6) + (robustRatio * 0.4);
+        })()
+        : 1;
+
+      const combinedAttempts = attemptRatios.length
+        ? (() => {
+          const weightedMean = attemptRatios.reduce((sum, ratio, index) => sum + ratio * weights[index], 0)
+            / weights.reduce((sum, weight) => sum + weight, 0);
+          const robustRatio = trimmedMean(attemptRatios, 0.25) ?? weightedMean;
+          return (weightedMean * 0.6) + (robustRatio * 0.4);
+        })()
+        : 1;
+
+      const speedScore = clamp(1 + (combinedSpeed - 1) * Math.min(1, speedRatios.length / 6), 0.7, 1.5);
+      const attemptsScore = clamp(1 + (combinedAttempts - 1) * Math.min(1, attemptRatios.length / 6), 0.7, 1.5);
+
+      return {
+        speed: speedScore,
+        attempts: attemptsScore,
+      };
+    }
+
+    function calculatePlayerSkill(levels, playerName) {
+      const components = calculateSkillComponents(levels, playerName);
+      return (components.speed + components.attempts) / 2;
     }
 
     function calculateAvgTimePerPoint(levels) {
@@ -209,10 +273,27 @@
       return ratios.length ? trimmedMean(ratios) : null;
     }
 
-    function estimateLevelTime(level, skillMultiplier, avgTimePerPoint) {
+    function calculateAvgAttemptsPerPoint(levels) {
+      const ratios = [];
+      levels.forEach(lvl => {
+        const attempts = lvl.victors
+          .map(v => Number(v.attempts))
+          .filter(a => Number.isFinite(a) && a > 0);
+        if (attempts.length > 0 && lvl.points > 0) {
+          ratios.push(trimmedMean(attempts) / lvl.points);
+        }
+      });
+      return ratios.length ? trimmedMean(ratios) : null;
+    }
+
+    function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPerPoint) {
       const victorTimes = level.victors
         .map(v => parseTimeToSeconds(v.time))
         .filter(t => t !== null && t > 0);
+
+      const victorAttempts = level.victors
+        .map(v => Number(v.attempts))
+        .filter(a => Number.isFinite(a) && a > 0);
 
       let baseTime;
       if (victorTimes.length > 0) {
@@ -223,14 +304,46 @@
         baseTime = 7200;
       }
 
-      if (!baseTime || baseTime <= 0) return null;
-      return baseTime * skillMultiplier;
+      let baseAttempts = null;
+      if (victorAttempts.length > 0) {
+        baseAttempts = trimmedMean(victorAttempts);
+      } else if (avgAttemptsPerPoint !== null && level.points > 0) {
+        baseAttempts = level.points * avgAttemptsPerPoint;
+      }
+
+      const expectedSeconds = baseTime && baseTime > 0
+        ? baseTime * components.speed
+        : null;
+
+      const expectedAttempts = baseAttempts && baseAttempts > 0
+        ? baseAttempts * components.attempts
+        : null;
+
+      return { expectedSeconds, expectedAttempts };
     }
 
-    function buildRecommendations(levels, player, globalBaseline, avgTimePerPoint) {
+    function projectedMultiplierFor(level, expectedSeconds, expectedAttempts) {
+      if (level.victors.length === 0) {
+        return 1.75;
+      }
+
+      const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
+      const timePossible = wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds;
+
+      const wrAttempts = level.wrAttempts ? Number(level.wrAttempts.attempts) : null;
+      const attemptsPossible = wrAttempts !== null && Number.isFinite(wrAttempts) && expectedAttempts !== null && expectedAttempts < wrAttempts;
+
+      const count = (timePossible ? 1 : 0) + (attemptsPossible ? 1 : 0);
+      if (count === 0) return 1.0;
+      if (count === 1) return 1.25;
+
+      return 1.5;
+    }
+
+    function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoint) {
       if (!player) return [];
       const beaten = new Set(player.levels);
-      const skill = calculatePlayerSkill(levels, player.name, globalBaseline);
+      const components = calculateSkillComponents(levels, player.name);
 
       return levels
         .filter(lvl => !beaten.has(lvl.name))
@@ -238,13 +351,22 @@
           const basePoints = lvl.points || 0;
           if (basePoints <= 0) return null;
 
-          const expectedSeconds = estimateLevelTime(lvl, skill, avgTimePerPoint);
+          const { expectedSeconds, expectedAttempts } = estimateLevelOutcome(lvl, components, avgTimePerPoint, avgAttemptsPerPoint);
           if (expectedSeconds === null || expectedSeconds <= 0) return null;
 
           const expectedHours = expectedSeconds / 3600;
-          const projectedMult = lvl.victors.length === 0 ? 1.75 : 1.0;
+          const projectedMult = projectedMultiplierFor(lvl, expectedSeconds, expectedAttempts);
           const projectedPoints = basePoints * projectedMult;
           const expectedValue = projectedPoints / expectedHours;
+          const wrTimeSeconds = lvl.wrTime ? parseTimeToSeconds(lvl.wrTime.time) : null;
+          const wrAttempts = lvl.wrAttempts ? Number(lvl.wrAttempts.attempts) : null;
+          const victorCount = lvl.victors.length;
+          const confidence = victorCount > 0 ? (victorCount / (victorCount + 3)) : 0;
+
+          const timeWrPossible = wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds;
+          const attemptsWrPossible = wrAttempts !== null && Number.isFinite(wrAttempts) && expectedAttempts !== null && expectedAttempts < wrAttempts;
+          const hasWrTime = wrTimeSeconds !== null;
+          const hasWrAttempts = wrAttempts !== null && Number.isFinite(wrAttempts);
 
           return {
             level: lvl.name,
@@ -253,14 +375,19 @@
             projectedPoints,
             expectedHours,
             expectedValue,
-            victorCount: lvl.victors.length,
+            victorCount: victorCount,
+            timeWrPossible,
+            attemptsWrPossible,
+            hasWrTime,
+            hasWrAttempts,
+            wrConfidence: confidence,
           };
         })
         .filter(Boolean)
         .sort((a, b) => b.expectedValue - a.expectedValue);
     }
 
-    function optimizeRoute(recommendations, targetPoints, granularity = 1) {
+    function optimizeRoute(recommendations, targetPoints, granularity = 4) {
       if (!recommendations.length || targetPoints <= 0) return { time: 0, picks: [] };
 
       const items = recommendations
@@ -328,8 +455,8 @@
 
       const leaderboard = useMemo(() => buildLeaderboard(levels), [levels]);
 
-      const globalBaseline = useMemo(() => calculateGlobalBaseline(levels), [levels]);
       const avgTimePerPoint = useMemo(() => calculateAvgTimePerPoint(levels), [levels]);
+      const avgAttemptsPerPoint = useMemo(() => calculateAvgAttemptsPerPoint(levels), [levels]);
 
       useEffect(() => {
         if (leaderboard.length === 0) {
@@ -378,14 +505,27 @@
         [leaderboard, selectedPlayer]
       );
 
+      const skillComponents = useMemo(
+        () => (currentPlayer ? calculateSkillComponents(levels, currentPlayer.name) : { speed: 1, attempts: 1 }),
+        [levels, currentPlayer]
+      );
+
+      const skillMultiplier = useMemo(
+        () => (currentPlayer ? calculatePlayerSkill(levels, currentPlayer.name) : 1),
+        [levels, currentPlayer]
+      );
+
+      const skillClassification = useMemo(() => classifySkill(skillMultiplier), [skillMultiplier]);
+      const skillComparison = useMemo(() => describeSkillRelative(skillMultiplier), [skillMultiplier]);
+
       const targetPlayer = useMemo(
         () => leaderboard.find(p => p.name === targetPlayerName) || null,
         [leaderboard, targetPlayerName]
       );
 
       const recommendations = useMemo(
-        () => buildRecommendations(levels, currentPlayer, globalBaseline, avgTimePerPoint),
-        [levels, currentPlayer, globalBaseline, avgTimePerPoint]
+        () => buildRecommendations(levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint),
+        [levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint]
       );
 
       const pointsNeeded = Math.max(
@@ -508,6 +648,20 @@
                     <span className="optimizer-target-caption">No target selected</span>
                   )}
                 </div>
+                <div className="optimizer-skill-summary">
+                  <div className="optimizer-skill-main">
+                    <span className="optimizer-skill-label">Your Skill Rating</span>
+                    <span className="optimizer-skill-value">{formatSkillMultiplier(skillMultiplier)}</span>
+                  </div>
+                  <div className="optimizer-skill-details">
+                    <div className="optimizer-skill-classification">{skillClassification}</div>
+                    <div className="optimizer-skill-comparison">{skillComparison}</div>
+                    <div className="optimizer-skill-breakdown">
+                      <span>Speed: {formatSkillMultiplier(skillComponents.speed)}</span>
+                      <span>Attempts: {formatSkillMultiplier(skillComponents.attempts)}</span>
+                    </div>
+                  </div>
+                </div>
                 <div className="optimizer-stats-grid">
                   <div className="optimizer-stat-box">
                     <span className="optimizer-stat-label">Your Points</span>
@@ -545,6 +699,8 @@
                           <th>Mult</th>
                           <th>Proj. Pts</th>
                           <th>Est. Time</th>
+                          <th>Time WR</th>
+                          <th>Attempts WR</th>
                           <th>EV (pts/hr)</th>
                         </tr>
                       </thead>
@@ -557,6 +713,8 @@
                             <td>{rec.projectedMult.toFixed(2)}×</td>
                             <td>{rec.projectedPoints.toFixed(1)}</td>
                             <td>{formatHours(rec.expectedHours)}</td>
+                            <td>{rec.hasWrTime ? (rec.timeWrPossible ? "Yes" : "No") : "N/A"}</td>
+                            <td>{rec.hasWrAttempts ? (rec.attemptsWrPossible ? "Yes" : "No") : "N/A"}</td>
                             <td className="optimizer-ev">{rec.expectedValue.toFixed(2)}</td>
                           </tr>
                         ))}
