@@ -799,6 +799,76 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
   return { time: bestTime, picks, fallback: bestUnits < targetUnits };
 }
 
+function reoptimizeRouteWithModifications(
+  recommendations,
+  targetPoints,
+  currentPicks,
+  lockedLevelIds = [],
+  removedLevelIds = []
+) {
+  if (!Array.isArray(recommendations) || !recommendations.length || targetPoints <= 0) {
+    return { time: 0, picks: [], fallback: false, message: "No recommendations available" };
+  }
+
+  const lockedSet = new Set(lockedLevelIds.map(id => String(id).trim().toLowerCase()));
+  const removedSet = new Set(removedLevelIds.map(id => String(id).trim().toLowerCase()));
+
+  // Separate locked levels from recommendations
+  const lockedPicks = [];
+  const availableForReopt = [];
+
+  recommendations.forEach(rec => {
+    const recId = String(rec.id || rec.level).trim().toLowerCase();
+    if (lockedSet.has(recId)) {
+      lockedPicks.push(rec);
+    } else if (!removedSet.has(recId)) {
+      availableForReopt.push(rec);
+    }
+  });
+
+  // Calculate points from locked levels
+  const lockedPoints = lockedPicks.reduce((sum, rec) => sum + (rec.projectedPoints || 0), 0);
+  const lockedTime = lockedPicks.reduce((sum, rec) => sum + (rec.expectedHours || 0), 0);
+
+  // Calculate remaining points needed
+  const remainingPointsNeeded = Math.max(0, targetPoints - lockedPoints);
+
+  // If no more points needed, return locked picks only
+  if (remainingPointsNeeded <= 0) {
+    return {
+      time: lockedTime,
+      picks: lockedPicks,
+      fallback: false,
+      message: "Locked levels meet target",
+    };
+  }
+
+  // If no levels available for reopt, return best locked picks with fallback message
+  if (availableForReopt.length === 0) {
+    return {
+      time: lockedTime,
+      picks: lockedPicks,
+      fallback: true,
+      message: "No available levels to reach target",
+    };
+  }
+
+  // Re-optimize for remaining points
+  const reoptResult = optimizeRoute(availableForReopt, remainingPointsNeeded);
+
+  // Combine locked picks with re-optimized picks
+  const combinedPicks = [...lockedPicks, ...reoptResult.picks];
+  const combinedTime = lockedTime + reoptResult.time;
+
+  return {
+    time: combinedTime,
+    picks: combinedPicks,
+    fallback: reoptResult.fallback,
+    lockedCount: lockedPicks.length,
+    reoptCount: reoptResult.picks.length,
+  };
+}
+
 function defaultTarget(leaderboard, currentName) {
   const idx = leaderboard.findIndex(p => p.name === currentName);
   if (idx <= 0) return leaderboard.find(p => p.name !== currentName) || null;

@@ -6,6 +6,8 @@ function App() {
   const [levels, setLevels] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState("");
   const [targetPlayerName, setTargetPlayerName] = useState("");
+  const [lockedLevelIds, setLockedLevelIds] = useState([]);
+  const [removedLevelIds, setRemovedLevelIds] = useState([]);
 
   useEffect(() => {
     loadLevelsJson()
@@ -70,6 +72,27 @@ function App() {
     setTargetPlayerName(name);
   }
 
+  function toggleLevelLocked(levelId) {
+    setLockedLevelIds(prev =>
+      prev.includes(levelId)
+        ? prev.filter(id => id !== levelId)
+        : [...prev, levelId]
+    );
+  }
+
+  function toggleLevelRemoved(levelId) {
+    setRemovedLevelIds(prev =>
+      prev.includes(levelId)
+        ? prev.filter(id => id !== levelId)
+        : [...prev, levelId]
+    );
+  }
+
+  function clearModifications() {
+    setLockedLevelIds([]);
+    setRemovedLevelIds([]);
+  }
+
   const currentPlayer = useMemo(
     () => leaderboard.find(p => p.name === selectedPlayer) || null,
     [leaderboard, selectedPlayer]
@@ -101,9 +124,19 @@ function App() {
   const rankTargetPoints = targetRankSurpassPoints(leaderboard, targetPlayer);
   const pointsNeeded = Math.max(0, rankTargetPoints - (currentPlayer?.points || 0));
 
+  const hasModifications = lockedLevelIds.length > 0 || removedLevelIds.length > 0;
+
   const optimized = useMemo(
-    () => optimizeRoute(recommendations, pointsNeeded),
-    [recommendations, pointsNeeded]
+    () => hasModifications
+      ? reoptimizeRouteWithModifications(
+          recommendations,
+          pointsNeeded,
+          [],
+          lockedLevelIds,
+          removedLevelIds
+        )
+      : optimizeRoute(recommendations, pointsNeeded),
+    [recommendations, pointsNeeded, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const safeRecommendations = Array.isArray(recommendations) ? recommendations : [];
@@ -181,7 +214,7 @@ function App() {
                       {player.name}
                     </div>
                     <div className="optimizer-player-meta">
-                      {player.levels.length} Â· {player.points.toFixed(1)} pts
+                      {player.levels.length} • {player.points.toFixed(1)} pts
                     </div>
                   </div>
                   <div className="optimizer-player-actions">
@@ -214,7 +247,7 @@ function App() {
               <span className="optimizer-target-caption">
                 <span>Targeting </span>
                 <span className="optimizer-target-name">#{targetRank} {targetPlayer.name}</span>
-                <span> â€” {targetPlayer.points.toFixed(1)} pts</span>
+                <span> - {targetPlayer.points.toFixed(1)} pts</span>
               </span>
             ) : (
               <span className="optimizer-target-caption">No target selected</span>
@@ -265,10 +298,35 @@ function App() {
               {fallbackRoute && (
                 <div className="optimizer-note">Showing the closest route for the current target; the route expands as the target grows.</div>
               )}
+              {hasModifications && (
+                <div className="optimizer-note" style={{backgroundColor: "#fff3cd00", borderColor: "#ffc107"}}>
+                  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                    <span>
+                      {lockedLevelIds.length > 0 && <span>📌 {lockedLevelIds.length} locked</span>}
+                      {lockedLevelIds.length > 0 && removedLevelIds.length > 0 && <span> • </span>}
+                      {removedLevelIds.length > 0 && <span>✕ {removedLevelIds.length} removed</span>}
+                    </span>
+                    <button
+                      onClick={clearModifications}
+                      style={{
+                        background: "none",
+                        border: "1px solid #ffc107",
+                        padding: "4px 8px",
+                        cursor: "pointer",
+                        borderRadius: "3px",
+                        fontSize: "0.9em",
+                      }}
+                    >
+                      Clear all
+                    </button>
+                  </div>
+                </div>
+              )}
               <div className="optimizer-table-wrap">
                 <table className="optimizer-table">
                   <thead>
                     <tr>
+                      <th style={{width: "60px"}}>Actions</th>
                       <th>Level</th>
                       <th>Completed</th>
                       <th colSpan="2" style={{textAlign: "center"}}>Points</th>
@@ -277,6 +335,7 @@ function App() {
                       <th>Efficiency</th>
                     </tr>
                     <tr className="optimizer-table-subheader">
+                      <th></th>
                       <th></th>
                       <th></th>
                       <th>Base</th>
@@ -288,18 +347,57 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {projectedPath.map(rec => (
-                      <tr key={rec.id || rec.level}>
-                        <td><strong>{rec.level}</strong></td>
-                        <td>{rec.victorCount}</td>
-                        <td>{rec.basePoints.toFixed(1)}</td>
-                        <td><strong>{rec.projectedPoints.toFixed(1)}</strong> <span style={{fontSize: "0.9em", color: "#999"}}>({rec.projectedMult.toFixed(2)}×)</span></td>
-                        <td>{formatHours(rec.expectedHours)}</td>
-                        <td>{rec.hasWrTime ? (rec.timeWrPossible ? "✓" : "✗") : "—"}</td>
-                        <td>{rec.hasWrAttempts ? (rec.attemptsWrPossible ? "✓" : "✗") : "—"}</td>
-                        <td className="optimizer-ev"><strong>{rec.expectedValue.toFixed(2)}</strong></td>
-                      </tr>
-                    ))}
+                    {projectedPath.map(rec => {
+                      const recId = String(rec.id || rec.level);
+                      const isLocked = lockedLevelIds.includes(recId);
+                      const isRemoved = removedLevelIds.includes(recId);
+                      return (
+                        <tr key={rec.id || rec.level} style={{opacity: isRemoved ? 0.5 : 1}}>
+                          <td style={{display: "flex", gap: "4px", justifyContent: "center"}}>
+                            <button
+                              onClick={() => toggleLevelLocked(recId)}
+                              title={isLocked ? "Unlock this level" : "Lock this level to route"}
+                              style={{
+                                background: isLocked ? "#28a745" : "transparent",
+                                color: isLocked ? "white" : "#666",
+                                border: "none",
+                                padding: "4px 6px",
+                                cursor: "pointer",
+                                borderRadius: "3px",
+                                fontSize: "0.85em",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              📌
+                            </button>
+                            <button
+                              onClick={() => toggleLevelRemoved(recId)}
+                              title={isRemoved ? "Re-include this level" : "Remove from route"}
+                              style={{
+                                background: isRemoved ? "#dc3545" : "transparent",
+                                color: isRemoved ? "white" : "#666",
+                                border: "none",
+                                padding: "4px 6px",
+                                cursor: "pointer",
+                                borderRadius: "3px",
+                                fontSize: "0.85em",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              ✕
+                            </button>
+                          </td>
+                          <td><strong>{rec.level}</strong></td>
+                          <td>{rec.victorCount}</td>
+                          <td>{rec.basePoints.toFixed(1)}</td>
+                          <td><strong>{rec.projectedPoints.toFixed(1)}</strong> <span style={{fontSize: "0.9em", color: "#999"}}>({rec.projectedMult.toFixed(2)}×)</span></td>
+                          <td>{formatHours(rec.expectedHours)}</td>
+                          <td>{rec.hasWrTime ? (rec.timeWrPossible ? "✓" : "✗") : "—"}</td>
+                          <td>{rec.hasWrAttempts ? (rec.attemptsWrPossible ? "✓" : "✗") : "—"}</td>
+                          <td className="optimizer-ev"><strong>{rec.expectedValue.toFixed(2)}</strong></td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

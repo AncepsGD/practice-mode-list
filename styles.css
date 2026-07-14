@@ -1769,7 +1769,6 @@ nav {
 
 .optimizer-table th,
 .optimizer-table td {
-  text-align: left;
   padding: 10px 8px;
   border-bottom: 1px solid var(--border);
 }
