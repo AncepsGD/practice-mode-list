@@ -152,16 +152,24 @@ function loadData() {
 function processRawData(data) {
   rawData = data;
 
-  levels = data
+  const rawLevels = data
     .filter((item) => item.name)
     .map((item) => {
-      const victors = (item.victors || []).map((v) => ({
-        name: v.name || "",
-        date: v.date || "",
-        wrTime: v.time || "",
-        wrAttempts: v.attempts || 0,
-        victorVideoUrl: v.video || "",
-      }));
+      const victors = (item.victors || []).map((v) => {
+        const time = v.time || "";
+        const attempts = Number(v.attempts) || null;
+        return {
+          name: v.name || "",
+          date: v.date || "",
+          time,
+          seconds: parseTimeToSeconds(time),
+          attempts,
+          videoUrl: v.video || "",
+          wrTime: time,
+          wrAttempts: attempts !== null ? attempts : 0,
+          victorVideoUrl: v.video || "",
+        };
+      });
       const sortedVictors = sortVictorsByDate(victors);
       const firstVictor = sortedVictors.find((v) => v.name) || null;
       return {
@@ -178,6 +186,26 @@ function processRawData(data) {
         tier: "",
       };
     });
+
+  const uniqueLevels = [];
+  const seenIds = new Set();
+  const seenNames = new Set();
+
+  rawLevels.forEach((level) => {
+    const idKey = String(level.id || "").trim();
+    const nameKey = String(level.name || "").trim().toLowerCase();
+    if (idKey && seenIds.has(idKey)) return;
+    if (nameKey && seenNames.has(nameKey)) return;
+    if (idKey) seenIds.add(idKey);
+    if (nameKey) seenNames.add(nameKey);
+    uniqueLevels.push(level);
+  });
+
+  if (uniqueLevels.length !== rawLevels.length) {
+    console.warn(`Removed ${rawLevels.length - uniqueLevels.length} duplicate level(s) from the main list.`);
+  }
+
+  levels = uniqueLevels;
 
   try {
     assignTiers(levels);
@@ -199,18 +227,18 @@ function processRawData(data) {
     let minTimeSec = Infinity, minAttempts = Infinity;
     let wrTimeObj = null, wrAttemptsObj = null;
     level.victors.forEach((victor) => {
-      if (victor.wrTime) {
-        const sec = parseTimeToSeconds(victor.wrTime);
-        if (sec < minTimeSec) {
+      if (victor.time) {
+        const sec = victor.seconds;
+        if (sec !== null && sec < minTimeSec) {
           minTimeSec = sec;
-          wrTimeObj = { name: victor.name, time: victor.wrTime };
+          wrTimeObj = { name: victor.name, time: victor.time };
         }
       }
-      if (victor.wrAttempts > 0 && victor.wrAttempts < minAttempts) {
-        minAttempts = victor.wrAttempts;
+      if (victor.attempts !== null && victor.attempts > 0 && victor.attempts < minAttempts) {
+        minAttempts = victor.attempts;
         wrAttemptsObj = {
           name: victor.name,
-          attempts: victor.wrAttempts.toLocaleString(),
+          attempts: victor.attempts.toLocaleString(),
         };
       }
     });
@@ -241,13 +269,21 @@ function processRawData(data) {
       const verificationsList = data
         .filter((item) => item.name)
         .map((item) => {
-          const victors = (item.victors || []).map((v) => ({
-            name: v.name || "",
-            date: v.date || "",
-            wrTime: v.time || "",
-            wrAttempts: v.attempts || 0,
-            victorVideoUrl: v.video || "",
-          }));
+          const victors = (item.victors || []).map((v) => {
+        const time = v.time || "";
+        const attempts = Number(v.attempts) || null;
+        return {
+          name: v.name || "",
+          date: v.date || "",
+          time,
+          seconds: parseTimeToSeconds(time),
+          attempts,
+          videoUrl: v.video || "",
+          wrTime: time,
+          wrAttempts: attempts !== null ? attempts : 0,
+          victorVideoUrl: v.video || "",
+        };
+      });
           return {
             rank: item.rank || "?",
             name: item.name,
@@ -293,9 +329,9 @@ function buildLeaderboard(lvls) {
 
       if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
       let mult = 1;
-      if (vi === 0) mult += 0.25;
-      if (lvl.wrTime && playerName === lvl.wrTime.name) mult += 0.25;
-      if (lvl.wrAttempts && playerName === lvl.wrAttempts.name) mult += 0.25;
+      if (vi === 0) mult += 0.15;
+      if (lvl.wrTime && playerName === lvl.wrTime.name) mult += 0.15;
+      if (lvl.wrAttempts && playerName === lvl.wrAttempts.name) mult += 0.15;
       map[playerName].points += lvl.points * mult;
       map[playerName].levels.push(lvl.name);
     });

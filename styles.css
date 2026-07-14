@@ -1486,6 +1486,13 @@ nav {
   font-size: 0.95rem;
 }
 
+.optimizer-two-column-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.6fr) minmax(0, 1.2fr);
+  gap: 20px;
+  align-items: start;
+}
+
 .optimizer-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1510,6 +1517,12 @@ nav {
 
 .optimizer-card-head h2 {
   font-size: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  .optimizer-two-column-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .optimizer-legend {
@@ -1541,8 +1554,7 @@ nav {
 }
 
 .optimizer-player-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
 }
 
