@@ -131,38 +131,81 @@ function processRawData(data) {
   return uniqueLevels;
 }
 
-function recordMultiplier(recordCount) {
-  return 1 + Math.pow(0.15 * recordCount, 0.7);
+function getVictorSortValue(victor) {
+  if (!victor || typeof victor !== "object") return null;
+  const rawDate = victor.date;
+  if (typeof rawDate !== "string" || rawDate.trim() === "") return null;
+  const parsed = Date.parse(rawDate);
+  return Number.isNaN(parsed) ? null : parsed;
 }
 
-function buildLeaderboard(levels) {
+function sortVictorsByDate(victors) {
+  return [...victors].sort((a, b) => {
+    const aValue = getVictorSortValue(a);
+    const bValue = getVictorSortValue(b);
+
+    if (aValue == null && bValue == null) return 0;
+    if (aValue == null) return 1;
+    if (bValue == null) return -1;
+    return aValue - bValue;
+  });
+}
+
+function buildLeaderboard(lvls) {
   const map = {};
-  levels.forEach(lvl => {
-    const orderedVictors = [...lvl.victors].sort((a, b) => {
-      const da = Date.parse(a.date);
-      const db = Date.parse(b.date);
-      const va = Number.isNaN(da) ? Infinity : da;
-      const vb = Number.isNaN(db) ? Infinity : db;
-      return va - vb;
+
+  const getMultiplierForRank = (rank) => {
+    if (!Number.isFinite(rank) || rank <= 0) return 0;
+    const tiers = [1, 0.6, 0.35, 0.2, 0.1];
+    if (rank <= tiers.length) return tiers[rank - 1];
+    return Math.max(0.05, tiers[tiers.length - 1] / (rank - tiers.length + 1));
+  };
+
+  lvls.forEach((lvl) => {
+    const sortedVictors = sortVictorsByDate(lvl.victors);
+    const players = sortedVictors.filter((victor) => {
+      const playerName = String(victor.name || "").trim();
+      return (
+        Boolean(playerName) &&
+        playerName !== "-" &&
+        !/^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(playerName) &&
+        !/^[-+]?\d+(?:\.\d+)?$/.test(playerName)
+      );
     });
 
-    const seenInLevel = new Set();
-    orderedVictors.forEach((v, vi) => {
-      if (!v.name || seenInLevel.has(v.name)) return;
-      seenInLevel.add(v.name);
+    const timeRankings = players
+      .filter((victor) => Number.isFinite(victor.seconds))
+      .sort((a, b) => a.seconds - b.seconds || (a.time || "").localeCompare(b.time || ""));
 
-      if (!map[v.name]) map[v.name] = { name: v.name, points: 0, levels: [] };
+    const attemptRankings = players
+      .filter((victor) => Number.isFinite(victor.attempts) && victor.attempts > 0)
+      .sort((a, b) => a.attempts - b.attempts);
 
-      const recordCount =
-        (vi === 0 ? 1 : 0)
-        + (lvl.wrTime && v.name === lvl.wrTime.name ? 1 : 0)
-        + (lvl.wrAttempts && v.name === lvl.wrAttempts.name ? 1 : 0);
-      const mult = recordMultiplier(recordCount);
+    const timeRanks = new Map();
+    timeRankings.forEach((victor, index) => {
+      timeRanks.set(String(victor.name || "").trim(), index + 1);
+    });
 
-      map[v.name].points += lvl.points * mult;
-      map[v.name].levels.push(lvl.name);
+    const attemptRanks = new Map();
+    attemptRankings.forEach((victor, index) => {
+      attemptRanks.set(String(victor.name || "").trim(), index + 1);
+    });
+
+    players.forEach((victor, index) => {
+      const playerName = String(victor.name || "").trim();
+      if (!playerName) return;
+
+      const timeRank = timeRanks.get(playerName) || Number.POSITIVE_INFINITY;
+      const attemptRank = attemptRanks.get(playerName) || Number.POSITIVE_INFINITY;
+      const rank = Math.min(timeRank, attemptRank, index + 1);
+      const multiplier = getMultiplierForRank(rank);
+
+      if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
+      map[playerName].points += lvl.points * multiplier;
+      map[playerName].levels.push(lvl.name);
     });
   });
+
   return Object.values(map).sort((a, b) => b.points - a.points);
 }
 
@@ -567,6 +610,19 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
   return { expectedSeconds, expectedAttempts };
 }
 
+function recordMultiplier(recordCount) {
+  if (!Number.isFinite(recordCount) || recordCount <= 0) return 1;
+
+  const multipliers = {
+    0: 1,
+    1: 1.15,
+    2: 1.35,
+    3: 1.6
+  };
+
+  return multipliers[Math.min(recordCount, 3)] || 1;
+}
+
 function projectedMultiplierFor(level, expectedSeconds, expectedAttempts) {
   const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
   const timePossible = wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds;
@@ -812,8 +868,6 @@ function reoptimizeRouteWithModifications(
 
   const lockedSet = new Set(lockedLevelIds.map(id => String(id).trim().toLowerCase()));
   const removedSet = new Set(removedLevelIds.map(id => String(id).trim().toLowerCase()));
-
-  // Separate locked levels from recommendations
   const lockedPicks = [];
   const availableForReopt = [];
 
@@ -825,15 +879,9 @@ function reoptimizeRouteWithModifications(
       availableForReopt.push(rec);
     }
   });
-
-  // Calculate points from locked levels
   const lockedPoints = lockedPicks.reduce((sum, rec) => sum + (rec.projectedPoints || 0), 0);
   const lockedTime = lockedPicks.reduce((sum, rec) => sum + (rec.expectedHours || 0), 0);
-
-  // Calculate remaining points needed
   const remainingPointsNeeded = Math.max(0, targetPoints - lockedPoints);
-
-  // If no more points needed, return locked picks only
   if (remainingPointsNeeded <= 0) {
     return {
       time: lockedTime,
@@ -842,8 +890,6 @@ function reoptimizeRouteWithModifications(
       message: "Locked levels meet target",
     };
   }
-
-  // If no levels available for reopt, return best locked picks with fallback message
   if (availableForReopt.length === 0) {
     return {
       time: lockedTime,
@@ -852,11 +898,7 @@ function reoptimizeRouteWithModifications(
       message: "No available levels to reach target",
     };
   }
-
-  // Re-optimize for remaining points
   const reoptResult = optimizeRoute(availableForReopt, remainingPointsNeeded);
-
-  // Combine locked picks with re-optimized picks
   const combinedPicks = [...lockedPicks, ...reoptResult.picks];
   const combinedTime = lockedTime + reoptResult.time;
 

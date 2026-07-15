@@ -270,20 +270,20 @@ function processRawData(data) {
         .filter((item) => item.name)
         .map((item) => {
           const victors = (item.victors || []).map((v) => {
-        const time = v.time || "";
-        const attempts = Number(v.attempts) || null;
-        return {
-          name: v.name || "",
-          date: v.date || "",
-          time,
-          seconds: parseTimeToSeconds(time),
-          attempts,
-          videoUrl: v.video || "",
-          wrTime: time,
-          wrAttempts: attempts !== null ? attempts : 0,
-          victorVideoUrl: v.video || "",
-        };
-      });
+            const time = v.time || "";
+            const attempts = Number(v.attempts) || null;
+            return {
+              name: v.name || "",
+              date: v.date || "",
+              time,
+              seconds: parseTimeToSeconds(time),
+              attempts,
+              videoUrl: v.video || "",
+              wrTime: time,
+              wrAttempts: attempts !== null ? attempts : 0,
+              victorVideoUrl: v.video || "",
+            };
+          });
           return {
             rank: item.rank || "?",
             name: item.name,
@@ -315,27 +315,59 @@ function processRawData(data) {
 
 function buildLeaderboard(lvls) {
   const map = {};
+
+  const getMultiplierForRank = (rank) => {
+    if (!Number.isFinite(rank) || rank <= 0) return 0;
+    const tiers = [1, 0.6, 0.35, 0.2, 0.1];
+    if (rank <= tiers.length) return tiers[rank - 1];
+    return Math.max(0.05, tiers[tiers.length - 1] / (rank - tiers.length + 1));
+  };
+
   lvls.forEach((lvl) => {
     const sortedVictors = sortVictorsByDate(lvl.victors);
+    const players = sortedVictors.filter((victor) => {
+      const playerName = String(victor.name || "").trim();
+      return (
+        Boolean(playerName) &&
+        playerName !== "-" &&
+        !/^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(playerName) &&
+        !/^[-+]?\d+(?:\.\d+)?$/.test(playerName)
+      );
+    });
 
-    sortedVictors.forEach((v, vi) => {
-      const playerName = String(v.name || "").trim();
-      const isPlaceholderPlayer =
-        !playerName ||
-        playerName === "-" ||
-        /^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(playerName) ||
-        /^[-+]?\d+(?:\.\d+)?$/.test(playerName);
-      if (isPlaceholderPlayer) return;
+    const timeRankings = players
+      .filter((victor) => Number.isFinite(victor.seconds))
+      .sort((a, b) => a.seconds - b.seconds || (a.time || "").localeCompare(b.time || ""));
+
+    const attemptRankings = players
+      .filter((victor) => Number.isFinite(victor.attempts) && victor.attempts > 0)
+      .sort((a, b) => a.attempts - b.attempts);
+
+    const timeRanks = new Map();
+    timeRankings.forEach((victor, index) => {
+      timeRanks.set(String(victor.name || "").trim(), index + 1);
+    });
+
+    const attemptRanks = new Map();
+    attemptRankings.forEach((victor, index) => {
+      attemptRanks.set(String(victor.name || "").trim(), index + 1);
+    });
+
+    players.forEach((victor, index) => {
+      const playerName = String(victor.name || "").trim();
+      if (!playerName) return;
+
+      const timeRank = timeRanks.get(playerName) || Number.POSITIVE_INFINITY;
+      const attemptRank = attemptRanks.get(playerName) || Number.POSITIVE_INFINITY;
+      const rank = Math.min(timeRank, attemptRank, index + 1);
+      const multiplier = getMultiplierForRank(rank);
 
       if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
-      let mult = 1;
-      if (vi === 0) mult += 0.15;
-      if (lvl.wrTime && playerName === lvl.wrTime.name) mult += 0.15;
-      if (lvl.wrAttempts && playerName === lvl.wrAttempts.name) mult += 0.15;
-      map[playerName].points += lvl.points * mult;
+      map[playerName].points += lvl.points * multiplier;
       map[playerName].levels.push(lvl.name);
     });
   });
+
   return Object.values(map).sort((a, b) => b.points - a.points);
 }
 
