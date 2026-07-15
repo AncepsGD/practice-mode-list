@@ -919,7 +919,5 @@ function defaultTarget(leaderboard, currentName) {
 
 function targetRankSurpassPoints(leaderboard, targetPlayer) {
   if (!targetPlayer) return 0;
-  const idx = leaderboard.findIndex(p => p.name === targetPlayer.name);
-  if (idx <= 0) return targetPlayer.points;
-  return leaderboard[idx - 1].points;
+  return targetPlayer.points;
 }
