@@ -14,6 +14,60 @@ function setEditingSource(source) {
 
 window.setEditingSource = setEditingSource;
 
+function escapeEditorText(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function normalizeEditorItem(item, fallbackRank = null) {
+  if (!item || typeof item !== "object") {
+    return {
+      rank: fallbackRank,
+      name: "",
+      creators: "",
+      id: "",
+      twoPlayer: "",
+      showcaseVideo: "",
+      image: "",
+      victors: [],
+    };
+  }
+
+  const readString = (...values) => {
+    for (const value of values) {
+      if (typeof value === "string") {
+        const trimmed = value.trim();
+        if (trimmed) return trimmed;
+      }
+    }
+    return "";
+  };
+
+  const creators = readString(item.creators, item.creator, item.author);
+  const id = readString(item.id, item.levelId);
+  const name = readString(item.name, item.levelName);
+  const showcaseVideo = readString(item.showcaseVideo, item.showcaseVideoUrl, item.video, item.showcase);
+  const image = readString(item.image, item.thumbnail, item.thumb, item.levelImage);
+  const twoPlayer = item.twoPlayer === true || item.twoPlayer === "2 Player" || item.twoPlayer === "2P" || item.twoPlayer === "true" || item.is2Player === true ? "2 Player" : "";
+  const rank = Number.isFinite(Number(item.rank)) ? Number(item.rank) : fallbackRank;
+  const victors = Array.isArray(item.victors) ? item.victors : [];
+
+  return {
+    rank,
+    name,
+    creators,
+    id,
+    twoPlayer,
+    showcaseVideo,
+    image,
+    victors,
+  };
+}
+
 function getEditorData() {
   return editingSource === "verifications" ? window.verifications : rawData;
 }
@@ -159,22 +213,23 @@ function renderEditTable() {
   }
 
   tbody.innerHTML = data
-    .map(
-      (item, i) => `
+    .map((item, i) => {
+      const normalizedItem = normalizeEditorItem(item, i + 1);
+      return `
       <tr draggable="true" data-index="${i}" ondragstart="dragStart(event,${i})" ondragover="dragOver(event,${i})" ondrop="dropRow(event,${i})" ondragleave="dragLeave(event)">
         <td><span class="drag-handle">⠿</span></td>
-        <td class="rank-td">${item.rank || "—"}</td>
-        <td class="name-td">${item.name || "—"}</td>
-        <td class="creator-td">${item.creators || "—"}</td>
-        <td class="id-td">${item.id || "—"}</td>
-        <td class="victors-td">${(item.victors || []).length}</td>
+        <td class="rank-td">${normalizedItem.rank ?? "—"}</td>
+        <td class="name-td">${escapeEditorText(normalizedItem.name || "—")}</td>
+        <td class="creator-td">${escapeEditorText(normalizedItem.creators || "—")}</td>
+        <td class="id-td">${escapeEditorText(normalizedItem.id || "—")}</td>
+        <td class="victors-td">${(normalizedItem.victors || []).length}</td>
         <td class="actions-td">
           <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>
           <button class="ebtn ebtn-red ebtn-sm" onclick="deleteLevel(${i})">Delete</button>
         </td>
       </tr>
-    `
-    )
+    `;
+    })
     .join("");
 }
 async function init() {
@@ -292,23 +347,26 @@ function openLevelForm(index) {
       return;
     }
     editingIndex = index;
-    document.getElementById("form-title").textContent = `Editing: ${data[index].name}`;
-    item = data[index];
+    const existingName = normalizeEditorItem(data[index], data.length + 1).name || "Untitled";
+    document.getElementById("form-title").textContent = `Editing: ${existingName}`;
+    item = normalizeEditorItem(data[index], data.length + 1);
   }
 
-  document.getElementById("f-name").value = item.name || "";
-  document.getElementById("f-creators").value = item.creators || "";
-  document.getElementById("f-id").value = item.id || "";
-  document.getElementById("f-rank").value = item.rank || data.length + 1;
-  document.getElementById("f-twoplayer").value = item.twoPlayer || "";
-  document.getElementById("f-showcase").value = item.showcaseVideo || "";
-  document.getElementById("f-image").value = item.image || "";
+  const normalizedItem = normalizeEditorItem(item, data.length + 1);
+
+  document.getElementById("f-name").value = normalizedItem.name || "";
+  document.getElementById("f-creators").value = normalizedItem.creators || "";
+  document.getElementById("f-id").value = normalizedItem.id || "";
+  document.getElementById("f-rank").value = normalizedItem.rank || data.length + 1;
+  document.getElementById("f-twoplayer").value = normalizedItem.twoPlayer || "";
+  document.getElementById("f-showcase").value = normalizedItem.showcaseVideo || "";
+  document.getElementById("f-image").value = normalizedItem.image || "";
 
   document.getElementById("victors-list").innerHTML = "";
-  (item.victors || []).forEach(() => addVictorRow());
+  (normalizedItem.victors || []).forEach(() => addVictorRow());
 
   const victorEntries = document.querySelectorAll(".victor-entry");
-  (item.victors || []).forEach((v, i) => {
+  (normalizedItem.victors || []).forEach((v, i) => {
     if (!victorEntries[i]) return;
     victorEntries[i].querySelector('[data-field="name"]').value = v.name || "";
     victorEntries[i].querySelector('[data-field="date"]').value = v.date || "";

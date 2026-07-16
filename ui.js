@@ -74,6 +74,32 @@ function getLevelCardKey(level, index) {
   return `${baseId || namePart || 'level'}-${namePart || index}-${index}`;
 }
 
+function getLevelMetaMarkup(level) {
+  const metaPills = [];
+  const creatorValue = [level.creator, level.creators, level.author]
+    .map((value) => String(value ?? '').trim())
+    .find(Boolean);
+
+  if (creatorValue) {
+    metaPills.push(`<span class="meta-pill creator">${escapeHTML(creatorValue)}</span>`);
+  }
+
+  if (level.tier) {
+    metaPills.push(`<span class="meta-pill tier">${escapeHTML(level.tier)}</span>`);
+  }
+
+  const idValue = String(level.id ?? '').trim();
+  if (idValue) {
+    metaPills.push(`<span class="meta-pill id">ID: ${escapeHTML(idValue)}</span>`);
+  }
+
+  if (level.is2Player) {
+    metaPills.push('<span class="meta-pill two-player">2-PLAYER</span>');
+  }
+
+  return metaPills.join('');
+}
+
 function getLevelSummaryRows(level) {
   const entries = [];
 
@@ -558,23 +584,27 @@ function renderVerifications(data) {
   const cards = data
     .map((lvl, index) => {
       const cardClass = index % 2 === 0 ? 'level-card variant-a' : 'level-card variant-b';
+      const actionsClass = index % 2 === 0 ? 'actions-col variant-a' : 'actions-col variant-b';
       const levelKey = getLevelCardKey(lvl, index);
       const thumbnailMarkup = getThumbnailMarkup(lvl);
+      const metaMarkup = getLevelMetaMarkup(lvl);
+      const summaryRowsMarkup = getLevelSummaryRows(lvl)
+        .map((row) => `<div class="victor-row"><span class="victor-label">${escapeHTML(row.label || '')}:</span><span class="victor-name">${escapeHTML(row.name || '')}</span><span class="victor-stats">${escapeHTML(row.stat || '')}</span></div>`)
+        .join('');
+
       return `
       <div class="${cardClass}" id="card-${levelKey}">
-        <div class="rank-col"><span class="rank-num">#${lvl.rank}</span></div>
+        <div class="rank-col">
+          <span class="rank-num" aria-hidden="true"></span>
+        </div>
+
         <div class="info-col">
-          <div class="level-name">${lvl.name}</div>
-          <div class="level-meta">
-            <span class="meta-pill creator">${lvl.creator}</span>
-            ${lvl.tier ? `<span class="meta-pill tier">${lvl.tier}</span>` : ''}
-            <span class="meta-pill id">ID: ${lvl.id}</span>
-            ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ''}
-          </div>
-          ${getLevelSummaryRows(lvl).map((row) => `<div class="victor-row"><span class="victor-label">${row.label}:</span><span class="victor-name">${row.name}</span><span class="victor-stats">${row.stat}</span></div>`).join('')}
+          <div class="level-name">${escapeHTML(lvl.name || '')}</div>
+          ${metaMarkup ? `<div class="level-meta">${metaMarkup}</div>` : ''}
+          ${summaryRowsMarkup}
         </div>
         ${thumbnailMarkup}
-        <div class="actions-col">
+        <div class="${actionsClass}">
           ${lvl.showcaseVideoUrl ? `<a class="btn-video" href="${lvl.showcaseVideoUrl}" target="_blank" rel="noopener">Video ↗</a>` : '<span class="btn-video no-link">No video</span>'}
         </div>
       </div>

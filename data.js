@@ -74,8 +74,90 @@ function assignTiers(levelsList) {
 }
 
 function autoThumbnail(explicit) {
-  if (explicit && explicit.trim() !== "") return explicit;
-  return "";
+  if (typeof explicit !== "string") return "";
+  const trimmed = explicit.trim();
+  if (!trimmed) return "";
+
+  const blockedPatterns = [
+    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\//i,
+    /^https?:\/\/(www\.)?youtube-nocookie\.com\//i,
+    /^https?:\/\/(www\.)?vimeo\.com\//i,
+  ];
+
+  if (blockedPatterns.some((pattern) => pattern.test(trimmed))) {
+    return "";
+  }
+
+  return trimmed;
+}
+
+function normalizeLevelEntry(item) {
+  if (!item || typeof item !== "object") {
+    return {
+      rank: null,
+      name: "",
+      thumbnail: "",
+      id: "",
+      points: 0,
+      victors: [],
+      firstVictor: null,
+      creator: "",
+      creators: "",
+      is2Player: false,
+      showcaseVideoUrl: "",
+      tier: "",
+    };
+  }
+
+  const rawVictors = Array.isArray(item.victors) ? item.victors : [];
+  const victors = rawVictors.map((victor) => {
+    const time = typeof victor?.time === "string" ? victor.time : "";
+    const attempts = Number(victor?.attempts);
+    const normalizedAttempts = Number.isFinite(attempts) && attempts > 0 ? attempts : null;
+    const videoUrl = victor?.video || victor?.videoUrl || "";
+    return {
+      name: victor?.name || "",
+      date: victor?.date || "",
+      time,
+      seconds: parseTimeToSeconds(time),
+      attempts: normalizedAttempts,
+      videoUrl,
+      wrTime: time,
+      wrAttempts: normalizedAttempts !== null ? normalizedAttempts : 0,
+      victorVideoUrl: videoUrl,
+    };
+  });
+
+  const creatorsValue = Array.isArray(item.creators)
+    ? item.creators.join(", ")
+    : item.creators || item.creator || item.author || "";
+  const showcaseVideoUrl = item.showcaseVideoUrl || item.showcaseVideo || item.video || "";
+  const imageValue = item.image || item.thumbnail || item.thumb || "";
+  const twoPlayerValue = item.twoPlayer === true || item.twoPlayer === "2 Player" || item.twoPlayer === "2P" || item.twoPlayer === "true" || item.is2Player === true;
+  const rankValue = Number.isFinite(Number(item.rank)) ? Number(item.rank) : null;
+
+  const normalized = {
+    rank: rankValue,
+    name: item.name || item.levelName || "",
+    thumbnail: autoThumbnail(imageValue),
+    id: item.id || item.levelId || "",
+    points: 0,
+    victors,
+    firstVictor: null,
+    creator: creatorsValue,
+    creators: creatorsValue,
+    is2Player: twoPlayerValue,
+    showcaseVideoUrl,
+    tier: "",
+  };
+
+  const sortedVictors = sortVictorsByDate(victors);
+  const firstVictor = sortedVictors.find((victor) => victor.name) || null;
+  if (firstVictor) {
+    normalized.firstVictor = { name: firstVictor.name, date: firstVictor.date };
+  }
+
+  return normalized;
 }
 
 function loadData() {
@@ -123,39 +205,8 @@ function processRawData(data) {
   rawData = data;
 
   const rawLevels = data
-    .filter((item) => item.name)
-    .map((item) => {
-      const victors = (item.victors || []).map((v) => {
-        const time = v.time || "";
-        const attempts = Number(v.attempts) || null;
-        return {
-          name: v.name || "",
-          date: v.date || "",
-          time,
-          seconds: parseTimeToSeconds(time),
-          attempts,
-          videoUrl: v.video || "",
-          wrTime: time,
-          wrAttempts: attempts !== null ? attempts : 0,
-          victorVideoUrl: v.video || "",
-        };
-      });
-      const sortedVictors = sortVictorsByDate(victors);
-      const firstVictor = sortedVictors.find((v) => v.name) || null;
-      return {
-        rank: item.rank,
-        name: item.name,
-        thumbnail: autoThumbnail(item.image),
-        id: item.id,
-        points: 0,
-        victors,
-        firstVictor: firstVictor ? { name: firstVictor.name, date: firstVictor.date } : null,
-        creator: item.creators,
-        is2Player: item.twoPlayer === "2 Player",
-        showcaseVideoUrl: item.showcaseVideo || "",
-        tier: "",
-      };
-    });
+    .filter((item) => item && (item.name || item.levelName || item.id))
+    .map((item) => normalizeLevelEntry(item));
 
   const uniqueLevels = [];
   const seenNames = new Set();
@@ -233,36 +284,8 @@ function processRawData(data) {
     .then((r) => r.json())
     .then((data) => {
       const verificationsList = data
-        .filter((item) => item.name)
-        .map((item) => {
-          const victors = (item.victors || []).map((v) => {
-            const time = v.time || "";
-            const attempts = Number(v.attempts) || null;
-            return {
-              name: v.name || "",
-              date: v.date || "",
-              time,
-              seconds: parseTimeToSeconds(time),
-              attempts,
-              videoUrl: v.video || "",
-              wrTime: time,
-              wrAttempts: attempts !== null ? attempts : 0,
-              victorVideoUrl: v.video || "",
-            };
-          });
-          return {
-            rank: item.rank || "?",
-            name: item.name,
-            thumbnail: autoThumbnail(item.image),
-            id: item.id,
-            points: 0,
-            victors,
-            creator: item.creators,
-            is2Player: item.twoPlayer === "2 Player",
-            showcaseVideoUrl: item.showcaseVideo || "",
-            tier: "",
-          };
-        });
+        .filter((item) => item && (item.name || item.levelName || item.id))
+        .map((item) => normalizeLevelEntry(item));
       try {
         assignTiers(verificationsList);
       } catch (e) {
