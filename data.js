@@ -16,66 +16,8 @@ function fetchWithTimeout(url, timeoutMs = 10000) {
   return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timeout));
 }
 
-function parseTimeToSeconds(timeStr) {
-  if (!timeStr || timeStr.trim() === "") return Infinity;
-  const regex =
-    /(\d+)h\s*(\d+)m\s*(\d+)s|(\d+)h\s*(\d+)s|(\d+)m\s*(\d+)s|(\d+)s|(\d+)h\s*(\d+)m|(\d+)m|(\d+)h/;
-  const match = timeStr.match(regex);
-  if (!match) return Infinity;
-  let h = 0, m = 0, s = 0;
-  if (match[1]) {
-    h = parseInt(match[1], 10);
-    m = parseInt(match[2], 10);
-    s = parseInt(match[3], 10);
-  } else if (match[4]) {
-    h = parseInt(match[4], 10);
-    s = parseInt(match[5], 10);
-  } else if (match[6]) {
-    m = parseInt(match[6], 10);
-    s = parseInt(match[7], 10);
-  } else if (match[8]) {
-    s = parseInt(match[8], 10);
-  } else if (match[9]) {
-    h = parseInt(match[9], 10);
-    m = parseInt(match[10], 10);
-  } else if (match[11]) {
-    m = parseInt(match[11], 10);
-  } else if (match[12]) {
-    h = parseInt(match[12], 10);
-  }
-  return h * 3600 + m * 60 + s;
-}
-
 function getDemonSystem() {
   return typeof window !== "undefined" ? window.demonSystem : null;
-}
-
-function getVictorSortValue(victor) {
-  if (!victor || typeof victor !== "object") return null;
-  const rawDate = victor.date;
-  if (typeof rawDate !== "string" || rawDate.trim() === "") return null;
-  const parsed = Date.parse(rawDate);
-  return Number.isNaN(parsed) ? null : parsed;
-}
-
-function sortVictorsByDate(victors) {
-  return [...victors].sort((a, b) => {
-    const aValue = getVictorSortValue(a);
-    const bValue = getVictorSortValue(b);
-
-    if (aValue == null && bValue == null) return 0;
-    if (aValue == null) return 1;
-    if (bValue == null) return -1;
-    return aValue - bValue;
-  });
-}
-
-function calculatePoints(rank, maxRank) {
-  if (!rank || !maxRank) return 0;
-  const base = 10, top = 360;
-  if (maxRank === 1) return top;
-  const ratio = Math.pow(top / base, 1 / (maxRank - 1));
-  return base * Math.pow(ratio, maxRank - rank);
 }
 
 function getTierByName(name) {
@@ -311,64 +253,6 @@ function processRawData(data) {
       initializeVerifications();
       syncDemonSystemFromRawData();
     });
-}
-
-function buildLeaderboard(lvls) {
-  const map = {};
-
-  const getMultiplierForRank = (rank) => {
-    if (!Number.isFinite(rank) || rank <= 0) return 0;
-    const tiers = [1, 0.6, 0.35, 0.2, 0.1];
-    if (rank <= tiers.length) return tiers[rank - 1];
-    return Math.max(0.05, tiers[tiers.length - 1] / (rank - tiers.length + 1));
-  };
-
-  lvls.forEach((lvl) => {
-    const sortedVictors = sortVictorsByDate(lvl.victors);
-    const players = sortedVictors.filter((victor) => {
-      const playerName = String(victor.name || "").trim();
-      return (
-        Boolean(playerName) &&
-        playerName !== "-" &&
-        !/^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(playerName) &&
-        !/^[-+]?\d+(?:\.\d+)?$/.test(playerName)
-      );
-    });
-
-    const timeRankings = players
-      .filter((victor) => Number.isFinite(victor.seconds))
-      .sort((a, b) => a.seconds - b.seconds || (a.time || "").localeCompare(b.time || ""));
-
-    const attemptRankings = players
-      .filter((victor) => Number.isFinite(victor.attempts) && victor.attempts > 0)
-      .sort((a, b) => a.attempts - b.attempts);
-
-    const timeRanks = new Map();
-    timeRankings.forEach((victor, index) => {
-      timeRanks.set(String(victor.name || "").trim(), index + 1);
-    });
-
-    const attemptRanks = new Map();
-    attemptRankings.forEach((victor, index) => {
-      attemptRanks.set(String(victor.name || "").trim(), index + 1);
-    });
-
-    players.forEach((victor, index) => {
-      const playerName = String(victor.name || "").trim();
-      if (!playerName) return;
-
-      const timeRank = timeRanks.get(playerName) || Number.POSITIVE_INFINITY;
-      const attemptRank = attemptRanks.get(playerName) || Number.POSITIVE_INFINITY;
-      const rank = Math.min(timeRank, attemptRank, index + 1);
-      const multiplier = getMultiplierForRank(rank);
-
-      if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
-      map[playerName].points += lvl.points * multiplier;
-      map[playerName].levels.push(lvl.name);
-    });
-  });
-
-  return Object.values(map).sort((a, b) => b.points - a.points);
 }
 
 function getDatasetSignature() {

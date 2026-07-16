@@ -1,38 +1,54 @@
 const LOCAL_KEY = "pml_edit_data";
 
-function parseTimeToSeconds(timeStr) {
-  if (!timeStr || typeof timeStr !== "string") return null;
-  const s = timeStr.trim();
-  if (!s) return null;
-
-  const parts = {};
-  const tokenRegex = /(\d+)\s*([hms])/gi;
-  let match;
-
-  while ((match = tokenRegex.exec(s)) !== null) {
-    const unit = match[2].toLowerCase();
-    if (parts[unit] !== undefined) return null;
-    parts[unit] = parseInt(match[1], 10);
+function getTierByName(name) {
+  if (typeof name !== "string") return "";
+  const normalized = name.toLowerCase();
+  const mapping = {
+    "WEINERclub": "Novice",
+    "Rainstorm": "Intermediate",
+    "Sakupen End": "Advanced",
+    "Under The Sea": "Insane",
+    "kataTARTARUS": "Legendary",
+    "Bloodiest Water": "Master",
+    "Six Paths of Pain (Unnerfed)": "Divine",
+    "Sashozz Geometry": "Transcendent"
+  };
+  for (const key in mapping) {
+    if (normalized.includes(key.toLowerCase())) return mapping[key];
   }
-
-  if (Object.keys(parts).length === 0) return null;
-
-  if ("h" in parts && "m" in parts && parts["m"] >= 60) return null;
-  if (("h" in parts || "m" in parts) && "s" in parts && parts["s"] >= 60) return null;
-
-  const h = parts["h"] || 0;
-  const m = parts["m"] || 0;
-  const sec = parts["s"] || 0;
-  const total = h * 3600 + m * 60 + sec;
-  return total > 0 ? total : null;
+  return "";
 }
 
-function calculatePoints(rank, maxRank) {
-  if (!rank || !maxRank) return 0;
-  const base = 10, top = 360;
-  if (maxRank === 1) return top;
-  const ratio = Math.pow(top / base, 1 / (maxRank - 1));
-  return base * Math.pow(ratio, maxRank - rank);
+function assignTiers(levelsList) {
+  if (!Array.isArray(levelsList) || !levelsList.length) return;
+  const markers = [
+    { key: "WEINERclub", tier: "Novice" },
+    { key: "Rainstorm", tier: "Intermediate" },
+    { key: "Sakupen End", tier: "Advanced" },
+    { key: "Under The Sea", tier: "Insane" },
+    { key: "kataTARTARUS", tier: "Legendary" },
+    { key: "Bloodiest Water", tier: "Master" },
+    { key: "Six Paths of Pain (Unnerfed)", tier: "Divine" },
+    { key: "Kingdom of Miracalis (Unnerfed)", tier: "Transcendent" }
+  ];
+
+  const names = levelsList.map((l) => (l.name || "").toLowerCase());
+  const found = markers
+    .map((m) => ({ ...m, index: names.findIndex((n) => n.includes(m.key.toLowerCase())) }))
+    .filter((m) => m.index !== -1)
+    .sort((a, b) => a.index - b.index);
+
+  found.forEach((marker, i) => {
+    const start = marker.index;
+    const end = i + 1 < found.length ? found[i + 1].index : levelsList.length;
+    for (let k = start; k < end; k++) {
+      levelsList[k].tier = marker.tier;
+    }
+  });
+
+  levelsList.forEach((lvl) => {
+    if (!lvl.tier) lvl.tier = getTierByName(lvl.name);
+  });
 }
 
 function loadLevelsJson() {
@@ -72,6 +88,7 @@ function processRawData(data) {
         rank: item.rank,
         name: item.name,
         id: item.id,
+        tier: item.tier || item.tierName || "",
         points: 0,
         victors,
         creator: item.creators,
@@ -90,6 +107,8 @@ function processRawData(data) {
     if (nameKey) seenNames.add(nameKey);
     uniqueLevels.push(level);
   });
+
+  assignTiers(uniqueLevels);
 
   const maxRank = Math.max(...uniqueLevels.map(l => l.rank), 1);
   uniqueLevels.forEach(l => {
@@ -129,84 +148,6 @@ function processRawData(data) {
   });
 
   return uniqueLevels;
-}
-
-function getVictorSortValue(victor) {
-  if (!victor || typeof victor !== "object") return null;
-  const rawDate = victor.date;
-  if (typeof rawDate !== "string" || rawDate.trim() === "") return null;
-  const parsed = Date.parse(rawDate);
-  return Number.isNaN(parsed) ? null : parsed;
-}
-
-function sortVictorsByDate(victors) {
-  return [...victors].sort((a, b) => {
-    const aValue = getVictorSortValue(a);
-    const bValue = getVictorSortValue(b);
-
-    if (aValue == null && bValue == null) return 0;
-    if (aValue == null) return 1;
-    if (bValue == null) return -1;
-    return aValue - bValue;
-  });
-}
-
-function buildLeaderboard(lvls) {
-  const map = {};
-
-  const getMultiplierForRank = (rank) => {
-    if (!Number.isFinite(rank) || rank <= 0) return 0;
-    const tiers = [1, 0.6, 0.35, 0.2, 0.1];
-    if (rank <= tiers.length) return tiers[rank - 1];
-    return Math.max(0.05, tiers[tiers.length - 1] / (rank - tiers.length + 1));
-  };
-
-  lvls.forEach((lvl) => {
-    const sortedVictors = sortVictorsByDate(lvl.victors);
-    const players = sortedVictors.filter((victor) => {
-      const playerName = String(victor.name || "").trim();
-      return (
-        Boolean(playerName) &&
-        playerName !== "-" &&
-        !/^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(playerName) &&
-        !/^[-+]?\d+(?:\.\d+)?$/.test(playerName)
-      );
-    });
-
-    const timeRankings = players
-      .filter((victor) => Number.isFinite(victor.seconds))
-      .sort((a, b) => a.seconds - b.seconds || (a.time || "").localeCompare(b.time || ""));
-
-    const attemptRankings = players
-      .filter((victor) => Number.isFinite(victor.attempts) && victor.attempts > 0)
-      .sort((a, b) => a.attempts - b.attempts);
-
-    const timeRanks = new Map();
-    timeRankings.forEach((victor, index) => {
-      timeRanks.set(String(victor.name || "").trim(), index + 1);
-    });
-
-    const attemptRanks = new Map();
-    attemptRankings.forEach((victor, index) => {
-      attemptRanks.set(String(victor.name || "").trim(), index + 1);
-    });
-
-    players.forEach((victor, index) => {
-      const playerName = String(victor.name || "").trim();
-      if (!playerName) return;
-
-      const timeRank = timeRanks.get(playerName) || Number.POSITIVE_INFINITY;
-      const attemptRank = attemptRanks.get(playerName) || Number.POSITIVE_INFINITY;
-      const rank = Math.min(timeRank, attemptRank, index + 1);
-      const multiplier = getMultiplierForRank(rank);
-
-      if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
-      map[playerName].points += lvl.points * multiplier;
-      map[playerName].levels.push(lvl.name);
-    });
-  });
-
-  return Object.values(map).sort((a, b) => b.points - a.points);
 }
 
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
@@ -623,7 +564,83 @@ function recordMultiplier(recordCount) {
   return multipliers[Math.min(recordCount, 3)] || 1;
 }
 
-function projectedMultiplierFor(level, expectedSeconds, expectedAttempts) {
+function getTimeScore(playerSeconds, bestSeconds) {
+  if (!Number.isFinite(playerSeconds) || playerSeconds <= 0) return 0;
+  if (!Number.isFinite(bestSeconds) || bestSeconds <= 0) return 0;
+  return Math.min(bestSeconds / playerSeconds, 1);
+}
+
+function getTierCompletionMultiplier(completions) {
+  if (!Number.isFinite(completions) || completions <= 0) return 1;
+  const tierCompletionDecay = typeof TIER_COMPLETION_DECAY !== "undefined"
+    ? TIER_COMPLETION_DECAY
+    : 0.95;
+  return Math.pow(tierCompletionDecay, completions);
+}
+
+function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, playerName, completions) {
+  const completionMultiplier = getTierCompletionMultiplier(completions);
+  const firstVictorBonus = typeof FIRST_VICTOR_BONUS !== "undefined" ? FIRST_VICTOR_BONUS : 0.1;
+  const fastestCompletionBonus = typeof FASTEST_COMPLETION_BONUS !== "undefined" ? FASTEST_COMPLETION_BONUS : 0.1;
+  const lowestAttemptsBonus = typeof LOWEST_ATTEMPTS_BONUS !== "undefined" ? LOWEST_ATTEMPTS_BONUS : 0.1;
+
+  const syntheticPlayer = {
+    name: String(playerName || "projected-player").trim() || "projected-player",
+    seconds: Number.isFinite(expectedSeconds) && expectedSeconds > 0 ? expectedSeconds : null,
+    attempts: Number.isFinite(expectedAttempts) && expectedAttempts > 0 ? expectedAttempts : null,
+    date: "0000-01-01T00:00:00.000Z",
+  };
+
+  const validEntries = (level.victors || [])
+    .filter(victor => {
+      const candidateName = String(victor && victor.name ? victor.name : "").trim();
+      return Boolean(candidateName) && candidateName !== "-" && !/^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(candidateName) && !/^[-+]?\d+(?:\.\d+)?$/.test(candidateName);
+    })
+    .map(victor => ({
+      ...victor,
+      name: String(victor.name || "").trim(),
+      seconds: Number.isFinite(victor.seconds) ? victor.seconds : null,
+      attempts: Number.isFinite(victor.attempts) && victor.attempts > 0 ? victor.attempts : null,
+    }));
+
+  const players = [...validEntries, syntheticPlayer];
+  const sortedPlayers = sortVictorsByDate(players);
+
+  const timeRankings = sortedPlayers
+    .filter(victor => Number.isFinite(victor.seconds))
+    .sort((a, b) => {
+      if (a.seconds !== b.seconds) return a.seconds - b.seconds;
+      const aDate = getVictorSortValue(a);
+      const bDate = getVictorSortValue(b);
+      if (aDate == null && bDate == null) return 0;
+      if (aDate == null) return 1;
+      if (bDate == null) return -1;
+      return aDate - bDate;
+    });
+
+  const attemptRankings = sortedPlayers
+    .filter(victor => Number.isFinite(victor.attempts) && victor.attempts > 0)
+    .sort((a, b) => a.attempts - b.attempts);
+
+  const bestTimeSeconds = timeRankings.length ? Number(timeRankings[0].seconds) : null;
+  const timeScore = bestTimeSeconds !== null && Number.isFinite(expectedSeconds) && expectedSeconds > 0
+    ? getTimeScore(expectedSeconds, bestTimeSeconds)
+    : 0;
+
+  const projectedIndex = sortedPlayers.findIndex(victor => String(victor.name || "").trim() === syntheticPlayer.name);
+  const timeRank = timeRankings.findIndex(victor => String(victor.name || "").trim() === syntheticPlayer.name) + 1;
+  const attemptRank = attemptRankings.findIndex(victor => String(victor.name || "").trim() === syntheticPlayer.name) + 1;
+
+  const bonusMultiplier = 1 +
+    (projectedIndex === 0 ? firstVictorBonus : 0) +
+    (timeRank === 1 ? fastestCompletionBonus : 0) +
+    (attemptRank === 1 ? lowestAttemptsBonus : 0);
+
+  const leaderboardStyleMultiplier = timeScore * bonusMultiplier * completionMultiplier;
+  if (Number.isFinite(leaderboardStyleMultiplier) && leaderboardStyleMultiplier > 0) {
+    return leaderboardStyleMultiplier;
+  }
+
   const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
   const timePossible = wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds;
 
@@ -642,7 +659,28 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
 
   components._playerName = player.name;
 
-  const recommendations = levels
+  const orderedLevels = [...levels].sort((a, b) => {
+    const tierA = (a.tier || "unknown").toLowerCase();
+    const tierB = (b.tier || "unknown").toLowerCase();
+    if (tierA !== tierB) return tierA.localeCompare(tierB);
+    return (b.points || 0) - (a.points || 0);
+  });
+
+  const playerTierCompletions = new Map();
+  const completionCountsByLevel = new Map();
+
+  orderedLevels.forEach((lvl) => {
+    const tierKey = `${(lvl.tier || "unknown").toLowerCase()}|${player.name}`;
+    const currentCompletions = playerTierCompletions.get(tierKey) || 0;
+    if (!beaten.has(lvl.name)) {
+      completionCountsByLevel.set(lvl.name, currentCompletions);
+    }
+    if (beaten.has(lvl.name)) {
+      playerTierCompletions.set(tierKey, currentCompletions + 1);
+    }
+  });
+
+  const recommendations = orderedLevels
     .filter(lvl => !beaten.has(lvl.name))
     .map(lvl => {
       const basePoints = lvl.points || 0;
@@ -659,8 +697,9 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
         return null;
       }
 
+      const completions = completionCountsByLevel.get(lvl.name) || 0;
       const expectedHours = expectedSeconds / 3600;
-      const projectedMult = projectedMultiplierFor(lvl, expectedSeconds, expectedAttempts);
+      const projectedMult = projectedMultiplierFor(lvl, expectedSeconds, expectedAttempts, player.name, completions);
       const projectedPoints = basePoints * projectedMult;
       const expectedValue = projectedPoints / expectedHours;
       const wrTimeSeconds = lvl.wrTime ? parseTimeToSeconds(lvl.wrTime.time) : null;
