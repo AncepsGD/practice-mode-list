@@ -29,6 +29,27 @@ function normalizeLevelSearchText(value) {
   return String(value || '').trim().toLowerCase();
 }
 
+function getLevelCreatorValue(level) {
+  const candidates = [level?.creators, level?.creator, level?.author];
+
+  for (const value of candidates) {
+    if (Array.isArray(value)) {
+      const joined = value
+        .map((entry) => String(entry ?? '').trim())
+        .filter(Boolean)
+        .join(', ');
+
+      if (joined) return joined;
+      continue;
+    }
+
+    const text = String(value ?? '').trim();
+    if (text) return text;
+  }
+
+  return '';
+}
+
 function getLevelNameMatchScore(levelName, query) {
   const normalizedLevelName = normalizeLevelSearchText(levelName);
   const normalizedQuery = normalizeLevelSearchText(query);
@@ -53,7 +74,7 @@ function getRankedLevelMatches(query, sourceLevels) {
   const matches = sourceLevels
     .map((lvl) => {
       const nameScore = getLevelNameMatchScore(lvl.name, normalizedQuery);
-      const creatorScore = normalizeLevelSearchText(lvl.creator).includes(normalizedQuery) ? 300 : 0;
+      const creatorScore = normalizeLevelSearchText(getLevelCreatorValue(lvl)).includes(normalizedQuery) ? 300 : 0;
       const idScore = String(lvl.id).includes(normalizedQuery) ? 200 : 0;
       const score = Math.max(nameScore, creatorScore, idScore);
       return { lvl, score };
@@ -76,9 +97,7 @@ function getLevelCardKey(level, index) {
 
 function getLevelMetaMarkup(level) {
   const metaPills = [];
-  const creatorValue = [level.creator, level.creators, level.author]
-    .map((value) => String(value ?? '').trim())
-    .find(Boolean);
+  const creatorValue = getLevelCreatorValue(level);
 
   if (creatorValue) {
     metaPills.push(`<span class="meta-pill creator">${escapeHTML(creatorValue)}</span>`);
@@ -254,7 +273,7 @@ function renderLevels(data) {
           <div class="level-name">${escapeHTML(lvl.name)}</div>
 
           <div class="level-meta">
-            <span class="meta-pill creator">${escapeHTML(lvl.creator)}</span>
+            ${getLevelCreatorValue(lvl) ? `<span class="meta-pill creator">${escapeHTML(getLevelCreatorValue(lvl))}</span>` : ''}
             ${lvl.tier ? `<span class="meta-pill tier">${escapeHTML(lvl.tier)}</span>` : ''}
             <span class="meta-pill id">ID: ${lvl.id}</span>
             ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ''}
