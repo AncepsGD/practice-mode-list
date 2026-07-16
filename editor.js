@@ -1,14 +1,116 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
 let dataReady = false;
+let editorHasLocalChanges = false;
+let editorLastSavedSnapshot = null;
+let editorConflictNoticeShown = false;
+let editorBaselineData = null;
 
 function setEditingSource(source) {
   editingSource = source;
-
+  syncEditorConflictState();
   renderEditTable();
 }
 
 window.setEditingSource = setEditingSource;
+
+function getEditorData() {
+  return editingSource === "verifications" ? window.verifications : rawData;
+}
+
+function getEditorDataSourceName() {
+  return editingSource === "verifications" ? "verifications.json" : "levels.json";
+}
+
+function getEditorDraftState() {
+  const currentData = getEditorData();
+  const baseline = editorBaselineData || editorRemoteBaseline;
+  const currentSignature = EditorStateUtils.buildDataSignature(currentData || []);
+  const baselineSignature = baseline ? baseline.signature : null;
+  return {
+    currentData,
+    currentSignature,
+    baselineSignature,
+    hasConflict: Boolean(baselineSignature && baselineSignature !== currentSignature),
+  };
+}
+
+function syncEditorConflictState() {
+  const state = getEditorDraftState();
+  editorBaselineData = editorRemoteBaseline;
+  editorLastSavedSnapshot = editorRemoteBaseline;
+  editorHasLocalChanges = Boolean(state.baselineSignature && state.baselineSignature !== state.currentSignature);
+  editorConflictNoticeShown = false;
+}
+
+function showEditorConflictNotice() {
+  if (editorConflictNoticeShown) return;
+  editorConflictNoticeShown = true;
+  const message = `This editor has unsaved local changes and ${getEditorDataSourceName()} was changed elsewhere. Publishing now may overwrite the newer file.`;
+  alert(message);
+}
+
+async function checkEditorConflictBeforeExit() {
+  const state = getEditorDraftState();
+  if (state.hasConflict) {
+    showEditorConflictNotice();
+    return false;
+  }
+
+  const source = editingSource === "verifications" ? "verifications" : "levels";
+  const baseline = editorRemoteBaseline || editorBaselineData;
+  if (!baseline) return true;
+
+  try {
+    const response = await fetchWithTimeout(source === "verifications" ? "verifications.json" : "levels.json");
+    const remoteData = await response.json();
+    const remoteSignature = EditorStateUtils.buildDataSignature(remoteData || []);
+    if (remoteSignature !== baseline.signature) {
+      showEditorConflictNotice();
+      return false;
+    }
+  } catch (err) {
+    console.warn("Unable to verify editor source freshness", err);
+  }
+
+  return true;
+}
+
+function persistEditorDraftState() {
+  const currentData = getEditorData();
+  const snapshot = EditorStateUtils.createEditorSnapshot(currentData || [], editingSource);
+  editorLastSavedSnapshot = snapshot;
+  editorBaselineData = snapshot;
+  localStorage.setItem("pml_editor_draft_state", JSON.stringify(snapshot));
+}
+
+function restoreEditorDraftState() {
+  const raw = localStorage.getItem("pml_editor_draft_state");
+  if (!raw) return;
+  try {
+    const snapshot = JSON.parse(raw);
+    editorLastSavedSnapshot = snapshot;
+    editorBaselineData = snapshot;
+    return snapshot;
+  } catch (err) {
+    return null;
+  }
+}
+
+async function refreshEditorRemoteBaseline() {
+  const source = editingSource === "verifications" ? "verifications" : "levels";
+  const url = source === "verifications" ? "verifications.json" : "levels.json";
+
+  try {
+    const response = await fetchWithTimeout(url);
+    const remoteData = await response.json();
+    persistEditorRemoteBaseline(remoteData || [], source);
+    return remoteData;
+  } catch (err) {
+    console.warn(`Unable to refresh ${url} baseline`, err);
+    return null;
+  }
+}
 
 function openEditMenu() {
   const modal = document.getElementById("edit-modal");
@@ -17,6 +119,11 @@ function openEditMenu() {
   document.getElementById("reset-notice").classList.remove("show");
 
   showEditView("list");
+  loadEditorRemoteBaseline();
+  restoreEditorDraftState();
+  refreshEditorRemoteBaseline().finally(() => {
+    syncEditorConflictState();
+  });
 
   if (!dataReady) {
     setTimeout(renderEditTable, 50);
@@ -25,7 +132,11 @@ function openEditMenu() {
   }
 }
 
-function closeEditMenu() {
+async function closeEditMenu() {
+  const canClose = await checkEditorConflictBeforeExit();
+  if (!canClose) {
+    return;
+  }
   document.getElementById("edit-modal").classList.remove("open");
   document.body.style.overflow = "";
 }
@@ -36,7 +147,7 @@ function showEditView(name) {
 }
 
 function renderEditTable() {
-  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const data = getEditorData();
 
   const tbody = document.getElementById("edit-table-body");
 
@@ -87,11 +198,21 @@ async function init() {
 
   }
 
+  loadEditorRemoteBaseline();
+  restoreEditorDraftState();
+  refreshEditorRemoteBaseline().finally(() => {
+    syncEditorConflictState();
+  });
   processRawData(data);
   dataReady = true;
 }
 
 init();
+window.addEventListener("beforeunload", () => {
+  persistCurrentEditorData();
+  persistEditorDraftState();
+});
+
 function dragStart(e, index) {
   dragSrcIndex = index;
   e.currentTarget.classList.add("dragging");
@@ -112,7 +233,7 @@ function dragLeave(e) {
 function dropRow(e, targetIndex) {
   e.preventDefault();
   if (dragSrcIndex === null || dragSrcIndex === targetIndex) return;
-  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const data = getEditorData();
   const moved = data.splice(dragSrcIndex, 1)[0];
   data.splice(targetIndex, 0, moved);
   data.forEach((item, i) => {
@@ -123,11 +244,13 @@ function dropRow(e, targetIndex) {
     r.classList.remove("drag-over");
   });
   dragSrcIndex = null;
+  persistEditorDraftState();
+  saveAndRefresh({ flash: false, skipRender: true });
   renderEditTable();
 }
 
 function deleteLevel(index) {
-  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const data = getEditorData();
   if (index < 0 || index >= data.length) {
     alert("Level not found");
     return;
@@ -137,6 +260,7 @@ function deleteLevel(index) {
   data.forEach((item, i) => {
     item.rank = i + 1;
   });
+  persistEditorDraftState();
   saveAndRefresh();
   renderEditTable();
 }
@@ -147,7 +271,7 @@ function openLevelForm(index) {
 
   document.getElementById("form-delete-btn").style.display = isNew ? "none" : "";
 
-  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const data = getEditorData();
 
   let item;
   if (isNew) {
@@ -254,7 +378,7 @@ function saveLevelForm() {
     return;
   }
 
-  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const data = getEditorData();
   const existingIndex = data.findIndex(l => l.id === id);
   const currentIndex = editingIndex;
 
@@ -293,6 +417,7 @@ function saveLevelForm() {
     d.rank = i + 1;
   });
 
+  persistEditorDraftState();
   saveAndRefresh();
   showEditView("list");
   renderEditTable();
@@ -300,7 +425,7 @@ function saveLevelForm() {
 
 function deleteCurrentLevel() {
   if (editingIndex === -1) return;
-  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const data = getEditorData();
   if (editingIndex < 0 || editingIndex >= data.length) {
     alert("Level not found.");
     return;
@@ -310,6 +435,7 @@ function deleteCurrentLevel() {
   data.forEach((item, i) => {
     item.rank = i + 1;
   });
+  persistEditorDraftState();
   saveAndRefresh();
   showEditView("list");
   renderEditTable();

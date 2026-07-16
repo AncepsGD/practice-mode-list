@@ -1,11 +1,13 @@
 const LOCAL_KEY = "pml_edit_data";
 const MODEL_STATE_KEY = "pml_demon_system_state";
+const EDITOR_REMOTE_BASELINE_KEY = "pml_editor_remote_baseline";
 let rawData = [];
 let levels = [];
 window.verifications = [];
 let leaderboard = [];
 let maxScore = 1;
 let editingIndex = -1;
+let editorRemoteBaseline = null;
 
 function syncDemonSystemFromRawData() {
 }
@@ -89,6 +91,32 @@ function loadData() {
       console.error("Failed to load levels.json", err);
       return [];
     });
+}
+
+function cloneEditorValue(value) {
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch (err) {
+    return value;
+  }
+}
+
+function persistEditorRemoteBaseline(data, source = "levels") {
+  const snapshot = EditorStateUtils.createEditorSnapshot(data || [], source);
+  editorRemoteBaseline = snapshot;
+  localStorage.setItem(EDITOR_REMOTE_BASELINE_KEY, JSON.stringify(snapshot));
+  return snapshot;
+}
+
+function loadEditorRemoteBaseline() {
+  const raw = localStorage.getItem(EDITOR_REMOTE_BASELINE_KEY);
+  if (!raw) return null;
+  try {
+    editorRemoteBaseline = JSON.parse(raw);
+    return editorRemoteBaseline;
+  } catch (err) {
+    return null;
+  }
 }
 
 function processRawData(data) {
@@ -241,6 +269,7 @@ function processRawData(data) {
         console.error("Failed to assign tiers to verifications", e);
       }
       window.verifications = verificationsList;
+      persistEditorRemoteBaseline(verificationsList, "verifications");
       initializeVerifications();
       syncDemonSystemFromRawData();
     })
@@ -324,19 +353,30 @@ function loadSavedModelState() {
   }
 }
 
-function saveAndRefresh() {
+function persistCurrentEditorData() {
   if (editingSource === "verifications") {
     localStorage.setItem("pml_verifications_data", JSON.stringify(window.verifications));
   } else {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(rawData));
   }
+}
 
-  if (editingSource === "verifications") {
-    initializeVerifications();
-  } else {
-    processRawData(rawData);
+function saveAndRefresh(options = {}) {
+  const { flash = true, skipRender = false } = options;
+
+  persistCurrentEditorData();
+
+  if (!skipRender) {
+    if (editingSource === "verifications") {
+      initializeVerifications();
+    } else {
+      processRawData(rawData);
+    }
   }
-  flashSaved();
+
+  if (flash) {
+    flashSaved();
+  }
 }
 
 function resetToOriginal() {
