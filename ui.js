@@ -191,8 +191,6 @@ function getThumbnailMarkup(level) {
   thumbnailCache.set(level.id, markup);
   return markup;
 }
-
-
 function renderLevels(data) {
   const container = document.getElementById('levels-container');
 
@@ -211,7 +209,7 @@ function renderLevels(data) {
     </div>
     ${data.map((lvl, index) => {
       const levelKey = getLevelCardKey(lvl, index);
-      const cardClass = index % 2 ? 
+      const cardClass = index % 2 ?
         'level-card variant-b' :
         'level-card variant-a';
 
@@ -316,8 +314,6 @@ function renderLevels(data) {
   initExpandHandlers();
   initLazyThumbnails();
 }
-
-
 function initExpandHandlers() {
   const container = document.getElementById('levels-container');
 
@@ -329,8 +325,6 @@ function initExpandHandlers() {
     toggleExpand(button.dataset.level);
   };
 }
-
-
 function initLazyThumbnails() {
   const images = document.querySelectorAll('.lazy-thumb');
 
@@ -356,8 +350,6 @@ function initLazyThumbnails() {
 
   images.forEach(img => thumbnailObserver.observe(img));
 }
-
-
 function tryThumbnailFallback(img) {
   let urls = [];
 
@@ -408,20 +400,61 @@ function renderLeaderboard(data) {
 
   function countryCodeToEmoji(code) {
     if (!code || typeof code !== 'string' || code.length !== 2) return '';
-    // Regional indicator symbols start at 0x1F1E6
+
     const chars = code.toUpperCase().split('');
     return chars.map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
   }
 
   body.innerHTML = data
-    .map(p => `
-      <tr class="leaderboard-row">
-        <td class="rank-td">${leaderboard.indexOf(p) + 1}</td>
-        <td><span class="player-name">${(window.playerCountries && window.playerCountries[p.name]) ? countryCodeToEmoji(window.playerCountries[p.name]) + ' ' : ''}${escapeHTML(p.name)}</span></td>
-        <td><span class="score-val">${p.points.toFixed(1)}</span></td>
-        <td><div class="completion-tags">${p.levels.map(lvl => `<span class="ctag">${lvl}</span>`).join('')}</div></td>
-      </tr>
-    `)
+    .map((p) => {
+      const completionDetails = Array.isArray(p.completionDetails) && p.completionDetails.length
+        ? p.completionDetails
+        : (p.levels || []).map((name) => ({ name, points: 0, tier: 'unknown' }));
+      const completionCount = p.completionCount ?? completionDetails.length;
+      const hardestCompletion = p.hardestCompletion || completionDetails.reduce((best, current) => {
+        if (!best) return current;
+        return (Number(current.points) || 0) > (Number(best.points) || 0) ? current : best;
+      }, null);
+      const hardestLabel = hardestCompletion
+        ? `<span class="hardest-completion-primary">${escapeHTML(hardestCompletion.name)}</span><span class="hardest-completion-secondary">${escapeHTML(hardestCompletion.tier || 'Unknown')} · ${Number(hardestCompletion.points || 0).toFixed(0)} pts</span>`
+        : '<span class="hardest-completion-primary">None</span>';
+      const orderedLevelsMarkup = completionDetails.map((entry) => `
+        <li class="completion-order-item">
+          <span class="completion-order-name">${escapeHTML(entry.name)}</span>
+          <span class="completion-order-meta">${escapeHTML(entry.tier || 'unknown')} · ${Number(entry.points || 0).toFixed(0)} pts</span>
+        </li>
+      `).join('');
+      return `
+        <tr class="leaderboard-row">
+          <td class="rank-td">${data.indexOf(p) + 1}</td>
+          <td><span class="player-name">${(window.playerCountries && window.playerCountries[p.name]) ? countryCodeToEmoji(window.playerCountries[p.name]) + ' ' : ''}${escapeHTML(p.name)}</span></td>
+          <td><span class="score-val">${p.points.toFixed(1)}</span></td>
+          <td class="completion-cell">
+            <div class="completion-summary-row">
+              <div class="completion-stat-pill">
+                <span class="completion-stat-label">Completed</span>
+                <strong>${completionCount}</strong>
+              </div>
+              <div class="completion-stat-pill">
+                <span class="completion-stat-label">Hardest</span>
+                <strong>${hardestLabel}</strong>
+              </div>
+              <details class="completion-dropdown completion-dropdown--inline">
+                <summary>
+                  <span class="completion-summary">
+                    <span class="completion-count">View completions</span>
+                    <span class="completion-pill">▾</span>
+                  </span>
+                </summary>
+                <div class="completion-dropdown-body">
+                  <ol class="completion-order-list">${orderedLevelsMarkup}</ol>
+                </div>
+              </details>
+            </div>
+          </td>
+        </tr>
+      `;
+    })
     .join('');
 }
 

@@ -74,6 +74,9 @@ function getTierCompletionMultiplier(completions) {
 function buildLeaderboard(lvls) {
     const map = {};
     const playerTierCompletions = new Map();
+    const levelOrder = new Map(
+        [...lvls].map((lvl, index) => [String(lvl.name || "").trim().toLowerCase(), index])
+    );
     const orderedLevels = [...lvls].sort((a, b) => {
         const tierA = (a.tier || "unknown").toLowerCase();
         const tierB = (b.tier || "unknown").toLowerCase();
@@ -137,13 +140,48 @@ function buildLeaderboard(lvls) {
                 (timeRank === 1 ? FASTEST_COMPLETION_BONUS : 0) +
                 (attemptRank === 1 ? LOWEST_ATTEMPTS_BONUS : 0);
 
-            if (!map[playerName]) map[playerName] = { name: playerName, points: 0, levels: [] };
+            if (!map[playerName]) {
+                map[playerName] = {
+                    name: playerName,
+                    points: 0,
+                    levels: [],
+                    completionDetails: [],
+                };
+            }
+
+            const levelName = String(lvl.name || "").trim();
             map[playerName].points += lvl.points * timeScore * bonusMultiplier * completionMultiplier;
-            map[playerName].levels.push(lvl.name);
+            map[playerName].levels.push(levelName);
+            map[playerName].completionDetails.push({
+                name: levelName,
+                points: Number(lvl.points) || 0,
+                tier: String(lvl.tier || "unknown").trim() || "unknown",
+                listIndex: levelOrder.get(levelName.toLowerCase()) ?? Number.MAX_SAFE_INTEGER,
+            });
 
             playerTierCompletions.set(tierKey, completions + 1);
         });
     });
 
-    return Object.values(map).sort((a, b) => b.points - a.points);
+    return Object.values(map)
+        .map((player) => {
+            const completionDetails = [...player.completionDetails]
+                .sort((a, b) => (a.listIndex ?? Number.MAX_SAFE_INTEGER) - (b.listIndex ?? Number.MAX_SAFE_INTEGER));
+            const completionCount = completionDetails.length;
+            const hardestCompletion = completionDetails.reduce((best, current) => {
+                if (!best) return current;
+                return (Number(current.points) || 0) > (Number(best.points) || 0) ? current : best;
+            }, null);
+            const averageCompletionValue = completionCount ? player.points / completionCount : 0;
+
+            return {
+                ...player,
+                levels: completionDetails.map((entry) => entry.name),
+                completionDetails,
+                completionCount,
+                hardestCompletion,
+                averageCompletionValue,
+            };
+        })
+        .sort((a, b) => b.points - a.points);
 }
