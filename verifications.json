@@ -1,480 +1,339 @@
 [
   {
-    "rank": 1,
     "name": "Kingdom of Miracalis",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/77452038/high",
+    "image": "https://levelthumbs.prevter.me/image/77452038/high",
     "id": "77452038",
-    "points": 0,
-    "victors": [],
-    "creator": "gdmiracle",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/5SEAH3ifzAQ"
+    "creators": "gdmiracle",
+    "twoPlayer": false,
+    "showcaseVideo": "https://youtu.be/5SEAH3ifzAQ"
   },
   {
-    "rank": 2,
     "name": "The Twilight Zone",
-    "thumbnail": "https://youtu.be/JXVVe2ClNeQ",
+    "image": "https://youtu.be/JXVVe2ClNeQ",
     "id": "137338835",
-    "points": 0,
-    "victors": [],
-    "creator": "IiIOpTiCaLIiI",
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "creators": "IiIOpTiCaLIiI",
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 3,
     "name": "Zobros Worst Fear",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/82669598/high",
+    "image": "https://levelthumbs.prevter.me/image/82669598/high",
     "id": "82669598",
-    "points": 0,
-    "victors": [],
-    "creator": "Senpranton15",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/ZzNkYe7WDCc"
+    "creators": "Senpranton15",
+    "twoPlayer": false,
+    "showcaseVideo": "https://youtu.be/ZzNkYe7WDCc"
   },
   {
-    "rank": 4,
     "name": "Death Dimension II",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/75493555",
+    "image": "https://levelthumbs.prevter.me/image/75493555",
     "id": "75493555",
-    "points": 0,
-    "victors": [],
-    "creator": "IUltraVenomI, 070 & more",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/eW5gY8R9rOc"
+    "creators": "IUltraVenomI, 070 & more",
+    "twoPlayer": false,
+    "showcaseVideo": "https://youtu.be/eW5gY8R9rOc"
   },
   {
-    "rank": 5,
     "name": "Silent Engine I",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/131039918",
+    "image": "https://levelthumbs.prevter.me/image/131039918",
     "id": "131039918",
-    "points": 0,
-    "victors": [],
-    "creator": "Cyrillic",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/wd5pfC4ktMc"
+    "creators": "Cyrillic",
+    "twoPlayer": false,
+    "showcaseVideo": "https://youtu.be/wd5pfC4ktMc"
   },
   {
-    "rank": 6,
     "name": "The Final Circle",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/136774556/high",
+    "image": "https://levelthumbs.prevter.me/image/136774556/high",
     "id": "136774556",
-    "points": 0,
-    "victors": [],
-    "creator": "Quartious",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/kbU3-LqYvLQ"
+    "creators": "Quartious",
+    "twoPlayer": false,
+    "showcaseVideo": "https://youtu.be/kbU3-LqYvLQ"
   },
   {
-    "rank": 8,
     "name": "supreme Machine",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/127761173",
+    "image": "https://levelthumbs.prevter.me/image/127761173",
     "id": "127761173",
-    "points": 0,
-    "victors": [],
-    "creator": "IiIOpTiCaLIiI",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/plW9H-yBfoE"
+    "creators": "IiIOpTiCaLIiI",
+    "twoPlayer": false,
+    "showcaseVideo": "https://youtu.be/plW9H-yBfoE"
   },
   {
-    "rank": 9,
     "name": "Minus World",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/111168619",
+    "image": "https://levelthumbs.prevter.me/image/111168619",
     "id": "111168619",
-    "points": 0,
-    "victors": [],
-    "creator": "icedcave, InVisible",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/eUYtHhjgang"
+    "creators": "icedcave, InVisible",
+    "twoPlayer": false,
+    "showcaseVideo": "https://youtu.be/eUYtHhjgang"
   },
   {
-    "rank": 12,
     "name": "Silent Skrillex v2",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/66626147",
+    "image": "https://levelthumbs.prevter.me/image/66626147",
     "id": "66626147",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 13,
     "name": "Satanic Heaven",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/126075805",
+    "image": "https://levelthumbs.prevter.me/image/126075805",
     "id": "126075805",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 15,
     "name": "Satanic Hell",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/63837087",
+    "image": "https://levelthumbs.prevter.me/image/63837087",
     "id": "63837087",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 16,
     "name": "sakupen circles v2",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/78178046",
+    "image": "https://levelthumbs.prevter.me/image/78178046",
     "id": "78178046",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 17,
     "name": "Something Satanic",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/125533818",
+    "image": "https://levelthumbs.prevter.me/image/125533818",
     "id": "125533818",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 18,
     "name": "Silent Processing",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/126380017",
+    "image": "https://levelthumbs.prevter.me/image/126380017",
     "id": "126380017",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 19,
     "name": "ultra silent circles",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/15846790",
+    "image": "https://levelthumbs.prevter.me/image/15846790",
     "id": "15846790",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 20,
     "name": "Silent Factory",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/80307362",
+    "image": "https://levelthumbs.prevter.me/image/80307362",
     "id": "80307362",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 21,
     "name": "deathwish",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/71237223",
+    "image": "https://levelthumbs.prevter.me/image/71237223",
     "id": "71237223",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 22,
     "name": "Chaotic World",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/105119769",
+    "image": "https://levelthumbs.prevter.me/image/105119769",
     "id": "105119769",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 24,
     "name": "Fredrick Survive II",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/133738923",
+    "image": "https://levelthumbs.prevter.me/image/133738923",
     "id": "133738923",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 26,
     "name": "Stereo Madness",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/138931146",
+    "image": "https://levelthumbs.prevter.me/image/138931146",
     "id": "138931146",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 27,
     "name": "Darkened Despair",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/129488649",
+    "image": "https://levelthumbs.prevter.me/image/129488649",
     "id": "129488649",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 28,
     "name": "how i see the ppll",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/138846647",
+    "image": "https://levelthumbs.prevter.me/image/138846647",
     "id": "138846647",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 29,
     "name": "Schafs (No Invis, 1p)",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/138850959",
+    "image": "https://levelthumbs.prevter.me/image/138850959",
     "id": "138850959",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 30,
     "name": "Rogideon",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/73718930",
+    "image": "https://levelthumbs.prevter.me/image/73718930",
     "id": "73718930",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 32,
     "name": "SaTans Circles X",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/133421543",
+    "image": "https://levelthumbs.prevter.me/image/133421543",
     "id": "133421543",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 33,
     "name": "Colorful Twilight",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/121449919",
+    "image": "https://levelthumbs.prevter.me/image/121449919",
     "id": "121449919",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 34,
     "name": "Provocation Circles",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/128528150",
+    "image": "https://levelthumbs.prevter.me/image/128528150",
     "id": "128528150",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 35,
     "name": "NU Silent Skrillex",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/68648954",
+    "image": "https://levelthumbs.prevter.me/image/68648954",
     "id": "68648954",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 36,
     "name": "MINUSclub",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/65476277",
+    "image": "https://levelthumbs.prevter.me/image/65476277",
     "id": "65476277",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 38,
     "name": "ZOINK NEVER CLEAR (Unnerfed)",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/136891983",
+    "image": "https://levelthumbs.prevter.me/image/136891983",
     "id": "136891983",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 39,
     "name": "Linquited",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/82450218",
+    "image": "https://levelthumbs.prevter.me/image/82450218",
     "id": "82450218",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 41,
     "name": "Hell to play II",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/118880869",
+    "image": "https://levelthumbs.prevter.me/image/118880869",
     "id": "118880869",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 42,
     "name": "rare",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/96496947",
+    "image": "https://levelthumbs.prevter.me/image/96496947",
     "id": "96496947",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 44,
     "name": "Calcium Hydroxide",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/92269608",
+    "image": "https://levelthumbs.prevter.me/image/92269608",
     "id": "92269608",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 45,
     "name": "Virdian",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/66137361",
+    "image": "https://levelthumbs.prevter.me/image/66137361",
     "id": "66137361",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 46,
     "name": "howconfusingisthelvl",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/92922586",
+    "image": "https://levelthumbs.prevter.me/image/92922586",
     "id": "92922586",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 47,
     "name": "Evolution Theory",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/135353937",
+    "image": "https://levelthumbs.prevter.me/image/135353937",
     "id": "135353937",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 49,
     "name": "the hell conjuror",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/66333636",
+    "image": "https://levelthumbs.prevter.me/image/66333636",
     "id": "66333636",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 51,
     "name": "Omega Circles II",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/83717092",
+    "image": "https://levelthumbs.prevter.me/image/83717092",
     "id": "83717092",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 52,
     "name": "Rainbow Bridge",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/71833434",
+    "image": "https://levelthumbs.prevter.me/image/71833434",
     "id": "71833434",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 53,
     "name": "silent landscape",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/116337387",
+    "image": "https://levelthumbs.prevter.me/image/116337387",
     "id": "116337387",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 54,
     "name": "Deadly Knock",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/63708222",
+    "image": "https://levelthumbs.prevter.me/image/63708222",
     "id": "63708222",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 55,
     "name": "silent toxic",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/116081172",
+    "image": "https://levelthumbs.prevter.me/image/116081172",
     "id": "116081172",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 58,
     "name": "Back On Track",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/80481445",
+    "image": "https://levelthumbs.prevter.me/image/80481445",
     "id": "80481445",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 60,
     "name": "Art is Dead",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/124241631",
+    "image": "https://levelthumbs.prevter.me/image/124241631",
     "id": "124241631",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 61,
     "name": "Satanic Palm Mutes",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/80088674",
+    "image": "https://levelthumbs.prevter.me/image/80088674",
     "id": "80088674",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   },
   {
-    "rank": 62,
     "name": "Divine Geometry II",
-    "thumbnail": "https://levelthumbs.prevter.me/thumbnail/18598734",
+    "image": "https://levelthumbs.prevter.me/image/18598734",
     "id": "18598734",
-    "points": 0,
-    "victors": [],
-    "is2Player": false,
-    "showcaseVideoUrl": ""
+    "twoPlayer": false,
+    "showcaseVideo": ""
   }
 ]
