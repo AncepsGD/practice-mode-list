@@ -130,15 +130,11 @@ function processRawData(data) {
     });
 
   const uniqueLevels = [];
-  const seenIds = new Set();
   const seenNames = new Set();
 
   rawLevels.forEach((level) => {
-    const idKey = String(level.id || "").trim();
     const nameKey = String(level.name || "").trim().toLowerCase();
-    if (idKey && seenIds.has(idKey)) return;
     if (nameKey && seenNames.has(nameKey)) return;
-    if (idKey) seenIds.add(idKey);
     if (nameKey) seenNames.add(nameKey);
     uniqueLevels.push(level);
   });
