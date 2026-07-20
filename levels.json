@@ -2216,9 +2216,9 @@
     "image": "",
     "victors": [
       {
-        "name": "fufu!",
+        "name": "Shween",
         "date": "2024-11-01",
-        "time": "1h 10m 25s",
+        "time": "",
         "attempts": 8238,
         "video": "https://youtu.be/zS7JgCPOf0Q?t=554"
       },
@@ -3008,6 +3008,13 @@
         "time": "32m 6s",
         "attempts": 2007,
         "video": "https://youtu.be/ilUViNHiZf4"
+      },
+      {
+        "name": "Aiden2644",
+        "date": "2026-07-19",
+        "time": "49m 25s",
+        "attempts": 3138,
+        "video": "https://youtu.be/w1znTaGlsY4"
       }
     ]
   },
@@ -3228,6 +3235,13 @@
         "time": "7m 24s",
         "attempts": 2542,
         "video": "https://youtu.be/MFHc1-6wtpI"
+      },
+      {
+        "name": "Stereogamer992",
+        "date": "2026-07-20",
+        "time": "19m 41s",
+        "attempts": 12617,
+        "video": "https://youtu.be/8s4PVrd9l2A"
       }
     ]
   },
@@ -4626,6 +4640,24 @@
   },
   {
     "rank": 165,
+    "name": "statera challenge",
+    "creators": "RMGD",
+    "id": "145028160",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-20",
+        "time": "13m 21s",
+        "attempts": 1206,
+        "video": "https://youtu.be/9KX8xhi8t5g"
+      }
+    ]
+  },
+  {
+    "rank": 166,
     "name": "Paralox",
     "creators": "Spamdrew",
     "id": "136427413",
@@ -4650,7 +4682,7 @@
     ]
   },
   {
-    "rank": 166,
+    "rank": 167,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
