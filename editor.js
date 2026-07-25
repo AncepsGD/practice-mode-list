@@ -300,7 +300,7 @@ function dropRow(e, targetIndex) {
   });
   dragSrcIndex = null;
   persistEditorDraftState();
-  saveAndRefresh({ flash: false, skipRender: true });
+  saveAndRefresh({ flash: false });
   renderEditTable();
 }
 
