@@ -1,5 +1,6 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
+let editingIndex = -1;
 let dataReady = false;
 let editorHasLocalChanges = false;
 let editorLastSavedSnapshot = null;
