@@ -3,6 +3,7 @@ const MODEL_STATE_KEY = "pml_demon_system_state";
 const EDITOR_REMOTE_BASELINE_KEY = "pml_editor_remote_baseline";
 let rawData = [];
 let levels = [];
+window.editorSessionActive = false;
 window.verifications = [];
 let leaderboard = [];
 let maxScore = 1;
@@ -377,6 +378,7 @@ function loadSavedModelState() {
 }
 
 function persistCurrentEditorData() {
+  if (!editorSessionActive) return;
   if (editingSource === "verifications") {
     localStorage.setItem("pml_verifications_data", JSON.stringify(window.verifications));
   } else {

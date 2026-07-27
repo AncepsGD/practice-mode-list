@@ -167,6 +167,7 @@ async function refreshEditorRemoteBaseline() {
 }
 
 function openEditMenu() {
+  editorSessionActive = true;
   const modal = document.getElementById("edit-modal");
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
