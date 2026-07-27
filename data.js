@@ -378,7 +378,7 @@ function loadSavedModelState() {
 }
 
 function persistCurrentEditorData() {
-  if (!editorSessionActive) return;
+  if (!window.editorSessionActive) return;
   if (editingSource === "verifications") {
     localStorage.setItem("pml_verifications_data", JSON.stringify(window.verifications));
   } else {
