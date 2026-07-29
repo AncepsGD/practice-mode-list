@@ -552,6 +552,38 @@
   },
   {
     "rank": 25,
+    "name": "Pricey Circles",
+    "creators": "Bukkk",
+    "id": "79833207",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=aRvd0FLCSnM",
+    "image": "",
+    "victors": [
+      {
+        "name": "mewj13",
+        "date": "2026-03-30",
+        "time": "58m 32s",
+        "attempts": 19294,
+        "video": "https://youtu.be/hhUG-NuP0p8"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-07-15",
+        "time": "1h 7m 37s",
+        "attempts": 52894,
+        "video": "https://youtu.be/ohATnuFHkPk"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-07-25",
+        "time": "54m 32s",
+        "attempts": 23944,
+        "video": "https://youtu.be/SMqmTGIK_4M"
+      }
+    ]
+  },
+  {
+    "rank": 26,
     "name": "The Disturbance",
     "creators": "cheapyyyyy",
     "id": "142171106",
@@ -600,38 +632,6 @@
         "time": "58m 23s",
         "attempts": 5523,
         "video": "https://youtu.be/8QjIGV0DFsE"
-      }
-    ]
-  },
-  {
-    "rank": 26,
-    "name": "Pricey Circles",
-    "creators": "Bukkk",
-    "id": "79833207",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=aRvd0FLCSnM",
-    "image": "",
-    "victors": [
-      {
-        "name": "mewj13",
-        "date": "2026-03-30",
-        "time": "58m 32s",
-        "attempts": 19294,
-        "video": "https://youtu.be/hhUG-NuP0p8"
-      },
-      {
-        "name": "Anceps",
-        "date": "2026-07-15",
-        "time": "1h 7m 37s",
-        "attempts": 52894,
-        "video": "https://youtu.be/ohATnuFHkPk"
-      },
-      {
-        "name": "RMGD",
-        "date": "2026-07-25",
-        "time": "54m 32s",
-        "attempts": 23944,
-        "video": "https://youtu.be/SMqmTGIK_4M"
       }
     ]
   },
