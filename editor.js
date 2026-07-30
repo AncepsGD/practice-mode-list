@@ -210,6 +210,7 @@ function renderEditTable() {
     const msg = editingSource === "verifications" ? "No verifications loaded" : "No data loaded";
     tbody.innerHTML =
       `<tr><td colspan="9" class="empty-state" style="padding:24px">${msg}</td></tr>`;
+    renderPublishBanner();
     return;
   }
 
@@ -232,7 +233,54 @@ function renderEditTable() {
     `;
     })
     .join("");
+
+  renderPublishBanner();
 }
+
+function getUnpublishedChangeState() {
+  const data = getEditorData();
+  const currentSignature = EditorStateUtils.buildDataSignature(data || []);
+  const lastPublished = getLastPublishedSignature();
+  return {
+    currentSignature,
+    lastPublished,
+    hasUnpublished: lastPublished !== null && lastPublished !== currentSignature,
+  };
+}
+
+function ensurePublishBanner() {
+  let banner = document.getElementById("publish-status-banner");
+  if (banner) return banner;
+  const modal = document.getElementById("edit-modal");
+  if (!modal) return null;
+  banner = document.createElement("div");
+  banner.id = "publish-status-banner";
+  banner.style.cssText =
+    "position:sticky;top:0;z-index:9999;padding:12px 16px;font-weight:700;text-align:center;";
+  modal.prepend(banner);
+  return banner;
+}
+
+function renderPublishBanner() {
+  const banner = ensurePublishBanner();
+  if (!banner) return;
+  const state = getUnpublishedChangeState();
+  if (state.hasUnpublished) {
+    banner.style.background = "#b91c1c";
+    banner.style.color = "#fff";
+    banner.textContent =
+      "⚠ UNPUBLISHED CHANGES — nothing here is live. Click Export, then paste over the file in your repo and deploy.";
+    banner.style.display = "block";
+  } else {
+    banner.style.background = "#166534";
+    banner.style.color = "#fff";
+    banner.textContent =
+      "No changes since last export. Still confirm the file was actually redeployed — export alone does not publish.";
+    banner.style.display = "block";
+  }
+}
+window.renderPublishBanner = renderPublishBanner;
+
 async function init() {
   const data = await loadData();
 
@@ -264,10 +312,54 @@ async function init() {
 }
 
 init();
-window.addEventListener("beforeunload", () => {
+window.addEventListener("beforeunload", (e) => {
   persistCurrentEditorData();
   persistEditorDraftState();
+  if (window.editorSessionActive && getUnpublishedChangeState().hasUnpublished) {
+    e.preventDefault();
+    e.returnValue = "";
+  }
 });
+
+function openEditMenu() {
+  window.editorSessionActive = true;
+  const modal = document.getElementById("edit-modal");
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+  document.getElementById("reset-notice").classList.remove("show");
+
+  showEditView("list");
+  loadEditorRemoteBaseline();
+  restoreEditorDraftState();
+  refreshEditorRemoteBaseline().finally(() => {
+    syncEditorConflictState();
+    renderPublishBanner();
+  });
+
+  if (!dataReady) {
+    setTimeout(renderEditTable, 50);
+  } else {
+    renderEditTable();
+  }
+}
+
+async function closeEditMenu() {
+  const canClose = await checkEditorConflictBeforeExit();
+  if (!canClose) {
+    return;
+  }
+
+  const publishState = getUnpublishedChangeState();
+  if (publishState.hasUnpublished) {
+    const leaveAnyway = confirm(
+      "You have changes that were never exported and published. Closing now means these edits exist only in this browser and no one else will ever see them unless you export and deploy them.\n\nClose anyway and lose the publish reminder?"
+    );
+    if (!leaveAnyway) return;
+  }
+
+  document.getElementById("edit-modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
 
 function dragStart(e, index) {
   dragSrcIndex = index;

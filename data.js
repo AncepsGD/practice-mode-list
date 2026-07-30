@@ -425,9 +425,28 @@ function resetToOriginal() {
     });
 }
 
+const LAST_PUBLISHED_KEY = "pml_editor_last_published_signature";
+
+function getLastPublishedSignature() {
+  const stored = localStorage.getItem(LAST_PUBLISHED_KEY);
+  if (stored) return stored;
+  return editorRemoteBaseline ? editorRemoteBaseline.signature : null;
+}
+
+function setLastPublishedSignature(signature) {
+  localStorage.setItem(LAST_PUBLISHED_KEY, signature);
+}
+
 function exportJSON() {
   const data = editingSource === "verifications" ? window.verifications : rawData;
-  navigator.clipboard.writeText(JSON.stringify(data, null, 2)).then(() => {
+  const json = JSON.stringify(data, null, 2);
+  const signature = EditorStateUtils.buildDataSignature(data || []);
+  navigator.clipboard.writeText(json).then(() => {
+    setLastPublishedSignature(signature);
+    if (typeof window.renderPublishBanner === "function") {
+      window.renderPublishBanner();
+    }
     flashCopied();
+    alert(`Copied ${getEditorDataSourceName()} to clipboard.\n\nThis is NOT live yet. Paste it over the file in your repo and deploy — visitors are still seeing the old version until you do.`);
   });
 }
