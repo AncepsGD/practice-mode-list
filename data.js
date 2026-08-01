@@ -80,9 +80,9 @@ function autoThumbnail(explicit) {
   if (!trimmed) return "";
 
   const blockedPatterns = [
-    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\//i,
-    /^https?:\/\/(www\.)?youtube-nocookie\.com\//i,
-    /^https?:\/\/(www\.)?vimeo\.com\//i,
+    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\
+      /^ https ?: \/\/(www\.)?youtube-nocookie\.com\
+        /^ https ?: \/\/(www\.)?vimeo\.com\
   ];
 
   if (blockedPatterns.some((pattern) => pattern.test(trimmed))) {
@@ -162,15 +162,20 @@ function normalizeLevelEntry(item) {
 }
 
 function loadData() {
-  const saved = localStorage.getItem(LOCAL_KEY);
-  if (saved) {
-    try {
-      return Promise.resolve(JSON.parse(saved));
-    } catch (e) { }
-  }
   return fetchWithTimeout("levels.json")
-    .then((r) => r.json())
+    .then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
     .catch((err) => {
+      const saved = localStorage.getItem(LOCAL_KEY);
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.warn("Failed to restore levels.json from local storage", e);
+        }
+      }
       console.error("Failed to load levels.json", err);
       return [];
     });

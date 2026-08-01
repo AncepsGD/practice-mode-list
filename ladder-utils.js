@@ -52,18 +52,24 @@ function assignTiers(levelsList) {
 }
 
 function loadLevelsJson() {
-  const saved = localStorage.getItem(LOCAL_KEY);
-  if (saved) {
-    try {
-      return Promise.resolve(JSON.parse(saved));
-    } catch (_) { }
-  }
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
   return fetch("levels.json", { signal: controller.signal })
     .then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
+    })
+    .catch((err) => {
+      const saved = localStorage.getItem(LOCAL_KEY);
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (_) {
+
+        }
+      }
+      console.error("Failed to load levels.json for ladder view", err);
+      return [];
     })
     .finally(() => clearTimeout(timeout));
 }
