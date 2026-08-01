@@ -183,6 +183,13 @@
         "time": "1h 18m 57s",
         "attempts": 178920,
         "video": "https://www.youtube.com/watch?v=4yOfjBfZMJc"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-07-30",
+        "time": "2h 23m 23s",
+        "attempts": 44920,
+        "video": "https://www.youtube.com/playlist?list=PLXzCoAsRYODc"
       }
     ]
   },
@@ -308,6 +315,20 @@
         "time": "2h 3m 14s",
         "attempts": 258546,
         "video": "https://youtu.be/NW2UFtC9DKA?si=ufhiCgqqu09jhErc"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-07-29",
+        "time": "2h 46m 3s",
+        "attempts": 55930,
+        "video": "https://www.youtube.com/playlist?list=PLF3Os0tUnSis"
+      },
+      {
+        "name": "kangerlussuaq",
+        "date": "2026-07-30",
+        "time": "2h 32m 5s",
+        "attempts": 265516,
+        "video": "https://www.youtube.com/playlist?list=PLZbVOdfFhT7w"
       }
     ]
   },
@@ -2641,6 +2662,13 @@
         "time": "22m 46s",
         "attempts": 1962,
         "video": "https://youtu.be/TlYa2DQwl-Y?si=OeFc5CRo03WIbG1f"
+      },
+      {
+        "name": "Stereogamer992",
+        "date": "2026-07-30",
+        "time": "22m 19s",
+        "attempts": 10211,
+        "video": "https://youtu.be/patJkOFYOf8"
       }
     ]
   },
