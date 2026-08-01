@@ -80,9 +80,9 @@ function autoThumbnail(explicit) {
   if (!trimmed) return "";
 
   const blockedPatterns = [
-    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\
-      /^ https ?: \/\/(www\.)?youtube-nocookie\.com\
-        /^ https ?: \/\/(www\.)?vimeo\.com\
+    /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\//i,
+    /^https?:\/\/(www\.)?youtube-nocookie\.com\//i,
+    /^https?:\/\/(www\.)?vimeo\.com\//i,
   ];
 
   if (blockedPatterns.some((pattern) => pattern.test(trimmed))) {
