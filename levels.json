@@ -1010,13 +1010,6 @@
         "video": "https://youtu.be/nORp22JJ6Yk"
       },
       {
-        "name": "niroi",
-        "date": "2026-06-21",
-        "time": "33m 34s",
-        "attempts": 901,
-        "video": "https://youtu.be/aEMcRGwqupQ"
-      },
-      {
         "name": "Redacted Player #3",
         "date": "2022-??-??",
         "time": "",
@@ -1029,6 +1022,13 @@
         "time": "1h 19m 7s",
         "attempts": 4386,
         "video": "https://youtu.be/T455vHlalKk"
+      },
+      {
+        "name": "niroi",
+        "date": "2026-08-01",
+        "time": "28m 31s",
+        "attempts": 706,
+        "video": "https://youtu.be/33DYr42jpsc"
       }
     ]
   },
