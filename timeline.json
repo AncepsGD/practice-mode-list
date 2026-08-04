@@ -1,42 +1,119 @@
 [
   {
-    "name": "Sashozz Geometry",
-    "creators": "Unknown",
+    "name": "The Twilight Zone (Unnerfed)",
+    "creators": "IiIOpTiCaLIiI",
+    "date": "2026-07-26",
+    "id": "137338835",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/Qmt-Dn_nsC8",
+    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/137338835.png"
+  },
+  {
+    "name": "Kingdom of Miracalis (Unnerfed)",
+    "creators": "gdmiracle",
+    "id": "74840910",
+    "date": "2026-07-11",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/playlist?list=PLG-Xdz7n06u0",
+    "image": ""
+  },
+  {
+    "name": "NEVERENDING NIGHTMARE",
+    "creators": "Izofdoors, mewj13",
+    "id": "144446226",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=je45e8yTErI",
+    "image": "",
+    "date": "2026-07-08"
+  },
+  {
+    "name": "Marine Geometry",
+    "creators": "Cyrillic, kalonikada",
+    "id": "138842938",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/5sjPEN8GgeI",
+    "image": "",
     "date": "2026-04-25"
   },
   {
-    "name": "Minus World (Old, 1p, Skip)",
-    "creators": "Unknown",
+    "name": "Minus World (Old, 1P, Skip)",
+    "creators": "icedcave",
+    "id": "139501388",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/minusworld.webp",
     "date": "2026-04-02"
   },
   {
-    "name": "Six Path of Pain (Unnerfed, Fixed)",
-    "creators": "Unknown",
+    "name": "Six Paths of Pain (Unnerfed)",
+    "creators": "GionniBlood",
+    "id": "139504391",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=4yOfjBfZMJc",
+    "image": "https://github.com/AncepsGD/practice-mode-list/blob/main/thumbnails/Six Paths of Pain (Unnerfed).webp?raw=true",
     "date": "2025-11-21"
   },
   {
     "name": "Divine Geometry",
-    "creators": "Unknown",
+    "creators": "Cyrillic",
+    "id": "13973215",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/v02Xxxze7Xc",
+    "image": "",
     "date": "2025-11-06"
   },
   {
-    "name": "Silent Skrillex",
-    "creators": "Unknown",
-    "date": "2025-04-07"
+    "name": "Infernoplex (MegaHack Layout)",
+    "creators": "cheapyyyyy",
+    "id": "141735424",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "https://youtu.be/FLeS4LOky5A?si=oQ_elDbHAWM6wvuo",
+    "date": "2023-??-??"
   },
   {
-    "name": "Silent Circles",
-    "creators": "Unknown",
-    "date": "2024-01-05"
+    "name": "The Disturbance (MegaHack Layout)",
+    "creators": "cheapyyyyy",
+    "id": "142171106",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "date": "2023-??-??"
   },
   {
-    "name": "Kingdom of Miracalis (2022 15cps Fix)",
-    "creators": "Unknown",
+    "name": "Kingdom of Miracalis (2022 15 CPS Fix)",
+    "creators": "gdmiracle",
+    "id": "127839106",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
     "date": "2022-09-30"
   },
   {
+    "name": "Lucidia (Unnerfed)",
+    "creators": "2A0L0I3, AuraXalaiv",
+    "id": "80523469",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "date": "2021-??-??"
+  },
+  {
+    "name": "Six Paths of Pain (Old)",
+    "creators": "GionniBlood",
+    "id": "63117908",
+    "twoPlayer": "",
+    "showcaseVideo": "https://discord.com/channels/1436100643830890508/1436100644648783936/1526274392198479933",
+    "image": "",
+    "date": "2020-08-03"
+  },
+  {
     "name": "Silent Circles (No Dual)",
-    "creators": "Unknown",
+    "creators": "Cyrillic, TheRealSailent",
+    "id": "127906018",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=8zX8e_nWsbw",
+    "image": "https://levelthumbs.prevter.me/thumbnail/12823778",
     "date": "2016-07-29"
   },
   {

@@ -124,7 +124,7 @@ function normalizeLevelEntry(item) {
       attempts: normalizedAttempts,
       videoUrl,
       wrTime: time,
-      wrAttempts: normalizedAttempts !== null ? normalizedAttempts : 0,
+      wrAttempts: normalizedAttempts,
       victorVideoUrl: videoUrl,
     };
   });
@@ -331,8 +331,11 @@ function createModelLevelRows() {
 
     const victors = Array.isArray(item.victors) ? item.victors : [];
     const attemptValues = victors
-      .map((v) => Number(v.attempts) || 0)
-      .filter((n) => n > 0)
+      .map((v) => {
+        const attempts = Number(v.attempts);
+        return Number.isFinite(attempts) && attempts > 0 ? attempts : null;
+      })
+      .filter((n) => n !== null)
       .sort((a, b) => a - b);
     const medianAttempt = attemptValues.length
       ? attemptValues[Math.floor(attemptValues.length / 2)]

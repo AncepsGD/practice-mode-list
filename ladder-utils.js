@@ -98,6 +98,13 @@ function processRawData(data) {
         points: 0,
         victors,
         creator: item.creators,
+        is2Player: Boolean(
+          item.twoPlayer === true ||
+          item.twoPlayer === "2 Player" ||
+          item.twoPlayer === "2P" ||
+          item.twoPlayer === "true" ||
+          item.is2Player === true
+        ),
       };
     });
 
@@ -534,11 +541,17 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
 
   const modelPredictedSeconds = predictPlayerTime(level, components && components.model ? components.model : null);
   if (modelPredictedSeconds !== null) {
-    const expectedAttempts = baseAttempts && baseAttempts > 0
-      ? baseAttempts * (components && components.attempts ? components.attempts : 1)
-      : null;
-    const baselineSeconds = baseTime && baseTime > 0 ? baseTime : 7200;
-    return { expectedSeconds: Math.max(baselineSeconds, modelPredictedSeconds), expectedAttempts };
+    const MAX_REASONABLE_SECONDS = 10 * 365 * 24 * 3600; // 10 years
+    const isReasonablePrediction = Number.isFinite(modelPredictedSeconds) && modelPredictedSeconds > 0 && modelPredictedSeconds < MAX_REASONABLE_SECONDS;
+    if (!isReasonablePrediction) {
+      console.warn("Rejected unreasonable model prediction for level:", level.name, { modelPredictedSeconds });
+    } else {
+      const expectedAttempts = baseAttempts && baseAttempts > 0
+        ? baseAttempts * (components && components.attempts ? components.attempts : 1)
+        : null;
+      const baselineSeconds = baseTime && baseTime > 0 ? baseTime : 7200;
+      return { expectedSeconds: Math.max(baselineSeconds, modelPredictedSeconds), expectedAttempts };
+    }
   }
 
   const diffMod = difficultyModifier(level, maxPoints);
@@ -737,6 +750,7 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
       return {
         id: lvl.id || lvl.name,
         level: lvl.name,
+        rank: lvl.rank || null,
         basePoints,
         projectedMult,
         projectedPoints,

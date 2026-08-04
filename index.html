@@ -228,10 +228,21 @@
 
   <div class="save-flash" id="save-flash">✓ SAVED</div>
 
+  <div id="video-modal" class="video-modal" hidden>
+    <div class="video-modal-backdrop" data-close-video-modal></div>
+    <div class="video-modal-shell" role="dialog" aria-modal="true" aria-label="Video player">
+      <button class="video-modal-close" type="button" aria-label="Close video player" data-close-video-modal>✕</button>
+      <div class="video-modal-frame-wrap">
+        <iframe id="video-modal-iframe" class="video-modal-frame" title="Embedded video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
   <script src="format.js"></script>
   <script src="leaderboard-utils.js"></script>
   <script src="data.js"></script>
   <script src="editor-state-utils.js"></script>
+  <script src="video-player.js"></script>
   <script src="ui.js"></script>
   <script src="editor.js"></script>
 </body>

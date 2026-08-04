@@ -139,10 +139,13 @@ function getLevelSummaryRows(level) {
   }
 
   if (level.wrAttempts && level.wrAttempts.name) {
+    const attemptsValue = level.wrAttempts.attempts != null
+      ? `${level.wrAttempts.attempts} atts`
+      : '—';
     entries.push({
       name: level.wrAttempts.name,
       label: 'WR Attempts',
-      value: `${level.wrAttempts.attempts} atts`,
+      value: attemptsValue,
     });
   }
 
@@ -236,6 +239,57 @@ function getThumbnailMarkup(level) {
   thumbnailCache.set(level.id, markup);
   return markup;
 }
+function openVideoModal(url) {
+  const modal = document.getElementById('video-modal');
+  const iframe = document.getElementById('video-modal-iframe');
+  if (!modal || !iframe) return;
+
+  const embedUrl = window.getEmbedVideoUrl ? window.getEmbedVideoUrl(url) : '';
+  if (!embedUrl) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+    return;
+  }
+
+  iframe.src = embedUrl;
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+  const modal = document.getElementById('video-modal');
+  const iframe = document.getElementById('video-modal-iframe');
+  if (!modal || !iframe) return;
+
+  modal.hidden = true;
+  iframe.removeAttribute('src');
+  document.body.style.overflow = '';
+}
+
+function bindVideoModalEvents() {
+  if (window.__videoModalEventsBound) return;
+  window.__videoModalEventsBound = true;
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-open-video-modal]');
+    if (trigger) {
+      event.preventDefault();
+      openVideoModal(trigger.dataset.openVideoModal);
+    }
+
+    const closer = event.target.closest('[data-close-video-modal]');
+    if (closer) {
+      event.preventDefault();
+      closeVideoModal();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeVideoModal();
+    }
+  });
+}
+
 function renderLevels(data) {
   const container = document.getElementById('levels-container');
 
@@ -257,6 +311,8 @@ function renderLevels(data) {
       const cardClass = index % 2 ?
         'level-card variant-b' :
         'level-card variant-a';
+      const rankValue = Number(lvl.rank);
+      const rankClass = rankValue === 1 ? 'rank-gold' : rankValue === 2 ? 'rank-silver' : rankValue === 3 ? 'rank-bronze' : '';
 
       if (!lvl._sortedVictors) {
         lvl._sortedVictors = [...(lvl.victors || [])]
@@ -266,7 +322,7 @@ function renderLevels(data) {
       return `
       <div class="${cardClass}" id="card-${levelKey}">
         <div class="rank-col">
-          <span class="rank-num">#${lvl.rank}</span>
+          <span class="rank-num ${rankClass}">#${lvl.rank}</span>
         </div>
 
         <div class="info-col">
@@ -299,12 +355,9 @@ function renderLevels(data) {
 
           ${
             lvl.showcaseVideoUrl
-            ? `<a class="btn-video"
-                 href="${lvl.showcaseVideoUrl}"
-                 target="_blank"
-                 rel="noopener">
-                 Video ↗
-               </a>`
+            ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}">
+                 Video ▸
+               </button>`
             : '<span class="btn-video no-link">No video</span>'
           }
         </div>
@@ -330,16 +383,12 @@ function renderLevels(data) {
               <td>${i+1}</td>
               <td>${getPlayerCountryEmoji(v.name) ? getPlayerCountryEmoji(v.name) + ' ' : ''}${escapeHTML(v.name)}</td>
               <td>${v.date}</td>
-              <td>${v.wrTime}</td>
-              <td>${v.wrAttempts.toLocaleString()}</td>
+              <td>${v.wrTime ? v.wrTime : '—'}</td>
+              <td>${v.wrAttempts == null ? '—' : v.wrAttempts.toLocaleString()}</td>
               <td>
                 ${
                   v.victorVideoUrl
-                  ? `<a href="${v.victorVideoUrl}"
-                       target="_blank"
-                       rel="noopener">
-                       Watch ↗
-                     </a>`
+                  ? `<button class="btn-video btn-video-inline" type="button" data-open-video-modal="${escapeHTML(v.victorVideoUrl)}">Watch</button>`
                   : '—'
                 }
               </td>
@@ -358,6 +407,7 @@ function renderLevels(data) {
 
   initExpandHandlers();
   initLazyThumbnails();
+  bindVideoModalEvents();
 }
 function initExpandHandlers() {
   const container = document.getElementById('levels-container');
@@ -624,7 +674,7 @@ function renderVerifications(data) {
         </div>
         ${thumbnailMarkup}
         <div class="${actionsClass}">
-          ${lvl.showcaseVideoUrl ? `<a class="btn-video" href="${lvl.showcaseVideoUrl}" target="_blank" rel="noopener">Video ↗</a>` : '<span class="btn-video no-link">No video</span>'}
+          ${lvl.showcaseVideoUrl ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}">Video ▸</button>` : '<span class="btn-video no-link">No video</span>'}
         </div>
       </div>
     `;
@@ -645,20 +695,44 @@ function renderTimeline(data) {
   const sorted = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
   const cards = sorted.map((entry, index) => {
     const cardClass = index % 2 === 0 ? 'level-card variant-a timeline' : 'level-card variant-b timeline';
+    const actionsClass = index % 2 === 0 ? 'actions-col variant-a' : 'actions-col variant-b';
+    const timelineLevel = {
+      ...entry,
+      id: entry.id || entry.name,
+      creators: entry.creators,
+      is2Player: Boolean(entry.twoPlayer),
+      thumbnail: entry.image || entry.thumbnail || '',
+      showcaseVideoUrl: entry.showcaseVideo || entry.showcaseVideoUrl || '',
+    };
+    const metaMarkup = getLevelMetaMarkup(timelineLevel);
+    const dateDisplay = entry.date ? escapeHTML(entry.date) : 'Unknown';
+
     return `
       <div class="${cardClass}">
-        <div class="rank-col"><span class="rank-num">${entry.date}</span></div>
+        <div class="rank-col">
+          <span class="rank-num">${dateDisplay}</span>
+        </div>
+
         <div class="info-col">
-          <div class="level-name">${entry.name}</div>
+          <div class="level-name">${escapeHTML(entry.name || '')}</div>
           <div class="level-meta">
-            ${entry.creators ? `<span class="meta-pill creator">${entry.creators}</span>` : ''}
+            ${metaMarkup ? metaMarkup : ''}
           </div>
+        </div>
+
+        ${getThumbnailMarkup(timelineLevel)}
+
+        <div class="${actionsClass}">
+          ${timelineLevel.showcaseVideoUrl
+            ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(timelineLevel.showcaseVideoUrl)}">Video ▸</button>`
+            : '<span class="btn-video no-link">No video</span>'}
         </div>
       </div>
     `;
   }).join('');
 
   container.innerHTML = cards;
+  initLazyThumbnails();
 }
 
 function initializeTimeline() {

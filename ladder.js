@@ -8,6 +8,7 @@ function App() {
   const [targetPlayerName, setTargetPlayerName] = useState("");
   const [lockedLevelIds, setLockedLevelIds] = useState([]);
   const [removedLevelIds, setRemovedLevelIds] = useState([]);
+  const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(false);
 
   useEffect(() => {
     loadLevelsJson()
@@ -25,10 +26,14 @@ function App() {
   }, []);
 
   const leaderboard = useMemo(() => buildLeaderboard(levels), [levels]);
+  const filteredLevels = useMemo(() => {
+    if (!excludeTwoPlayer) return levels;
+    return levels.filter(level => !level.is2Player);
+  }, [levels, excludeTwoPlayer]);
 
-  const avgTimePerPoint = useMemo(() => calculateAvgTimePerPoint(levels), [levels]);
-  const avgAttemptsPerPoint = useMemo(() => calculateAvgAttemptsPerPoint(levels), [levels]);
-  const maxPoints = useMemo(() => Math.max(...levels.map(l => l.points), 1), [levels]);
+  const avgTimePerPoint = useMemo(() => calculateAvgTimePerPoint(filteredLevels), [filteredLevels]);
+  const avgAttemptsPerPoint = useMemo(() => calculateAvgAttemptsPerPoint(filteredLevels), [filteredLevels]);
+  const maxPoints = useMemo(() => Math.max(...filteredLevels.map(l => l.points), 1), [filteredLevels]);
 
   useEffect(() => {
     if (leaderboard.length === 0) {
@@ -93,19 +98,23 @@ function App() {
     setRemovedLevelIds([]);
   }
 
+  function toggleTwoPlayerLevels() {
+    setExcludeTwoPlayer(prev => !prev);
+  }
+
   const currentPlayer = useMemo(
     () => leaderboard.find(p => p.name === selectedPlayer) || null,
     [leaderboard, selectedPlayer]
   );
 
   const skillComponents = useMemo(
-    () => (currentPlayer ? calculateSkillComponents(levels, currentPlayer.name) : { speed: 1, attempts: 1 }),
-    [levels, currentPlayer]
+    () => (currentPlayer ? calculateSkillComponents(filteredLevels, currentPlayer.name) : { speed: 1, attempts: 1 }),
+    [filteredLevels, currentPlayer]
   );
 
   const skillMultiplier = useMemo(
-    () => (currentPlayer ? calculatePlayerSkill(levels, currentPlayer.name) : 1),
-    [levels, currentPlayer]
+    () => (currentPlayer ? calculatePlayerSkill(filteredLevels, currentPlayer.name) : 1),
+    [filteredLevels, currentPlayer]
   );
 
   const skillClassification = useMemo(() => classifySkill(skillMultiplier), [skillMultiplier]);
@@ -117,8 +126,8 @@ function App() {
   );
 
   const recommendations = useMemo(
-    () => buildRecommendations(levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints),
-    [levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints]
+    () => buildRecommendations(filteredLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints),
+    [filteredLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints]
   );
 
   const rankTargetPoints = targetRankSurpassPoints(leaderboard, targetPlayer);
@@ -253,6 +262,22 @@ function App() {
               <span className="optimizer-target-caption">No target selected</span>
             )}
           </div>
+          <div className="optimizer-toggle-row">
+            <span className="optimizer-toggle-label">Exclude 2-player levels</span>
+            <button
+              type="button"
+              className={`optimizer-toggle ${excludeTwoPlayer ? "active" : ""}`}
+              onClick={toggleTwoPlayerLevels}
+            >
+              <span className="optimizer-toggle-track">
+                <span className="optimizer-toggle-thumb" />
+              </span>
+              <span className="optimizer-toggle-text">{excludeTwoPlayer ? "On" : "Off"}</span>
+            </button>
+          </div>
+          {excludeTwoPlayer && (
+            <div className="optimizer-note">2-player levels are excluded from route generation.</div>
+          )}
           <div className="optimizer-skill-summary">
             <div className="optimizer-skill-main">
               <span className="optimizer-skill-label">Your Skill Rating</span>
@@ -279,6 +304,10 @@ function App() {
             <div className="optimizer-stat-box">
               <span className="optimizer-stat-label">Route Gain</span>
               <span className="optimizer-stat-value">{totalPoints.toFixed(1)}</span>
+            </div>
+            <div className="optimizer-stat-box">
+              <span className="optimizer-stat-label">Levels in Route</span>
+              <span className="optimizer-stat-value">{projectedPath.length}</span>
             </div>
             <div className="optimizer-stat-box">
               <span className="optimizer-stat-label">Est. Time</span>
@@ -327,14 +356,16 @@ function App() {
                   <thead>
                     <tr>
                       <th style={{width: "60px"}}>Actions</th>
+                      <th style={{width: "60px"}}>Rank</th>
                       <th>Level</th>
-                      <th>Completed</th>
+                      <th>Victors</th>
                       <th colSpan="2" style={{textAlign: "center"}}>Points</th>
                       <th>Est. Time</th>
-                      <th colSpan="2" style={{textAlign: "center"}}>World Record Possible</th>
+                      <th colSpan="2" style={{textAlign: "center"}}>World Record Estimate</th>
                       <th>Efficiency</th>
                     </tr>
                     <tr className="optimizer-table-subheader">
+                      <th></th>
                       <th></th>
                       <th></th>
                       <th></th>
@@ -387,6 +418,7 @@ function App() {
                               ✕
                             </button>
                           </td>
+                          <td style={{textAlign: "center"}}>{rec.rank ? `#${rec.rank}` : "—"}</td>
                           <td><strong>{rec.level}</strong></td>
                           <td>{rec.victorCount}</td>
                           <td>{rec.basePoints.toFixed(1)}</td>
