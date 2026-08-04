@@ -51,8 +51,8 @@ function assignTiers(levelsList) {
     { key: "Under The Sea", tier: "Insane" },
     { key: "kataTARTARUS", tier: "Legendary" },
     { key: "Bloodiest Water", tier: "Master" },
-    { key: "Six Paths of Pain (Unnerfed)", tier: "Divine" },
-    { key: "Kingdom of Miracalis (Unnerfed)", tier: "Transcendent" }
+    { key: "Nightmarish", tier: "Divine" },
+    { key: "The Twilight Zone (Unnerfed)", tier: "Transcendent" }
   ];
 
   const names = levelsList.map((l) => (l.name || "").toLowerCase());
