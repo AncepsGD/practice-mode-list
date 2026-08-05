@@ -30,8 +30,8 @@ function getTierByName(name) {
     "WEINERclub": "Novice",
     "Rainstorm": "Intermediate",
     "Sakupen End": "Advanced",
-    "Under The Sea": "Insane",
-    "kataTARTARUS": "Legendary",
+    "Silent lake": "Insane",
+    "Bye Level": "Legendary",
     "Bloodiest Water": "Master",
     "Six Paths of Pain (Unnerfed)": "Divine",
     "Sashozz Geometry": "Transcendent"
@@ -48,8 +48,8 @@ function assignTiers(levelsList) {
     { key: "WEINERclub", tier: "Novice" },
     { key: "Rainstorm", tier: "Intermediate" },
     { key: "Sakupen End", tier: "Advanced" },
-    { key: "Under The Sea", tier: "Insane" },
-    { key: "kataTARTARUS", tier: "Legendary" },
+    { key: "Silent lake", tier: "Insane" },
+    { key: "Bye Level", tier: "Legendary" },
     { key: "Bloodiest Water", tier: "Master" },
     { key: "Nightmarish", tier: "Divine" },
     { key: "The Twilight Zone (Unnerfed)", tier: "Transcendent" }
