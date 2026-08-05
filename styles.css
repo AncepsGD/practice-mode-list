@@ -1494,10 +1494,26 @@ nav {
   font-size: 12px;
 }
 
+.edit-table td.tier-td {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
 .edit-table td.victors-td {
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 11px;
+}
+
+.edit-table.verifications-only td.tier-td,
+.edit-table.verifications-only th.tier-col {
+  display: table-cell;
+}
+
+.edit-table:not(.verifications-only) td.tier-td,
+.edit-table:not(.verifications-only) th.tier-col {
+  display: none;
 }
 
 .edit-table td.actions-td {

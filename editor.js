@@ -6,8 +6,20 @@ let editorLastSavedSnapshot = null;
 let editorConflictNoticeShown = false;
 let editorBaselineData = null;
 
+function updateEditorTierVisibility() {
+  const table = document.getElementById("edit-level-table");
+  if (table) {
+    table.classList.toggle("verifications-only", editingSource === "verifications");
+  }
+  const tierFieldGroup = document.getElementById("tier-field-group");
+  if (tierFieldGroup) {
+    tierFieldGroup.style.display = editingSource === "verifications" ? "block" : "none";
+  }
+}
+
 function setEditingSource(source) {
   editingSource = source;
+  updateEditorTierVisibility();
   syncEditorConflictState();
   renderEditTable();
 }
@@ -55,6 +67,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
   const twoPlayer = item.twoPlayer === true || item.twoPlayer === "2 Player" || item.twoPlayer === "2P" || item.twoPlayer === "true" || item.is2Player === true ? "2 Player" : "";
   const rank = Number.isFinite(Number(item.rank)) ? Number(item.rank) : fallbackRank;
   const victors = Array.isArray(item.victors) ? item.victors : [];
+  const tier = readString(item.tier, item.tierName);
 
   return {
     rank,
@@ -65,6 +78,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
     showcaseVideo,
     image,
     victors,
+    tier,
   };
 }
 
@@ -223,6 +237,7 @@ function renderEditTable() {
         <td class="rank-td">${normalizedItem.rank ?? "—"}</td>
         <td class="name-td">${escapeEditorText(normalizedItem.name || "—")}</td>
         <td class="creator-td">${escapeEditorText(normalizedItem.creators || "—")}</td>
+        <td class="tier-td">${escapeEditorText(editingSource === "verifications" ? normalizedItem.tier || "—" : "—")}</td>
         <td class="id-td">${escapeEditorText(normalizedItem.id || "—")}</td>
         <td class="victors-td">${(normalizedItem.victors || []).length}</td>
         <td class="actions-td">
@@ -420,6 +435,8 @@ function openLevelForm(index) {
   document.getElementById("form-delete-btn").style.display = isNew ? "none" : "";
 
   const data = getEditorData();
+  updateEditorTierVisibility();
+  document.getElementById("tier-field-group").style.display = editingSource === "verifications" ? "block" : "none";
 
   let item;
   if (isNew) {
@@ -454,6 +471,11 @@ function openLevelForm(index) {
   document.getElementById("f-twoplayer").value = normalizedItem.twoPlayer || "";
   document.getElementById("f-showcase").value = normalizedItem.showcaseVideo || "";
   document.getElementById("f-image").value = normalizedItem.image || "";
+  if (editingSource === "verifications") {
+    document.getElementById("f-tier").value = normalizedItem.tier || "";
+  } else {
+    document.getElementById("f-tier").value = "";
+  }
 
   document.getElementById("victors-list").innerHTML = "";
   (normalizedItem.victors || []).forEach(() => addVictorRow());
@@ -556,6 +578,12 @@ function saveLevelForm() {
     image: document.getElementById("f-image").value.trim(),
     victors,
   };
+
+  if (editingSource === "verifications") {
+    item.tier = document.getElementById("f-tier").value;
+  } else if (currentIndex !== -1) {
+    item.tier = data[currentIndex].tier;
+  }
 
   if (currentIndex === -1) {
     data.push(item);
