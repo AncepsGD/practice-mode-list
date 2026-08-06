@@ -1650,6 +1650,24 @@
   },
   {
     "rank": 65,
+    "name": "gakkou gurashi (Old)",
+    "creators": "fortpat",
+    "id": "127057886",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/9NC-qn-vWI0?si=gLpSnRmgvUZabicr",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-08-03",
+        "time": "30m 47s",
+        "attempts": 10853,
+        "video": "https://www.youtube.com/playlist?list=PLUbKgXaaKiZ8"
+      }
+    ]
+  },
+  {
+    "rank": 66,
     "name": "Silent Nightfall",
     "creators": "RMGD",
     "id": "129974620",
@@ -1674,7 +1692,7 @@
     ]
   },
   {
-    "rank": 66,
+    "rank": 67,
     "name": "Slaughters Hell",
     "creators": "IIZebII",
     "id": "136006378",
@@ -1692,7 +1710,7 @@
     ]
   },
   {
-    "rank": 67,
+    "rank": 68,
     "name": "Plasma Down Machina",
     "creators": "BaChjPhonLu2738",
     "id": "133617928",
@@ -1710,7 +1728,7 @@
     ]
   },
   {
-    "rank": 68,
+    "rank": 69,
     "name": "Chaotic Circles XII",
     "creators": "Nox Eternis",
     "id": "115930714",
@@ -1742,7 +1760,7 @@
     ]
   },
   {
-    "rank": 69,
+    "rank": 70,
     "name": "Golden True (ILL)",
     "creators": "Nikoshi",
     "id": "117388462",
@@ -1756,24 +1774,6 @@
         "time": "32m 37s",
         "attempts": 4259,
         "video": "https://youtu.be/kfcmdgoD3VM"
-      }
-    ]
-  },
-  {
-    "rank": 70,
-    "name": "gakkou gurashi (Old)",
-    "creators": "fortpat",
-    "id": "127057886",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/9NC-qn-vWI0?si=gLpSnRmgvUZabicr",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-08-03",
-        "time": "30m 47s",
-        "attempts": 10853,
-        "video": "https://www.youtube.com/playlist?list=PLUbKgXaaKiZ8"
       }
     ]
   },
