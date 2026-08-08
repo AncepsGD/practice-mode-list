@@ -9,6 +9,7 @@ function App() {
   const [lockedLevelIds, setLockedLevelIds] = useState([]);
   const [removedLevelIds, setRemovedLevelIds] = useState([]);
   const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(false);
+  const [autoExcludeTwoPlayer, setAutoExcludeTwoPlayer] = useState(true);
 
   useEffect(() => {
     loadLevelsJson()
@@ -26,14 +27,15 @@ function App() {
   }, []);
 
   const leaderboard = useMemo(() => buildLeaderboard(levels), [levels]);
-  const filteredLevels = useMemo(() => {
-    if (!excludeTwoPlayer) return levels;
-    return levels.filter(level => !level.is2Player);
-  }, [levels, excludeTwoPlayer]);
 
-  const avgTimePerPoint = useMemo(() => calculateAvgTimePerPoint(filteredLevels), [filteredLevels]);
-  const avgAttemptsPerPoint = useMemo(() => calculateAvgAttemptsPerPoint(filteredLevels), [filteredLevels]);
-  const maxPoints = useMemo(() => Math.max(...filteredLevels.map(l => l.points), 1), [filteredLevels]);
+  const filteredLevelsWithout2P = useMemo(
+    () => levels.filter(level => !level.is2Player),
+    [levels]
+  );
+
+  const avgTimePerPoint = useMemo(() => calculateAvgTimePerPoint(levels), [levels]);
+  const avgAttemptsPerPoint = useMemo(() => calculateAvgAttemptsPerPoint(levels), [levels]);
+  const maxPoints = useMemo(() => Math.max(...levels.map(l => l.points), 1), [levels]);
 
   useEffect(() => {
     if (leaderboard.length === 0) {
@@ -100,6 +102,7 @@ function App() {
 
   function toggleTwoPlayerLevels() {
     setExcludeTwoPlayer(prev => !prev);
+    setAutoExcludeTwoPlayer(false);
   }
 
   const currentPlayer = useMemo(
@@ -108,13 +111,13 @@ function App() {
   );
 
   const skillComponents = useMemo(
-    () => (currentPlayer ? calculateSkillComponents(filteredLevels, currentPlayer.name) : { speed: 1, attempts: 1 }),
-    [filteredLevels, currentPlayer]
+    () => (currentPlayer ? calculateSkillComponents(levels, currentPlayer.name) : { speed: 1, attempts: 1 }),
+    [levels, currentPlayer]
   );
 
   const skillMultiplier = useMemo(
-    () => (currentPlayer ? calculatePlayerSkill(filteredLevels, currentPlayer.name) : 1),
-    [filteredLevels, currentPlayer]
+    () => (currentPlayer ? calculatePlayerSkill(levels, currentPlayer.name) : 1),
+    [levels, currentPlayer]
   );
 
   const skillClassification = useMemo(() => classifySkill(skillMultiplier), [skillMultiplier]);
@@ -125,28 +128,50 @@ function App() {
     [leaderboard, targetPlayerName]
   );
 
-  const recommendations = useMemo(
-    () => buildRecommendations(filteredLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints),
-    [filteredLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints]
+  const recommendationsWith2P = useMemo(
+    () => buildRecommendations(levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, levels),
+    [levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints]
   );
+
+  const recommendationsWithout2P = useMemo(
+    () => buildRecommendations(filteredLevelsWithout2P, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, levels),
+    [filteredLevelsWithout2P, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, levels]
+  );
+
+  const recommendations = excludeTwoPlayer ? recommendationsWithout2P : recommendationsWith2P;
 
   const rankTargetPoints = targetRankSurpassPoints(leaderboard, targetPlayer);
   const pointsNeeded = Math.max(0, rankTargetPoints - (currentPlayer?.points || 0));
 
   const hasModifications = lockedLevelIds.length > 0 || removedLevelIds.length > 0;
 
-  const optimized = useMemo(
+  const optimizedWith2P = useMemo(
     () => hasModifications
       ? reoptimizeRouteWithModifications(
-          recommendations,
+          recommendationsWith2P,
           pointsNeeded,
           [],
           lockedLevelIds,
           removedLevelIds
         )
-      : optimizeRoute(recommendations, pointsNeeded),
-    [recommendations, pointsNeeded, hasModifications, lockedLevelIds, removedLevelIds]
+      : optimizeRoute(recommendationsWith2P, pointsNeeded),
+    [recommendationsWith2P, pointsNeeded, hasModifications, lockedLevelIds, removedLevelIds]
   );
+
+  const optimizedWithout2P = useMemo(
+    () => hasModifications
+      ? reoptimizeRouteWithModifications(
+          recommendationsWithout2P,
+          pointsNeeded,
+          [],
+          lockedLevelIds,
+          removedLevelIds
+        )
+      : optimizeRoute(recommendationsWithout2P, pointsNeeded),
+    [recommendationsWithout2P, pointsNeeded, hasModifications, lockedLevelIds, removedLevelIds]
+  );
+
+  const optimized = excludeTwoPlayer ? optimizedWithout2P : optimizedWith2P;
 
   const safeRecommendations = Array.isArray(recommendations) ? recommendations : [];
   console.log({
@@ -168,6 +193,34 @@ function App() {
   const totalPoints = projectedPath.reduce((a, b) => a + b.projectedPoints, 0);
   const totalHours = projectedPath.reduce((a, b) => a + b.expectedHours, 0);
   const targetRank = leaderboard.findIndex(p => p.name === targetPlayerName) + 1;
+
+  useEffect(() => {
+    if (!autoExcludeTwoPlayer) return;
+    if (!currentPlayer || !targetPlayer || pointsNeeded <= 0) return;
+
+    const with2PValid = optimizedWith2P?.picks?.length > 0 || pointsNeeded === 0;
+    const without2PValid = optimizedWithout2P?.picks?.length > 0 || pointsNeeded === 0;
+
+    if (with2PValid && !without2PValid) {
+      if (excludeTwoPlayer) setExcludeTwoPlayer(false);
+      return;
+    }
+
+    if (without2PValid && !with2PValid) {
+      if (!excludeTwoPlayer) setExcludeTwoPlayer(true);
+      return;
+    }
+
+    if (!with2PValid && !without2PValid) return;
+
+    const without2PTime = optimizedWithout2P?.time ?? Infinity;
+    const with2PTime = optimizedWith2P?.time ?? Infinity;
+
+    const shouldExclude = without2PTime < with2PTime;
+    if (shouldExclude !== excludeTwoPlayer) {
+      setExcludeTwoPlayer(shouldExclude);
+    }
+  }, [autoExcludeTwoPlayer, currentPlayer, targetPlayer, pointsNeeded, optimizedWith2P, optimizedWithout2P, excludeTwoPlayer]);
 
   if (status === "loading") {
     return (
@@ -324,9 +377,6 @@ function App() {
             </div>
           ) : (
             <>
-              {fallbackRoute && (
-                <div className="optimizer-note">Showing the closest route for the current target; the route expands as the target grows.</div>
-              )}
               {hasModifications && (
                 <div className="optimizer-note" style={{backgroundColor: "#fff3cd00", borderColor: "#ffc107"}}>
                   <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
@@ -378,12 +428,13 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {projectedPath.map(rec => {
+                    {projectedPath.map((rec, idx) => {
                       const recId = String(rec.id || rec.level);
                       const isLocked = lockedLevelIds.includes(recId);
                       const isRemoved = removedLevelIds.includes(recId);
+                      const keyVal = `${recId}-${idx}`;
                       return (
-                        <tr key={rec.id || rec.level} style={{opacity: isRemoved ? 0.5 : 1}}>
+                        <tr key={keyVal} style={{opacity: isRemoved ? 0.5 : 1}}>
                           <td style={{display: "flex", gap: "4px", justifyContent: "center"}}>
                             <button
                               onClick={() => toggleLevelLocked(recId)}

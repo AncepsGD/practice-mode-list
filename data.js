@@ -33,8 +33,8 @@ function getTierByName(name) {
     "Silent lake": "Insane",
     "Bye Level": "Legendary",
     "Bloodiest Water": "Master",
-    "Six Paths of Pain (Unnerfed)": "Divine",
-    "Sashozz Geometry": "Transcendent"
+    "Nightmarish": "Divine",
+    "The Twilight Zone (Unnerfed)": "Transcendent"
   };
   for (const key in mapping) {
     if (normalized.includes(key.toLowerCase())) return mapping[key];

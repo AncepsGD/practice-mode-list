@@ -7,11 +7,11 @@ function getTierByName(name) {
     "WEINERclub": "Novice",
     "Rainstorm": "Intermediate",
     "Sakupen End": "Advanced",
-    "Under The Sea": "Insane",
-    "kataTARTARUS": "Legendary",
+    "Silent lake": "Insane",
+    "Bye Level": "Legendary",
     "Bloodiest Water": "Master",
-    "Six Paths of Pain (Unnerfed)": "Divine",
-    "Sashozz Geometry": "Transcendent"
+    "Nightmarish": "Divine",
+    "The Twilight Zone (Unnerfed)": "Transcendent"
   };
   for (const key in mapping) {
     if (normalized.includes(key.toLowerCase())) return mapping[key];
@@ -25,11 +25,11 @@ function assignTiers(levelsList) {
     { key: "WEINERclub", tier: "Novice" },
     { key: "Rainstorm", tier: "Intermediate" },
     { key: "Sakupen End", tier: "Advanced" },
-    { key: "Under The Sea", tier: "Insane" },
-    { key: "kataTARTARUS", tier: "Legendary" },
+    { key: "Silent lake", tier: "Insane" },
+    { key: "Bye Level", tier: "Legendary" },
     { key: "Bloodiest Water", tier: "Master" },
-    { key: "Six Paths of Pain (Unnerfed)", tier: "Divine" },
-    { key: "Kingdom of Miracalis (Unnerfed)", tier: "Transcendent" }
+    { key: "Nightmarish", tier: "Divine" },
+    { key: "The Twilight Zone (Unnerfed)", tier: "Transcendent" }
   ];
 
   const names = levelsList.map((l) => (l.name || "").toLowerCase());
@@ -249,6 +249,37 @@ function timeModelVector(features) {
   ];
 }
 
+function buildFeatureScaler(rows) {
+  if (!rows.length) return null;
+  const p = rows[0].x.length;
+  const means = Array(p).fill(0);
+  const stds = Array(p).fill(0);
+  const n = rows.length;
+
+  for (let i = 1; i < p; i++) {
+    means[i] = rows.reduce((sum, row) => sum + row.x[i], 0) / n;
+  }
+
+  for (let i = 1; i < p; i++) {
+    const variance = rows.reduce((sum, row) => {
+      const diff = row.x[i] - means[i];
+      return sum + diff * diff;
+    }, 0) / n;
+    stds[i] = Math.sqrt(variance) || 1;
+  }
+
+  return { means, stds };
+}
+
+function standardizeFeatureVector(x, scaler) {
+  if (!scaler) return x.slice();
+  return x.map((value, index) => {
+    if (index === 0) return 1;
+    const std = scaler.stds[index];
+    return std > 0 ? (value - scaler.means[index]) / std : 0;
+  });
+}
+
 function solveLinearSystem(a, b) {
   const n = a.length;
   const A = a.map(row => row.slice());
@@ -280,13 +311,15 @@ function solveLinearSystem(a, b) {
   return x;
 }
 
-function trainLinearRegression(rows, ridge = 0.01) {
+function trainLinearRegression(rows, ridge = 0.01, fixedScaler = null) {
   if (!rows.length) return null;
   const p = rows[0].x.length;
+  const scaler = fixedScaler || buildFeatureScaler(rows);
+  const standardizedRows = rows.map(({ x, y }) => ({ x: standardizeFeatureVector(x, scaler), y }));
   const xtx = Array.from({ length: p }, () => Array(p).fill(0));
   const xty = Array(p).fill(0);
 
-  rows.forEach(({ x, y }) => {
+  standardizedRows.forEach(({ x, y }) => {
     const target = Math.log(Math.max(y, 1e-6));
     for (let i = 0; i < p; i++) {
       xty[i] += x[i] * target;
@@ -297,11 +330,20 @@ function trainLinearRegression(rows, ridge = 0.01) {
   });
 
   for (let i = 0; i < p; i++) {
-    xtx[i][i] += ridge;
+    xtx[i][i] += ridge * (i === 0 ? 0 : 1);
   }
 
   const weights = solveLinearSystem(xtx, xty);
-  return weights ? { weights, featureCount: p } : null;
+  return weights ? { weights, featureCount: p, scaler } : null;
+}
+
+const globalTimeModelCache = new WeakMap();
+
+function getCachedGlobalTimeModel(levels) {
+  if (globalTimeModelCache.has(levels)) return globalTimeModelCache.get(levels);
+  const model = buildGlobalTimeModel(levels);
+  globalTimeModelCache.set(levels, model);
+  return model;
 }
 
 function buildGlobalTimeModel(levels) {
@@ -322,12 +364,13 @@ function buildGlobalTimeModel(levels) {
   if (!rows.length) return null;
 
   const model = trainLinearRegression(rows, 0.001);
-  if (model) return { weights: model.weights, featureCount: model.featureCount };
+  if (model) return { weights: model.weights, featureCount: model.featureCount, scaler: model.scaler };
 
   const meanTime = rows.reduce((sum, row) => sum + Math.log(Math.max(row.y, 1e-6)), 0) / rows.length;
   return {
     weights: [Math.exp(meanTime), 0, 0, 0, 0, 0, 0, 0],
     featureCount: timeModelVector(buildTimeModelFeatures(levels[0] || {})).length,
+    scaler: null,
   };
 }
 
@@ -336,18 +379,21 @@ function blendRegressionModels(priorModel, localModel, weight) {
   if (!priorModel) return localModel;
   if (!localModel) return priorModel;
 
-  const effectiveWeight = clamp(weight, 0.05, 0.95);
+  const effectiveWeight = clamp(weight, 0.05, 0.5);
   const priorWeight = 1 - effectiveWeight;
   const weights = priorModel.weights.map((value, index) => value * priorWeight + (localModel.weights[index] || 0) * effectiveWeight);
 
-  return { weights, featureCount: priorModel.featureCount || localModel.featureCount };
+  return {
+    weights,
+    featureCount: priorModel.featureCount || localModel.featureCount,
+    scaler: priorModel.scaler || localModel.scaler,
+  };
 }
 
 function trainPlayerTimeModel(levels, playerName) {
-  const rows = [];
-  const ratios = [];
   const playerRows = [];
-  const globalModel = buildGlobalTimeModel(levels);
+  const ratios = [];
+  const globalModel = getCachedGlobalTimeModel(levels);
 
   levels.forEach(lvl => {
     const parsedEntries = lvl.victors
@@ -364,23 +410,30 @@ function trainPlayerTimeModel(levels, playerName) {
     const features = buildTimeModelFeatures(lvl);
     if (!features.avgVictorTime) return;
 
-    const row = { x: timeModelVector(features), y: playerEntry.sec };
-    rows.push(row);
-    playerRows.push(row);
+    playerRows.push({ x: timeModelVector(features), y: playerEntry.sec });
 
     if (playerEntry.sec > 0 && features.avgVictorTime > 0) {
       ratios.push(playerEntry.sec / features.avgVictorTime);
     }
   });
 
-  const localModel = playerRows.length >= 3
-    ? trainLinearRegression(playerRows, 0.001)
+  const localModel = playerRows.length >= 15
+    ? trainLinearRegression(playerRows, 0.1, globalModel?.scaler || null)
     : null;
-  const localWeight = clamp(playerRows.length / 8, 0.2, 0.9);
-  const blendedModel = blendRegressionModels(globalModel, localModel ? { weights: localModel.weights, featureCount: localModel.featureCount } : null, localWeight);
+
+  const localWeight = localModel
+    ? clamp((playerRows.length - 14) / 10, 0.05, 0.5)
+    : 0;
+
+  const blendedModel = blendRegressionModels(
+    globalModel,
+    localModel ? { weights: localModel.weights, featureCount: localModel.featureCount, scaler: localModel.scaler } : null,
+    localWeight,
+  );
+
   const playerSkillRatio = ratios.length ? geometricMean(ratios) : null;
   const skillRatio = playerSkillRatio
-    ? clamp(playerSkillRatio * localWeight + 1 * (1 - localWeight), 0.5, 2.0)
+    ? clamp(playerSkillRatio * (playerRows.length >= 15 ? localWeight : 0) + 1 * (1 - (playerRows.length >= 15 ? localWeight : 0)), 0.5, 2.0)
     : null;
 
   return {
@@ -394,7 +447,8 @@ function predictPlayerTime(level, model) {
   const features = buildTimeModelFeatures(level);
   if (!features.avgVictorTime) return null;
   const x = timeModelVector(features);
-  const logSeconds = model.model.weights.reduce((sum, w, i) => sum + w * x[i], 0);
+  const standardizedX = model.model.scaler ? standardizeFeatureVector(x, model.model.scaler) : x;
+  const logSeconds = model.model.weights.reduce((sum, w, i) => sum + w * standardizedX[i], 0);
   if (!Number.isFinite(logSeconds)) return null;
   return Math.exp(logSeconds);
 }
@@ -541,7 +595,7 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
 
   const modelPredictedSeconds = predictPlayerTime(level, components && components.model ? components.model : null);
   if (modelPredictedSeconds !== null) {
-    const MAX_REASONABLE_SECONDS = 10 * 365 * 24 * 3600; // 10 years
+    const MAX_REASONABLE_SECONDS = 10 * 365 * 24 * 3600;
     const isReasonablePrediction = Number.isFinite(modelPredictedSeconds) && modelPredictedSeconds > 0 && modelPredictedSeconds < MAX_REASONABLE_SECONDS;
     if (!isReasonablePrediction) {
       console.warn("Rejected unreasonable model prediction for level:", level.name, { modelPredictedSeconds });
@@ -549,8 +603,18 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
       const expectedAttempts = baseAttempts && baseAttempts > 0
         ? baseAttempts * (components && components.attempts ? components.attempts : 1)
         : null;
-      const baselineSeconds = baseTime && baseTime > 0 ? baseTime : 7200;
-      return { expectedSeconds: Math.max(baselineSeconds, modelPredictedSeconds), expectedAttempts };
+      const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
+      const minObserved = victorTimes.length ? Math.min(...victorTimes) : null;
+      const bestObserved = wrTimeSeconds !== null ? wrTimeSeconds : minObserved;
+      const LOWER_BOUND_FACTOR = 0.6;
+      const lowerBound = bestObserved !== null ? bestObserved * LOWER_BOUND_FACTOR : null;
+
+      let expectedSeconds = modelPredictedSeconds;
+      if (lowerBound !== null && Number.isFinite(expectedSeconds) && expectedSeconds < lowerBound) {
+        expectedSeconds = lowerBound;
+      }
+
+      return { expectedSeconds, expectedAttempts };
     }
   }
 
@@ -558,10 +622,17 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
   const famMod = familiarityModifier(level, components && components._playerName ? components._playerName : null);
 
   const predictedMultiplier = (components && components.speed ? components.speed : 1) * diffMod * famMod;
+  const predicted = baseTime && baseTime > 0 ? baseTime * predictedMultiplier : null;
 
-  const expectedSeconds = baseTime && baseTime > 0
-    ? Math.max(baseTime, baseTime * predictedMultiplier)
-    : null;
+  const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
+  const minObserved = victorTimes.length ? Math.min(...victorTimes) : null;
+  const bestObserved = wrTimeSeconds !== null ? wrTimeSeconds : minObserved;
+  const LOWER_BOUND_FACTOR = 0.6;
+  const lowerBound = bestObserved !== null ? bestObserved * LOWER_BOUND_FACTOR : null;
+
+  const expectedSeconds = predicted !== null && lowerBound !== null
+    ? Math.max(predicted, lowerBound)
+    : predicted;
 
   const expectedAttempts = baseAttempts && baseAttempts > 0
     ? baseAttempts * (components && components.attempts ? components.attempts : 1) * famMod
@@ -671,14 +742,14 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
   return recordMultiplier(recordCount);
 }
 
-function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoint, maxPoints) {
+function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, allLevels = levels) {
   if (!player) return [];
   const beaten = new Set(player.levels);
   const components = calculateSkillComponents(levels, player.name);
 
   components._playerName = player.name;
 
-  const orderedLevels = [...levels].sort((a, b) => {
+  const allOrderedLevels = [...allLevels].sort((a, b) => {
     const tierA = (a.tier || "unknown").toLowerCase();
     const tierB = (b.tier || "unknown").toLowerCase();
     if (tierA !== tierB) return tierA.localeCompare(tierB);
@@ -688,7 +759,7 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
   const playerTierCompletions = new Map();
   const completionCountsByLevel = new Map();
 
-  orderedLevels.forEach((lvl) => {
+  allOrderedLevels.forEach((lvl) => {
     const tierKey = `${(lvl.tier || "unknown").toLowerCase()}|${player.name}`;
     const currentCompletions = playerTierCompletions.get(tierKey) || 0;
     if (!beaten.has(lvl.name)) {
@@ -699,7 +770,7 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
     }
   });
 
-  const recommendations = orderedLevels
+  const recommendations = allOrderedLevels
     .filter(lvl => !beaten.has(lvl.name))
     .map(lvl => {
       const basePoints = lvl.points || 0;
@@ -772,53 +843,128 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
       return unique;
     }, []);
 
-  console.log({
-    totalLevels: levels.length,
-    unbeaten: levels.filter(l => !beaten.has(l.name)).length,
-    withPoints: levels.filter(l => l.points > 0).length,
-    player: player.name,
-    recommendations,
-  });
-
   return recommendations.sort((a, b) => b.expectedValue - a.expectedValue);
 }
 
 function pruneDominatedRecommendations(recommendations) {
   if (!Array.isArray(recommendations) || recommendations.length <= 1) return recommendations;
 
-  const kept = [];
-
-  recommendations.forEach(candidate => {
-    const isDominated = kept.some(existing => {
-      const pointsBetterOrEqual = (existing.projectedPoints || 0) >= (candidate.projectedPoints || 0);
-      const timeBetterOrEqual = (existing.expectedHours || 0) <= (candidate.expectedHours || 0);
-      const strictImprovement = pointsBetterOrEqual && timeBetterOrEqual && (
-        (existing.projectedPoints || 0) > (candidate.projectedPoints || 0)
-        || (existing.expectedHours || 0) < (candidate.expectedHours || 0)
-      );
-      return strictImprovement;
-    });
-
-    if (isDominated) return;
-
-    const dominatedByCandidate = kept.filter(existing => {
-      const pointsBetterOrEqual = (candidate.projectedPoints || 0) >= (existing.projectedPoints || 0);
-      const timeBetterOrEqual = (candidate.expectedHours || 0) <= (existing.expectedHours || 0);
-      const strictImprovement = pointsBetterOrEqual && timeBetterOrEqual && (
-        (candidate.projectedPoints || 0) > (existing.projectedPoints || 0)
-        || (candidate.expectedHours || 0) < (existing.expectedHours || 0)
-      );
-      return strictImprovement;
-    });
-
-    if (dominatedByCandidate.length) {
-      kept.splice(kept.indexOf(dominatedByCandidate[0]), 1);
-    }
-
-    kept.push(candidate);
+  const sorted = [...recommendations].sort((a, b) => {
+    const pa = a.projectedPoints || 0;
+    const pb = b.projectedPoints || 0;
+    if (pb !== pa) return pb - pa;
+    return (a.expectedHours || 0) - (b.expectedHours || 0);
   });
 
-  return kept;
+  const deduped = [];
+  let i = 0;
+  while (i < sorted.length) {
+    let j = i;
+    let groupMinHours = Infinity;
+    while (j < sorted.length && (sorted[j].projectedPoints || 0) === (sorted[i].projectedPoints || 0)) {
+      const hours = sorted[j].expectedHours || 0;
+      if (hours <= groupMinHours) {
+        deduped.push(sorted[j]);
+        groupMinHours = Math.min(groupMinHours, hours);
+      }
+      j++;
+    }
+    i = j;
+  }
+
+  const kept = [];
+  let runningMinHours = Infinity;
+  for (const candidate of deduped) {
+    const hours = candidate.expectedHours || 0;
+    if (hours < runningMinHours) {
+      kept.push(candidate);
+    }
+  }
+
+  let minSeen = Infinity;
+  const result = [];
+  for (const candidate of kept) {
+    const hours = candidate.expectedHours || 0;
+    if (hours < minSeen) {
+      result.push(candidate);
+      minSeen = hours;
+    }
+  }
+
+  return result;
+}
+
+function refineRouteLocalSearch(picks, items, targetPoints, maxIterations = 400) {
+  if (!picks.length) return { picks, time: 0 };
+
+  let currentPicks = [...picks];
+  let currentIds = new Set(currentPicks.map(p => p.id));
+  let currentPoints = currentPicks.reduce((s, p) => s + (p.projectedPoints || 0), 0);
+  let currentTime = currentPicks.reduce((s, p) => s + (p.expectedHours || 0), 0);
+
+  let improved = true;
+  let iterations = 0;
+
+  while (improved && iterations < maxIterations) {
+    improved = false;
+    iterations++;
+
+    for (let i = 0; i < currentPicks.length; i++) {
+      const outgoing = currentPicks[i];
+      const pointsWithout = currentPoints - (outgoing.projectedPoints || 0);
+      const timeWithout = currentTime - (outgoing.expectedHours || 0);
+
+      if (pointsWithout >= targetPoints && timeWithout < currentTime - 1e-9) {
+        currentPicks.splice(i, 1);
+        currentIds.delete(outgoing.id);
+        currentPoints = pointsWithout;
+        currentTime = timeWithout;
+        improved = true;
+        break;
+      }
+
+      for (const candidate of items) {
+        if (currentIds.has(candidate.id)) continue;
+        const swappedPoints = pointsWithout + (candidate.projectedPoints || 0);
+        const swappedTime = timeWithout + (candidate.expectedHours || 0);
+        if (swappedPoints >= targetPoints && swappedTime < currentTime - 1e-9) {
+          currentPicks[i] = candidate;
+          currentIds.delete(outgoing.id);
+          currentIds.add(candidate.id);
+          currentPoints = swappedPoints;
+          currentTime = swappedTime;
+          improved = true;
+          break;
+        }
+      }
+      if (improved) break;
+    }
+  }
+
+  return { picks: currentPicks, time: currentTime };
+}
+
+function buildFallbackRoute(items, targetPoints) {
+  const sortedItems = [...items].sort((a, b) => {
+    const aScore = (a.projectedPoints || 0) / Math.max(a.expectedHours || 1, 0.001);
+    const bScore = (b.projectedPoints || 0) / Math.max(b.expectedHours || 1, 0.001);
+    return bScore - aScore;
+  });
+
+  const picks = [];
+  let totalTime = 0;
+  let totalPoints = 0;
+
+  for (const item of sortedItems) {
+    picks.push(item);
+    totalTime += item.expectedHours || 0;
+    totalPoints += item.projectedPoints || 0;
+    if (totalPoints + 1e-9 >= targetPoints) {
+      return { time: totalTime, picks, fallback: false };
+    }
+  }
+
+  return { time: totalTime, picks, fallback: true };
 }
 
 function optimizeRoute(recommendations, targetPoints, granularity = 20) {
@@ -826,16 +972,20 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
     return { time: 0, picks: [], fallback: false };
   }
 
+  const MAX_DP_UNITS = 60000;
+
   const effectiveGranularity = Number.isFinite(granularity) && granularity > 0
     ? granularity
     : 20;
   const adaptiveGranularity = Math.max(1, Math.min(100, Math.round(100 / Math.max(1, targetPoints))));
-  const resolvedGranularity = Math.max(effectiveGranularity, adaptiveGranularity);
+  let resolvedGranularity = Math.max(effectiveGranularity, adaptiveGranularity);
 
-  const items = recommendations
+  const toUnits = item => Math.max(1, Math.round(((item.basePoints || item.projectedPoints) || 0) * resolvedGranularity));
+
+  let items = recommendations
     .map(item => ({
       ...item,
-      units: Math.max(1, Math.round((item.projectedPoints || 0) * resolvedGranularity)),
+      units: toUnits(item),
     }))
     .filter(item => item.units > 0)
     .sort((a, b) => {
@@ -848,18 +998,35 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
     return { time: 0, picks: [], fallback: false };
   }
 
-  const targetUnits = Math.max(1, Math.round(targetPoints * resolvedGranularity));
-  const maxUnits = Math.max(targetUnits, ...items.map(item => item.units));
+  let targetUnits = Math.max(1, Math.round(targetPoints * resolvedGranularity));
+  let totalUnits = items.reduce((sum, item) => sum + item.units, 0);
+  let largestItemUnits = Math.max(...items.map(item => item.units));
+  let maxUnits = Math.min(totalUnits, targetUnits + largestItemUnits);
 
-  const dpCost = new Array(maxUnits + 1).fill(Infinity);
-  const dpTime = new Array(maxUnits + 1).fill(Infinity);
-  const dpPrev = new Array(maxUnits + 1).fill(null);
+  if (maxUnits > MAX_DP_UNITS) {
+    const scale = MAX_DP_UNITS / maxUnits;
+    resolvedGranularity = Math.max(1, Math.floor(resolvedGranularity * scale));
+    items = items.map(item => ({
+      ...item,
+      units: toUnits(item),
+    }));
+    targetUnits = Math.max(1, Math.round(targetPoints * resolvedGranularity));
+    totalUnits = items.reduce((sum, item) => sum + item.units, 0);
+    largestItemUnits = Math.max(...items.map(item => item.units));
+    maxUnits = Math.min(totalUnits, targetUnits + largestItemUnits);
+  }
+
+  const dpCost = new Float64Array(maxUnits + 1).fill(Infinity);
+  const dpTime = new Float64Array(maxUnits + 1).fill(Infinity);
+  const dpParentUnits = new Int32Array(maxUnits + 1).fill(-1);
+  const dpParentItem = new Int32Array(maxUnits + 1).fill(-1);
   dpCost[0] = 0;
   dpTime[0] = 0;
 
   const penaltyBase = Math.max(0.01, Math.min(0.2, targetPoints / 1000));
 
-  for (const item of items) {
+  for (let itemIdx = 0; itemIdx < items.length; itemIdx++) {
+    const item = items[itemIdx];
     for (let units = maxUnits; units >= 0; units--) {
       if (dpCost[units] === Infinity) continue;
 
@@ -872,7 +1039,8 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
         || (Math.abs(nextCost - dpCost[nextUnits]) < 1e-9 && nextTime < dpTime[nextUnits])) {
         dpCost[nextUnits] = nextCost;
         dpTime[nextUnits] = nextTime;
-        dpPrev[nextUnits] = { units, item, prev: dpPrev[units] };
+        dpParentUnits[nextUnits] = units;
+        dpParentItem[nextUnits] = itemIdx;
       }
     }
   }
@@ -894,24 +1062,42 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
     }
   }
 
+  if (bestUnits === 0) {
+    for (let units = maxUnits; units > 0; units--) {
+      if (dpCost[units] < Infinity) {
+        bestUnits = units;
+        bestCost = dpCost[units];
+        bestTime = dpTime[units];
+        break;
+      }
+    }
+  }
+
   if (bestUnits === 0 || dpCost[bestUnits] === Infinity) {
-    const best = items[0];
-    return best ? { time: best.expectedHours, picks: [best], fallback: true } : { time: 0, picks: [], fallback: false };
+    return buildFallbackRoute(items, targetPoints);
   }
 
   const picks = [];
   let cursor = bestUnits;
-  let state = dpPrev[cursor];
-
-  while (state && state.item) {
-    picks.push(state.item);
-    cursor = state.units;
-    state = state.prev;
+  while (dpParentItem[cursor] !== -1) {
+    picks.push(items[dpParentItem[cursor]]);
+    cursor = dpParentUnits[cursor];
   }
 
   picks.reverse();
 
-  return { time: bestTime, picks, fallback: bestUnits < targetUnits };
+  const refined = refineRouteLocalSearch(picks, items, targetPoints);
+  const totalProjectedPoints = refined.picks.reduce((sum, rec) => sum + (rec.projectedPoints || 0), 0);
+
+  if (totalProjectedPoints + 1e-9 < targetPoints) {
+    return buildFallbackRoute(items, targetPoints);
+  }
+
+  return {
+    time: refined.time,
+    picks: refined.picks,
+    fallback: false,
+  };
 }
 
 function reoptimizeRouteWithModifications(
@@ -938,7 +1124,7 @@ function reoptimizeRouteWithModifications(
       availableForReopt.push(rec);
     }
   });
-  const lockedPoints = lockedPicks.reduce((sum, rec) => sum + (rec.projectedPoints || 0), 0);
+  const lockedPoints = lockedPicks.reduce((sum, rec) => sum + (rec.basePoints || 0), 0);
   const lockedTime = lockedPicks.reduce((sum, rec) => sum + (rec.expectedHours || 0), 0);
   const remainingPointsNeeded = Math.max(0, targetPoints - lockedPoints);
   if (remainingPointsNeeded <= 0) {
@@ -954,7 +1140,6 @@ function reoptimizeRouteWithModifications(
       time: lockedTime,
       picks: lockedPicks,
       fallback: true,
-      message: "No available levels to reach target",
     };
   }
   const reoptResult = optimizeRoute(availableForReopt, remainingPointsNeeded);
