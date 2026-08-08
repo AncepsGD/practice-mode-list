@@ -2,61 +2,27 @@
   {
     "rank": 1,
     "name": "Kingdom of Miracalis (ILL)",
-    "thumbnail": "",
-    "id": "77452038",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "gdmiracle",
     "creators": "gdmiracle",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=5SEAH3ifzAQ",
-    "tier": ""
+    "id": "77452038",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=5SEAH3ifzAQ",
+    "image": "",
+    "victors": [],
+    "tier": "Divine"
   },
   {
     "rank": 2,
-    "name": "The Twilight Zone",
-    "thumbnail": "",
-    "id": "137338835",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
+    "name": "Death Dimension II",
     "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
+    "id": "75493555",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [],
+    "tier": "Transcendent"
   },
   {
     "rank": 3,
-    "name": "Zobros Worst Fear",
-    "thumbnail": "",
-    "id": "82669598",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 4,
-    "name": "Death Dimension II",
-    "thumbnail": "",
-    "id": "75493555",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 5,
     "name": "Silent Engine I",
     "thumbnail": "",
     "id": "131039918",
@@ -70,7 +36,7 @@
     "tier": ""
   },
   {
-    "rank": 6,
+    "rank": 4,
     "name": "The Final Circle",
     "thumbnail": "",
     "id": "136774556",
@@ -84,35 +50,29 @@
     "tier": ""
   },
   {
-    "rank": 7,
+    "rank": 5,
     "name": "supreme Machine",
-    "thumbnail": "",
+    "creators": "IiIOpTiCaLIiI",
     "id": "127761173",
-    "points": 0,
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=plW9H-yBfoE",
+    "image": "",
     "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
+    "tier": "Master"
   },
   {
-    "rank": 8,
+    "rank": 6,
     "name": "Minus World",
-    "thumbnail": "",
+    "creators": "IcEDCave, InVisible",
     "id": "111168619",
-    "points": 0,
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=eUYtHhjgang",
+    "image": "",
     "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
+    "tier": "Transcendent"
   },
   {
-    "rank": 9,
+    "rank": 7,
     "name": "Silent Skrillex v2",
     "thumbnail": "",
     "id": "66626147",
@@ -126,7 +86,7 @@
     "tier": ""
   },
   {
-    "rank": 10,
+    "rank": 8,
     "name": "Satanic Heaven",
     "thumbnail": "",
     "id": "126075805",
@@ -140,7 +100,7 @@
     "tier": ""
   },
   {
-    "rank": 11,
+    "rank": 9,
     "name": "Something Satanic",
     "thumbnail": "",
     "id": "125533818",
@@ -154,7 +114,7 @@
     "tier": ""
   },
   {
-    "rank": 12,
+    "rank": 10,
     "name": "Silent Processing",
     "thumbnail": "",
     "id": "126380017",
@@ -168,7 +128,7 @@
     "tier": ""
   },
   {
-    "rank": 13,
+    "rank": 11,
     "name": "ultra silent circles",
     "thumbnail": "",
     "id": "15846790",
@@ -182,21 +142,7 @@
     "tier": ""
   },
   {
-    "rank": 14,
-    "name": "Silent Factory",
-    "thumbnail": "",
-    "id": "80307362",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 15,
+    "rank": 12,
     "name": "Chaotic World",
     "thumbnail": "",
     "id": "75325556",
@@ -210,7 +156,7 @@
     "tier": ""
   },
   {
-    "rank": 16,
+    "rank": 13,
     "name": "Fredrick Survive II",
     "thumbnail": "",
     "id": "133738923",
@@ -224,7 +170,7 @@
     "tier": ""
   },
   {
-    "rank": 17,
+    "rank": 14,
     "name": "Stereo Madness",
     "thumbnail": "",
     "id": "138931146",
@@ -238,21 +184,7 @@
     "tier": ""
   },
   {
-    "rank": 18,
-    "name": "Darkened Despair",
-    "thumbnail": "",
-    "id": "129488649",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 19,
+    "rank": 15,
     "name": "how i see the ppll",
     "thumbnail": "",
     "id": "138846647",
@@ -266,7 +198,7 @@
     "tier": ""
   },
   {
-    "rank": 20,
+    "rank": 16,
     "name": "Schafs (No Invis, 1p)",
     "thumbnail": "",
     "id": "138850959",
@@ -280,21 +212,7 @@
     "tier": ""
   },
   {
-    "rank": 21,
-    "name": "Rogideon",
-    "thumbnail": "",
-    "id": "73718930",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 22,
+    "rank": 17,
     "name": "SaTans Circles X",
     "thumbnail": "",
     "id": "133421543",
@@ -308,7 +226,7 @@
     "tier": ""
   },
   {
-    "rank": 23,
+    "rank": 18,
     "name": "Colorful Twilight",
     "thumbnail": "",
     "id": "121449919",
@@ -322,35 +240,7 @@
     "tier": ""
   },
   {
-    "rank": 24,
-    "name": "Provocation Circles",
-    "thumbnail": "",
-    "id": "128528150",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 25,
-    "name": "NU Silent Skrillex",
-    "thumbnail": "",
-    "id": "68648954",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 26,
+    "rank": 19,
     "name": "MINUSclub",
     "thumbnail": "",
     "id": "65476277",
@@ -364,7 +254,7 @@
     "tier": ""
   },
   {
-    "rank": 27,
+    "rank": 20,
     "name": "ZOINK NEVER CLEAR (Unnerfed)",
     "thumbnail": "",
     "id": "136891983",
@@ -378,7 +268,7 @@
     "tier": ""
   },
   {
-    "rank": 28,
+    "rank": 21,
     "name": "Hell to play II",
     "thumbnail": "",
     "id": "118880869",
@@ -392,7 +282,7 @@
     "tier": ""
   },
   {
-    "rank": 29,
+    "rank": 22,
     "name": "rare",
     "thumbnail": "",
     "id": "96496947",
@@ -406,7 +296,7 @@
     "tier": ""
   },
   {
-    "rank": 30,
+    "rank": 23,
     "name": "Calcium Hydroxide",
     "thumbnail": "",
     "id": "92269608",
@@ -420,21 +310,7 @@
     "tier": ""
   },
   {
-    "rank": 31,
-    "name": "howconfusingisthelvl",
-    "thumbnail": "",
-    "id": "92922586",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 32,
+    "rank": 24,
     "name": "Evolution Theory",
     "thumbnail": "",
     "id": "135353937",
@@ -448,21 +324,7 @@
     "tier": ""
   },
   {
-    "rank": 33,
-    "name": "UltimateChallengeMix",
-    "thumbnail": "",
-    "id": "130777102",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "ternasius, IcEDCave & more",
-    "creators": "ternasius, IcEDCave & more",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=DiKAIkce5io",
-    "tier": ""
-  },
-  {
-    "rank": 34,
+    "rank": 25,
     "name": "the hell conjuror",
     "thumbnail": "",
     "id": "66333636",
@@ -476,7 +338,7 @@
     "tier": ""
   },
   {
-    "rank": 35,
+    "rank": 26,
     "name": "Omega Circles II",
     "thumbnail": "",
     "id": "83717092",
@@ -490,7 +352,7 @@
     "tier": ""
   },
   {
-    "rank": 36,
+    "rank": 27,
     "name": "Rainbow Bridge",
     "thumbnail": "",
     "id": "71833434",
@@ -504,7 +366,7 @@
     "tier": ""
   },
   {
-    "rank": 37,
+    "rank": 28,
     "name": "silent landscape",
     "thumbnail": "",
     "id": "116337387",
@@ -518,7 +380,7 @@
     "tier": ""
   },
   {
-    "rank": 38,
+    "rank": 29,
     "name": "Deadly Knock",
     "thumbnail": "",
     "id": "63708222",
@@ -532,7 +394,7 @@
     "tier": ""
   },
   {
-    "rank": 39,
+    "rank": 30,
     "name": "silent toxic",
     "thumbnail": "",
     "id": "116081172",
@@ -546,7 +408,7 @@
     "tier": ""
   },
   {
-    "rank": 40,
+    "rank": 31,
     "name": "Back On Track",
     "thumbnail": "",
     "id": "80481445",
@@ -560,7 +422,7 @@
     "tier": ""
   },
   {
-    "rank": 41,
+    "rank": 32,
     "name": "Art is Dead",
     "thumbnail": "",
     "id": "124241631",
@@ -574,7 +436,7 @@
     "tier": ""
   },
   {
-    "rank": 42,
+    "rank": 33,
     "name": "Satanic Palm Mutes",
     "thumbnail": "",
     "id": "80088674",
@@ -588,21 +450,18 @@
     "tier": ""
   },
   {
-    "rank": 43,
+    "rank": 34,
     "name": "Divine Geometry II",
-    "thumbnail": "",
-    "id": "18598734",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
     "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
+    "id": "18598734",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [],
+    "tier": "Divine"
   },
   {
-    "rank": 44,
+    "rank": 35,
     "name": "ParalympicTriathlon",
     "thumbnail": "",
     "id": "144986791",
@@ -616,49 +475,18 @@
     "tier": ""
   },
   {
-    "rank": 45,
-    "name": "Practice limit",
-    "thumbnail": "",
-    "id": "144956117",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "ajackxz",
-    "creators": "ajackxz",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 46,
+    "rank": 36,
     "name": "Hope",
-    "thumbnail": "",
-    "id": "144679535",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "RMGD",
     "creators": "RMGD",
-    "is2Player": true,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 47,
-    "name": "Society (True Unnerfed)",
-    "thumbnail": "",
-    "id": "144702527",
-    "points": 0,
+    "id": "144679535",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
+    "image": "",
     "victors": [],
-    "firstVictor": null,
-    "creator": "Neomarbilan & more",
-    "creators": "Neomarbilan & more",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=O8Q04vNPnGM",
-    "tier": ""
+    "tier": "Transcendent"
   },
   {
-    "rank": 48,
+    "rank": 37,
     "name": "Silent Nightfall DX",
     "thumbnail": "",
     "id": "144257309",
@@ -672,21 +500,7 @@
     "tier": ""
   },
   {
-    "rank": 49,
-    "name": "Bloody Sky",
-    "thumbnail": "",
-    "id": "123635454",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "RMGD",
-    "creators": "RMGD",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/R8PK1js6qc0",
-    "tier": ""
-  },
-  {
-    "rank": 50,
+    "rank": 38,
     "name": "bp EXILED MODE",
     "thumbnail": "",
     "id": "144161571",
@@ -700,7 +514,7 @@
     "tier": ""
   },
   {
-    "rank": 51,
+    "rank": 39,
     "name": "RMGD Legend",
     "thumbnail": "",
     "id": "142465296",
@@ -714,7 +528,7 @@
     "tier": ""
   },
   {
-    "rank": 52,
+    "rank": 40,
     "name": "Deadly Silent Fred",
     "thumbnail": "",
     "id": "143999876",
@@ -728,7 +542,7 @@
     "tier": ""
   },
   {
-    "rank": 53,
+    "rank": 41,
     "name": "Disconnection Day",
     "thumbnail": "",
     "id": "144000727",
@@ -742,7 +556,7 @@
     "tier": ""
   },
   {
-    "rank": 54,
+    "rank": 42,
     "name": "The Island Chamber",
     "thumbnail": "",
     "id": "139623217",
@@ -756,7 +570,7 @@
     "tier": ""
   },
   {
-    "rank": 55,
+    "rank": 43,
     "name": "Golden True",
     "thumbnail": "",
     "id": "117388462",
@@ -770,7 +584,7 @@
     "tier": ""
   },
   {
-    "rank": 56,
+    "rank": 44,
     "name": "Illusion of Sin",
     "thumbnail": "",
     "id": "93456281",
@@ -784,7 +598,7 @@
     "tier": ""
   },
   {
-    "rank": 57,
+    "rank": 45,
     "name": "Slaughterhouse II X",
     "thumbnail": "",
     "id": "141877395",
@@ -798,7 +612,7 @@
     "tier": ""
   },
   {
-    "rank": 58,
+    "rank": 46,
     "name": "Zillion never clear",
     "thumbnail": "",
     "id": "130393455",
@@ -812,35 +626,18 @@
     "tier": ""
   },
   {
-    "rank": 59,
+    "rank": 47,
     "name": "WASP 76b",
-    "thumbnail": "",
-    "id": "129826895",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "PrometheusDev, Arsenjeex",
     "creators": "PrometheusDev, Arsenjeex",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=oXGI4VMRWnk",
-    "tier": ""
-  },
-  {
-    "rank": 60,
-    "name": "METH DEATH X",
-    "thumbnail": "",
-    "id": "84311079",
-    "points": 0,
+    "id": "129826895",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=oXGI4VMRWnk",
+    "image": "",
     "victors": [],
-    "firstVictor": null,
-    "creator": "AuraXalaiv, erzor",
-    "creators": "AuraXalaiv, erzor",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=ApoVAG0MZpM",
-    "tier": ""
+    "tier": "Transcendent"
   },
   {
-    "rank": 61,
+    "rank": 48,
     "name": "Wistfully (nanayuisei)",
     "thumbnail": "",
     "id": "138373983",
@@ -854,35 +651,29 @@
     "tier": ""
   },
   {
-    "rank": 62,
+    "rank": 49,
     "name": "Ballistic Wistfully",
-    "thumbnail": "",
-    "id": "70371046",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "eightos & more",
     "creators": "eightos & more",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Vw9e8hGc3mY",
-    "tier": ""
-  },
-  {
-    "rank": 63,
-    "name": "Ultra Coffee",
-    "thumbnail": "",
-    "id": "126427346",
-    "points": 0,
+    "id": "70371046",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=Vw9e8hGc3mY",
+    "image": "",
     "victors": [],
-    "firstVictor": null,
-    "creator": "chronosify2",
-    "creators": "chronosify2",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=SyUxx7dD_zM",
-    "tier": ""
+    "tier": "Transcendent"
   },
   {
-    "rank": 64,
+    "rank": 50,
+    "name": "Ultra Coffee",
+    "creators": "chronosify2",
+    "id": "126427346",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=SyUxx7dD_zM",
+    "image": "",
+    "victors": [],
+    "tier": "Legendary"
+  },
+  {
+    "rank": 51,
     "name": "Anceps Worst Fear",
     "thumbnail": "",
     "id": "139007010",
@@ -896,21 +687,7 @@
     "tier": ""
   },
   {
-    "rank": 65,
-    "name": "Gamma Radiation",
-    "thumbnail": "",
-    "id": "145099738",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "RMGD",
-    "creators": "RMGD",
-    "is2Player": true,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 66,
+    "rank": 52,
     "name": "Silent Theory X",
     "thumbnail": "",
     "id": "82797130",
@@ -924,7 +701,7 @@
     "tier": ""
   },
   {
-    "rank": 67,
+    "rank": 53,
     "name": "grandma demon",
     "thumbnail": "",
     "id": "92518531",
@@ -938,7 +715,7 @@
     "tier": ""
   },
   {
-    "rank": 68,
+    "rank": 54,
     "name": "Xane gets trippy",
     "thumbnail": "",
     "id": "78245982",
@@ -952,7 +729,7 @@
     "tier": ""
   },
   {
-    "rank": 69,
+    "rank": 55,
     "name": "Sailent Discoworld",
     "thumbnail": "",
     "id": "108115322",
@@ -966,7 +743,7 @@
     "tier": ""
   },
   {
-    "rank": 70,
+    "rank": 56,
     "name": "system",
     "thumbnail": "",
     "id": "123110852",
@@ -980,7 +757,7 @@
     "tier": ""
   },
   {
-    "rank": 71,
+    "rank": 57,
     "name": "Eddies Castle",
     "thumbnail": "",
     "id": "129113296",
@@ -994,7 +771,7 @@
     "tier": ""
   },
   {
-    "rank": 72,
+    "rank": 58,
     "name": "Cosmos of Silence",
     "thumbnail": "",
     "id": "107175769",
@@ -1008,21 +785,7 @@
     "tier": ""
   },
   {
-    "rank": 73,
-    "name": "Minecraft",
-    "thumbnail": "",
-    "id": "75560026",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "realhutoew, Mojang",
-    "creators": "realhutoew, Mojang",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=XW8k8Arxl78",
-    "tier": ""
-  },
-  {
-    "rank": 74,
+    "rank": 59,
     "name": "Deadly Circles",
     "thumbnail": "",
     "id": "134368013",
@@ -1036,7 +799,7 @@
     "tier": ""
   },
   {
-    "rank": 75,
+    "rank": 60,
     "name": "XANE GETS SEQUELL",
     "thumbnail": "",
     "id": "138689383",
@@ -1050,7 +813,7 @@
     "tier": ""
   },
   {
-    "rank": 76,
+    "rank": 61,
     "name": "Marble Caverns",
     "thumbnail": "",
     "id": "126401253",
@@ -1064,7 +827,7 @@
     "tier": ""
   },
   {
-    "rank": 77,
+    "rank": 62,
     "name": "Basalt Caverns",
     "thumbnail": "",
     "id": "126105053",
@@ -1078,7 +841,7 @@
     "tier": ""
   },
   {
-    "rank": 78,
+    "rank": 63,
     "name": "Battle of the Shades (Phase 5)",
     "thumbnail": "",
     "id": "138729631",
@@ -1092,21 +855,7 @@
     "tier": ""
   },
   {
-    "rank": 79,
-    "name": "Morisummer Lane",
-    "thumbnail": "",
-    "id": "124759629",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "AngelEffect",
-    "creators": "AngelEffect",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=jjyrABJpvRM",
-    "tier": ""
-  },
-  {
-    "rank": 80,
+    "rank": 64,
     "name": "advanced christmas",
     "thumbnail": "",
     "id": "86524282",
@@ -1120,7 +869,7 @@
     "tier": ""
   },
   {
-    "rank": 81,
+    "rank": 65,
     "name": "ICE Carbon Destiny",
     "thumbnail": "",
     "id": "141594975",
@@ -1134,7 +883,7 @@
     "tier": ""
   },
   {
-    "rank": 82,
+    "rank": 66,
     "name": "STALEMATE 15",
     "thumbnail": "",
     "id": "91889965",
@@ -1148,7 +897,7 @@
     "tier": ""
   },
   {
-    "rank": 83,
+    "rank": 67,
     "name": "Silent Solar Circles",
     "thumbnail": "",
     "id": "125260812",
@@ -1162,7 +911,7 @@
     "tier": ""
   },
   {
-    "rank": 84,
+    "rank": 68,
     "name": "Silent Forest",
     "thumbnail": "",
     "id": "93103211",
@@ -1176,21 +925,7 @@
     "tier": ""
   },
   {
-    "rank": 85,
-    "name": "question processing",
-    "thumbnail": "",
-    "id": "116036581",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "Arsenjeex",
-    "creators": "Arsenjeex",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=EDkFNhaNVoA",
-    "tier": ""
-  },
-  {
-    "rank": 86,
+    "rank": 69,
     "name": "LOST RESOLVE",
     "thumbnail": "",
     "id": "91963297",
@@ -1204,21 +939,7 @@
     "tier": ""
   },
   {
-    "rank": 87,
-    "name": "Io",
-    "thumbnail": "",
-    "id": "141700670",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "HIROST",
-    "creators": "HIROST",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=LPxIPdv1LjM",
-    "tier": ""
-  },
-  {
-    "rank": 88,
+    "rank": 70,
     "name": "Devilicide",
     "thumbnail": "",
     "id": "139394939",
@@ -1232,35 +953,18 @@
     "tier": ""
   },
   {
-    "rank": 89,
-    "name": "Silent Acropolis (1cicl3)",
-    "thumbnail": "",
-    "id": "83061483",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "1cicl3",
-    "creators": "1cicl3",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=grPvsJq1BGM",
-    "tier": ""
-  },
-  {
-    "rank": 90,
+    "rank": 71,
     "name": "Snow Dynasty",
-    "thumbnail": "",
-    "id": "138152649",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "p4rax",
     "creators": "p4rax",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=RDTRk7Nkddg",
-    "tier": ""
+    "id": "138152649",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=RDTRk7Nkddg",
+    "image": "",
+    "victors": [],
+    "tier": "Legendary"
   },
   {
-    "rank": 91,
+    "rank": 72,
     "name": "Devils myths (Unnerfed)",
     "thumbnail": "",
     "id": "121452959",
@@ -1274,7 +978,7 @@
     "tier": ""
   },
   {
-    "rank": 92,
+    "rank": 73,
     "name": "PARALLEL UNIVERSE (Old)",
     "thumbnail": "",
     "id": "123812850",
@@ -1288,7 +992,7 @@
     "tier": ""
   },
   {
-    "rank": 93,
+    "rank": 74,
     "name": "Drown",
     "thumbnail": "",
     "id": "134433439",
@@ -1302,7 +1006,7 @@
     "tier": ""
   },
   {
-    "rank": 94,
+    "rank": 75,
     "name": "Isolation",
     "thumbnail": "",
     "id": "74547973",
@@ -1316,21 +1020,7 @@
     "tier": ""
   },
   {
-    "rank": 95,
-    "name": "A wish to say",
-    "thumbnail": "",
-    "id": "124228880",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "AuraXalaiv",
-    "creators": "AuraXalaiv",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=YkzOgFBUk-s",
-    "tier": ""
-  },
-  {
-    "rank": 96,
+    "rank": 76,
     "name": "Flawless Homicide",
     "thumbnail": "",
     "id": "131538234",
@@ -1344,7 +1034,7 @@
     "tier": ""
   },
   {
-    "rank": 97,
+    "rank": 77,
     "name": "Silent silent club",
     "thumbnail": "",
     "id": "131355701",
@@ -1358,7 +1048,7 @@
     "tier": ""
   },
   {
-    "rank": 98,
+    "rank": 78,
     "name": "xKore",
     "thumbnail": "",
     "id": "131284760",
@@ -1372,7 +1062,7 @@
     "tier": ""
   },
   {
-    "rank": 99,
+    "rank": 79,
     "name": "Swing Nightmare",
     "thumbnail": "",
     "id": "135264499",
@@ -1386,247 +1076,636 @@
     "tier": ""
   },
   {
-    "rank": 100,
-    "name": "Incommodiousness",
+    "rank": 80,
+    "name": "Parousia Diluvi",
     "thumbnail": "",
-    "id": "79449270",
+    "id": "110540426",
     "points": 0,
     "victors": [],
     "firstVictor": null,
-    "creator": "Thycket & more",
-    "creators": "Thycket & more",
+    "creator": "AnonIIExt, VizzionGD",
+    "creators": "AnonIIExt, VizzionGD",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=O7Ztmm5UWcg",
+    "tier": ""
+  },
+  {
+    "rank": 81,
+    "name": "the poison tree",
+    "thumbnail": "",
+    "id": "122058587",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "khacs",
+    "creators": "khacs",
     "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=H3NK853Uw_0",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=tNIQv8AtPgM",
+    "tier": ""
+  },
+  {
+    "rank": 82,
+    "name": "Treasures of Ruin",
+    "thumbnail": "",
+    "id": "96919097",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "realhutoew",
+    "creators": "realhutoew",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=29otKh4ZvqM",
+    "tier": ""
+  },
+  {
+    "rank": 83,
+    "name": "Vitrification",
+    "thumbnail": "",
+    "id": "https://drive.google.com/file/d/1bENSGOvWUde9620NB8W309va8DLi-5Ce/view?usp=sharing",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "erzor",
+    "creators": "erzor",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=x_EmGCjOCZU",
+    "tier": ""
+  },
+  {
+    "rank": 84,
+    "name": "problemy sinusini",
+    "thumbnail": "",
+    "id": "129141105",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "entity1111112",
+    "creators": "entity1111112",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=FPq8txd6bVE",
+    "tier": ""
+  },
+  {
+    "rank": 85,
+    "name": "flaofret",
+    "thumbnail": "",
+    "id": "114091323",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "hexitine",
+    "creators": "hexitine",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Vy9iVS9-c2Q",
+    "tier": ""
+  },
+  {
+    "rank": 86,
+    "name": "CHAINSMOKER",
+    "thumbnail": "",
+    "id": "140349344",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "wabug",
+    "creators": "wabug",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Si4qhlTAkf4",
+    "tier": ""
+  },
+  {
+    "rank": 87,
+    "name": "genesis",
+    "thumbnail": "",
+    "id": "108695742",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "SureFir3",
+    "creators": "SureFir3",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=yAgM4KrolIk",
+    "tier": ""
+  },
+  {
+    "rank": 88,
+    "name": "Dark Nightmares",
+    "thumbnail": "",
+    "id": "144851821",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "Blazek & more",
+    "creators": "Blazek & more",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Xah7O0b1Hzc",
+    "tier": ""
+  },
+  {
+    "rank": 89,
+    "name": "IceBLOOD WORLD",
+    "thumbnail": "",
+    "id": "144723836",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "OddMod",
+    "creators": "OddMod",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=3GzxQQ6PG8c",
+    "tier": ""
+  },
+  {
+    "rank": 90,
+    "name": "Hard Flying 3",
+    "thumbnail": "",
+    "id": "144280574",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "Unknown",
+    "creators": "Unknown",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=G8s_0SbNx7A",
+    "tier": ""
+  },
+  {
+    "rank": 91,
+    "name": "hay demon",
+    "thumbnail": "",
+    "id": "142526555",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "smartysmartysma",
+    "creators": "smartysmartysma",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=MLUQXZijPyA",
+    "tier": ""
+  },
+  {
+    "rank": 92,
+    "name": "Calamity Fortune v2",
+    "thumbnail": "",
+    "id": "142655239",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "AngelEffect",
+    "creators": "AngelEffect",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=jZenQLxVSyU",
+    "tier": ""
+  },
+  {
+    "rank": 93,
+    "name": "Winterbliss",
+    "thumbnail": "",
+    "id": "142171098",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "cheapyyyyy",
+    "creators": "cheapyyyyy",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=2-84oBoSxZA",
+    "tier": ""
+  },
+  {
+    "rank": 94,
+    "name": "Medusa",
+    "thumbnail": "",
+    "id": "142025716",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "cheapyyyyy",
+    "creators": "cheapyyyyy",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=psi96hc-zi4",
+    "tier": ""
+  },
+  {
+    "rank": 95,
+    "name": "The Prototype",
+    "thumbnail": "",
+    "id": "142025676",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "cheapyyyyy",
+    "creators": "cheapyyyyy",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=EDztDUjkmx0",
+    "tier": ""
+  },
+  {
+    "rank": 96,
+    "name": "The Falling Mysts",
+    "thumbnail": "",
+    "id": "141735413",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "cheapyyyyy",
+    "creators": "cheapyyyyy",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=23IqmMfcar8",
+    "tier": ""
+  },
+  {
+    "rank": 97,
+    "name": "HELLRAISER",
+    "thumbnail": "",
+    "id": "137703430",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "taggis",
+    "creators": "taggis",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=G5nwg3Q6VD4",
+    "tier": ""
+  },
+  {
+    "rank": 98,
+    "name": "Silent Jawbreaker",
+    "thumbnail": "",
+    "id": "136063350",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "thecyberr, jcob, evileyegalaxy",
+    "creators": "thecyberr, jcob, evileyegalaxy",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=sMSnsVyGS4o",
+    "tier": ""
+  },
+  {
+    "rank": 99,
+    "name": "MINUSdash",
+    "thumbnail": "",
+    "id": "119017600",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "SylenPaws",
+    "creators": "SylenPaws",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=CFCyUpI-eu4",
+    "tier": ""
+  },
+  {
+    "rank": 100,
+    "name": "Galaxy Reactor",
+    "thumbnail": "",
+    "id": "78862019",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "AnonIIExt",
+    "creators": "AnonIIExt",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=oYXke81wbTs",
     "tier": ""
   },
   {
     "rank": 101,
-    "name": "Parousia Diluvi",
-    "creators": "AnonIIExt, VizzionGD",
-    "id": "110540426",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=O7Ztmm5UWcg",
+    "name": "Conjury",
+    "creators": "Visionari",
+    "id": "64151855",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=bGm9EhYWoxo",
     "image": "",
     "victors": []
   },
   {
     "rank": 102,
-    "name": "the poison tree",
-    "creators": "khacs",
-    "id": "122058587",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=tNIQv8AtPgM",
+    "name": "Luua Tron SO EASY",
+    "creators": "Slopes",
+    "id": "139042622",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/eH21ctpen4Y",
     "image": "",
     "victors": []
   },
   {
     "rank": 103,
-    "name": "Treasures of Ruin",
-    "creators": "realhutoew",
-    "id": "96919097",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=29otKh4ZvqM",
+    "name": "Challenger Circles",
+    "creators": "RMGD",
+    "id": "146308612",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Divine"
   },
   {
     "rank": 104,
-    "name": "Vitrification",
-    "creators": "erzor",
-    "id": "https://drive.google.com/file/d/1bENSGOvWUde9620NB8W309va8DLi-5Ce/view?usp=sharing",
+    "name": "Old Thinking Blood",
+    "creators": "Kubi21official, Rebornnn, Stereogamer992, JBKris, pa1ne2",
+    "id": "146316976",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=x_EmGCjOCZU",
+    "showcaseVideo": "https://www.youtube.com/watch?v=niPv94mclFg",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Novice"
   },
   {
     "rank": 105,
-    "name": "problemy sinusini",
-    "creators": "entity1111112",
-    "id": "129141105",
+    "name": "Satanic Twilight Zone",
+    "creators": "IiIOpTiCaLIiI, RMGD",
+    "id": "146323084",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=FPq8txd6bVE",
+    "showcaseVideo": "",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Transcendent"
   },
   {
     "rank": 106,
-    "name": "flaofret",
-    "creators": "hexitine",
-    "id": "114091323",
+    "name": "Divine Geometry (RMGD)",
+    "creators": "Cyrillic, RMGD",
+    "id": "146113866",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=Vy9iVS9-c2Q",
+    "showcaseVideo": "https://youtu.be/r09Gtuu79-k",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Divine"
   },
   {
     "rank": 107,
-    "name": "CHAINSMOKER",
-    "creators": "wabug",
-    "id": "140349344",
+    "name": "KoMjury",
+    "creators": "skeletonlol, Visionari",
+    "id": "84572738",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=Si4qhlTAkf4",
+    "showcaseVideo": "https://www.youtube.com/watch?v=b66T2HVG15A",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 108,
-    "name": "genesis",
-    "creators": "SureFir3",
-    "id": "108695742",
+    "name": "Miraculous Twilight",
+    "creators": "gdmiracle, IiIOpTiCaLIiI, RMGD",
+    "id": "146254916",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=yAgM4KrolIk",
+    "showcaseVideo": "",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Transcendent"
   },
   {
     "rank": 109,
-    "name": "Dark Nightmares",
-    "creators": "Blazek & more",
-    "id": "144851821",
+    "name": "Bloody Hell II",
+    "creators": "DeAtHcAvE",
+    "id": "99438857",
     "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=Xah7O0b1Hzc",
+    "showcaseVideo": "",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Transcendent"
   },
   {
     "rank": 110,
-    "name": "IceBLOOD WORLD",
-    "creators": "OddMod",
-    "id": "144723836",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=3GzxQQ6PG8c",
+    "name": "arcturus (Unnerfed)",
+    "creators": "maxfs",
+    "id": "67059113",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=qi5622PJg9Q",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Divine"
   },
   {
     "rank": 111,
-    "name": "Hard Flying 3",
-    "creators": "Unknown",
-    "id": "144280574",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=G8s_0SbNx7A",
+    "name": "Dehumanization Dance",
+    "creators": "Nick24, Anaya",
+    "id": "145928521",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Insane"
   },
   {
     "rank": 112,
-    "name": "hay demon",
-    "creators": "smartysmartysma",
-    "id": "142526555",
+    "name": "Nivel De Silencio",
+    "creators": "2A0L0I3, str",
+    "id": "140475229",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=MLUQXZijPyA",
+    "showcaseVideo": "https://www.youtube.com/watch?v=SmZ06XvicHo",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Divine"
   },
   {
     "rank": 113,
-    "name": "Calamity Fortune v2",
-    "creators": "AngelEffect",
-    "id": "142655239",
+    "name": "i n j u r y (Old)",
+    "creators": "greafer",
+    "id": "83966317",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=jZenQLxVSyU",
+    "showcaseVideo": "https://www.youtube.com/watch?v=rQJ5ZUFHYGI",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Advanced"
   },
   {
     "rank": 114,
-    "name": "Winterbliss",
-    "creators": "cheapyyyyy",
-    "id": "142171098",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=2-84oBoSxZA",
+    "name": "KIAMAT",
+    "creators": "1Madjack1",
+    "id": "94362024",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=QmTft0nP_R4",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": "Transcendent"
   },
   {
     "rank": 115,
-    "name": "Medusa",
-    "creators": "cheapyyyyy",
-    "id": "142025716",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=psi96hc-zi4",
+    "name": "IfThanksLevelWasLevel1",
+    "creators": "Fancy, Anaya",
+    "id": "145494521",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 116,
-    "name": "The Prototype",
-    "creators": "cheapyyyyy",
-    "id": "142025676",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=EDztDUjkmx0",
+    "name": "Calls of the Abyss",
+    "creators": "Skyyee",
+    "id": "65526825",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/JsRb28OAChI",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 117,
-    "name": "The Falling Mysts",
-    "creators": "cheapyyyyy",
-    "id": "141735413",
+    "name": "Death Corridor Y ExT",
+    "creators": "nhauqq, VortexBaush",
+    "id": "141500466 Showcase Video:",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=23IqmMfcar8",
+    "showcaseVideo": "https://www.youtube.com/watch?v=wNcslObwWqo",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 118,
-    "name": "HELLRAISER",
-    "creators": "taggis",
-    "id": "137703430",
+    "name": "Small Time",
+    "creators": "Skyyee",
+    "id": "108097946",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=G5nwg3Q6VD4",
+    "showcaseVideo": "https://www.youtube.com/watch?v=qIJENHbvvnY",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 119,
-    "name": "Silent Jawbreaker",
-    "creators": "thecyberr, jcob, evileyegalaxy",
-    "id": "136063350",
+    "name": "Nodependence",
+    "creators": "TCTeam, dudodo",
+    "id": "108789987",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=sMSnsVyGS4o",
+    "showcaseVideo": "https://www.youtube.com/watch?v=IkMZqLUAVXk",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 120,
-    "name": "Azure Cyclone",
-    "creators": "realhutoew",
-    "id": "75325000",
+    "name": "Sorry",
+    "creators": "Skyyee",
+    "id": "70505891",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=DXmUxMudrIg",
+    "showcaseVideo": "https://www.youtube.com/watch?v=OZeFbjWXsL4",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 121,
-    "name": "MINUSdash",
-    "creators": "SylenPaws",
-    "id": "119017600",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=CFCyUpI-eu4",
+    "name": "Flash",
+    "creators": "AndrejGD",
+    "id": "80177702",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/G8e0g_ENOp0",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 122,
-    "name": "Monroy Force",
-    "creators": "AserejeJaDeJeOG",
-    "id": "75531583",
+    "name": "Lunam Noctem",
+    "creators": "Sapphuby",
+    "id": "90398982",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=bKyUy_qiwWk",
+    "showcaseVideo": "https://www.youtube.com/watch?v=XqvsVIidJOU",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
   },
   {
     "rank": 123,
-    "name": "Galaxy Reactor",
-    "creators": "AnonIIExt",
-    "id": "78862019",
+    "name": "Parathesia",
+    "creators": "slacktoaster",
+    "id": "122521696",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=oYXke81wbTs",
+    "showcaseVideo": "https://www.youtube.com/watch?v=1LI97TYLxU0",
     "image": "",
-    "victors": []
+    "victors": [],
+    "tier": ""
+  },
+  {
+    "rank": 124,
+    "name": "Misguidance",
+    "creators": "Lasandr_90",
+    "id": "129951584",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=p4SLzJ4FtJ0",
+    "image": "",
+    "victors": [],
+    "tier": ""
+  },
+  {
+    "rank": 125,
+    "name": "Aggravation",
+    "creators": "GDNachoo",
+    "id": "36411477",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=4b4Gi0av1tA",
+    "image": "",
+    "victors": [],
+    "tier": ""
+  },
+  {
+    "rank": 126,
+    "name": "Discombobulation",
+    "creators": "Lasandr_90",
+    "id": "121997915",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=S254dkv2gwg",
+    "image": "",
+    "victors": [],
+    "tier": ""
+  },
+  {
+    "rank": 127,
+    "name": "Ruined Geometry",
+    "creators": "Cyrillic, RMGD",
+    "id": "145207700",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [],
+    "tier": "Transcendent"
+  },
+  {
+    "rank": 128,
+    "name": "Silent Theory",
+    "creators": "HaloZombies",
+    "id": "102607395",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=4SoxBml6uH4",
+    "image": "",
+    "victors": [],
+    "tier": ""
+  },
+  {
+    "rank": 129,
+    "name": "Porq Legend IV",
+    "creators": "porqkyp",
+    "id": "73866070",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=-9J67ozD-Mw",
+    "image": "",
+    "victors": [],
+    "tier": ""
+  },
+  {
+    "rank": 130,
+    "name": "Liveless",
+    "creators": "nanayuisei",
+    "id": "109862537",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=YkXFshUoSkw",
+    "image": "",
+    "victors": [],
+    "tier": ""
+  },
+  {
+    "rank": 131,
+    "name": "Deadfully",
+    "creators": "",
+    "id": "69819768",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=BykeVE97gUM",
+    "image": "",
+    "victors": [],
+    "tier": ""
   }
 ]
