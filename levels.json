@@ -5864,45 +5864,6 @@
   },
   {
     "rank": 219,
-    "name": "Evolution",
-    "creators": "cheapyyyyy",
-    "id": "142171111",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/-b_fcE4O3Ks",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-05-19",
-        "time": "15m ?s",
-        "attempts": 962,
-        "video": "https://youtu.be/_kEF8ZUcjmc"
-      },
-      {
-        "name": "Sashozz",
-        "date": "2026-05-19",
-        "time": "15m 36s",
-        "attempts": 1156,
-        "video": "https://youtu.be/5jqVc-bYtJo"
-      },
-      {
-        "name": "Flyingfish9",
-        "date": "2026-07-15",
-        "time": "26m 51s",
-        "attempts": 1743,
-        "video": "https://youtu.be/pt3VBl_nA5o"
-      },
-      {
-        "name": "kyle1saurus",
-        "date": "2026-08-08",
-        "time": "25m",
-        "attempts": 1656,
-        "video": "https://youtu.be/4SBBv0jmIxY"
-      }
-    ]
-  },
-  {
-    "rank": 220,
     "name": "statera challenge",
     "creators": "RMGD",
     "id": "145028160",
@@ -5920,7 +5881,7 @@
     ]
   },
   {
-    "rank": 221,
+    "rank": 220,
     "name": "Paralox",
     "creators": "Spamdrew",
     "id": "136427413",
@@ -5952,7 +5913,7 @@
     ]
   },
   {
-    "rank": 222,
+    "rank": 221,
     "name": "Nowon Yung Jae Won",
     "creators": "DiaCreeper, kangerlussuaq",
     "id": "145529918",
@@ -5970,7 +5931,7 @@
     ]
   },
   {
-    "rank": 223,
+    "rank": 222,
     "name": "magnolia",
     "creators": "skeletonlol",
     "id": "76045050",
@@ -5988,7 +5949,7 @@
     ]
   },
   {
-    "rank": 224,
+    "rank": 223,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
