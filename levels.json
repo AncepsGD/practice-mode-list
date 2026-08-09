@@ -5971,6 +5971,24 @@
   },
   {
     "rank": 223,
+    "name": "magnolia",
+    "creators": "skeletonlol",
+    "id": "76045050",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/2b9v8w0Mg_M?si=9In6ARgn6dzMdxtE",
+    "image": "",
+    "victors": [
+      {
+        "name": "Sashozz",
+        "date": "2026-08-07",
+        "time": "10m 30s",
+        "attempts": 999,
+        "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
+      }
+    ]
+  },
+  {
+    "rank": 224,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
