@@ -25,6 +25,243 @@ function renderStats() {
   `;
 }
 
+function formatDuration(seconds) {
+  if (!Number.isFinite(seconds) || seconds <= 0) return '0s';
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  const parts = [];
+  if (h) parts.push(`${h}h`);
+  if (m) parts.push(`${m}m`);
+  if (s || parts.length === 0) parts.push(`${s}s`);
+  return parts.join(' ');
+}
+
+const LB_SORT_STORAGE_KEY = 'pml_lb_sort_state';
+const LB_SORT_DEFAULT_STATE = { key: 'rank', direction: 'asc' };
+let leaderboardSortState = { ...LB_SORT_DEFAULT_STATE };
+
+function loadLeaderboardSortState() {
+  try {
+    const stored = localStorage.getItem(LB_SORT_STORAGE_KEY);
+    if (!stored) return LB_SORT_DEFAULT_STATE;
+    const parsed = JSON.parse(stored);
+    if (parsed && typeof parsed === 'object' && ['rank', 'name', 'completed', 'totalTime', 'totalAttempts', 'hardest'].includes(parsed.key) && ['asc', 'desc'].includes(parsed.direction)) {
+      return parsed;
+    }
+  } catch (e) {
+    // ignore invalid stored state
+  }
+  return LB_SORT_DEFAULT_STATE;
+}
+
+function saveLeaderboardSortState() {
+  try {
+    localStorage.setItem(LB_SORT_STORAGE_KEY, JSON.stringify(leaderboardSortState));
+  } catch (e) {
+    // localStorage may be unavailable
+  }
+}
+
+function updateLeaderboardSortControls() {
+  const sortSelect = document.getElementById('lb-sort-key');
+  const directionBtn = document.getElementById('lb-sort-direction-btn');
+  if (sortSelect) {
+    sortSelect.value = leaderboardSortState.key;
+  }
+  if (directionBtn) {
+    directionBtn.textContent = leaderboardSortState.direction === 'asc' ? '▲' : '▼';
+    directionBtn.title = leaderboardSortState.direction === 'asc' ? 'Ascending order' : 'Descending order';
+  }
+}
+
+function initializeLeaderboardSortState() {
+  leaderboardSortState = loadLeaderboardSortState();
+  updateLeaderboardSortControls();
+}
+
+const LIST_SORT_STORAGE_KEY = 'pml_list_sort_state';
+const LIST_SORT_DEFAULT_STATE = { key: 'rank', direction: 'asc' };
+let listSortState = { ...LIST_SORT_DEFAULT_STATE };
+
+function loadListSortState() {
+  try {
+    const stored = localStorage.getItem(LIST_SORT_STORAGE_KEY);
+    if (!stored) return LIST_SORT_DEFAULT_STATE;
+    const parsed = JSON.parse(stored);
+    if (parsed && typeof parsed === 'object' && ['rank', 'name', 'creators', 'victors', 'earliestDate', 'id'].includes(parsed.key) && ['asc', 'desc'].includes(parsed.direction)) {
+      return parsed;
+    }
+  } catch (e) {
+    // ignore invalid stored state
+  }
+  return LIST_SORT_DEFAULT_STATE;
+}
+
+function saveListSortState() {
+  try {
+    localStorage.setItem(LIST_SORT_STORAGE_KEY, JSON.stringify(listSortState));
+  } catch (e) {
+    // localStorage may be unavailable
+  }
+}
+
+function updateListSortControls() {
+  const sortSelect = document.getElementById('list-sort-key');
+  const directionBtn = document.getElementById('list-sort-direction-btn');
+  if (sortSelect) {
+    sortSelect.value = listSortState.key;
+  }
+  if (directionBtn) {
+    directionBtn.textContent = listSortState.direction === 'asc' ? '▲' : '▼';
+    directionBtn.title = listSortState.direction === 'asc' ? 'Ascending order' : 'Descending order';
+  }
+}
+
+function initializeListSortState() {
+  listSortState = loadListSortState();
+  updateListSortControls();
+}
+
+function handleListSortChange() {
+  const sortSelect = document.getElementById('list-sort-key');
+  if (!sortSelect) return;
+  listSortState.key = sortSelect.value;
+  saveListSortState();
+  updateListSortControls();
+  filterList(document.getElementById('list-search').value || '');
+}
+
+function toggleListSortDirection() {
+  listSortState.direction = listSortState.direction === 'asc' ? 'desc' : 'asc';
+  saveListSortState();
+  updateListSortControls();
+  filterList(document.getElementById('list-search').value || '');
+}
+
+function getListSortValue(item, key, direction = 1) {
+  switch (key) {
+    case 'rank': {
+      const value = Number.isFinite(Number(item.rank)) ? Number(item.rank) : null;
+      return value !== null ? value : (direction === 1 ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER);
+    }
+    case 'name':
+      return String(item.name || '').toLowerCase();
+    case 'creators':
+      return normalizeLevelSearchText(getLevelCreatorValue(item));
+    case 'victors':
+      return Array.isArray(item.victors) ? item.victors.length : 0;
+    case 'earliestDate': {
+      if (!Array.isArray(item.victors) || !item.victors.length) {
+        return direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+      }
+      let earliest = Number.POSITIVE_INFINITY;
+      for (const victor of item.victors) {
+        const value = Date.parse(String(victor.date || '').trim());
+        if (!Number.isNaN(value) && value < earliest) earliest = value;
+      }
+      if (earliest === Number.POSITIVE_INFINITY) {
+        return direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+      }
+      return earliest;
+    }
+    case 'id': {
+      const idValue = String(item.id || '').trim();
+      const numeric = Number(idValue);
+      return Number.isFinite(numeric) ? numeric : idValue.toLowerCase();
+    }
+    default:
+      return String(item.name || '').toLowerCase();
+  }
+}
+
+function getSortedLevelData(data) {
+  if (!Array.isArray(data)) return [];
+  const sorted = [...data];
+  const direction = listSortState.direction === 'asc' ? 1 : -1;
+  sorted.sort((a, b) => {
+    const aValue = getListSortValue(a, listSortState.key, direction);
+    const bValue = getListSortValue(b, listSortState.key, direction);
+
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return aValue.localeCompare(bValue) * direction;
+    }
+    if (aValue < bValue) return -1 * direction;
+    if (aValue > bValue) return 1 * direction;
+    return 0;
+  });
+  return sorted;
+}
+
+function handleLeaderboardSortChange() {
+  const sortSelect = document.getElementById('lb-sort-key');
+  if (!sortSelect) return;
+  leaderboardSortState.key = sortSelect.value;
+  saveLeaderboardSortState();
+  updateLeaderboardSortControls();
+  filterLeaderboard();
+}
+
+function toggleLeaderboardSortDirection() {
+  leaderboardSortState.direction = leaderboardSortState.direction === 'asc' ? 'desc' : 'asc';
+  saveLeaderboardSortState();
+  updateLeaderboardSortControls();
+  filterLeaderboard();
+}
+
+function getLeaderboardSortValue(item, key, direction = 1) {
+  switch (key) {
+    case 'rank': {
+      const value = Number.isFinite(item.rank) ? item.rank : null;
+      return value !== null ? value : (direction === 1 ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER);
+    }
+    case 'name':
+      return String(item.name || '').toLowerCase();
+    case 'completed':
+      return Number.isFinite(item.completionCount) ? item.completionCount : 0;
+    case 'totalTime': {
+      const value = Number.isFinite(item.totalTimeSeconds) && item.totalTimeSeconds > 0 ? item.totalTimeSeconds : null;
+      return value !== null ? value : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
+    }
+    case 'totalAttempts': {
+      const value = Number.isFinite(item.totalAttempts) && item.totalAttempts > 0 ? item.totalAttempts : null;
+      return value !== null ? value : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
+    }
+    case 'hardest':
+      return item.hardestCompletion && Number.isFinite(item.hardestCompletion.points)
+        ? item.hardestCompletion.points
+        : 0;
+    default:
+      return item.rank ?? Number.MAX_SAFE_INTEGER;
+  }
+}
+
+function getSortedLeaderboardData(data) {
+  if (!Array.isArray(data)) return [];
+  const sorted = [...data];
+  const direction = leaderboardSortState.direction === 'asc' ? 1 : -1;
+  sorted.sort((a, b) => {
+    if (leaderboardSortState.key === 'rank') {
+      const aValue = Number.isFinite(a.rank) ? a.rank : (direction === 1 ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER);
+      const bValue = Number.isFinite(b.rank) ? b.rank : (direction === 1 ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER);
+      if (aValue < bValue) return -1 * direction;
+      if (aValue > bValue) return 1 * direction;
+      return 0;
+    }
+
+    const aValue = getLeaderboardSortValue(a, leaderboardSortState.key, direction);
+    const bValue = getLeaderboardSortValue(b, leaderboardSortState.key, direction);
+
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return aValue.localeCompare(bValue) * direction;
+    }
+    if (aValue < bValue) return -1 * direction;
+    if (aValue > bValue) return 1 * direction;
+    return 0;
+  });
+  return sorted;
+}
+
 function normalizeLevelSearchText(value) {
   return String(value || '').trim().toLowerCase();
 }
@@ -488,7 +725,8 @@ function toggleExpand(id) {
 
 function renderLeaderboard(data) {
   const body = document.getElementById('lb-body');
-  if (!data.length) {
+  const sortedData = getSortedLeaderboardData(data);
+  if (!sortedData.length) {
     body.innerHTML = '<tr><td colspan="4" class="empty-state">// NO PLAYERS FOUND //</td></tr>';
     return;
   }
@@ -500,7 +738,7 @@ function renderLeaderboard(data) {
     return chars.map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
   }
 
-  body.innerHTML = data
+  body.innerHTML = sortedData
     .map((p) => {
       const completionDetails = Array.isArray(p.completionDetails) && p.completionDetails.length
         ? p.completionDetails
@@ -521,7 +759,7 @@ function renderLeaderboard(data) {
       `).join('');
       return `
         <tr class="leaderboard-row">
-          <td class="rank-td">${data.indexOf(p) + 1}</td>
+          <td class="rank-td">${p.rank ?? sortedData.indexOf(p) + 1}</td>
           <td><span class="player-name">${(window.playerCountries && window.playerCountries[p.name]) ? countryCodeToEmoji(window.playerCountries[p.name]) + ' ' : ''}${escapeHTML(p.name)}</span></td>
           <td><span class="score-val">${p.points.toFixed(1)}</span></td>
           <td class="completion-cell">
@@ -529,6 +767,14 @@ function renderLeaderboard(data) {
               <div class="completion-stat-pill">
                 <span class="completion-stat-label">Completed</span>
                 <strong>${completionCount}</strong>
+              </div>
+              <div class="completion-stat-pill">
+                <span class="completion-stat-label">Total Time</span>
+                <strong>${formatDuration(p.totalTimeSeconds ?? 0)}</strong>
+              </div>
+              <div class="completion-stat-pill">
+                <span class="completion-stat-label">Total Attempts</span>
+                <strong>${Number(p.totalAttempts ?? 0).toLocaleString()}</strong>
               </div>
               <div class="completion-stat-pill">
                 <span class="completion-stat-label">Hardest</span>
@@ -575,7 +821,7 @@ function filterList(query) {
     ? getRankedLevelMatches(normalizedQuery, levels)
     : [...levels];
 
-  renderLevels(rankedLevels);
+  renderLevels(getSortedLevelData(rankedLevels));
 }
 
 function filterLeaderboard() {

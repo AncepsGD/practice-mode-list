@@ -24,31 +24,47 @@
       </h1>
       <nav>
         <button class="nav-btn active" onclick="showPage('list', this)">
-          <span class="nav-icon"><i class="fa-solid fa-list"></i></span>The List
+          <span class="nav-icon"><i class="fa-solid fa-list"></i></span><span class="nav-label">The List</span>
         </button>
         <button class="nav-btn" onclick="showPage('leaderboard', this)">
-          <span class="nav-icon"><i class="fa-solid fa-trophy"></i></span>Leaderboard
+          <span class="nav-icon"><i class="fa-solid fa-trophy"></i></span><span class="nav-label">Leaderboard</span>
         </button>
         <button class="nav-btn" onclick="showPage('verifications', this)">
-          <span class="nav-icon"><i class="fa-solid fa-circle-check"></i></span>Unverified List
+          <span class="nav-icon"><i class="fa-solid fa-circle-check"></i></span><span class="nav-label">Unverified List</span>
         </button>
         <button class="nav-btn" onclick="showPage('timeline', this)">
-          <span class="nav-icon"><i class="fa-solid fa-clock"></i></span>Timeline
+          <span class="nav-icon"><i class="fa-solid fa-clock"></i></span><span class="nav-label">Timeline</span>
         </button>
         <button class="nav-btn" onclick="showPage('optimizer', this)">
-          <span class="nav-icon"><i class="fa-solid fa-route"></i></span>Ladder
+          <span class="nav-icon"><i class="fa-solid fa-route"></i></span><span class="nav-label">Ladder</span>
         </button>
         <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank">
-          <span class="nav-icon"><i class="fa-brands fa-discord"></i></span>Discord
+          <span class="nav-icon"><i class="fa-brands fa-discord"></i></span><span class="nav-label">Discord</span>
         </a>
       </nav>
     </header>
 
     <div id="page-list" class="page active">
       <div class="stats-strip" id="stats-strip"></div>
-      <div class="search-bar">
-        <input class="search-input" type="text" placeholder="Search levels or creators..." id="list-search"
-          oninput="handleListSearch()" />
+      <div class="list-toolbar">
+        <div class="list-sort-controls">
+          <label class="leaderboard-label" for="list-sort-key">Sort by</label>
+          <div class="sort-controls">
+            <select id="list-sort-key" onchange="handleListSortChange()">
+              <option value="rank">Rank</option>
+              <option value="name">Name</option>
+              <option value="creators">Creators</option>
+              <option value="victors">Victors</option>
+              <option value="earliestDate">Earliest Date</option>
+              <option value="id">ID</option>
+            </select>
+            <button id="list-sort-direction-btn" class="sort-direction-btn" type="button" onclick="toggleListSortDirection()" aria-label="Toggle list sort direction">▲</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input class="search-input" type="text" placeholder="Search levels or creators..." id="list-search"
+            oninput="handleListSearch()" />
+        </div>
       </div>
       <div id="levels-container"></div>
     </div>
@@ -58,10 +74,26 @@
         <div class="line"></div>
       </div>
       <div class="leaderboard-toolbar">
-        <label class="leaderboard-label" for="lb-search">Search players</label>
-        <div class="search-bar">
-          <input class="search-input-lb" type="text" placeholder="Search players, levels, or scores..." id="lb-search"
-            oninput="filterLeaderboard()" />
+        <div class="leaderboard-sort-controls">
+          <label class="leaderboard-label" for="lb-sort-key">Sort by</label>
+          <div class="sort-controls">
+            <select id="lb-sort-key" onchange="handleLeaderboardSortChange()">
+              <option value="rank">Rank</option>
+              <option value="name">Player</option>
+              <option value="completed">Completed Levels</option>
+              <option value="totalTime">Total Time</option>
+              <option value="totalAttempts">Total Attempts</option>
+              <option value="hardest">Peak Hardest</option>
+            </select>
+            <button id="lb-sort-direction-btn" class="sort-direction-btn" type="button" onclick="toggleLeaderboardSortDirection()" aria-label="Toggle leaderboard sort direction">▲</button>
+          </div>
+        </div>
+        <div class="leaderboard-search-wrap">
+          <label class="leaderboard-label" for="lb-search">Search players</label>
+          <div class="search-bar">
+            <input class="search-input-lb" type="text" placeholder="Search players, levels, or scores..." id="lb-search"
+              oninput="filterLeaderboard()" />
+          </div>
         </div>
       </div>
       <table class="leaderboard-table">

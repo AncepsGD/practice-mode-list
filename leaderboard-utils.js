@@ -146,10 +146,21 @@ function buildLeaderboard(lvls) {
                     points: 0,
                     levels: [],
                     completionDetails: [],
+                    totalTimeSeconds: 0,
+                    totalAttempts: 0,
                 };
             }
 
             const levelName = String(lvl.name || "").trim();
+            const playerSeconds = Number(victor.seconds);
+            if (Number.isFinite(playerSeconds) && playerSeconds > 0) {
+                map[playerName].totalTimeSeconds += playerSeconds;
+            }
+            const playerAttempts = Number(victor.attempts);
+            if (Number.isFinite(playerAttempts) && playerAttempts > 0) {
+                map[playerName].totalAttempts += playerAttempts;
+            }
+
             map[playerName].points += lvl.points * timeScore * bonusMultiplier * completionMultiplier;
             map[playerName].levels.push(levelName);
             map[playerName].completionDetails.push({

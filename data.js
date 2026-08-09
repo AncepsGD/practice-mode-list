@@ -270,9 +270,11 @@ function processRawData(data) {
   });
 
   leaderboard = buildLeaderboard(levels);
+  initializeLeaderboardSortState();
+  initializeListSortState();
   maxScore = Math.max(...leaderboard.map((p) => p.points), 1);
   renderStats();
-  renderLevels(levels);
+  renderLevels(getSortedLevelData(levels));
   renderLeaderboard(leaderboard);
   initializeTimeline();
 
