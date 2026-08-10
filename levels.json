@@ -5954,24 +5954,6 @@
   },
   {
     "rank": 224,
-    "name": "statera challenge",
-    "creators": "RMGD",
-    "id": "145028160",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-07-20",
-        "time": "13m 21s",
-        "attempts": 1206,
-        "video": "https://youtu.be/9KX8xhi8t5g"
-      }
-    ]
-  },
-  {
-    "rank": 225,
     "name": "Paralox",
     "creators": "Spamdrew",
     "id": "136427413",
@@ -6003,7 +5985,7 @@
     ]
   },
   {
-    "rank": 226,
+    "rank": 225,
     "name": "Nowon Yung Jae Won",
     "creators": "DiaCreeper, kangerlussuaq",
     "id": "145529918",
@@ -6021,7 +6003,7 @@
     ]
   },
   {
-    "rank": 227,
+    "rank": 226,
     "name": "magnolia",
     "creators": "skeletonlol",
     "id": "76045050",
@@ -6039,7 +6021,7 @@
     ]
   },
   {
-    "rank": 228,
+    "rank": 227,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
