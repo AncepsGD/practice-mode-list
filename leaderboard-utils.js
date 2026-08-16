@@ -22,7 +22,7 @@ function parseTimeToSeconds(timeStr) {
     const m = parts["m"] || 0;
     const sec = parts["s"] || 0;
     const total = h * 3600 + m * 60 + sec;
-    return total > 0 ? total : null;
+    return Number.isFinite(total) ? total : null;
 }
 
 const DIFFICULTY_CURVE_EXPONENT = 1.6;
@@ -61,8 +61,10 @@ const LOWEST_ATTEMPTS_BONUS = 0.1;
 const TIER_COMPLETION_DECAY = 0.95;
 
 function getTimeScore(playerSeconds, bestSeconds) {
-    if (!Number.isFinite(playerSeconds) || playerSeconds <= 0) return 0;
-    if (!Number.isFinite(bestSeconds) || bestSeconds <= 0) return 0;
+    if (!Number.isFinite(playerSeconds)) return 0;
+    if (!Number.isFinite(bestSeconds) || bestSeconds < 0) return 0;
+    if (playerSeconds === 0) return bestSeconds >= 0 ? 1 : 0;
+    if (bestSeconds <= 0) return 0;
     return Math.min(bestSeconds / playerSeconds, 1);
 }
 

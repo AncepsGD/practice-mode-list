@@ -655,8 +655,10 @@ function recordMultiplier(recordCount) {
 }
 
 function getTimeScore(playerSeconds, bestSeconds) {
-  if (!Number.isFinite(playerSeconds) || playerSeconds <= 0) return 0;
-  if (!Number.isFinite(bestSeconds) || bestSeconds <= 0) return 0;
+  if (!Number.isFinite(playerSeconds)) return 0;
+  if (!Number.isFinite(bestSeconds) || bestSeconds < 0) return 0;
+  if (playerSeconds === 0) return bestSeconds >= 0 ? 1 : 0;
+  if (bestSeconds <= 0) return 0;
   return Math.min(bestSeconds / playerSeconds, 1);
 }
 
