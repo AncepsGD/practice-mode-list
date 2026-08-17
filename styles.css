@@ -1664,10 +1664,27 @@ nav {
   font-size: 12px;
 }
 
+.edit-table th:nth-child(6),
+.edit-table td.id-td {
+  width: 92px;
+  max-width: 92px;
+}
+
 .edit-table td.id-td {
   color: var(--violet-bright);
   font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.edit-table td.tps-td {
+  color: #aac5ff;
+  font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .edit-table td.tier-td {

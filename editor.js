@@ -564,8 +564,12 @@ function saveLevelForm() {
   const currentIndex = editingIndex;
 
   if (existingIndex !== -1 && existingIndex !== currentIndex) {
-    alert("A level with this ID already exists.");
-    return;
+    console.warn("Duplicate level ID detected while saving; continuing with save.", {
+      id,
+      existingIndex,
+      currentIndex,
+    });
+    alert("A level with this ID already exists. Saving anyway.");
   }
 
   const victors = Array.from(document.querySelectorAll(".victor-entry")).map((el) => ({
