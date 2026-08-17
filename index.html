@@ -32,6 +32,9 @@
         <button class="nav-btn" onclick="showPage('verifications', this)">
           <span class="nav-icon"><i class="fa-solid fa-circle-check"></i></span><span class="nav-label">Unverified List</span>
         </button>
+        <button class="nav-btn" onclick="showPage('todo', this)">
+          <span class="nav-icon"><i class="fa-solid fa-list-check"></i></span><span class="nav-label">To-Do</span>
+        </button>
         <button class="nav-btn" onclick="showPage('timeline', this)">
           <span class="nav-icon"><i class="fa-solid fa-clock"></i></span><span class="nav-label">Timeline</span>
         </button>
@@ -123,6 +126,17 @@
       <div id="verifications-container"></div>
     </div>
 
+    <div id="page-todo" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="todo-header">
+        <h2>Favorited Levels</h2>
+        <p class="todo-subtitle">Levels you marked for review across the main list and the unverified list.</p>
+      </div>
+      <div id="todo-container"></div>
+    </div>
+
     <div id="page-timeline" class="page">
       <div class="section-header">
         <div class="line"></div>
@@ -183,6 +197,7 @@
                 <th>Creator(s)</th>
                 <th class="tier-col">Tier</th>
                 <th>ID</th>
+                <th>TPS</th>
                 <th>Victors</th>
                 <th style="text-align: right">Actions</th>
               </tr>
@@ -216,6 +231,10 @@
           <div class="form-group">
             <label class="form-label">Rank</label>
             <input class="form-input" id="f-rank" type="number" placeholder="e.g. 1" min="1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">TPS</label>
+            <input class="form-input" id="f-tps" type="number" placeholder="e.g. 17" min="0" step="1" />
           </div>
           <div class="form-group" id="tier-field-group">
             <label class="form-label">Tier</label>

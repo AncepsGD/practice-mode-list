@@ -37,6 +37,118 @@ function formatDuration(seconds) {
   return parts.join(' ');
 }
 
+const TARGETED_LEVELS_STORAGE_KEY = 'pml_targeted_levels';
+
+function getTargetedLevelKey(level) {
+  const sourceId = String(level?.id ?? '').trim();
+  const sourceName = String(level?.name ?? '').trim();
+  const key = sourceId || sourceName;
+  return key ? key.toLowerCase() : '';
+}
+
+function getStoredTargetedLevels() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(TARGETED_LEVELS_STORAGE_KEY) || '[]');
+    return Array.isArray(saved) ? saved.filter((entry) => typeof entry === 'string').map((entry) => String(entry).trim().toLowerCase()) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveStoredTargetedLevels(keys) {
+  try {
+    localStorage.setItem(TARGETED_LEVELS_STORAGE_KEY, JSON.stringify([...new Set(keys.filter(Boolean))]));
+  } catch (error) {
+    // localStorage may be unavailable
+  }
+}
+
+function isLevelTargeted(level) {
+  const key = getTargetedLevelKey(level);
+  if (!key) return false;
+  return getStoredTargetedLevels().includes(key);
+}
+
+function toggleTargetLevel(level) {
+  const key = getTargetedLevelKey(level);
+  if (!key) return;
+
+  const stored = getStoredTargetedLevels();
+  const next = stored.includes(key)
+    ? stored.filter((entry) => entry !== key)
+    : [...stored, key];
+
+  saveStoredTargetedLevels(next);
+  renderTargetedLevels();
+  renderLevels(getSortedLevelData(levels));
+  renderVerifications(getVerificationsList());
+}
+
+function getTargetedLevelsFromData(sourceLevels) {
+  const keyed = getStoredTargetedLevels();
+  if (!keyed.length) return [];
+
+  return (sourceLevels || []).filter((level) => keyed.includes(getTargetedLevelKey(level)));
+}
+
+function renderTargetedLevels() {
+  const container = document.getElementById('todo-container');
+
+  if (!container) return;
+
+  const targetedMain = getTargetedLevelsFromData(levels);
+  const targetedUnverified = getTargetedLevelsFromData(verifications);
+  const combined = [...targetedMain, ...targetedUnverified]
+    .filter((level, index, list) => list.findIndex((entry) => getTargetedLevelKey(entry) === getTargetedLevelKey(level)) === index);
+
+  if (!combined.length) {
+    container.innerHTML = '<div class="empty-state">// NO TARGETED LEVELS // </div>';
+    return;
+  }
+
+  const cards = combined
+    .sort((a, b) => {
+      const aRank = Number(a.rank ?? Number.MAX_SAFE_INTEGER);
+      const bRank = Number(b.rank ?? Number.MAX_SAFE_INTEGER);
+      if (Number.isFinite(aRank) && Number.isFinite(bRank) && aRank !== bRank) return aRank - bRank;
+      return String(a.name || '').localeCompare(String(b.name || ''));
+    })
+    .map((lvl, index) => {
+      const cardClass = index % 2 === 0 ? 'level-card variant-a' : 'level-card variant-b';
+      const sourceLabel = levels.some((item) => getTargetedLevelKey(item) === getTargetedLevelKey(lvl)) ? 'Main List' : 'Unverified';
+      const buttonText = 'Remove Target';
+
+      return `
+        <div class="${cardClass}">
+          <div class="rank-col">
+            <span class="rank-num" aria-hidden="true">${Number.isFinite(Number(lvl.rank)) ? '#' + lvl.rank : '•'}</span>
+          </div>
+
+          <div class="info-col">
+            <div class="level-name">${escapeHTML(lvl.name || '')}</div>
+            <div class="level-meta">
+              ${sourceLabel ? `<span class="meta-pill creator">${escapeHTML(sourceLabel)}</span>` : ''}
+              ${lvl.tier ? `<span class="meta-pill tier">${escapeHTML(lvl.tier)}</span>` : ''}
+              ${getLevelTpsDisplayValue(lvl) !== null ? `<span class="meta-pill tps">TPS: ${escapeHTML(String(getLevelTpsDisplayValue(lvl)))}</span>` : ''}
+              ${String(lvl.id || '').trim() ? `<span class="meta-pill id">ID: ${escapeHTML(String(lvl.id || '').trim())}</span>` : ''}
+            </div>
+            ${getLevelSummaryRows(lvl).map((row) => `<div class="victor-row"><span class="victor-label">${escapeHTML(row.label || '')}:</span><span class="victor-name">${escapeHTML(row.name || '')}</span><span class="victor-stats">${escapeHTML(row.stat || '')}</span></div>`).join('')}
+          </div>
+          ${getThumbnailMarkup(lvl)}
+          <div class="actions-col">
+            <button class="btn-target-toggle targeted" type="button" data-target-level="${escapeHTML(getTargetedLevelKey(lvl))}" title="Remove target" aria-label="Remove target">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            ${lvl.showcaseVideoUrl ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}" title="Open showcase video" aria-label="Open showcase video"><i class="fa-solid fa-video"></i></button>` : '<span class="btn-video no-link" title="No video available"><i class="fa-solid fa-video-slash"></i></span>'}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  container.innerHTML = cards;
+  initLazyThumbnails();
+}
+
 const LB_SORT_STORAGE_KEY = 'pml_lb_sort_state';
 const LB_SORT_DEFAULT_STATE = { key: 'rank', direction: 'asc' };
 let leaderboardSortState = { ...LB_SORT_DEFAULT_STATE };
@@ -332,6 +444,16 @@ function getLevelCardKey(level, index) {
   return `${baseId || namePart || 'level'}-${namePart || index}-${index}`;
 }
 
+function getLevelTpsDisplayValue(level) {
+  const raw = level?.tps;
+  if (raw === null || raw === undefined || raw === "" || (typeof raw === "string" && raw.trim() === "") || Number(raw) === 0) {
+    return null;
+  }
+
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : null;
+}
+
 function getLevelMetaMarkup(level) {
   const metaPills = [];
   const creatorValue = getLevelCreatorValue(level);
@@ -342,6 +464,11 @@ function getLevelMetaMarkup(level) {
 
   if (level.tier) {
     metaPills.push(`<span class="meta-pill tier">${escapeHTML(level.tier)}</span>`);
+  }
+
+  const tpsValue = getLevelTpsDisplayValue(level);
+  if (tpsValue !== null) {
+    metaPills.push(`<span class="meta-pill tps">TPS: ${escapeHTML(String(tpsValue))}</span>`);
   }
 
   const idValue = String(level.id ?? '').trim();
@@ -507,6 +634,15 @@ function bindVideoModalEvents() {
   window.__videoModalEventsBound = true;
 
   document.addEventListener('click', (event) => {
+    const targetToggle = event.target.closest('[data-target-level]');
+    if (targetToggle) {
+      const levelKey = String(targetToggle.dataset.targetLevel || '').trim();
+      const sourceLevels = [...levels, ...verifications];
+      const level = sourceLevels.find((item) => getTargetedLevelKey(item) === levelKey) || { name: '', id: levelKey };
+      toggleTargetLevel(level);
+      return;
+    }
+
     const trigger = event.target.closest('[data-open-video-modal]');
     if (trigger) {
       event.preventDefault();
@@ -568,6 +704,7 @@ function renderLevels(data) {
           <div class="level-meta">
             ${getLevelCreatorValue(lvl) ? `<span class="meta-pill creator">${escapeHTML(getLevelCreatorValue(lvl))}</span>` : ''}
             ${lvl.tier ? `<span class="meta-pill tier">${escapeHTML(lvl.tier)}</span>` : ''}
+            ${getLevelTpsDisplayValue(lvl) !== null ? `<span class="meta-pill tps">TPS: ${escapeHTML(String(getLevelTpsDisplayValue(lvl)))}</span>` : ''}
             <span class="meta-pill id">ID: ${lvl.id}</span>
             ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ''}
           </div>
@@ -586,16 +723,19 @@ function renderLevels(data) {
         ${getThumbnailMarkup(lvl)}
 
         <div class="actions-col">
-          <button class="btn-expand" data-level="${levelKey}">
-            Victors ▾
+          <button class="btn-expand" data-level="${levelKey}" title="Toggle victors list" aria-label="Toggle victors list">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <button class="btn-target-toggle ${isLevelTargeted(lvl) ? 'targeted' : ''}" type="button" data-target-level="${escapeHTML(getTargetedLevelKey(lvl))}" title="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}" aria-label="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}">
+            <i class="fa-solid ${isLevelTargeted(lvl) ? 'fa-check' : 'fa-star'}"></i>
           </button>
 
           ${
             lvl.showcaseVideoUrl
-            ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}">
-                 Video ▸
+            ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}" title="Open showcase video" aria-label="Open showcase video">
+                 <i class="fa-solid fa-video"></i>
                </button>`
-            : '<span class="btn-video no-link">No video</span>'
+            : '<span class="btn-video no-link" title="No video available"><i class="fa-solid fa-video-slash"></i></span>'
           }
         </div>
       </div>
@@ -625,7 +765,7 @@ function renderLevels(data) {
               <td>
                 ${
                   v.victorVideoUrl
-                  ? `<button class="btn-video btn-video-inline" type="button" data-open-video-modal="${escapeHTML(v.victorVideoUrl)}">Watch</button>`
+                  ? `<button class="btn-video btn-video-inline" type="button" data-open-video-modal="${escapeHTML(v.victorVideoUrl)}" title="Watch video" aria-label="Watch video"><i class="fa-solid fa-play"></i></button>`
                   : '—'
                 }
               </td>
@@ -719,8 +859,12 @@ function toggleExpand(id) {
   const button = document.querySelector(`#card-${id} .btn-expand`);
   if (!panel || !button) return;
 
-  const btnText = panel.classList.toggle('open') ? 'Victors ▴' : 'Victors ▾';
-  button.textContent = btnText;
+  const isOpen = panel.classList.toggle('open');
+  const icon = button.querySelector('i');
+  if (icon) {
+    icon.classList.toggle('fa-chevron-up', isOpen);
+    icon.classList.toggle('fa-chevron-down', !isOpen);
+  }
 }
 
 function renderLeaderboard(data) {
@@ -876,6 +1020,7 @@ function initializeVerifications() {
   const shuffledLevels = shuffleArray(unverifiedLevels);
   sessionStorage.setItem('verifications-list', JSON.stringify(shuffledLevels));
   renderVerifications(shuffledLevels);
+  renderTargetedLevels();
 }
 
 function shuffleVerifications() {
@@ -883,6 +1028,7 @@ function shuffleVerifications() {
   const shuffledLevels = shuffleArray(unverifiedLevels);
   sessionStorage.setItem('verifications-list', JSON.stringify(shuffledLevels));
   renderVerifications(shuffledLevels);
+  renderTargetedLevels();
 }
 
 function getVerificationsList() {
@@ -920,7 +1066,10 @@ function renderVerifications(data) {
         </div>
         ${thumbnailMarkup}
         <div class="${actionsClass}">
-          ${lvl.showcaseVideoUrl ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}">Video ▸</button>` : '<span class="btn-video no-link">No video</span>'}
+          <button class="btn-target-toggle ${isLevelTargeted(lvl) ? 'targeted' : ''}" type="button" data-target-level="${escapeHTML(getTargetedLevelKey(lvl))}" title="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}" aria-label="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}">
+            <i class="fa-solid ${isLevelTargeted(lvl) ? 'fa-check' : 'fa-star'}"></i>
+          </button>
+          ${lvl.showcaseVideoUrl ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}" title="Open showcase video" aria-label="Open showcase video"><i class="fa-solid fa-video"></i></button>` : '<span class="btn-video no-link" title="No video available"><i class="fa-solid fa-video-slash"></i></span>'}
         </div>
       </div>
     `;
@@ -970,8 +1119,8 @@ function renderTimeline(data) {
 
         <div class="${actionsClass}">
           ${timelineLevel.showcaseVideoUrl
-            ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(timelineLevel.showcaseVideoUrl)}">Video ▸</button>`
-            : '<span class="btn-video no-link">No video</span>'}
+            ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(timelineLevel.showcaseVideoUrl)}" title="Open showcase video" aria-label="Open showcase video"><i class="fa-solid fa-video"></i></button>`
+            : '<span class="btn-video no-link" title="No video available"><i class="fa-solid fa-video-slash"></i></span>'}
         </div>
       </div>
     `;

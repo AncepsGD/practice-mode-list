@@ -136,6 +136,9 @@ function normalizeLevelEntry(item) {
   const imageValue = item.image || item.thumbnail || item.thumb || "";
   const twoPlayerValue = item.twoPlayer === true || item.twoPlayer === "2 Player" || item.twoPlayer === "2P" || item.twoPlayer === "true" || item.is2Player === true;
   const rankValue = Number.isFinite(Number(item.rank)) ? Number(item.rank) : null;
+  const rawTps = item.tps ?? item.TPS ?? item.tpsValue;
+  const normalizedTps = rawTps === null || rawTps === undefined || (typeof rawTps === "string" && rawTps.trim() === "") || Number(rawTps) === 0 ? null : Number(rawTps);
+  const parsedTps = Number.isFinite(normalizedTps) ? normalizedTps : null;
 
   const normalized = {
     rank: rankValue,
@@ -150,6 +153,7 @@ function normalizeLevelEntry(item) {
     is2Player: twoPlayerValue,
     showcaseVideoUrl,
     tier: "",
+    tps: parsedTps,
   };
 
   const sortedVictors = sortVictorsByDate(victors);
@@ -275,6 +279,7 @@ function processRawData(data) {
   maxScore = Math.max(...leaderboard.map((p) => p.points), 1);
   renderStats();
   renderLevels(getSortedLevelData(levels));
+  renderTargetedLevels();
   renderLeaderboard(leaderboard);
   initializeTimeline();
 
