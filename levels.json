@@ -140,9 +140,16 @@
       {
         "name": "Redacted Player #1",
         "date": "2026-04-02",
-        "time": "3h 06m 59s",
+        "time": "3h 6m 59s",
         "attempts": 198717,
         "video": ""
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-07-28",
+        "time": "2h 14m 52s",
+        "attempts": 60105,
+        "video": "https://youtube.com/playlist?list=PLInQ9Vmn0GGM&si=6C97fPqQ9UJ9zQKg"
       }
     ]
   },
