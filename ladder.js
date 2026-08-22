@@ -141,37 +141,50 @@ function App() {
   const recommendations = excludeTwoPlayer ? recommendationsWithout2P : recommendationsWith2P;
 
   const rankTargetPoints = targetRankSurpassPoints(leaderboard, targetPlayer);
-  const pointsNeeded = Math.max(0, rankTargetPoints - (currentPlayer?.points || 0));
+  const initialPointsNeeded = Math.max(0, rankTargetPoints - (currentPlayer?.points || 0));
 
   const hasModifications = lockedLevelIds.length > 0 || removedLevelIds.length > 0;
 
   const optimizedWith2P = useMemo(
     () => hasModifications
-      ? reoptimizeRouteWithModifications(
+      ? optimizeRouteWithProjectedTarget(
           recommendationsWith2P,
-          pointsNeeded,
-          [],
+          targetPlayer,
+          levels,
+          currentPlayer?.points || 0,
           lockedLevelIds,
           removedLevelIds
         )
-      : optimizeRoute(recommendationsWith2P, pointsNeeded),
-    [recommendationsWith2P, pointsNeeded, hasModifications, lockedLevelIds, removedLevelIds]
+      : optimizeRouteWithProjectedTarget(
+          recommendationsWith2P,
+          targetPlayer,
+          levels,
+          currentPlayer?.points || 0
+        ),
+    [recommendationsWith2P, targetPlayer, levels, currentPlayer, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimizedWithout2P = useMemo(
     () => hasModifications
-      ? reoptimizeRouteWithModifications(
+      ? optimizeRouteWithProjectedTarget(
           recommendationsWithout2P,
-          pointsNeeded,
-          [],
+          targetPlayer,
+          levels,
+          currentPlayer?.points || 0,
           lockedLevelIds,
           removedLevelIds
         )
-      : optimizeRoute(recommendationsWithout2P, pointsNeeded),
-    [recommendationsWithout2P, pointsNeeded, hasModifications, lockedLevelIds, removedLevelIds]
+      : optimizeRouteWithProjectedTarget(
+          recommendationsWithout2P,
+          targetPlayer,
+          levels,
+          currentPlayer?.points || 0
+        ),
+    [recommendationsWithout2P, targetPlayer, levels, currentPlayer, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimized = excludeTwoPlayer ? optimizedWithout2P : optimizedWith2P;
+  const pointsNeeded = optimized?.pointsNeeded ?? initialPointsNeeded;
 
   const safeRecommendations = Array.isArray(recommendations) ? recommendations : [];
   console.log({

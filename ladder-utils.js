@@ -828,6 +828,8 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
         projectedMult,
         projectedPoints,
         expectedHours,
+        expectedSeconds,
+        expectedAttempts,
         expectedValue,
         victorCount: victorCount,
         timeWrPossible,
@@ -1166,4 +1168,68 @@ function defaultTarget(leaderboard, currentName) {
 function targetRankSurpassPoints(leaderboard, targetPlayer) {
   if (!targetPlayer) return 0;
   return targetPlayer.points;
+}
+
+function projectTargetPointsAfterRoute(levels, targetPlayer, picks) {
+  if (!targetPlayer || !Array.isArray(levels) || !Array.isArray(picks) || !picks.length) {
+    return targetPlayer?.points || 0;
+  }
+
+  const pickByLevel = new Map(
+    picks.map(pick => [String(pick.id || pick.level).trim().toLowerCase(), pick])
+  );
+  const projectedPlayerName = "__projected-ladder-player__";
+  const projectedLevels = levels.map(level => {
+    const levelKey = String(level.id || level.name).trim().toLowerCase();
+    const pick = pickByLevel.get(levelKey);
+    if (!pick) return level;
+
+    const victors = Array.isArray(level.victors) ? [...level.victors] : [];
+    victors.push({
+      name: projectedPlayerName,
+      date: "9999-12-31",
+      seconds: Number.isFinite(pick.expectedSeconds) ? pick.expectedSeconds : null,
+      attempts: Number.isFinite(pick.expectedAttempts) ? pick.expectedAttempts : null,
+    });
+    return { ...level, victors };
+  });
+
+  const projectedTarget = buildLeaderboard(projectedLevels)
+    .find(player => player.name === targetPlayer.name);
+  return projectedTarget?.points ?? targetPlayer.points;
+}
+
+function optimizeRouteWithProjectedTarget(
+  recommendations,
+  targetPlayer,
+  levels,
+  currentPoints,
+  lockedLevelIds = [],
+  removedLevelIds = []
+) {
+  let targetPoints = targetPlayer?.points || 0;
+  let result = { time: 0, picks: [], fallback: false };
+
+  for (let iteration = 0; iteration < 3; iteration++) {
+    const pointsNeeded = Math.max(0, targetPoints - currentPoints);
+    result = lockedLevelIds.length > 0 || removedLevelIds.length > 0
+      ? reoptimizeRouteWithModifications(
+          recommendations,
+          pointsNeeded,
+          [],
+          lockedLevelIds,
+          removedLevelIds
+        )
+      : optimizeRoute(recommendations, pointsNeeded);
+
+    const projectedTargetPoints = projectTargetPointsAfterRoute(levels, targetPlayer, result.picks);
+    if (Math.abs(projectedTargetPoints - targetPoints) < 1e-9) break;
+    targetPoints = projectedTargetPoints;
+  }
+
+  return {
+    ...result,
+    targetPoints,
+    pointsNeeded: Math.max(0, targetPoints - currentPoints),
+  };
 }
