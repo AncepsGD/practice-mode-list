@@ -1072,6 +1072,10 @@ function renderVerifications(data) {
       const levelKey = getLevelCardKey(lvl, index);
       const thumbnailMarkup = getThumbnailMarkup(lvl);
       const metaMarkup = getLevelMetaMarkup(lvl);
+      const tierRankRange = getTodoTierRankRange(lvl);
+      const rankLabel = tierRankRange
+        ? `#${tierRankRange.min}-${tierRankRange.max}~`
+        : '•';
       const summaryRowsMarkup = getLevelSummaryRows(lvl)
         .map((row) => `<div class="victor-row"><span class="victor-label">${escapeHTML(row.label || '')}:</span><span class="victor-name">${escapeHTML(row.name || '')}</span><span class="victor-stats">${escapeHTML(row.stat || '')}</span></div>`)
         .join('');
@@ -1079,7 +1083,7 @@ function renderVerifications(data) {
       return `
       <div class="${cardClass}" id="card-${levelKey}">
         <div class="rank-col">
-          <span class="rank-num" aria-hidden="true"></span>
+          <span class="rank-num" aria-hidden="true">${rankLabel}</span>
         </div>
 
         <div class="info-col">
