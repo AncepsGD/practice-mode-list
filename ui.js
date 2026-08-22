@@ -91,6 +91,22 @@ function getTargetedLevelsFromData(sourceLevels) {
   return (sourceLevels || []).filter((level) => keyed.includes(getTargetedLevelKey(level)));
 }
 
+function getTodoTierRankRange(level) {
+  const tier = String(level?.tier || '').trim().toLowerCase();
+  if (!tier) return null;
+
+  const tierRanks = levels
+    .filter((mainLevel) => String(mainLevel?.tier || '').trim().toLowerCase() === tier)
+    .map((mainLevel) => Number(mainLevel.rank))
+    .filter((rank) => Number.isFinite(rank));
+
+  if (!tierRanks.length) return null;
+  return {
+    min: Math.min(...tierRanks),
+    max: Math.max(...tierRanks),
+  };
+}
+
 function renderTargetedLevels() {
   const container = document.getElementById('todo-container');
 
@@ -115,13 +131,20 @@ function renderTargetedLevels() {
     })
     .map((lvl, index) => {
       const cardClass = index % 2 === 0 ? 'level-card variant-a' : 'level-card variant-b';
-      const sourceLabel = levels.some((item) => getTargetedLevelKey(item) === getTargetedLevelKey(lvl)) ? 'Main List' : 'Unverified';
+      const isMainList = levels.some((item) => getTargetedLevelKey(item) === getTargetedLevelKey(lvl));
+      const sourceLabel = isMainList ? 'Main List' : 'Unverified';
       const buttonText = 'Remove Target';
+      const tierRankRange = !isMainList ? getTodoTierRankRange(lvl) : null;
+      const rankLabel = isMainList && Number.isFinite(Number(lvl.rank))
+        ? `#${lvl.rank}`
+        : tierRankRange
+          ? `#${tierRankRange.min}-${tierRankRange.max}~`
+          : '•';
 
       return `
         <div class="${cardClass}">
           <div class="rank-col">
-            <span class="rank-num" aria-hidden="true">${Number.isFinite(Number(lvl.rank)) ? '#' + lvl.rank : '•'}</span>
+            <span class="rank-num" aria-hidden="true">${rankLabel}</span>
           </div>
 
           <div class="info-col">
