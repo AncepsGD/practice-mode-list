@@ -134,7 +134,8 @@ function App() {
   );
 
   const recommendationsWithout2P = useMemo(
-    () => buildRecommendations(filteredLevelsWithout2P, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, levels),
+    () => buildRecommendations(levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, levels)
+      .filter(level => !level.is2Player),
     [filteredLevelsWithout2P, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, levels]
   );
 
@@ -153,15 +154,25 @@ function App() {
           levels,
           currentPlayer?.points || 0,
           lockedLevelIds,
-          removedLevelIds
+          removedLevelIds,
+          currentPlayer,
+          avgTimePerPoint,
+          avgAttemptsPerPoint,
+          maxPoints
         )
       : optimizeRouteWithProjectedTarget(
           recommendationsWith2P,
           targetPlayer,
           levels,
-          currentPlayer?.points || 0
+          currentPlayer?.points || 0,
+          [],
+          [],
+          currentPlayer,
+          avgTimePerPoint,
+          avgAttemptsPerPoint,
+          maxPoints
         ),
-    [recommendationsWith2P, targetPlayer, levels, currentPlayer, hasModifications, lockedLevelIds, removedLevelIds]
+    [recommendationsWith2P, targetPlayer, levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimizedWithout2P = useMemo(
@@ -172,15 +183,25 @@ function App() {
           levels,
           currentPlayer?.points || 0,
           lockedLevelIds,
-          removedLevelIds
+          removedLevelIds,
+          currentPlayer,
+          avgTimePerPoint,
+          avgAttemptsPerPoint,
+          maxPoints
         )
       : optimizeRouteWithProjectedTarget(
           recommendationsWithout2P,
           targetPlayer,
           levels,
-          currentPlayer?.points || 0
+          currentPlayer?.points || 0,
+          [],
+          [],
+          currentPlayer,
+          avgTimePerPoint,
+          avgAttemptsPerPoint,
+          maxPoints
         ),
-    [recommendationsWithout2P, targetPlayer, levels, currentPlayer, hasModifications, lockedLevelIds, removedLevelIds]
+    [recommendationsWithout2P, targetPlayer, levels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimized = excludeTwoPlayer ? optimizedWithout2P : optimizedWith2P;

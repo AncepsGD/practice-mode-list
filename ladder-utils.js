@@ -823,6 +823,7 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
       return {
         id: lvl.id || lvl.name,
         level: lvl.name,
+        is2Player: lvl.is2Player === true,
         rank: lvl.rank || null,
         basePoints,
         projectedMult,
@@ -853,49 +854,40 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
 function pruneDominatedRecommendations(recommendations) {
   if (!Array.isArray(recommendations) || recommendations.length <= 1) return recommendations;
 
-  const sorted = [...recommendations].sort((a, b) => {
-    const pa = a.projectedPoints || 0;
-    const pb = b.projectedPoints || 0;
-    if (pb !== pa) return pb - pa;
-    return (a.expectedHours || 0) - (b.expectedHours || 0);
+  const bonusPotential = recommendation => ({
+    timeWrPossible: recommendation.timeWrPossible === true,
+    attemptsWrPossible: recommendation.attemptsWrPossible === true,
+    wrConfidence: recommendation.wrConfidence || 0,
   });
+  const noWorseBonusPotential = (dominator, candidate) => {
+    const dominatorBonus = bonusPotential(dominator);
+    const candidateBonus = bonusPotential(candidate);
+    return dominatorBonus.timeWrPossible >= candidateBonus.timeWrPossible
+      && dominatorBonus.attemptsWrPossible >= candidateBonus.attemptsWrPossible
+      && dominatorBonus.wrConfidence >= candidateBonus.wrConfidence;
+  };
 
-  const deduped = [];
-  let i = 0;
-  while (i < sorted.length) {
-    let j = i;
-    let groupMinHours = Infinity;
-    while (j < sorted.length && (sorted[j].projectedPoints || 0) === (sorted[i].projectedPoints || 0)) {
-      const hours = sorted[j].expectedHours || 0;
-      if (hours <= groupMinHours) {
-        deduped.push(sorted[j]);
-        groupMinHours = Math.min(groupMinHours, hours);
-      }
-      j++;
-    }
-    i = j;
-  }
+  return recommendations.filter((candidate, candidateIndex) => {
+    const candidatePoints = candidate.projectedPoints || 0;
+    const candidateHours = candidate.expectedHours || 0;
 
-  const kept = [];
-  let runningMinHours = Infinity;
-  for (const candidate of deduped) {
-    const hours = candidate.expectedHours || 0;
-    if (hours < runningMinHours) {
-      kept.push(candidate);
-    }
-  }
+    return !recommendations.some((other, otherIndex) => {
+      if (candidateIndex === otherIndex) return false;
 
-  let minSeen = Infinity;
-  const result = [];
-  for (const candidate of kept) {
-    const hours = candidate.expectedHours || 0;
-    if (hours < minSeen) {
-      result.push(candidate);
-      minSeen = hours;
-    }
-  }
+      const otherPoints = other.projectedPoints || 0;
+      const otherHours = other.expectedHours || 0;
+      const dominates = otherPoints >= candidatePoints
+        && otherHours <= candidateHours
+        && noWorseBonusPotential(other, candidate);
+      const strictlyBetter = otherPoints > candidatePoints
+        || otherHours < candidateHours
+        || (other.timeWrPossible === true && candidate.timeWrPossible !== true)
+        || (other.attemptsWrPossible === true && candidate.attemptsWrPossible !== true)
+        || (other.wrConfidence || 0) > (candidate.wrConfidence || 0);
 
-  return result;
+      return dominates && strictlyBetter;
+    });
+  });
 }
 
 function refineRouteLocalSearch(picks, items, targetPoints, maxIterations = 400) {
@@ -986,7 +978,7 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
 
   const toUnits = item => Math.max(1, Math.round(((item.basePoints || item.projectedPoints) || 0) * resolvedGranularity));
 
-  let items = recommendations
+  let items = pruneDominatedRecommendations(recommendations)
     .map(item => ({
       ...item,
       units: toUnits(item),
@@ -1020,29 +1012,27 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
     maxUnits = Math.min(totalUnits, targetUnits + largestItemUnits);
   }
 
-  const dpCost = new Float64Array(maxUnits + 1).fill(Infinity);
   const dpTime = new Float64Array(maxUnits + 1).fill(Infinity);
+  const dpLevels = new Int32Array(maxUnits + 1).fill(Infinity);
   const dpParentUnits = new Int32Array(maxUnits + 1).fill(-1);
   const dpParentItem = new Int32Array(maxUnits + 1).fill(-1);
-  dpCost[0] = 0;
   dpTime[0] = 0;
-
-  const penaltyBase = Math.max(0.01, Math.min(0.2, targetPoints / 1000));
+  dpLevels[0] = 0;
 
   for (let itemIdx = 0; itemIdx < items.length; itemIdx++) {
     const item = items[itemIdx];
     for (let units = maxUnits; units >= 0; units--) {
-      if (dpCost[units] === Infinity) continue;
+      if (dpTime[units] === Infinity) continue;
 
-      const nextUnits = Math.min(maxUnits, units + item.units);
+      const nextUnits = units + item.units;
+      if (nextUnits > maxUnits) continue;
       const nextTime = dpTime[units] + item.expectedHours;
-      const overshootUnits = Math.max(0, nextUnits - targetUnits);
-      const nextCost = nextTime + overshootUnits * penaltyBase;
+      const nextLevels = dpLevels[units] + 1;
 
-      if (nextCost < dpCost[nextUnits] - 1e-9
-        || (Math.abs(nextCost - dpCost[nextUnits]) < 1e-9 && nextTime < dpTime[nextUnits])) {
-        dpCost[nextUnits] = nextCost;
+      if (nextTime < dpTime[nextUnits] - 1e-9
+        || (Math.abs(nextTime - dpTime[nextUnits]) < 1e-9 && nextLevels < dpLevels[nextUnits])) {
         dpTime[nextUnits] = nextTime;
+        dpLevels[nextUnits] = nextLevels;
         dpParentUnits[nextUnits] = units;
         dpParentItem[nextUnits] = itemIdx;
       }
@@ -1050,34 +1040,38 @@ function optimizeRoute(recommendations, targetPoints, granularity = 20) {
   }
 
   let bestUnits = 0;
-  let bestCost = Infinity;
   let bestTime = Infinity;
+  let bestLevels = Infinity;
 
   for (let units = targetUnits; units <= maxUnits; units++) {
-    if (dpCost[units] === Infinity) continue;
+    if (dpTime[units] === Infinity) continue;
 
-    const isBetter = dpCost[units] < bestCost - 1e-9
-      || (Math.abs(dpCost[units] - bestCost) < 1e-9 && dpTime[units] < bestTime);
+    const overshootUnits = units - targetUnits;
+    const bestOvershootUnits = bestUnits - targetUnits;
+    const isBetter = dpTime[units] < bestTime - 1e-9
+      || (Math.abs(dpTime[units] - bestTime) < 1e-9 && (
+        overshootUnits < bestOvershootUnits
+        || (overshootUnits === bestOvershootUnits && dpLevels[units] < bestLevels)
+      ));
 
     if (isBetter) {
       bestUnits = units;
-      bestCost = dpCost[units];
       bestTime = dpTime[units];
+      bestLevels = dpLevels[units];
     }
   }
 
   if (bestUnits === 0) {
     for (let units = maxUnits; units > 0; units--) {
-      if (dpCost[units] < Infinity) {
+      if (dpTime[units] < Infinity) {
         bestUnits = units;
-        bestCost = dpCost[units];
         bestTime = dpTime[units];
         break;
       }
     }
   }
 
-  if (bestUnits === 0 || dpCost[bestUnits] === Infinity) {
+  if (bestUnits === 0 || dpTime[bestUnits] === Infinity) {
     return buildFallbackRoute(items, targetPoints);
   }
 
@@ -1165,21 +1159,22 @@ function defaultTarget(leaderboard, currentName) {
   return leaderboard[idx - 1];
 }
 
+const SURPASS_MARGIN = 0.01;
+
 function targetRankSurpassPoints(leaderboard, targetPlayer) {
   if (!targetPlayer) return 0;
-  return targetPlayer.points;
+  return targetPlayer.points + SURPASS_MARGIN;
 }
 
-function projectTargetPointsAfterRoute(levels, targetPlayer, picks) {
-  if (!targetPlayer || !Array.isArray(levels) || !Array.isArray(picks) || !picks.length) {
-    return targetPlayer?.points || 0;
-  }
+function projectLevelsAfterRoute(levels, picks) {
+  if (!Array.isArray(levels) || !Array.isArray(picks) || !picks.length) return levels;
 
   const pickByLevel = new Map(
     picks.map(pick => [String(pick.id || pick.level).trim().toLowerCase(), pick])
   );
   const projectedPlayerName = "__projected-ladder-player__";
-  const projectedLevels = levels.map(level => {
+
+  return levels.map(level => {
     const levelKey = String(level.id || level.name).trim().toLowerCase();
     const pick = pickByLevel.get(levelKey);
     if (!pick) return level;
@@ -1193,10 +1188,100 @@ function projectTargetPointsAfterRoute(levels, targetPlayer, picks) {
     });
     return { ...level, victors };
   });
+}
+
+function projectTargetPointsAfterRoute(levels, targetPlayer, picks) {
+  if (!targetPlayer || !Array.isArray(levels) || !Array.isArray(picks) || !picks.length) {
+    return (targetPlayer?.points || 0) + SURPASS_MARGIN;
+  }
+
+  const projectedLevels = projectLevelsAfterRoute(levels, picks);
 
   const projectedTarget = buildLeaderboard(projectedLevels)
     .find(player => player.name === targetPlayer.name);
-  return projectedTarget?.points ?? targetPlayer.points;
+  return (projectedTarget?.points ?? targetPlayer.points) + SURPASS_MARGIN;
+}
+
+function optimizeSequentialRoute(
+  recommendations,
+  levels,
+  currentPlayer,
+  targetPoints,
+  avgTimePerPoint,
+  avgAttemptsPerPoint,
+  maxPoints,
+  lockedLevelIds,
+  removedLevelIds
+) {
+  const candidateIds = new Set(
+    recommendations.map(rec => String(rec.id || rec.level).trim().toLowerCase())
+  );
+  const lockedSet = new Set(lockedLevelIds.map(id => String(id).trim().toLowerCase()));
+  const removedSet = new Set(removedLevelIds.map(id => String(id).trim().toLowerCase()));
+  const strategies = [
+    rec => (rec.projectedPoints || 0) / Math.max(rec.expectedHours || 1, 0.001),
+    rec => rec.projectedPoints || 0,
+    rec => -(rec.expectedHours || 0),
+  ];
+  const routes = [];
+
+  strategies.forEach(score => {
+    const selected = [];
+    const selectedIds = new Set();
+    let routePoints = 0;
+    let routeTime = 0;
+    let workingRecommendations = recommendations;
+
+    const select = (pick) => {
+      const pickId = String(pick.id || pick.level).trim().toLowerCase();
+      if (selectedIds.has(pickId)) return;
+      selected.push(pick);
+      selectedIds.add(pickId);
+      routePoints += pick.projectedPoints || 0;
+      routeTime += pick.expectedHours || 0;
+    };
+
+    recommendations
+      .filter(rec => lockedSet.has(String(rec.id || rec.level).trim().toLowerCase()))
+      .forEach(select);
+
+    while (routePoints + 1e-9 < targetPoints) {
+      const next = workingRecommendations
+        .filter(rec => {
+          const recId = String(rec.id || rec.level).trim().toLowerCase();
+          return candidateIds.has(recId) && !selectedIds.has(recId) && !removedSet.has(recId);
+        })
+        .sort((a, b) => score(b) - score(a))[0];
+      if (!next) break;
+
+      select(next);
+      const projectedLevels = projectLevelsAfterRoute(levels, selected);
+      const projectedPlayer = {
+        ...currentPlayer,
+        levels: [...(currentPlayer.levels || []), ...selected.map(pick => pick.level)],
+      };
+      workingRecommendations = buildRecommendations(
+        projectedLevels,
+        projectedPlayer,
+        avgTimePerPoint,
+        avgAttemptsPerPoint,
+        maxPoints,
+        projectedLevels
+      ).filter(rec => candidateIds.has(String(rec.id || rec.level).trim().toLowerCase()));
+    }
+
+    routes.push({
+      time: routeTime,
+      picks: selected,
+      fallback: routePoints + 1e-9 < targetPoints,
+    });
+  });
+
+  return routes
+    .filter(route => !route.fallback)
+    .sort((a, b) => a.time - b.time)[0]
+    || routes.sort((a, b) => b.picks.length - a.picks.length)[0]
+    || { time: 0, picks: [], fallback: false };
 }
 
 function optimizeRouteWithProjectedTarget(
@@ -1205,27 +1290,29 @@ function optimizeRouteWithProjectedTarget(
   levels,
   currentPoints,
   lockedLevelIds = [],
-  removedLevelIds = []
+  removedLevelIds = [],
+  currentPlayer = null,
+  avgTimePerPoint = 0,
+  avgAttemptsPerPoint = 0,
+  maxPoints = 1
 ) {
-  let targetPoints = targetPlayer?.points || 0;
-  let result = { time: 0, picks: [], fallback: false };
-
-  for (let iteration = 0; iteration < 3; iteration++) {
-    const pointsNeeded = Math.max(0, targetPoints - currentPoints);
-    result = lockedLevelIds.length > 0 || removedLevelIds.length > 0
-      ? reoptimizeRouteWithModifications(
-          recommendations,
-          pointsNeeded,
-          [],
-          lockedLevelIds,
-          removedLevelIds
-        )
+  let targetPoints = (targetPlayer?.points || 0) + SURPASS_MARGIN;
+  const pointsNeeded = Math.max(0, targetPoints - currentPoints);
+  const result = currentPlayer
+    ? optimizeSequentialRoute(
+        recommendations,
+        levels,
+        currentPlayer,
+        pointsNeeded,
+        avgTimePerPoint,
+        avgAttemptsPerPoint,
+        maxPoints,
+        lockedLevelIds,
+        removedLevelIds
+      )
+    : lockedLevelIds.length > 0 || removedLevelIds.length > 0
+      ? reoptimizeRouteWithModifications(recommendations, pointsNeeded, [], lockedLevelIds, removedLevelIds)
       : optimizeRoute(recommendations, pointsNeeded);
-
-    const projectedTargetPoints = projectTargetPointsAfterRoute(levels, targetPlayer, result.picks);
-    if (Math.abs(projectedTargetPoints - targetPoints) < 1e-9) break;
-    targetPoints = projectedTargetPoints;
-  }
 
   return {
     ...result,

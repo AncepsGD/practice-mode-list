@@ -238,17 +238,13 @@ nav {
 .stats-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin: 40px 0 32px;
+  gap: 12px;
+  margin: 24px 0 20px;
 }
 
 .stat-box {
-  background: var(--surface);
-  padding: 14px 20px;
+  background: transparent;
+  padding: 6px 10px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -256,7 +252,7 @@ nav {
 }
 
 .stat-box:hover {
-  background: var(--surface2);
+  background: transparent;
 }
 
 .stat-box::after {
@@ -266,7 +262,7 @@ nav {
 .stat-box .val {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 32px;
+  font-size: 24px;
   color: var(--text);
   line-height: 1.1;
   display: block;
@@ -274,10 +270,9 @@ nav {
 
 .stat-box .lbl {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 1.5px;
   color: var(--text-muted);
-  text-transform: uppercase;
   display: block;
   margin-top: 6px;
 }

@@ -157,7 +157,9 @@ function normalizeLevelEntry(item) {
   };
 
   const sortedVictors = sortVictorsByDate(victors);
-  const firstVictor = sortedVictors.find((victor) => victor.name) || null;
+  const firstVictor = sortedVictors.find((victor) => {
+    return victor.name && getVictorSortValue(victor) !== null;
+  }) || sortedVictors.find((victor) => victor.name) || null;
   if (firstVictor) {
     normalized.firstVictor = { name: firstVictor.name, date: firstVictor.date };
   }

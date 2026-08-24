@@ -17,11 +17,15 @@ function flashCopied() {
 function renderStats() {
   const totalVictors = new Set(levels.flatMap(lvl => lvl.victors.map(victor => victor.name))).size;
   const totalCompletions = levels.reduce((sum, lvl) => sum + lvl.victors.length, 0);
+  const totalTimeSeconds = leaderboard.reduce((sum, player) => sum + (Number.isFinite(player.totalTimeSeconds) ? player.totalTimeSeconds : 0), 0);
+  const totalAttempts = leaderboard.reduce((sum, player) => sum + (Number.isFinite(player.totalAttempts) ? player.totalAttempts : 0), 0);
 
   document.getElementById('stats-strip').innerHTML = `
     <div class="stat-box"><span class="val">${levels.length}</span><span class="lbl">Levels Ranked</span></div>
     <div class="stat-box"><span class="val">${totalVictors}</span><span class="lbl">Unique Players</span></div>
     <div class="stat-box"><span class="val">${totalCompletions}</span><span class="lbl">Total Completions</span></div>
+    <div class="stat-box"><span class="val">${formatDuration(totalTimeSeconds)}</span><span class="lbl">Total Time</span></div>
+    <div class="stat-box"><span class="val">${totalAttempts.toLocaleString()}</span><span class="lbl">Total Attempts</span></div>
   `;
 }
 
@@ -224,7 +228,7 @@ function loadListSortState() {
     const stored = localStorage.getItem(LIST_SORT_STORAGE_KEY);
     if (!stored) return LIST_SORT_DEFAULT_STATE;
     const parsed = JSON.parse(stored);
-    if (parsed && typeof parsed === 'object' && ['rank', 'name', 'creators', 'victors', 'earliestDate', 'id'].includes(parsed.key) && ['asc', 'desc'].includes(parsed.direction)) {
+    if (parsed && typeof parsed === 'object' && ['rank', 'name', 'creators', 'victors', 'averageTime', 'averageAttempts', 'earliestDate', 'id'].includes(parsed.key) && ['asc', 'desc'].includes(parsed.direction)) {
       return parsed;
     }
   } catch (e) {
@@ -286,6 +290,22 @@ function getListSortValue(item, key, direction = 1) {
       return normalizeLevelSearchText(getLevelCreatorValue(item));
     case 'victors':
       return Array.isArray(item.victors) ? item.victors.length : 0;
+    case 'averageTime': {
+      const times = (item.victors || [])
+        .map((victor) => victor.seconds)
+        .filter((seconds) => Number.isFinite(seconds) && seconds > 0);
+      return times.length
+        ? times.reduce((sum, seconds) => sum + seconds, 0) / times.length
+        : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
+    }
+    case 'averageAttempts': {
+      const attempts = (item.victors || [])
+        .map((victor) => victor.attempts)
+        .filter((value) => Number.isFinite(value) && value > 0);
+      return attempts.length
+        ? attempts.reduce((sum, value) => sum + value, 0) / attempts.length
+        : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
+    }
     case 'earliestDate': {
       if (!Array.isArray(item.victors) || !item.victors.length) {
         return direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
@@ -711,8 +731,7 @@ function renderLevels(data) {
       const rankClass = rankValue === 1 ? 'rank-gold' : rankValue === 2 ? 'rank-silver' : rankValue === 3 ? 'rank-bronze' : '';
 
       if (!lvl._sortedVictors) {
-        lvl._sortedVictors = [...(lvl.victors || [])]
-          .sort((a, b) => new Date(a.date) - new Date(b.date));
+        lvl._sortedVictors = sortVictorsByDate(lvl.victors || []);
       }
 
       return `

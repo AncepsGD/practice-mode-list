@@ -39,7 +39,17 @@ function getVictorSortValue(victor) {
     if (!victor || typeof victor !== "object") return null;
     const rawDate = victor.date;
     if (typeof rawDate !== "string" || rawDate.trim() === "") return null;
-    const parsed = Date.parse(rawDate);
+    const date = rawDate.trim();
+    const partialDateMatch = date.match(/^(\d{4})(?:-(\d{2}|\?\?))?(?:-(\d{2}|\?\?))?(?:$|T)/);
+    if (partialDateMatch) {
+        const year = Number(partialDateMatch[1]);
+        const month = partialDateMatch[2] && partialDateMatch[2] !== "??" ? Number(partialDateMatch[2]) : 1;
+        const day = partialDateMatch[3] && partialDateMatch[3] !== "??" ? Number(partialDateMatch[3]) : 1;
+        const parsedPartial = Date.UTC(year, month - 1, day);
+        if (Number.isFinite(parsedPartial)) return parsedPartial;
+    }
+
+    const parsed = Date.parse(date);
     return Number.isNaN(parsed) ? null : parsed;
 }
 
