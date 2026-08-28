@@ -43,20 +43,6 @@
   },
   {
     "rank": 4,
-    "name": "The Final Circle",
-    "thumbnail": "",
-    "id": "136774556",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 5,
     "name": "supreme Machine",
     "thumbnail": "",
     "id": "127761173",
@@ -70,21 +56,7 @@
     "tier": ""
   },
   {
-    "rank": 6,
-    "name": "Minus World",
-    "thumbnail": "",
-    "id": "111168619",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "IcEDCave, InVisible",
-    "creators": "IcEDCave, InVisible",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=eUYtHhjgang",
-    "tier": ""
-  },
-  {
-    "rank": 7,
+    "rank": 5,
     "name": "Silent Skrillex v2",
     "thumbnail": "",
     "id": "66626147",
@@ -98,7 +70,7 @@
     "tier": ""
   },
   {
-    "rank": 8,
+    "rank": 6,
     "name": "Satanic Heaven",
     "thumbnail": "",
     "id": "126075805",
@@ -112,7 +84,7 @@
     "tier": ""
   },
   {
-    "rank": 9,
+    "rank": 7,
     "name": "Something Satanic",
     "thumbnail": "",
     "id": "125533818",
@@ -126,7 +98,7 @@
     "tier": ""
   },
   {
-    "rank": 10,
+    "rank": 8,
     "name": "Silent Processing",
     "thumbnail": "",
     "id": "126380017",
@@ -140,7 +112,7 @@
     "tier": ""
   },
   {
-    "rank": 11,
+    "rank": 9,
     "name": "ultra silent circles",
     "thumbnail": "",
     "id": "15846790",
@@ -154,21 +126,7 @@
     "tier": ""
   },
   {
-    "rank": 12,
-    "name": "Chaotic World",
-    "thumbnail": "",
-    "id": "75325556",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "KaotikJumper, kylra",
-    "creators": "KaotikJumper, kylra",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=PxOOL62VfHg",
-    "tier": ""
-  },
-  {
-    "rank": 13,
+    "rank": 10,
     "name": "Fredrick Survive II",
     "thumbnail": "",
     "id": "133738923",
@@ -182,7 +140,7 @@
     "tier": ""
   },
   {
-    "rank": 14,
+    "rank": 11,
     "name": "Stereo Madness",
     "thumbnail": "",
     "id": "138931146",
@@ -196,7 +154,7 @@
     "tier": ""
   },
   {
-    "rank": 15,
+    "rank": 12,
     "name": "how i see the ppll",
     "thumbnail": "",
     "id": "138846647",
@@ -210,7 +168,7 @@
     "tier": ""
   },
   {
-    "rank": 16,
+    "rank": 13,
     "name": "Schafs (No Invis, 1p)",
     "thumbnail": "",
     "id": "138850959",
@@ -224,7 +182,7 @@
     "tier": ""
   },
   {
-    "rank": 17,
+    "rank": 14,
     "name": "SaTans Circles X",
     "thumbnail": "",
     "id": "133421543",
@@ -238,7 +196,7 @@
     "tier": ""
   },
   {
-    "rank": 18,
+    "rank": 15,
     "name": "Colorful Twilight",
     "thumbnail": "",
     "id": "121449919",
@@ -252,7 +210,7 @@
     "tier": ""
   },
   {
-    "rank": 19,
+    "rank": 16,
     "name": "MINUSclub",
     "thumbnail": "",
     "id": "65476277",
@@ -266,21 +224,7 @@
     "tier": ""
   },
   {
-    "rank": 20,
-    "name": "ZOINK NEVER CLEAR (Unnerfed)",
-    "thumbnail": "",
-    "id": "136891983",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 21,
+    "rank": 17,
     "name": "Hell to play II",
     "thumbnail": "",
     "id": "118880869",
@@ -294,7 +238,7 @@
     "tier": ""
   },
   {
-    "rank": 22,
+    "rank": 18,
     "name": "Calcium Hydroxide",
     "thumbnail": "",
     "id": "92269608",
@@ -308,7 +252,7 @@
     "tier": ""
   },
   {
-    "rank": 23,
+    "rank": 19,
     "name": "Evolution Theory",
     "thumbnail": "",
     "id": "135353937",
@@ -322,7 +266,7 @@
     "tier": ""
   },
   {
-    "rank": 24,
+    "rank": 20,
     "name": "the hell conjuror",
     "thumbnail": "",
     "id": "66333636",
@@ -336,7 +280,7 @@
     "tier": ""
   },
   {
-    "rank": 25,
+    "rank": 21,
     "name": "Omega Circles II",
     "thumbnail": "",
     "id": "83717092",
@@ -350,7 +294,7 @@
     "tier": ""
   },
   {
-    "rank": 26,
+    "rank": 22,
     "name": "Rainbow Bridge",
     "thumbnail": "",
     "id": "71833434",
@@ -364,7 +308,7 @@
     "tier": ""
   },
   {
-    "rank": 27,
+    "rank": 23,
     "name": "silent landscape",
     "thumbnail": "",
     "id": "116337387",
@@ -378,7 +322,7 @@
     "tier": ""
   },
   {
-    "rank": 28,
+    "rank": 24,
     "name": "Deadly Knock",
     "thumbnail": "",
     "id": "63708222",
@@ -392,7 +336,7 @@
     "tier": ""
   },
   {
-    "rank": 29,
+    "rank": 25,
     "name": "Back On Track",
     "thumbnail": "",
     "id": "80481445",
@@ -406,7 +350,7 @@
     "tier": ""
   },
   {
-    "rank": 30,
+    "rank": 26,
     "name": "Art is Dead",
     "thumbnail": "",
     "id": "124241631",
@@ -420,7 +364,7 @@
     "tier": ""
   },
   {
-    "rank": 31,
+    "rank": 27,
     "name": "Satanic Palm Mutes",
     "thumbnail": "",
     "id": "80088674",
@@ -434,7 +378,7 @@
     "tier": ""
   },
   {
-    "rank": 32,
+    "rank": 28,
     "name": "Divine Geometry II",
     "thumbnail": "",
     "id": "18598734",
@@ -448,7 +392,7 @@
     "tier": ""
   },
   {
-    "rank": 33,
+    "rank": 29,
     "name": "ParalympicTriathlon",
     "thumbnail": "",
     "id": "144986791",
@@ -462,7 +406,7 @@
     "tier": ""
   },
   {
-    "rank": 34,
+    "rank": 30,
     "name": "Hope",
     "thumbnail": "",
     "id": "144679535",
@@ -476,7 +420,7 @@
     "tier": ""
   },
   {
-    "rank": 35,
+    "rank": 31,
     "name": "Silent Nightfall DX",
     "thumbnail": "",
     "id": "144257309",
@@ -490,7 +434,7 @@
     "tier": ""
   },
   {
-    "rank": 36,
+    "rank": 32,
     "name": "bp EXILED MODE",
     "thumbnail": "",
     "id": "144161571",
@@ -504,7 +448,7 @@
     "tier": ""
   },
   {
-    "rank": 37,
+    "rank": 33,
     "name": "RMGD Legend",
     "thumbnail": "",
     "id": "142465296",
@@ -518,7 +462,7 @@
     "tier": ""
   },
   {
-    "rank": 38,
+    "rank": 34,
     "name": "Deadly Silent Fred",
     "thumbnail": "",
     "id": "143999876",
@@ -532,7 +476,7 @@
     "tier": ""
   },
   {
-    "rank": 39,
+    "rank": 35,
     "name": "Disconnection Day",
     "thumbnail": "",
     "id": "144000727",
@@ -546,7 +490,7 @@
     "tier": ""
   },
   {
-    "rank": 40,
+    "rank": 36,
     "name": "The Island Chamber",
     "thumbnail": "",
     "id": "139623217",
@@ -560,35 +504,7 @@
     "tier": ""
   },
   {
-    "rank": 41,
-    "name": "Golden True",
-    "thumbnail": "",
-    "id": "117388462",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "Nikoshi",
-    "creators": "Nikoshi",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=I5kfOgM282g",
-    "tier": ""
-  },
-  {
-    "rank": 42,
-    "name": "Illusion of Sin",
-    "thumbnail": "",
-    "id": "93456281",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "RMGD",
-    "creators": "RMGD",
-    "is2Player": true,
-    "showcaseVideoUrl": "",
-    "tier": ""
-  },
-  {
-    "rank": 43,
+    "rank": 37,
     "name": "Slaughterhouse II X",
     "thumbnail": "",
     "id": "141877395",
@@ -602,7 +518,7 @@
     "tier": ""
   },
   {
-    "rank": 44,
+    "rank": 38,
     "name": "Zillion never clear",
     "thumbnail": "",
     "id": "130393455",
@@ -616,7 +532,7 @@
     "tier": ""
   },
   {
-    "rank": 45,
+    "rank": 39,
     "name": "WASP 76b",
     "thumbnail": "",
     "id": "129826895",
@@ -630,7 +546,7 @@
     "tier": ""
   },
   {
-    "rank": 46,
+    "rank": 40,
     "name": "Wistfully (nanayuisei)",
     "thumbnail": "",
     "id": "138373983",
@@ -644,21 +560,7 @@
     "tier": ""
   },
   {
-    "rank": 47,
-    "name": "Ballistic Wistfully",
-    "thumbnail": "",
-    "id": "70371046",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "eightos & more",
-    "creators": "eightos & more",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Vw9e8hGc3mY",
-    "tier": ""
-  },
-  {
-    "rank": 48,
+    "rank": 41,
     "name": "Ultra Coffee",
     "thumbnail": "",
     "id": "126427346",
@@ -672,7 +574,7 @@
     "tier": ""
   },
   {
-    "rank": 49,
+    "rank": 42,
     "name": "Anceps Worst Fear",
     "thumbnail": "",
     "id": "139007010",
@@ -686,7 +588,7 @@
     "tier": ""
   },
   {
-    "rank": 50,
+    "rank": 43,
     "name": "Silent Theory X",
     "thumbnail": "",
     "id": "82797130",
@@ -700,7 +602,7 @@
     "tier": ""
   },
   {
-    "rank": 51,
+    "rank": 44,
     "name": "grandma demon",
     "thumbnail": "",
     "id": "92518531",
@@ -714,7 +616,7 @@
     "tier": ""
   },
   {
-    "rank": 52,
+    "rank": 45,
     "name": "Xane gets trippy",
     "thumbnail": "",
     "id": "78245982",
@@ -728,7 +630,7 @@
     "tier": ""
   },
   {
-    "rank": 53,
+    "rank": 46,
     "name": "Sailent Discoworld",
     "thumbnail": "",
     "id": "108115322",
@@ -742,7 +644,7 @@
     "tier": ""
   },
   {
-    "rank": 54,
+    "rank": 47,
     "name": "system",
     "thumbnail": "",
     "id": "123110852",
@@ -756,7 +658,7 @@
     "tier": ""
   },
   {
-    "rank": 55,
+    "rank": 48,
     "name": "Eddies Castle",
     "thumbnail": "",
     "id": "129113296",
@@ -770,7 +672,7 @@
     "tier": ""
   },
   {
-    "rank": 56,
+    "rank": 49,
     "name": "Cosmos of Silence",
     "thumbnail": "",
     "id": "107175769",
@@ -784,7 +686,7 @@
     "tier": ""
   },
   {
-    "rank": 57,
+    "rank": 50,
     "name": "Deadly Circles",
     "thumbnail": "",
     "id": "134368013",
@@ -798,7 +700,7 @@
     "tier": ""
   },
   {
-    "rank": 58,
+    "rank": 51,
     "name": "XANE GETS SEQUELL",
     "thumbnail": "",
     "id": "138689383",
@@ -812,7 +714,7 @@
     "tier": ""
   },
   {
-    "rank": 59,
+    "rank": 52,
     "name": "Basalt Caverns",
     "thumbnail": "",
     "id": "126105053",
@@ -826,7 +728,7 @@
     "tier": ""
   },
   {
-    "rank": 60,
+    "rank": 53,
     "name": "Battle of the Shades (Phase 5)",
     "thumbnail": "",
     "id": "138729631",
@@ -840,7 +742,7 @@
     "tier": ""
   },
   {
-    "rank": 61,
+    "rank": 54,
     "name": "advanced christmas",
     "thumbnail": "",
     "id": "86524282",
@@ -854,21 +756,7 @@
     "tier": ""
   },
   {
-    "rank": 62,
-    "name": "ICE Carbon Destiny",
-    "thumbnail": "",
-    "id": "141594975",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "Chicharito52",
-    "creators": "Chicharito52",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=nLtkxV_ms88",
-    "tier": ""
-  },
-  {
-    "rank": 63,
+    "rank": 55,
     "name": "STALEMATE 15",
     "thumbnail": "",
     "id": "91889965",
@@ -882,7 +770,7 @@
     "tier": ""
   },
   {
-    "rank": 64,
+    "rank": 56,
     "name": "Silent Solar Circles",
     "thumbnail": "",
     "id": "125260812",
@@ -896,7 +784,7 @@
     "tier": ""
   },
   {
-    "rank": 65,
+    "rank": 57,
     "name": "Silent Forest",
     "thumbnail": "",
     "id": "93103211",
@@ -910,7 +798,7 @@
     "tier": ""
   },
   {
-    "rank": 66,
+    "rank": 58,
     "name": "LOST RESOLVE",
     "thumbnail": "",
     "id": "91963297",
@@ -924,7 +812,7 @@
     "tier": ""
   },
   {
-    "rank": 67,
+    "rank": 59,
     "name": "Devilicide",
     "thumbnail": "",
     "id": "139394939",
@@ -938,7 +826,7 @@
     "tier": ""
   },
   {
-    "rank": 68,
+    "rank": 60,
     "name": "Snow Dynasty",
     "thumbnail": "",
     "id": "138152649",
@@ -952,7 +840,7 @@
     "tier": ""
   },
   {
-    "rank": 69,
+    "rank": 61,
     "name": "Devils myths (Unnerfed)",
     "thumbnail": "",
     "id": "121452959",
@@ -966,7 +854,7 @@
     "tier": ""
   },
   {
-    "rank": 70,
+    "rank": 62,
     "name": "PARALLEL UNIVERSE (Old)",
     "thumbnail": "",
     "id": "123812850",
@@ -980,7 +868,7 @@
     "tier": ""
   },
   {
-    "rank": 71,
+    "rank": 63,
     "name": "Drown",
     "thumbnail": "",
     "id": "134433439",
@@ -994,7 +882,7 @@
     "tier": ""
   },
   {
-    "rank": 72,
+    "rank": 64,
     "name": "Flawless Homicide",
     "thumbnail": "",
     "id": "131538234",
@@ -1008,7 +896,7 @@
     "tier": ""
   },
   {
-    "rank": 73,
+    "rank": 65,
     "name": "Silent silent club",
     "thumbnail": "",
     "id": "131355701",
@@ -1022,7 +910,7 @@
     "tier": ""
   },
   {
-    "rank": 74,
+    "rank": 66,
     "name": "xKore",
     "thumbnail": "",
     "id": "131284760",
@@ -1036,7 +924,7 @@
     "tier": ""
   },
   {
-    "rank": 75,
+    "rank": 67,
     "name": "Swing Nightmare",
     "thumbnail": "",
     "id": "135264499",
@@ -1050,7 +938,7 @@
     "tier": ""
   },
   {
-    "rank": 76,
+    "rank": 68,
     "name": "Parousia Diluvi",
     "thumbnail": "",
     "id": "110540426",
@@ -1064,7 +952,7 @@
     "tier": ""
   },
   {
-    "rank": 77,
+    "rank": 69,
     "name": "the poison tree",
     "thumbnail": "",
     "id": "122058587",
@@ -1078,7 +966,7 @@
     "tier": ""
   },
   {
-    "rank": 78,
+    "rank": 70,
     "name": "Treasures of Ruin",
     "thumbnail": "",
     "id": "96919097",
@@ -1092,7 +980,7 @@
     "tier": ""
   },
   {
-    "rank": 79,
+    "rank": 71,
     "name": "Vitrification",
     "thumbnail": "",
     "id": "https://drive.google.com/file/d/1bENSGOvWUde9620NB8W309va8DLi-5Ce/view?usp=sharing",
@@ -1106,7 +994,7 @@
     "tier": ""
   },
   {
-    "rank": 80,
+    "rank": 72,
     "name": "problemy sinusini",
     "thumbnail": "",
     "id": "129141105",
@@ -1120,7 +1008,7 @@
     "tier": ""
   },
   {
-    "rank": 81,
+    "rank": 73,
     "name": "flaofret",
     "thumbnail": "",
     "id": "114091323",
@@ -1134,7 +1022,7 @@
     "tier": ""
   },
   {
-    "rank": 82,
+    "rank": 74,
     "name": "CHAINSMOKER",
     "thumbnail": "",
     "id": "140349344",
@@ -1148,7 +1036,7 @@
     "tier": ""
   },
   {
-    "rank": 83,
+    "rank": 75,
     "name": "Dark Nightmares",
     "thumbnail": "",
     "id": "144851821",
@@ -1162,7 +1050,7 @@
     "tier": ""
   },
   {
-    "rank": 84,
+    "rank": 76,
     "name": "IceBLOOD WORLD",
     "thumbnail": "",
     "id": "144723836",
@@ -1176,7 +1064,7 @@
     "tier": ""
   },
   {
-    "rank": 85,
+    "rank": 77,
     "name": "Hard Flying 3",
     "thumbnail": "",
     "id": "144280574",
@@ -1190,7 +1078,7 @@
     "tier": ""
   },
   {
-    "rank": 86,
+    "rank": 78,
     "name": "HELLRAISER",
     "thumbnail": "",
     "id": "137703430",
@@ -1204,7 +1092,7 @@
     "tier": ""
   },
   {
-    "rank": 87,
+    "rank": 79,
     "name": "Silent Jawbreaker",
     "thumbnail": "",
     "id": "136063350",
@@ -1218,7 +1106,7 @@
     "tier": ""
   },
   {
-    "rank": 88,
+    "rank": 80,
     "name": "MINUSdash",
     "thumbnail": "",
     "id": "119017600",
@@ -1232,7 +1120,7 @@
     "tier": ""
   },
   {
-    "rank": 89,
+    "rank": 81,
     "name": "Galaxy Reactor",
     "thumbnail": "",
     "id": "78862019",
@@ -1246,7 +1134,7 @@
     "tier": ""
   },
   {
-    "rank": 90,
+    "rank": 82,
     "name": "Conjury",
     "thumbnail": "",
     "id": "64151855",
@@ -1260,7 +1148,7 @@
     "tier": ""
   },
   {
-    "rank": 91,
+    "rank": 83,
     "name": "Challenger Circles",
     "thumbnail": "",
     "id": "146308612",
@@ -1274,7 +1162,7 @@
     "tier": ""
   },
   {
-    "rank": 92,
+    "rank": 84,
     "name": "Satanic Twilight Zone",
     "thumbnail": "",
     "id": "146323084",
@@ -1288,7 +1176,7 @@
     "tier": ""
   },
   {
-    "rank": 93,
+    "rank": 85,
     "name": "Divine Geometry (RMGD)",
     "thumbnail": "",
     "id": "146113866",
@@ -1302,7 +1190,7 @@
     "tier": ""
   },
   {
-    "rank": 94,
+    "rank": 86,
     "name": "KoMjury",
     "thumbnail": "",
     "id": "84572738",
@@ -1316,7 +1204,7 @@
     "tier": ""
   },
   {
-    "rank": 95,
+    "rank": 87,
     "name": "Miraculous Twilight",
     "thumbnail": "",
     "id": "146254916",
@@ -1330,7 +1218,7 @@
     "tier": ""
   },
   {
-    "rank": 96,
+    "rank": 88,
     "name": "Bloody Hell II",
     "thumbnail": "",
     "id": "99438857",
@@ -1344,7 +1232,7 @@
     "tier": ""
   },
   {
-    "rank": 97,
+    "rank": 89,
     "name": "Dehumanization Dance",
     "thumbnail": "",
     "id": "145928521",
@@ -1358,7 +1246,7 @@
     "tier": ""
   },
   {
-    "rank": 98,
+    "rank": 90,
     "name": "Nivel De Silencio",
     "thumbnail": "",
     "id": "140475229",
@@ -1372,7 +1260,7 @@
     "tier": ""
   },
   {
-    "rank": 99,
+    "rank": 91,
     "name": "KIAMAT",
     "thumbnail": "",
     "id": "94362024",
@@ -1386,7 +1274,7 @@
     "tier": ""
   },
   {
-    "rank": 100,
+    "rank": 92,
     "name": "Calls of the Abyss",
     "thumbnail": "",
     "id": "65526825",
@@ -1400,7 +1288,7 @@
     "tier": ""
   },
   {
-    "rank": 101,
+    "rank": 93,
     "name": "Death Corridor Y ExT",
     "thumbnail": "",
     "id": "141500466 Showcase Video:",
@@ -1414,7 +1302,7 @@
     "tier": ""
   },
   {
-    "rank": 102,
+    "rank": 94,
     "name": "Small Time",
     "thumbnail": "",
     "id": "108097946",
@@ -1428,7 +1316,7 @@
     "tier": ""
   },
   {
-    "rank": 103,
+    "rank": 95,
     "name": "Nodependence",
     "thumbnail": "",
     "id": "108789987",
@@ -1442,7 +1330,7 @@
     "tier": ""
   },
   {
-    "rank": 104,
+    "rank": 96,
     "name": "Sorry",
     "thumbnail": "",
     "id": "70505891",
@@ -1456,21 +1344,7 @@
     "tier": ""
   },
   {
-    "rank": 105,
-    "name": "Flash",
-    "thumbnail": "",
-    "id": "80177702",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "AndrejGD",
-    "creators": "AndrejGD",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/G8e0g_ENOp0",
-    "tier": ""
-  },
-  {
-    "rank": 106,
+    "rank": 97,
     "name": "Lunam Noctem",
     "thumbnail": "",
     "id": "90398982",
@@ -1484,7 +1358,7 @@
     "tier": ""
   },
   {
-    "rank": 107,
+    "rank": 98,
     "name": "Parathesia",
     "thumbnail": "",
     "id": "122521696",
@@ -1498,7 +1372,7 @@
     "tier": ""
   },
   {
-    "rank": 108,
+    "rank": 99,
     "name": "Misguidance",
     "thumbnail": "",
     "id": "129951584",
@@ -1512,7 +1386,7 @@
     "tier": ""
   },
   {
-    "rank": 109,
+    "rank": 100,
     "name": "Aggravation",
     "thumbnail": "",
     "id": "36411477",
@@ -1526,7 +1400,7 @@
     "tier": ""
   },
   {
-    "rank": 110,
+    "rank": 101,
     "name": "Discombobulation",
     "thumbnail": "",
     "id": "121997915",
@@ -1540,7 +1414,7 @@
     "tier": ""
   },
   {
-    "rank": 111,
+    "rank": 102,
     "name": "Ruined Geometry",
     "thumbnail": "",
     "id": "145207700",
@@ -1554,7 +1428,7 @@
     "tier": ""
   },
   {
-    "rank": 112,
+    "rank": 103,
     "name": "Silent Theory",
     "thumbnail": "",
     "id": "102607395",
@@ -1568,7 +1442,7 @@
     "tier": ""
   },
   {
-    "rank": 113,
+    "rank": 104,
     "name": "Liveless",
     "thumbnail": "",
     "id": "109862537",
@@ -1582,7 +1456,7 @@
     "tier": ""
   },
   {
-    "rank": 114,
+    "rank": 105,
     "name": "Deadfully",
     "thumbnail": "",
     "id": "69819768",
@@ -1596,7 +1470,7 @@
     "tier": ""
   },
   {
-    "rank": 115,
+    "rank": 106,
     "name": "Where",
     "creators": "Miguette",
     "id": "81243030",
@@ -1608,19 +1482,7 @@
     "tier": ""
   },
   {
-    "rank": 116,
-    "name": "Silent Hellfire",
-    "creators": "RMGD, Anceps",
-    "id": "147276461",
-    "tps": 240,
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [],
-    "tier": ""
-  },
-  {
-    "rank": 117,
+    "rank": 107,
     "name": "Galatic Blood",
     "creators": "edictz, GoldNation, iHinataUzumaki, Chipuha, Axii",
     "id": "106603172",
@@ -1632,7 +1494,7 @@
     "tier": ""
   },
   {
-    "rank": 118,
+    "rank": 108,
     "name": "SWI mega hardest",
     "creators": "RMGD, Riot, ViPriN, Cyclic",
     "id": "147464245",
@@ -1644,7 +1506,7 @@
     "tier": "Transcendent"
   },
   {
-    "rank": 119,
+    "rank": 109,
     "name": "Silent geode",
     "creators": "flarerX",
     "id": "147342820",
@@ -1656,7 +1518,7 @@
     "tier": "Novice"
   },
   {
-    "rank": 120,
+    "rank": 110,
     "name": "Ballistic Crimson World",
     "creators": "Cyrillic, Convindix",
     "id": "56260387",
@@ -1668,7 +1530,7 @@
     "tier": ""
   },
   {
-    "rank": 121,
+    "rank": 111,
     "name": "silent step",
     "creators": "TheRealSailen",
     "id": "104332408",
@@ -1680,7 +1542,7 @@
     "tier": ""
   },
   {
-    "rank": 122,
+    "rank": 112,
     "name": "Silent Step",
     "creators": "z3rix",
     "id": "80271550",
@@ -1692,7 +1554,7 @@
     "tier": ""
   },
   {
-    "rank": 123,
+    "rank": 113,
     "name": "Silent Stephell",
     "creators": "DiXXXXXXXXXXoN",
     "id": "117824584",
@@ -1704,7 +1566,7 @@
     "tier": ""
   },
   {
-    "rank": 124,
+    "rank": 114,
     "name": "spike avoider",
     "creators": "alle",
     "id": "117180622",
@@ -1716,19 +1578,7 @@
     "tier": ""
   },
   {
-    "rank": 125,
-    "name": "the extreme universe",
-    "creators": "nordic gamer",
-    "id": "138328080",
-    "tps": 240,
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=obgsvevebhY",
-    "image": "",
-    "victors": [],
-    "tier": ""
-  },
-  {
-    "rank": 126,
+    "rank": 115,
     "name": "Hard Cube 2",
     "creators": "Yousseff01",
     "id": "144567706",
@@ -1740,7 +1590,7 @@
     "tier": ""
   },
   {
-    "rank": 127,
+    "rank": 116,
     "name": "statera challenge ii",
     "creators": "RMGD",
     "id": "147080117",
@@ -1752,7 +1602,7 @@
     "tier": ""
   },
   {
-    "rank": 128,
+    "rank": 117,
     "name": "beast circles 2",
     "creators": "yali540",
     "id": "146987903",
@@ -1764,7 +1614,7 @@
     "tier": ""
   },
   {
-    "rank": 129,
+    "rank": 118,
     "name": "Chime",
     "creators": "TheCrazydud",
     "id": "93920921",
@@ -1776,7 +1626,7 @@
     "tier": ""
   },
   {
-    "rank": 130,
+    "rank": 119,
     "name": "silent at freddys",
     "creators": "foxyyourgod",
     "id": "146914798",
@@ -1788,7 +1638,7 @@
     "tier": "Novice"
   },
   {
-    "rank": 131,
+    "rank": 120,
     "name": "Death Corridor (True Old)",
     "creators": "KaotikJumper",
     "id": "147459422",
@@ -1800,7 +1650,7 @@
     "tier": "Intermediate"
   },
   {
-    "rank": 132,
+    "rank": 121,
     "name": "Silent Haunting",
     "creators": "RMGD",
     "id": "146754865",
