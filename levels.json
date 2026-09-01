@@ -7708,51 +7708,6 @@
   },
   {
     "rank": 289,
-    "name": "the extreme universe",
-    "creators": "Nordric gamer",
-    "id": "138328080",
-    "tps": 240,
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=obgsvevebhY",
-    "image": "",
-    "victors": [
-      {
-        "name": "Anceps",
-        "date": "2026-08-27",
-        "time": "13m 39s",
-        "attempts": 1205,
-        "video": "https://youtu.be/-MRnJqfunNU"
-      },
-      {
-        "name": "kangerlussuaq",
-        "date": "2026-08-25",
-        "time": "14m 22s",
-        "attempts": 1192,
-        "video": "https://www.youtube.com/watch?v=2nbxwjM-hHI"
-      }
-    ]
-  },
-  {
-    "rank": 290,
-    "name": "magnolia",
-    "creators": "skeletonlol",
-    "id": "76045050",
-    "tps": 240,
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/2b9v8w0Mg_M?si=9In6ARgn6dzMdxtE",
-    "image": "",
-    "victors": [
-      {
-        "name": "Sashozz",
-        "date": "2026-08-07",
-        "time": "10m 30s",
-        "attempts": 999,
-        "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
-      }
-    ]
-  },
-  {
-    "rank": 291,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
