@@ -398,6 +398,7 @@ function persistCurrentEditorData() {
   if (!window.editorSessionActive) return;
   if (editingSource === "verifications") {
     localStorage.setItem("pml_verifications_data", JSON.stringify(window.verifications));
+    sessionStorage.removeItem("verifications-list");
   } else {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(rawData));
   }
