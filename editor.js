@@ -42,7 +42,9 @@ function normalizeEditorItem(item, fallbackRank = null) {
       name: "",
       creators: "",
       id: "",
+      length: "",
       tps: "",
+      precision: "",
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
@@ -70,6 +72,12 @@ function normalizeEditorItem(item, fallbackRank = null) {
   const rawTps = item.tps ?? item.TPS ?? item.tpsValue;
   const normalizedTps = rawTps === null || rawTps === undefined || (typeof rawTps === "string" && rawTps.trim() === "") || Number(rawTps) === 0 ? "" : String(Number(rawTps));
   const tps = Number.isFinite(Number(normalizedTps)) ? String(Number(normalizedTps)) : "";
+  const rawLength = item.length ?? item.levelLength;
+  const normalizedLength = rawLength === null || rawLength === undefined || (typeof rawLength === "string" && rawLength.trim() === "") ? "" : String(Number(rawLength));
+  const length = Number.isFinite(Number(normalizedLength)) ? String(Number(normalizedLength)) : "";
+  const rawPrecision = item.precision ?? item.Precision;
+  const normalizedPrecision = rawPrecision === null || rawPrecision === undefined || (typeof rawPrecision === "string" && rawPrecision.trim() === "") ? "" : String(Number(rawPrecision));
+  const precision = Number.isFinite(Number(normalizedPrecision)) ? String(Number(normalizedPrecision)) : "";
   const victors = Array.isArray(item.victors) ? item.victors : [];
   const tier = readString(item.tier, item.tierName);
 
@@ -78,7 +86,9 @@ function normalizeEditorItem(item, fallbackRank = null) {
     name,
     creators,
     id,
+    length,
     tps,
+    precision,
     twoPlayer,
     showcaseVideo,
     image,
@@ -244,7 +254,6 @@ function renderEditTable() {
         <td class="creator-td">${escapeEditorText(normalizedItem.creators || "—")}</td>
         <td class="tier-td">${escapeEditorText(editingSource === "verifications" ? normalizedItem.tier || "—" : "—")}</td>
         <td class="id-td">${escapeEditorText(normalizedItem.id || "—")}</td>
-        <td class="tps-td">${normalizedItem.tps === "" || normalizedItem.tps == null ? "—" : escapeEditorText(String(normalizedItem.tps))}</td>
         <td class="victors-td">${(normalizedItem.victors || []).length}</td>
         <td class="actions-td">
           <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>
@@ -452,7 +461,9 @@ function openLevelForm(index) {
       name: "",
       creators: "",
       id: "",
+      length: "",
       tps: "",
+      precision: "",
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
@@ -475,7 +486,9 @@ function openLevelForm(index) {
   document.getElementById("f-creators").value = normalizedItem.creators || "";
   document.getElementById("f-id").value = normalizedItem.id || "";
   document.getElementById("f-rank").value = normalizedItem.rank || data.length + 1;
+  document.getElementById("f-length").value = normalizedItem.length === "" ? "" : normalizedItem.length;
   document.getElementById("f-tps").value = normalizedItem.tps === 0 || normalizedItem.tps === "0" || normalizedItem.tps == null || normalizedItem.tps === "" ? "" : normalizedItem.tps;
+  document.getElementById("f-precision").value = normalizedItem.precision || "";
   document.getElementById("f-twoplayer").value = normalizedItem.twoPlayer || "";
   document.getElementById("f-showcase").value = normalizedItem.showcaseVideo || "";
   document.getElementById("f-image").value = normalizedItem.image || "";
@@ -582,13 +595,19 @@ function saveLevelForm() {
 
   const tpsInput = document.getElementById("f-tps").value.trim();
   const parsedTps = tpsInput === "" || Number(tpsInput) === 0 ? "" : Number.parseFloat(tpsInput);
+  const lengthInput = document.getElementById("f-length").value.trim();
+  const parsedLength = lengthInput === "" ? "" : Number.parseFloat(lengthInput);
+  const precisionInput = document.getElementById("f-precision").value.trim();
+  const parsedPrecision = precisionInput === "" ? "" : Number.parseFloat(precisionInput);
 
   const item = {
     rank: parseInt(document.getElementById("f-rank").value) || data.length + 1,
     name,
     creators: document.getElementById("f-creators").value.trim(),
     id,
+    length: Number.isFinite(parsedLength) ? parsedLength : "",
     tps: Number.isFinite(parsedTps) ? parsedTps : "",
+    precision: Number.isFinite(parsedPrecision) ? parsedPrecision : "",
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),

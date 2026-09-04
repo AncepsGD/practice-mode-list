@@ -27,6 +27,16 @@ function parseTimeToSeconds(timeStr) {
 
 const DIFFICULTY_CURVE_EXPONENT = 1.6;
 
+function isEligibleVictor(victor) {
+    const playerName = String(victor && victor.name || "").trim();
+    return (
+        Boolean(playerName) &&
+        playerName !== "-" &&
+        !/^(?:redacted\s+)?player(?:\s*#\d+)?$/i.test(playerName) &&
+        !/^[-+]?\d+(?:\.\d+)?$/.test(playerName)
+    );
+}
+
 function calculatePoints(rank, maxRank) {
     if (!rank || !maxRank) return 0;
     if (maxRank === 1) return 360;
@@ -65,10 +75,16 @@ function sortVictorsByDate(victors) {
     });
 }
 
-const FIRST_VICTOR_BONUS = 0.1;
+const FIRST_VICTOR_BONUS = 0.12;
+const VICTOR_ORDER_DECAY = 0.65;
 const FASTEST_COMPLETION_BONUS = 0.1;
 const LOWEST_ATTEMPTS_BONUS = 0.1;
 const TIER_COMPLETION_DECAY = 0.95;
+
+function getVictorOrderBonus(orderIndex) {
+    if (!Number.isFinite(orderIndex) || orderIndex < 0) return 0;
+    return FIRST_VICTOR_BONUS * Math.pow(VICTOR_ORDER_DECAY, orderIndex);
+}
 
 function getTimeScore(playerSeconds, bestSeconds) {
     if (!Number.isFinite(playerSeconds)) return 0;
@@ -98,15 +114,7 @@ function buildLeaderboard(lvls) {
 
     orderedLevels.forEach((lvl) => {
         const sortedVictors = sortVictorsByDate(lvl.victors);
-        const players = sortedVictors.filter((victor) => {
-            const playerName = String(victor.name || "").trim();
-            return (
-                Boolean(playerName) &&
-                playerName !== "-" &&
-                !/^(?:redacted\s+player\s*#\d+|player\s*#\d+)$/i.test(playerName) &&
-                !/^[-+]?\d+(?:\.\d+)?$/.test(playerName)
-            );
-        });
+        const players = sortedVictors.filter(isEligibleVictor);
 
         const timeRankings = players
             .filter((victor) => Number.isFinite(victor.seconds))
@@ -139,6 +147,8 @@ function buildLeaderboard(lvls) {
         players.forEach((victor, index) => {
             const playerName = String(victor.name || "").trim();
             if (!playerName) return;
+            const hasOtherVictor = players.length > 1;
+            const canHoldRecord = hasOtherVictor;
 
             const tierKey = `${(lvl.tier || "unknown").toLowerCase()}|${playerName}`;
             const completions = playerTierCompletions.get(tierKey) || 0;
@@ -148,9 +158,9 @@ function buildLeaderboard(lvls) {
             const timeRank = timeRanks.get(playerName) || Number.POSITIVE_INFINITY;
             const attemptRank = attemptRanks.get(playerName) || Number.POSITIVE_INFINITY;
             const bonusMultiplier = 1 +
-                (index === 0 ? FIRST_VICTOR_BONUS : 0) +
-                (timeRank === 1 ? FASTEST_COMPLETION_BONUS : 0) +
-                (attemptRank === 1 ? LOWEST_ATTEMPTS_BONUS : 0);
+                getVictorOrderBonus(index) +
+                (canHoldRecord && timeRank === 1 ? FASTEST_COMPLETION_BONUS : 0) +
+                (canHoldRecord && attemptRank === 1 ? LOWEST_ATTEMPTS_BONUS : 0);
 
             if (!map[playerName]) {
                 map[playerName] = {

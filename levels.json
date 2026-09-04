@@ -284,7 +284,8 @@
         "attempts": 38479,
         "video": "https://youtube.com/playlist?list=PLcpkS-keFxBg&si=B_Q6mUtVSEgmTOsQ"
       }
-    ]
+    ],
+    "length": 56
   },
   {
     "rank": 15,
@@ -329,7 +330,8 @@
         "attempts": 10957,
         "video": "https://youtu.be/dRFuq8VwaBY"
       }
-    ]
+    ],
+    "length": 91
   },
   {
     "rank": 17,
@@ -424,7 +426,8 @@
         "attempts": 24171,
         "video": "https://www.youtube.com/playlist?list=PLSWE1Q7bPL3M"
       }
-    ]
+    ],
+    "length": 124
   },
   {
     "rank": 22,
@@ -432,6 +435,7 @@
     "creators": "Smarted",
     "id": "136891983",
     "tps": 240,
+    "precision": 570.5,
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://www.youtube.com/watch?v=hHl3pzue0EE",
     "image": "",
@@ -443,7 +447,8 @@
         "attempts": 4001,
         "video": "https://youtu.be/rVUOSD8TPT8"
       }
-    ]
+    ],
+    "length": 95
   },
   {
     "rank": 23,
@@ -526,7 +531,8 @@
         "attempts": 21790,
         "video": "https://www.youtube.com/watch?v=hBnyKQ35u1w&list=PLVs1ipa724nQ"
       }
-    ]
+    ],
+    "length": 90
   },
   {
     "rank": 27,
@@ -632,7 +638,8 @@
         "attempts": 24775,
         "video": "https://youtu.be/Ug4QvWlRxF0"
       }
-    ]
+    ],
+    "length": 60
   },
   {
     "rank": 30,
@@ -729,6 +736,7 @@
     "creators": "greafer",
     "id": "81002356",
     "tps": 720,
+    "precision": 1126.8,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/3vlpoX6e2I4?si=oDbKhxk6t6ljZz1Q",
     "image": "",
@@ -804,7 +812,8 @@
         "attempts": 6399,
         "video": "https://www.youtube.com/playlist?list=PLbSPMG6KzZsY"
       }
-    ]
+    ],
+    "length": 111
   },
   {
     "rank": 38,
@@ -879,7 +888,8 @@
         "attempts": 7437,
         "video": "https://www.youtube.com/playlist?list=PLPWAmmKW5vRo"
       }
-    ]
+    ],
+    "length": 96
   },
   {
     "rank": 42,
@@ -898,7 +908,8 @@
         "attempts": 11102,
         "video": "https://youtu.be/BbikpJdvtrQ"
       }
-    ]
+    ],
+    "length": 30
   },
   {
     "rank": 43,
@@ -989,7 +1000,8 @@
         "attempts": 10687,
         "video": "https://www.youtube.com/watch?v=WEMVbppgHd8"
       }
-    ]
+    ],
+    "length": 274
   },
   {
     "rank": 46,
@@ -1008,7 +1020,8 @@
         "attempts": 27692,
         "video": "https://www.youtube.com/watch?v=w8Bu6AovbnA"
       }
-    ]
+    ],
+    "length": 85
   },
   {
     "rank": 47,
@@ -1027,7 +1040,8 @@
         "attempts": 10719,
         "video": "https://youtu.be/dcMEfs44Mmc"
       }
-    ]
+    ],
+    "length": 83
   },
   {
     "rank": 48,
@@ -1046,7 +1060,8 @@
         "attempts": 6046,
         "video": "https://www.youtube.com/playlist?list=PLG0_CZe8coNo"
       }
-    ]
+    ],
+    "length": 69
   },
   {
     "rank": 49,
@@ -1086,7 +1101,8 @@
         "attempts": 5317,
         "video": "https://youtu.be/yy-2_UwjeGk"
       }
-    ]
+    ],
+    "length": 196
   },
   {
     "rank": 50,
@@ -1195,7 +1211,8 @@
         "attempts": 12089,
         "video": "https://www.youtube.com/playlist?list=PLLEgQuw0C6vY"
       }
-    ]
+    ],
+    "length": 176
   },
   {
     "rank": 54,
@@ -1289,7 +1306,8 @@
         "attempts": 3350,
         "video": "https://youtu.be/4SBBv0jmIxY"
       }
-    ]
+    ],
+    "length": 98
   },
   {
     "rank": 56,
@@ -1327,7 +1345,8 @@
         "attempts": 2813,
         "video": "https://youtu.be/4SBBv0jmIxY"
       }
-    ]
+    ],
+    "length": 101
   },
   {
     "rank": 58,
@@ -1354,6 +1373,7 @@
     "creators": "Danyko & more",
     "id": "63711033",
     "tps": 240,
+    "precision": 356.5,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/13SPkbv2bcE?si=deMzdrvA8D9WNVb3",
     "image": "",
@@ -1384,7 +1404,8 @@
         "attempts": 3911,
         "video": "https://youtu.be/jdX2aJjqat4"
       }
-    ]
+    ],
+    "length": 92
   },
   {
     "rank": 61,
@@ -1422,7 +1443,8 @@
         "attempts": 2928,
         "video": "https://youtu.be/4SBBv0jmIxY"
       }
-    ]
+    ],
+    "length": 156
   },
   {
     "rank": 63,
@@ -1460,7 +1482,8 @@
         "attempts": 6083,
         "video": "https://www.youtube.com/live/iM4x4i_jfaY"
       }
-    ]
+    ],
+    "length": 138
   },
   {
     "rank": 65,
@@ -1486,7 +1509,8 @@
         "attempts": 5992,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "length": 231
   },
   {
     "rank": 66,
@@ -1505,7 +1529,8 @@
         "attempts": 6403,
         "video": "https://youtu.be/Y0cFsOsqagw"
       }
-    ]
+    ],
+    "length": 82
   },
   {
     "rank": 67,
@@ -1524,7 +1549,8 @@
         "attempts": 17229,
         "video": "https://www.youtube.com/playlist?list=PLdNV001w7lWsbkF3Q99h4ZEUpb7hWrtTW"
       }
-    ]
+    ],
+    "length": 32
   },
   {
     "rank": 68,
@@ -1558,6 +1584,7 @@
     "creators": "AngelEffect",
     "id": "118059486",
     "tps": 240,
+    "precision": 525.4,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=yR280j42VbY",
     "image": "",
@@ -1583,7 +1610,8 @@
         "attempts": 2638,
         "video": "https://youtu.be/YmNun1hAsOM"
       }
-    ]
+    ],
+    "length": 491
   },
   {
     "rank": 70,
@@ -1591,6 +1619,7 @@
     "creators": "AngelEffect",
     "id": "120306904",
     "tps": 240,
+    "precision": 330.4,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/JmwaPRtp-GY",
     "image": "",
@@ -1616,7 +1645,8 @@
         "attempts": 3860,
         "video": "https://youtu.be/5uCySxfYQg"
       }
-    ]
+    ],
+    "length": 246
   },
   {
     "rank": 71,
@@ -1731,7 +1761,8 @@
         "attempts": 11149,
         "video": "https://youtu.be/Yx019FOD2ek"
       }
-    ]
+    ],
+    "length": 97
   },
   {
     "rank": 76,
@@ -1815,7 +1846,8 @@
         "attempts": 6179,
         "video": "https://youtu.be/23E_mbDOunU"
       }
-    ]
+    ],
+    "length": 106
   },
   {
     "rank": 79,
@@ -1834,7 +1866,8 @@
         "attempts": 6855,
         "video": "https://www.youtube.com/watch?v=NRluHzbke5c"
       }
-    ]
+    ],
+    "length": 135
   },
   {
     "rank": 80,
@@ -1900,7 +1933,8 @@
         "attempts": 706,
         "video": "https://youtu.be/33DYr42jpsc"
       }
-    ]
+    ],
+    "length": 708
   },
   {
     "rank": 82,
@@ -1938,7 +1972,8 @@
         "attempts": 2580,
         "video": "https://youtube.com/live/QFLx92sTf70?feature=share"
       }
-    ]
+    ],
+    "length": 88
   },
   {
     "rank": 84,
@@ -1985,7 +2020,8 @@
         "attempts": 5646,
         "video": "https://youtu.be/uhQqL-bQk34"
       }
-    ]
+    ],
+    "length": 87
   },
   {
     "rank": 85,
@@ -2078,6 +2114,7 @@
     "creators": "Cyrillic, TheRealSailent",
     "id": "12169905",
     "tps": 540,
+    "precision": 1281.03,
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://youtu.be/gJlP-V1DCfo",
     "image": "",
@@ -2131,7 +2168,8 @@
         "attempts": 10453,
         "video": "https://youtube.com/playlist?list=PLOrwfywyQQgU&si=dwVog_UP3G2QCZEz"
       }
-    ]
+    ],
+    "length": 69
   },
   {
     "rank": 89,
@@ -2164,7 +2202,8 @@
         "attempts": 30147,
         "video": "https://youtu.be/490EtYxmA04"
       }
-    ]
+    ],
+    "length": 214
   },
   {
     "rank": 90,
@@ -2211,7 +2250,8 @@
         "attempts": 9682,
         "video": "https://www.youtube.com/playlist?list=PLNRlldVpR4Gs"
       }
-    ]
+    ],
+    "length": 77
   },
   {
     "rank": 91,
@@ -2256,7 +2296,8 @@
         "attempts": 7180,
         "video": "https://youtu.be/w5J_tG576qU"
       }
-    ]
+    ],
+    "length": 68
   },
   {
     "rank": 93,
@@ -2355,7 +2396,8 @@
         "attempts": 25866,
         "video": "https://www.youtube.com/live/xBQY-cTq3iM"
       }
-    ]
+    ],
+    "length": 180
   },
   {
     "rank": 96,
@@ -2435,7 +2477,8 @@
         "attempts": 7671,
         "video": "https://youtu.be/TmA4-l0eSRU"
       }
-    ]
+    ],
+    "length": 174
   },
   {
     "rank": 98,
@@ -2480,7 +2523,8 @@
         "attempts": 4459,
         "video": "https://youtu.be/4au_mflXY2I"
       }
-    ]
+    ],
+    "length": 140
   },
   {
     "rank": 100,
@@ -2506,7 +2550,8 @@
         "attempts": 939,
         "video": "https://youtu.be/OXnpBbwWq00"
       }
-    ]
+    ],
+    "length": 119
   },
   {
     "rank": 101,
@@ -2577,7 +2622,8 @@
         "attempts": 10853,
         "video": "https://www.youtube.com/playlist?list=PLUbKgXaaKiZ8"
       }
-    ]
+    ],
+    "length": 110
   },
   {
     "rank": 104,
@@ -2622,7 +2668,8 @@
         "attempts": 3919,
         "video": "https://youtu.be/M3tHEKUQCgo"
       }
-    ]
+    ],
+    "length": 78
   },
   {
     "rank": 106,
@@ -2648,7 +2695,8 @@
         "attempts": 36778,
         "video": "https://youtube.com/live/QQILAU5Fflc"
       }
-    ]
+    ],
+    "length": 84
   },
   {
     "rank": 107,
@@ -2700,7 +2748,8 @@
         "attempts": 4259,
         "video": "https://youtu.be/kfcmdgoD3VM"
       }
-    ]
+    ],
+    "length": 54
   },
   {
     "rank": 109,
@@ -2708,6 +2757,7 @@
     "creators": "ultraharos",
     "id": "79864749",
     "tps": 635,
+    "precision": 930.007,
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://youtu.be/UWl8haXonPg",
     "image": "https://levelthumbs.prevter.me/thumbnail/39685177/high",
@@ -2766,7 +2816,8 @@
         "attempts": 9766,
         "video": "https://youtu.be/HeQbiDqWmEI"
       }
-    ]
+    ],
+    "length": 64
   },
   {
     "rank": 111,
@@ -2792,7 +2843,8 @@
         "attempts": 4089,
         "video": "https://youtu.be/uRlqYurDtMA"
       }
-    ]
+    ],
+    "length": 42
   },
   {
     "rank": 112,
@@ -2800,6 +2852,7 @@
     "creators": "eightos",
     "id": "77233362",
     "tps": 240,
+    "precision": 386.7,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/a37y9M8rCIU",
     "image": "https://levelthumbs.prevter.me/thumbnail/77233362/high",
@@ -2853,7 +2906,8 @@
         "attempts": 11753,
         "video": "https://youtu.be/EEIQRMtnDgk"
       }
-    ]
+    ],
+    "length": 175
   },
   {
     "rank": 113,
@@ -2861,6 +2915,7 @@
     "creators": "Thycket & more",
     "id": "79449270",
     "tps": 240,
+    "precision": 326.8,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/H3NK853Uw_0",
     "image": "",
@@ -2898,7 +2953,8 @@
         "attempts": 5336,
         "video": "https://www.youtube.com/playlist?list=PLLYPIOyZCs6s"
       }
-    ]
+    ],
+    "length": 62
   },
   {
     "rank": 115,
@@ -3000,7 +3056,8 @@
         "attempts": 3588,
         "video": "https://www.youtube.com/watch?v=QCSP9zJ7lx8"
       }
-    ]
+    ],
+    "length": 85
   },
   {
     "rank": 120,
@@ -3026,7 +3083,8 @@
         "attempts": 3288,
         "video": "https://www.youtube.com/watch?v=zWnKTbhcxMk&list=PLOrcxt-fg0FM"
       }
-    ]
+    ],
+    "length": 106
   },
   {
     "rank": 121,
@@ -3078,7 +3136,8 @@
         "attempts": 4811,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "length": 64
   },
   {
     "rank": 123,
@@ -3180,7 +3239,8 @@
         "attempts": 6191,
         "video": "https://youtu.be/d1sQwtgZrzQ"
       }
-    ]
+    ],
+    "length": 168
   },
   {
     "rank": 128,
@@ -3279,7 +3339,8 @@
         "attempts": 5280,
         "video": "https://youtu.be/n9Q3eR3gZPg"
       }
-    ]
+    ],
+    "length": 54
   },
   {
     "rank": 131,
@@ -3340,7 +3401,8 @@
         "attempts": 34085,
         "video": "https://youtube.com/live/9tFtcfTcmT8"
       }
-    ]
+    ],
+    "length": 72
   },
   {
     "rank": 132,
@@ -3423,6 +3485,7 @@
     "creators": "Neomarbilan, Tusol, & more",
     "id": "144835866",
     "tps": 240,
+    "precision": 682.3,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/i_pzdT9SLMI?si=DrkE0rqa1pNp7tg-",
     "image": "",
@@ -3510,7 +3573,8 @@
         "attempts": 7534,
         "video": "https://youtu.be/_XC40e34Tus"
       }
-    ]
+    ],
+    "length": 32
   },
   {
     "rank": 141,
@@ -3639,7 +3703,8 @@
         "attempts": 6607,
         "video": "https://youtu.be/7kjwWJU7sco"
       }
-    ]
+    ],
+    "length": 69
   },
   {
     "rank": 143,
@@ -3771,7 +3836,8 @@
         "attempts": 19892,
         "video": "https://youtu.be/HCYvneVUuII"
       }
-    ]
+    ],
+    "length": 61
   },
   {
     "rank": 147,
@@ -3797,7 +3863,8 @@
         "attempts": 9646,
         "video": "https://www.youtube.com/watch?v=qBiwVCnQO30"
       }
-    ]
+    ],
+    "length": 176
   },
   {
     "rank": 148,
@@ -3916,6 +3983,7 @@
     "creators": "Armadeus",
     "id": "57262123",
     "tps": 360,
+    "precision": 340.3,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=UMWym61LxwA",
     "image": "",
@@ -3934,7 +4002,8 @@
         "attempts": 1269,
         "video": "https://youtu.be/OyZTatUENUc"
       }
-    ]
+    ],
+    "length": 55
   },
   {
     "rank": 153,
@@ -3960,7 +4029,8 @@
         "attempts": 5208,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "length": 148
   },
   {
     "rank": 154,
@@ -3968,6 +4038,7 @@
     "creators": "Nick24",
     "id": "100856004",
     "tps": 240,
+    "precision": 328.84,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/xJMDlzGyb6c",
     "image": "",
@@ -4119,7 +4190,8 @@
         "attempts": 9570,
         "video": "https://www.youtube.com/watch?v=JrcrkOGmmWI"
       }
-    ]
+    ],
+    "length": 352
   },
   {
     "rank": 155,
@@ -4152,7 +4224,8 @@
         "attempts": 2715,
         "video": "https://youtu.be/uhQqL-bQk34"
       }
-    ]
+    ],
+    "length": 62
   },
   {
     "rank": 156,
@@ -4190,7 +4263,8 @@
         "attempts": 2324,
         "video": "https://youtu.be/4SBBv0jmIxY"
       }
-    ]
+    ],
+    "length": 75
   },
   {
     "rank": 158,
@@ -4216,7 +4290,8 @@
         "attempts": 2010,
         "video": "https://youtu.be/zkKln9CUi90"
       }
-    ]
+    ],
+    "length": 76
   },
   {
     "rank": 159,
@@ -4242,7 +4317,8 @@
         "attempts": 3179,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "length": 60
   },
   {
     "rank": 160,
@@ -4288,6 +4364,7 @@
     "creators": "JonathanGD, Delta",
     "id": "95722079",
     "tps": 240,
+    "precision": 573.087,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/uYI6qPOiLcA?si=fG6GaPxWmxIk5Uay",
     "image": "",
@@ -4307,6 +4384,7 @@
     "creators": "Jester",
     "id": "13536376",
     "tps": 240,
+    "precision": 419.3,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/DipPvUJ--Sc",
     "image": "",
@@ -4318,7 +4396,8 @@
         "attempts": 1875,
         "video": "https://youtu.be/SPhqUF5Fjs0"
       }
-    ]
+    ],
+    "length": 90
   },
   {
     "rank": 164,
@@ -4356,7 +4435,8 @@
         "attempts": 2813,
         "video": "https://youtu.be/q21h65hunV8"
       }
-    ]
+    ],
+    "length": 73
   },
   {
     "rank": 166,
@@ -4394,7 +4474,8 @@
         "attempts": 2243,
         "video": "https://youtu.be/20C8YT2nmNo"
       }
-    ]
+    ],
+    "length": 60
   },
   {
     "rank": 168,
@@ -4420,7 +4501,8 @@
         "attempts": 10211,
         "video": "https://youtu.be/patJkOFYOf8"
       }
-    ]
+    ],
+    "length": 66
   },
   {
     "rank": 169,
@@ -4458,7 +4540,8 @@
         "attempts": 1647,
         "video": "https://youtu.be/TnLLCbgVJcE"
       }
-    ]
+    ],
+    "length": 131
   },
   {
     "rank": 171,
@@ -4503,7 +4586,8 @@
         "attempts": 3912,
         "video": "https://www.youtube.com/watch?v=GtztOa9fRMQ"
       }
-    ]
+    ],
+    "length": 165
   },
   {
     "rank": 173,
@@ -4541,7 +4625,8 @@
         "attempts": 1258,
         "video": "https://youtu.be/t44Jw00-oiQ"
       }
-    ]
+    ],
+    "length": 37
   },
   {
     "rank": 175,
@@ -4593,7 +4678,8 @@
         "attempts": 2482,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "length": 184
   },
   {
     "rank": 177,
@@ -4612,7 +4698,8 @@
         "attempts": 2419,
         "video": "https://youtu.be/jJshxTBtSdA"
       }
-    ]
+    ],
+    "length": 89
   },
   {
     "rank": 178,
@@ -4645,7 +4732,8 @@
         "attempts": 3715,
         "video": "https://gdbrowser.com/comments/10031383"
       }
-    ]
+    ],
+    "length": 168
   },
   {
     "rank": 179,
@@ -4664,7 +4752,8 @@
         "attempts": 6678,
         "video": "https://youtu.be/qmLI1w_u2Ew"
       }
-    ]
+    ],
+    "length": 170
   },
   {
     "rank": 180,
@@ -4716,7 +4805,8 @@
         "attempts": 6350,
         "video": "https://www.youtube.com/watch?v=kX31zoYVQ4Y"
       }
-    ]
+    ],
+    "length": 116
   },
   {
     "rank": 182,
@@ -4735,7 +4825,8 @@
         "attempts": 3189,
         "video": "https://youtu.be/nX3H8-uOeME"
       }
-    ]
+    ],
+    "length": 100
   },
   {
     "rank": 183,
@@ -4743,6 +4834,7 @@
     "creators": "Neomarbilan & more",
     "id": "127323087",
     "tps": 240,
+    "precision": 447.9,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/6s-NBTRzspE",
     "image": "https://levelthumbs.prevter.me/thumbnail/127323087/high",
@@ -4780,7 +4872,8 @@
         "attempts": 2826,
         "video": "https://youtu.be/DtY4iWjWVgE"
       }
-    ]
+    ],
+    "length": 87
   },
   {
     "rank": 185,
@@ -4806,7 +4899,8 @@
         "attempts": 4916,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "length": 74
   },
   {
     "rank": 186,
@@ -4882,7 +4976,8 @@
         "attempts": 1865,
         "video": "https://youtube.com/playlist?list=PLkmf-ycfDOKeqfDGsERvApcbo5n7myIoc&si=GQMzFA7xU0pCc39P"
       }
-    ]
+    ],
+    "length": 175
   },
   {
     "rank": 190,
@@ -4890,6 +4985,7 @@
     "creators": "TMco & more",
     "id": "75284290",
     "tps": 240,
+    "precision": 413.2,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/ByHrcniGsGM",
     "image": "https://levelthumbs.prevter.me/thumbnail/75284290/high",
@@ -4941,7 +5037,8 @@
         "attempts": 1606,
         "video": "https://youtu.be/t1BB9L8IXhQ?si=rtNZGw5fdikZd1hK"
       }
-    ]
+    ],
+    "length": 101
   },
   {
     "rank": 192,
@@ -4960,7 +5057,8 @@
         "attempts": 1477,
         "video": "https://youtu.be/WfJxPsJZBmk"
       }
-    ]
+    ],
+    "length": 90
   },
   {
     "rank": 193,
@@ -4979,7 +5077,8 @@
         "attempts": 1709,
         "video": "https://youtu.be/N0d4A3m-PgM"
       }
-    ]
+    ],
+    "length": 80
   },
   {
     "rank": 194,
@@ -5017,7 +5116,8 @@
         "attempts": 1714,
         "video": "https://youtu.be/C7x8_XPxaVU"
       }
-    ]
+    ],
+    "length": 289
   },
   {
     "rank": 196,
@@ -5199,7 +5299,8 @@
         "attempts": 2883,
         "video": "https://youtu.be/CQY7mz4zvu0"
       }
-    ]
+    ],
+    "length": 53
   },
   {
     "rank": 203,
@@ -5265,7 +5366,8 @@
         "attempts": 3115,
         "video": "https://youtu.be/HhIn1EdnpCs"
       }
-    ]
+    ],
+    "length": 63
   },
   {
     "rank": 205,
@@ -5284,7 +5386,8 @@
         "attempts": 2353,
         "video": "https://youtu.be/cDAIhDChyPI"
       }
-    ]
+    ],
+    "length": 135
   },
   {
     "rank": 206,
@@ -5303,7 +5406,8 @@
         "attempts": 2728,
         "video": "https://youtu.be/KhHlDt8vBFc"
       }
-    ]
+    ],
+    "length": 54
   },
   {
     "rank": 207,
@@ -5330,6 +5434,7 @@
     "creators": "Fishavolo, RealDynamix",
     "id": "101656380",
     "tps": 240,
+    "precision": 421.7,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/MG39eJWPjlU",
     "image": "",
@@ -5362,7 +5467,8 @@
         "attempts": 2970,
         "video": "https://youtu.be/myx6y-WQAnw"
       }
-    ]
+    ],
+    "length": 99
   },
   {
     "rank": 209,
@@ -5388,7 +5494,8 @@
         "attempts": 3883,
         "video": "https://youtu.be/NellaRdHrPk"
       }
-    ]
+    ],
+    "length": 127
   },
   {
     "rank": 210,
@@ -5421,7 +5528,8 @@
         "attempts": 1048,
         "video": "https://youtu.be/8YU-DRfli6o"
       }
-    ]
+    ],
+    "length": 43
   },
   {
     "rank": 211,
@@ -5429,6 +5537,7 @@
     "creators": "Exen",
     "id": "98327676",
     "tps": 240,
+    "precision": 458.7,
     "twoPlayer": "",
     "showcaseVideo": "",
     "image": "",
@@ -5474,6 +5583,7 @@
     "creators": "SureFir3",
     "id": "108590404",
     "tps": 240,
+    "precision": 715.1,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/49PZUs5gpXY",
     "image": "https://levelthumbs.prevter.me/thumbnail/108590404/high",
@@ -5492,7 +5602,8 @@
         "attempts": 2590,
         "video": "https://youtu.be/UYpORl5GXJc"
       }
-    ]
+    ],
+    "length": 31
   },
   {
     "rank": 214,
@@ -5573,6 +5684,7 @@
     "creators": "Devilism, kyle1saurus",
     "id": "146649812",
     "tps": 240,
+    "precision": 497.6,
     "twoPlayer": "",
     "showcaseVideo": "",
     "image": "",
@@ -5903,7 +6015,8 @@
         "attempts": 4015,
         "video": "https://youtube.com/live/QFLx92sTf70?feature=share"
       }
-    ]
+    ],
+    "length": 61
   },
   {
     "rank": 225,
@@ -6036,7 +6149,8 @@
         "attempts": 6741,
         "video": "https://youtu.be/Ct97NP3kY0o"
       }
-    ]
+    ],
+    "length": 126
   },
   {
     "rank": 232,
@@ -6100,7 +6214,8 @@
         "attempts": 1335,
         "video": "https://youtu.be/5o7tNHWdkFI"
       }
-    ]
+    ],
+    "length": 93
   },
   {
     "rank": 235,
@@ -6190,7 +6305,8 @@
         "attempts": 776,
         "video": "https://youtu.be/uhHX5iV8r88?si=iCvooj8_6nozgDvt"
       }
-    ]
+    ],
+    "length": 73
   },
   {
     "rank": 239,
@@ -6242,7 +6358,8 @@
         "attempts": 2096,
         "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
       }
-    ]
+    ],
+    "length": 32
   },
   {
     "rank": 241,
@@ -6268,7 +6385,8 @@
         "attempts": 1067,
         "video": "https://youtu.be/HbAAGceterU"
       }
-    ]
+    ],
+    "length": 34
   },
   {
     "rank": 242,
@@ -6276,6 +6394,7 @@
     "creators": "vastaus",
     "id": "124108794",
     "tps": 240,
+    "precision": 386.7,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/qVAyeDvb0HA",
     "image": "",
@@ -6301,7 +6420,8 @@
         "attempts": 920,
         "video": "https://youtu.be/e5fEYSEfGoE"
       }
-    ]
+    ],
+    "length": 87
   },
   {
     "rank": 243,
@@ -6353,7 +6473,8 @@
         "attempts": 1556,
         "video": "https://www.youtube.com/watch?v=9VRkwCfIrFQ"
       }
-    ]
+    ],
+    "length": 68
   },
   {
     "rank": 245,
@@ -6361,6 +6482,7 @@
     "creators": "Anceps",
     "id": "114130329",
     "tps": 240,
+    "precision": 491.9,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/7RpCu-lTIFs",
     "image": "https://levelthumbs.prevter.me/thumbnail/114130329/high",
@@ -6386,7 +6508,8 @@
         "attempts": 3189,
         "video": "https://youtu.be/gdt4kM4FYrU"
       }
-    ]
+    ],
+    "length": 70
   },
   {
     "rank": 246,
@@ -6405,7 +6528,8 @@
         "attempts": 2462,
         "video": "https://youtu.be/1p7w3jpzuoA"
       }
-    ]
+    ],
+    "length": 52
   },
   {
     "rank": 247,
@@ -6413,6 +6537,7 @@
     "creators": "wabas",
     "id": "139903937",
     "tps": 240,
+    "precision": 383.8,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/mX39H70IiU0",
     "image": "",
@@ -6438,7 +6563,8 @@
         "attempts": 3184,
         "video": "https://youtu.be/sWCKYt0U7iY"
       }
-    ]
+    ],
+    "length": 77
   },
   {
     "rank": 248,
@@ -6457,7 +6583,8 @@
         "attempts": 6408,
         "video": "https://youtu.be/qsJgs6iaBsM"
       }
-    ]
+    ],
+    "length": 61
   },
   {
     "rank": 249,
@@ -6476,7 +6603,8 @@
         "attempts": 1253,
         "video": "https://youtu.be/WUxSzPWCXlE"
       }
-    ]
+    ],
+    "length": 85
   },
   {
     "rank": 250,
@@ -6510,6 +6638,7 @@
     "creators": "ivyteal",
     "id": "79393829",
     "tps": 243,
+    "precision": 489.1,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/U-eN50vRY6c",
     "image": "",
@@ -6528,7 +6657,8 @@
         "attempts": 1731,
         "video": "https://youtu.be/TKDU3aKx1dA"
       }
-    ]
+    ],
+    "length": 64
   },
   {
     "rank": 252,
@@ -6598,7 +6728,8 @@
         "attempts": 1537,
         "video": "https://youtu.be/uhQqL-bQk34"
       }
-    ]
+    ],
+    "length": 74
   },
   {
     "rank": 255,
@@ -6617,7 +6748,8 @@
         "attempts": 1790,
         "video": "https://youtu.be/7lJML1vyWSw"
       }
-    ]
+    ],
+    "length": 42
   },
   {
     "rank": 256,
@@ -6757,6 +6889,7 @@
     "creators": "Exen, buragoz & more",
     "id": "130142951",
     "tps": 262,
+    "precision": 207.1,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/5nOxYAh2hp8",
     "image": "",
@@ -6808,7 +6941,8 @@
         "attempts": 1666,
         "video": "https://youtu.be/i7IZv7vH698"
       }
-    ]
+    ],
+    "length": 91
   },
   {
     "rank": 262,
@@ -6886,7 +7020,8 @@
         "attempts": 2444,
         "video": "https://youtu.be/soTzacLKngo"
       }
-    ]
+    ],
+    "length": 68
   },
   {
     "rank": 265,
@@ -6912,7 +7047,8 @@
         "attempts": 793,
         "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
       }
-    ]
+    ],
+    "length": 57
   },
   {
     "rank": 266,
@@ -6931,7 +7067,8 @@
         "attempts": 1947,
         "video": "https://youtu.be/-v6JEBKpQsY"
       }
-    ]
+    ],
+    "length": 83
   },
   {
     "rank": 267,
@@ -6957,7 +7094,8 @@
         "attempts": 1418,
         "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
       }
-    ]
+    ],
+    "length": 75
   },
   {
     "rank": 268,
@@ -6965,6 +7103,7 @@
     "creators": "Aeden",
     "id": "126344104",
     "tps": 240,
+    "precision": 528.1,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/mAJG_i9Vziw",
     "image": "https://levelthumbs.prevter.me/thumbnail/126344104/high",
@@ -7011,7 +7150,8 @@
         "attempts": 2313,
         "video": "https://youtu.be/qg3byk_5VBU"
       }
-    ]
+    ],
+    "length": 66
   },
   {
     "rank": 269,
@@ -7072,7 +7212,8 @@
         "attempts": 2930,
         "video": "https://youtu.be/s662TCUmxrQ"
       }
-    ]
+    ],
+    "length": 122
   },
   {
     "rank": 270,
@@ -7112,7 +7253,8 @@
         "attempts": 978,
         "video": "https://youtu.be/kuKoDHHgSVU"
       }
-    ]
+    ],
+    "length": 68
   },
   {
     "rank": 271,
@@ -7138,7 +7280,8 @@
         "attempts": 1620,
         "video": "https://youtu.be/qg3byk_5VBU"
       }
-    ]
+    ],
+    "length": 71
   },
   {
     "rank": 272,
@@ -7171,7 +7314,8 @@
         "attempts": 1317,
         "video": "https://youtu.be/qg3byk_5VBU"
       }
-    ]
+    ],
+    "length": 98
   },
   {
     "rank": 273,
@@ -7296,7 +7440,8 @@
         "attempts": 2201,
         "video": "https://youtube.com/live/IfQ7eIEI_6I?feature=share"
       }
-    ]
+    ],
+    "length": 31
   },
   {
     "rank": 277,
@@ -7348,6 +7493,7 @@
     "creators": "TCDofficial",
     "id": "126701660",
     "tps": 240,
+    "precision": 406.1,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/KCkPjq2IleY",
     "image": "",
@@ -7385,7 +7531,8 @@
         "attempts": 2885,
         "video": "https://youtu.be/JsymKF5ROmc"
       }
-    ]
+    ],
+    "length": 70
   },
   {
     "rank": 281,
@@ -7393,6 +7540,7 @@
     "creators": "CDMusic",
     "id": "69608644",
     "tps": 241,
+    "precision": 286.4,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=z4ywBsYiZF0",
     "image": "",
@@ -7439,7 +7587,8 @@
         "attempts": 3164,
         "video": "https://youtu.be/5EfQBe_P37Y"
       }
-    ]
+    ],
+    "length": 82
   },
   {
     "rank": 282,
@@ -7500,7 +7649,8 @@
         "attempts": 756,
         "video": "https://youtu.be/B-gYto1PJ6w"
       }
-    ]
+    ],
+    "length": 67
   },
   {
     "rank": 283,
@@ -7561,7 +7711,8 @@
         "attempts": 2149,
         "video": "https://youtu.be/ZgZrC3JTaTM"
       }
-    ]
+    ],
+    "length": 122
   },
   {
     "rank": 284,
@@ -7606,7 +7757,8 @@
         "attempts": 1154,
         "video": "https://youtube.com/playlist?list=PLF8cOJfZPH_0&si=cv4mazPZ6isc-H1T"
       }
-    ]
+    ],
+    "length": 72
   },
   {
     "rank": 286,
@@ -7695,7 +7847,8 @@
         "attempts": 2800,
         "video": "https://www.youtube.com/watch?v=zKmaMBpshjc"
       }
-    ]
+    ],
+    "length": 86
   },
   {
     "rank": 290,
@@ -7714,7 +7867,8 @@
         "attempts": 993,
         "video": "https://youtu.be/i39RPNnEfPY"
       }
-    ]
+    ],
+    "length": 137
   },
   {
     "rank": 291,
@@ -7840,6 +7994,7 @@
     "creators": "Riot, ryamu & more",
     "id": "102646926",
     "tps": 240,
+    "precision": 367.22,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=H0WIku2Yjg8",
     "image": "",
@@ -7998,6 +8153,7 @@
         "attempts": 2622,
         "video": "https://youtu.be/wZ-1YSWrkEE"
       }
-    ]
+    ],
+    "length": 66
   }
 ]
