@@ -74,10 +74,12 @@ function normalizeEditorItem(item, fallbackRank = null) {
   const tps = Number.isFinite(Number(normalizedTps)) ? String(Number(normalizedTps)) : "";
   const rawLength = item.length ?? item.levelLength;
   const normalizedLength = rawLength === null || rawLength === undefined || (typeof rawLength === "string" && rawLength.trim() === "") ? "" : String(Number(rawLength));
-  const length = Number.isFinite(Number(normalizedLength)) ? String(Number(normalizedLength)) : "";
+  const lengthValue = Number(normalizedLength);
+  const length = Number.isFinite(lengthValue) && lengthValue > 0 ? String(lengthValue) : "";
   const rawPrecision = item.precision ?? item.Precision;
   const normalizedPrecision = rawPrecision === null || rawPrecision === undefined || (typeof rawPrecision === "string" && rawPrecision.trim() === "") ? "" : String(Number(rawPrecision));
-  const precision = Number.isFinite(Number(normalizedPrecision)) ? String(Number(normalizedPrecision)) : "";
+  const precisionValue = Number(normalizedPrecision);
+  const precision = Number.isFinite(precisionValue) && precisionValue > 0 ? String(precisionValue) : "";
   const victors = Array.isArray(item.victors) ? item.victors : [];
   const tier = readString(item.tier, item.tierName);
 
@@ -605,9 +607,9 @@ function saveLevelForm() {
     name,
     creators: document.getElementById("f-creators").value.trim(),
     id,
-    length: Number.isFinite(parsedLength) ? parsedLength : "",
+    length: Number.isFinite(parsedLength) && parsedLength > 0 ? parsedLength : "",
     tps: Number.isFinite(parsedTps) ? parsedTps : "",
-    precision: Number.isFinite(parsedPrecision) ? parsedPrecision : "",
+    precision: Number.isFinite(parsedPrecision) && parsedPrecision > 0 ? parsedPrecision : "",
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),

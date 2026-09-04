@@ -177,6 +177,58 @@ function getEstimatedMainListRank(level, calibrationLevels = []) {
   return Math.round(1 + normalizedRank * (calibrationLevels.length - 1));
 }
 
+function buildEstimatedDifficultyAnchors(calibrationLevels, estimatedNames) {
+  if (!Array.isArray(calibrationLevels) || !Array.isArray(estimatedNames)) return [];
+
+  const estimatedRanks = new Map();
+  estimatedNames.forEach((name, index) => {
+    const key = normalizeLadderName(name);
+    if (key && !estimatedRanks.has(key)) estimatedRanks.set(key, index + 1);
+  });
+
+  return calibrationLevels
+    .map(level => ({
+      estimatedRank: estimatedRanks.get(normalizeLadderName(level.name)),
+      points: Number(level.points),
+    }))
+    .filter(anchor => Number.isFinite(anchor.estimatedRank) && Number.isFinite(anchor.points))
+    .sort((a, b) => a.estimatedRank - b.estimatedRank)
+    .filter((anchor, index, anchors) => index === 0 || anchor.estimatedRank !== anchors[index - 1].estimatedRank);
+}
+
+function interpolateDifficultyPoints(level, calibrationLevels, estimatedNames) {
+  const estimatedRank = Number(level?._difficultyRank);
+  const estimatedListSize = Number(level?._estimatedRankMax);
+  if (!level?.isUnverified || !Number.isFinite(estimatedRank) || estimatedRank <= 0
+    || !Number.isFinite(estimatedListSize) || estimatedListSize <= 1) return null;
+
+  const anchors = buildEstimatedDifficultyAnchors(calibrationLevels, estimatedNames);
+  if (anchors.length < 2) return null;
+
+  let left = anchors[0];
+  let right = anchors[anchors.length - 1];
+  for (let index = 1; index < anchors.length; index++) {
+    if (anchors[index].estimatedRank >= estimatedRank) {
+      right = anchors[index];
+      left = anchors[index - 1];
+      break;
+    }
+  }
+
+  if (estimatedRank <= anchors[0].estimatedRank) {
+    left = anchors[0];
+    right = anchors[1];
+  } else if (estimatedRank >= anchors[anchors.length - 1].estimatedRank) {
+    left = anchors[anchors.length - 2];
+    right = anchors[anchors.length - 1];
+  }
+
+  const span = right.estimatedRank - left.estimatedRank;
+  if (span <= 0) return left.points;
+  const ratio = (estimatedRank - left.estimatedRank) / span;
+  return clamp(left.points + (right.points - left.points) * ratio, 10, 360);
+}
+
 function prepareUnverifiedData(verifications, estimatedNames, verifiedLevels = []) {
   const estimatedRanks = new Map();
   const verifiedIdentity = buildVerifiedIdentityIndex(verifiedLevels);
@@ -364,7 +416,10 @@ function processRawData(data, options = {}) {
       hasRankCalibration ? calibrationLevels.length : maxRank,
     );
     l.modelRank = calibratedRank || l.rank || l._difficultyRank || 0;
-    l.points = rankPoints * getTpsDifficultyMultiplier(l, options.calibrationLevels);
+    const anchorPoints = l.isUnverified
+      ? interpolateDifficultyPoints(l, calibrationLevels, options.estimatedNames)
+      : null;
+    l.points = (anchorPoints ?? rankPoints) * getTpsDifficultyMultiplier(l, options.calibrationLevels);
   });
 
   uniqueLevels.forEach(level => {

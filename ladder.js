@@ -76,7 +76,11 @@ function App() {
     );
     return processRawData(
       unverifiedData,
-      { preserveDistinctIds: true, calibrationLevels: processedVerified },
+      {
+        preserveDistinctIds: true,
+        calibrationLevels: processedVerified,
+        estimatedNames: ladderSources.estimatedNames,
+      },
     );
   }, [ladderSources, useFullSecretList, processedVerified]);
 
