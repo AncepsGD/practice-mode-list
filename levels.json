@@ -395,7 +395,8 @@
         "video": "https://www.youtube.com/playlist?list=PLSWE1Q7bPL3M"
       }
     ],
-    "length": 124
+    "length": 124,
+    "tier": "Divine"
   },
   {
     "rank": 20,
@@ -826,8 +827,7 @@
         "attempts": 25086,
         "video": "https://www.youtube.com/playlist?list=PLd6t41VjEEOg"
       }
-    ],
-    "tier": "Divine"
+    ]
   },
   {
     "rank": 38,
