@@ -66,6 +66,13 @@ function App() {
     [ladderSources]
   );
 
+  const unverifiedCalibrationModel = useMemo(
+    () => ladderSources
+      ? buildUnverifiedCalibrationModel(processedVerified, ladderSources.estimatedNames)
+      : null,
+    [ladderSources, processedVerified]
+  );
+
   const processedUnverified = useMemo(() => {
     if (!ladderSources) return [];
     const unverifiedData = getPreparedUnverifiedData(
@@ -80,9 +87,10 @@ function App() {
         preserveDistinctIds: true,
         calibrationLevels: processedVerified,
         estimatedNames: ladderSources.estimatedNames,
+        calibrationModel: unverifiedCalibrationModel,
       },
     );
-  }, [ladderSources, useFullSecretList, processedVerified]);
+  }, [ladderSources, useFullSecretList, processedVerified, unverifiedCalibrationModel]);
 
   useEffect(() => {
     if (!ladderSources) return;
