@@ -122,7 +122,7 @@ function normalizeLevelEntry(item) {
     creators: creatorsValue,
     is2Player: twoPlayerValue,
     showcaseVideoUrl,
-    tier: "",
+    tier: item.tier || item.tierName || "",
     tps: parsedTps,
   };
 
