@@ -12,54 +12,24 @@ function parseLevelMetric(value, schema) {
   return numericValue;
 }
 
-function getTierByName(name) {
-  if (typeof name !== "string") return "";
-  const normalized = name.toLowerCase();
-  const mapping = {
-    "WEINERclub": "Novice",
-    "Rainstorm": "Intermediate",
-    "Sakupen End": "Advanced",
-    "Silent lake": "Insane",
-    "Bye Level": "Legendary",
-    "Bloodiest Water": "Master",
-    "Nightmarish": "Divine",
-    "The Twilight Zone (Unnerfed)": "Transcendent"
-  };
-  for (const key in mapping) {
-    if (normalized.includes(key.toLowerCase())) return mapping[key];
-  }
-  return "";
-}
-
 function assignTiers(levelsList) {
   if (!Array.isArray(levelsList) || !levelsList.length) return;
-  const markers = [
-    { key: "WEINERclub", tier: "Novice" },
-    { key: "Rainstorm", tier: "Intermediate" },
-    { key: "Sakupen End", tier: "Advanced" },
-    { key: "Silent lake", tier: "Insane" },
-    { key: "Bye Level", tier: "Legendary" },
-    { key: "Bloodiest Water", tier: "Master" },
-    { key: "Nightmarish", tier: "Divine" },
-    { key: "The Twilight Zone (Unnerfed)", tier: "Transcendent" }
-  ];
+  const markers = [];
+  const seenTiers = new Set();
 
-  const names = levelsList.map((l) => (l.name || "").toLowerCase());
-  const found = markers
-    .map((m) => ({ ...m, index: names.findIndex((n) => n.includes(m.key.toLowerCase())) }))
-    .filter((m) => m.index !== -1)
-    .sort((a, b) => a.index - b.index);
-
-  found.forEach((marker, i) => {
-    const start = marker.index;
-    const end = i + 1 < found.length ? found[i + 1].index : levelsList.length;
-    for (let k = start; k < end; k++) {
-      levelsList[k].tier = marker.tier;
+  levelsList.forEach((level, index) => {
+    const tier = String(level.tier || level.tierName || "").trim();
+    if (tier && !seenTiers.has(tier.toLowerCase())) {
+      seenTiers.add(tier.toLowerCase());
+      markers.push({ index, tier });
     }
   });
 
-  levelsList.forEach((lvl) => {
-    if (!lvl.tier) lvl.tier = getTierByName(lvl.name);
+  markers.forEach((marker, markerIndex) => {
+    const end = markerIndex + 1 < markers.length ? markers[markerIndex + 1].index : levelsList.length;
+    for (let index = marker.index; index < end; index += 1) {
+      levelsList[index].tier = marker.tier;
+    }
   });
 }
 
@@ -149,6 +119,7 @@ function isVerifiedLevel(item, verifiedIdentity) {
 
 function getTierDifficultyMultiplier(level) {
   const tierMultipliers = {
+    ethereal: 2.35,
     novice: 0.72,
     intermediate: 0.86,
     advanced: 1.0,
@@ -335,6 +306,7 @@ function interpolateDifficultyPoints(level, calibrationLevels, estimatedNames) {
 }
 
 const CALIBRATION_TIER_SCORES = {
+  ethereal: 8,
   novice: 0,
   intermediate: 1,
   advanced: 2,

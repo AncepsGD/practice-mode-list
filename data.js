@@ -23,54 +23,24 @@ function getDemonSystem() {
   return typeof window !== "undefined" ? window.demonSystem : null;
 }
 
-function getTierByName(name) {
-  if (typeof name !== "string") return "";
-  const normalized = name.toLowerCase();
-  const mapping = {
-    "WEINERclub": "Novice",
-    "Rainstorm": "Intermediate",
-    "Sakupen End": "Advanced",
-    "Silent lake": "Insane",
-    "Bye Level": "Legendary",
-    "Bloodiest Water": "Master",
-    "Nightmarish": "Divine",
-    "The Twilight Zone (Unnerfed)": "Transcendent"
-  };
-  for (const key in mapping) {
-    if (normalized.includes(key.toLowerCase())) return mapping[key];
-  }
-  return "";
-}
-
 function assignTiers(levelsList) {
   if (!Array.isArray(levelsList) || !levelsList.length) return;
-  const markers = [
-    { key: "WEINERclub", tier: "Novice" },
-    { key: "Rainstorm", tier: "Intermediate" },
-    { key: "Sakupen End", tier: "Advanced" },
-    { key: "Silent lake", tier: "Insane" },
-    { key: "Bye Level", tier: "Legendary" },
-    { key: "Bloodiest Water", tier: "Master" },
-    { key: "Nightmarish", tier: "Divine" },
-    { key: "The Twilight Zone (Unnerfed)", tier: "Transcendent" }
-  ];
+  const markers = [];
+  const seenTiers = new Set();
 
-  const names = levelsList.map((l) => (l.name || "").toLowerCase());
-  const found = markers
-    .map((m) => ({ ...m, index: names.findIndex((n) => n.includes(m.key.toLowerCase())) }))
-    .filter((m) => m.index !== -1)
-    .sort((a, b) => a.index - b.index);
-
-  found.forEach((marker, i) => {
-    const start = marker.index;
-    const end = i + 1 < found.length ? found[i + 1].index : levelsList.length;
-    for (let k = start; k < end; k++) {
-      levelsList[k].tier = marker.tier;
+  levelsList.forEach((level, index) => {
+    const tier = String(level.tier || level.tierName || "").trim();
+    if (tier && !seenTiers.has(tier.toLowerCase())) {
+      seenTiers.add(tier.toLowerCase());
+      markers.push({ index, tier });
     }
   });
 
-  levelsList.forEach((lvl) => {
-    if (!lvl.tier) lvl.tier = getTierByName(lvl.name);
+  markers.forEach((marker, markerIndex) => {
+    const end = markerIndex + 1 < markers.length ? markers[markerIndex + 1].index : levelsList.length;
+    for (let index = marker.index; index < end; index += 1) {
+      levelsList[index].tier = marker.tier;
+    }
   });
 }
 
@@ -326,62 +296,6 @@ function getDatasetSignature() {
       return `${idPart}::${i}::${rank}`;
     })
     .join("|");
-}
-
-function createModelLevelRows() {
-  const seen = new Set();
-  const rows = [];
-  const rankMax = Math.max(...rawData.map((item) => Number(item.rank) || 1), 1);
-
-  rawData.forEach((item, idx) => {
-    const baseId = String(item.id || item.name || `level_${idx}`).trim() || `level_${idx}`;
-    const modelId = seen.has(baseId) ? `${baseId}__${idx}` : baseId;
-    seen.add(modelId);
-
-    const victors = Array.isArray(item.victors) ? item.victors : [];
-    const attemptValues = victors
-      .map((v) => {
-        const attempts = Number(v.attempts);
-        return Number.isFinite(attempts) && attempts > 0 ? attempts : null;
-      })
-      .filter((n) => n !== null)
-      .sort((a, b) => a - b);
-    const medianAttempt = attemptValues.length
-      ? attemptValues[Math.floor(attemptValues.length / 2)]
-      : 1000;
-
-    const rank = Number(item.rank) || (idx + 1);
-    const normalizedRank = Math.max(0, Math.min(1, (rankMax - rank) / Math.max(rankMax - 1, 1)));
-    const avgDifficulty = Math.min(10, 3 + normalizedRank * 7);
-    const completionRate = Math.max(0.05, Math.min(1, victors.length / 6));
-    const inputDensity = 1;
-
-    rows.push({
-      modelId,
-      displayName: item.name || modelId,
-      attrs: {
-        avgDifficulty,
-        attemptsMedian: medianAttempt,
-        inputDensity,
-        completionRate,
-      },
-    });
-  });
-
-  return rows;
-}
-
-function saveModelState(signature) {
-  const system = getDemonSystem();
-  if (!system) return;
-  localStorage.setItem(
-    MODEL_STATE_KEY,
-    JSON.stringify({
-      signature,
-      levels: system.exportLevelStates(),
-      comparisons: system.exportComparisons(),
-    }),
-  );
 }
 
 function loadSavedModelState() {
