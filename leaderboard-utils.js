@@ -279,3 +279,31 @@ function buildLeaderboard(lvls) {
         })
         .sort((a, b) => b.points - a.points);
 }
+
+function buildFullListLeaderboardEntry(lvls) {
+    const levels = Array.isArray(lvls) ? lvls : [];
+    if (!levels.length) return null;
+
+    const completionDetails = levels.map((level, index) => ({
+        name: String(level.name || "").trim(),
+        points: Number(level.points) || 0,
+        tier: String(level.tier || "unknown").trim() || "unknown",
+        listIndex: index,
+    }));
+    const points = completionDetails.reduce((total, level) => total + level.points, 0);
+
+    return {
+        name: "Full List",
+        points,
+        levels: completionDetails.map(level => level.name),
+        completionDetails,
+        completionCount: completionDetails.length,
+        hardestCompletion: completionDetails.reduce((hardest, level) => (
+            !hardest || level.points > hardest.points ? level : hardest
+        ), null),
+        averageCompletionValue: completionDetails.length ? points / completionDetails.length : 0,
+        totalTimeSeconds: 0,
+        totalAttempts: 0,
+        isFullList: true,
+    };
+}

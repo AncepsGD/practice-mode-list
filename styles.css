@@ -2277,6 +2277,53 @@ nav {
   border-color: rgba(124, 92, 255, 0.35);
 }
 
+.optimizer-full-list-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px dashed rgba(245, 201, 74, 0.35);
+  box-shadow: inset 3px 0 0 rgba(245, 201, 74, 0.65);
+}
+
+.optimizer-full-list-card.optimizer-player-card-target {
+  background: rgba(245, 201, 74, 0.09);
+  border-style: solid;
+  border-color: rgba(245, 201, 74, 0.5);
+}
+
+.optimizer-full-list-kicker {
+  margin-bottom: 2px;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.optimizer-full-list-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  border: 1px solid rgba(245, 201, 74, 0.5);
+  border-radius: 5px;
+  color: var(--gold);
+  font-size: 13px;
+  vertical-align: -2px;
+}
+
+.optimizer-full-list-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 6px;
+  border: 1px solid rgba(245, 201, 74, 0.42);
+  border-radius: 4px;
+  color: var(--gold);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  vertical-align: middle;
+}
+
 .optimizer-player-main {
   min-width: 0;
 }

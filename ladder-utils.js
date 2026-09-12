@@ -1514,6 +1514,7 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
   const victorTimes = level.victors
     .map(v => v.seconds)
     .filter(t => t !== null && t > 0);
+  const hasObservedTime = victorTimes.length > 0;
 
   const victorAttempts = level.victors
     .map(v => v.attempts)
@@ -1528,9 +1529,11 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
     baseTime = 7200;
   }
 
-  baseTime *= getVerifiedTimeCalibration(level, calibrationLevels);
+  if (!hasObservedTime) {
+    baseTime *= getVerifiedTimeCalibration(level, calibrationLevels);
+  }
 
-  if (level.isUnverified) {
+  if (level.isUnverified && !hasObservedTime) {
     baseTime *= getUnverifiedRankDifficultyMultiplier(level, maxPoints, calibrationLevels);
     baseTime *= getTpsDifficultyMultiplier(level, calibrationLevels);
     baseTime *= getUnverifiedCoordinationDifficultyMultiplier(level);
@@ -1589,12 +1592,7 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
     : 1;
 
   const modelPredictedSeconds = predictPlayerTime(level, components && components.model ? components.model : null);
-  if (modelPredictedSeconds !== null) {
-    const MAX_REASONABLE_SECONDS = 10 * 365 * 24 * 3600;
-    const isReasonablePrediction = Number.isFinite(modelPredictedSeconds) && modelPredictedSeconds > 0 && modelPredictedSeconds < MAX_REASONABLE_SECONDS;
-    if (!isReasonablePrediction) {
-      console.warn("Rejected unreasonable model prediction for level:", level.name, { modelPredictedSeconds });
-    } else {
+  if (modelPredictedSeconds !== null && !hasObservedTime) {
       const expectedAttempts = baseAttempts && baseAttempts > 0
         ? baseAttempts * (components && components.attempts ? components.attempts : 1) * famMod
         : null;
@@ -1617,10 +1615,9 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
         expectedSeconds = lowerBound;
       }
       return { expectedSeconds, expectedAttempts };
-    }
   }
 
-  const diffMod = difficultyModifier(level, maxPoints);
+  const diffMod = hasObservedTime ? 1 : difficultyModifier(level, maxPoints);
 
   const predictedMultiplier = (components && components.speed ? components.speed : 1)
     * dimensionSkillModifier
@@ -1816,22 +1813,13 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
         ? clamp(0.35 - confidence * 0.2, 0.1, 0.35)
         : clamp(0.18 - confidence * 0.1, 0.05, 0.18);
 
-      const wrHolderTimeRatio = wrTimeSeconds !== null && levelAvgVictorTime && levelAvgVictorTime > 0
-        ? wrTimeSeconds / levelAvgVictorTime
-        : null;
-      const wrHolderAttemptsRatio = wrAttempts !== null && Number.isFinite(wrAttempts) && wrAttempts > 0 && levelAvgAttempts && levelAvgAttempts > 0
-        ? wrAttempts / levelAvgAttempts
-        : null;
-      const playerIsBetterThanWrHolderInTime = wrHolderTimeRatio !== null && components.speed !== null
-        ? components.speed < wrHolderTimeRatio
-        : false;
-      const playerIsBetterThanWrHolderInAttempts = wrHolderAttemptsRatio !== null && components.attempts !== null
-        ? components.attempts < wrHolderAttemptsRatio
-        : false;
-      const timeWrPossible = (wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds)
-        || playerIsBetterThanWrHolderInTime;
-      const attemptsWrPossible = (wrAttempts !== null && Number.isFinite(wrAttempts) && expectedAttempts !== null && expectedAttempts < wrAttempts)
-        || playerIsBetterThanWrHolderInAttempts;
+      const timeWrPossible = wrTimeSeconds !== null
+        && expectedSeconds !== null
+        && expectedSeconds < wrTimeSeconds;
+      const attemptsWrPossible = wrAttempts !== null
+        && Number.isFinite(wrAttempts)
+        && expectedAttempts !== null
+        && expectedAttempts < wrAttempts;
       const hasWrTime = wrTimeSeconds !== null;
       const hasWrAttempts = wrAttempts !== null && Number.isFinite(wrAttempts);
 

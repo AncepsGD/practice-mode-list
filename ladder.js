@@ -30,6 +30,33 @@ function applyUnverifiedMinimumTime(recommendations, unverifiedOnly) {
   return recommendations.filter(level => level.expectedHours >= MIN_UNVERIFIED_ROUTE_HOURS);
 }
 
+function applyFullListPointValues(recommendations, targetPlayer) {
+  if (!targetPlayer?.isFullList) return recommendations;
+  return recommendations.map(recommendation => {
+    const basePoints = Number(recommendation.basePoints) || 0;
+    return {
+      ...recommendation,
+      projectedMult: 1,
+      projectedPoints: basePoints,
+      projectedPointsLower: basePoints,
+      projectedPointsUpper: basePoints,
+      expectedValue: basePoints / Math.max(recommendation.expectedHours || 1, 0.001),
+    };
+  });
+}
+
+function getFullListRouteTarget(targetPlayer, currentPlayer, levels) {
+  if (!targetPlayer?.isFullList || !currentPlayer) return targetPlayer;
+  const completedLevels = new Set(currentPlayer.levels);
+  const remainingPoints = (Array.isArray(levels) ? levels : [])
+    .filter(level => !completedLevels.has(level.name))
+    .reduce((total, level) => total + (Number(level.points) || 0), 0);
+  return {
+    ...targetPlayer,
+    points: currentPlayer.points + remainingPoints - 0.01,
+  };
+}
+
 function App() {
   const [status, setStatus] = useState("loading");
   const [errorMsg, setErrorMsg] = useState("");
@@ -44,8 +71,7 @@ function App() {
   const [targetPlayerName, setTargetPlayerName] = useState("");
   const [lockedLevelIds, setLockedLevelIds] = useState([]);
   const [removedLevelIds, setRemovedLevelIds] = useState([]);
-  const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(false);
-  const [autoExcludeTwoPlayer, setAutoExcludeTwoPlayer] = useState(true);
+  const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(true);
 
   useEffect(() => {
     loadLadderData()
@@ -108,7 +134,11 @@ function App() {
     clearModifications();
   }, [ladderSources, includeUnverified, processedVerified, processedUnverified]);
 
-  const leaderboard = useMemo(() => buildLeaderboard(verifiedLevels), [verifiedLevels]);
+  const leaderboard = useMemo(() => {
+    const fullList = buildFullListLeaderboardEntry(levels);
+    const players = buildLeaderboard(verifiedLevels);
+    return fullList ? [fullList, ...players] : players;
+  }, [levels, verifiedLevels]);
 
   const filteredLevelsWithout2P = useMemo(
     () => levels.filter(level => !level.is2Player),
@@ -123,17 +153,20 @@ function App() {
     if (unverifiedOnly) return unverifiedLevels;
     if (!includeUnverified) return verifiedLevels;
 
+    const availableUnverifiedLevels = targetPlayerName === "Full List"
+      ? processedUnverified
+      : unverifiedLevels;
     const verifiedKeys = new Set(
       verifiedLevels.map(level => String(level.id || level.name).trim().toLowerCase())
     );
     return [
       ...verifiedLevels,
-      ...unverifiedLevels.filter(level => {
+      ...availableUnverifiedLevels.filter(level => {
         const key = String(level.id || level.name).trim().toLowerCase();
         return !verifiedKeys.has(key);
       }),
     ];
-  }, [unverifiedOnly, includeUnverified, verifiedLevels, unverifiedLevels]);
+  }, [unverifiedOnly, includeUnverified, targetPlayerName, verifiedLevels, unverifiedLevels, processedUnverified]);
 
   useEffect(() => {
     if (leaderboard.length === 0) {
@@ -200,7 +233,6 @@ function App() {
 
   function toggleTwoPlayerLevels() {
     setExcludeTwoPlayer(prev => !prev);
-    setAutoExcludeTwoPlayer(false);
   }
 
   function toggleIncludeUnverified(event) {
@@ -246,20 +278,28 @@ function App() {
     [leaderboard, targetPlayerName]
   );
 
+  const routeTargetPlayer = useMemo(
+    () => getFullListRouteTarget(targetPlayer, currentPlayer, levels),
+    [targetPlayer, currentPlayer, levels]
+  );
+
   const recommendationsWith2P = useMemo(
     () => applyUnverifiedMinimumTime(
-      buildRecommendations(
-        routeLevels,
-        currentPlayer,
-        avgTimePerPoint,
-        avgAttemptsPerPoint,
-        maxPoints,
-        routeLevels,
-        verifiedLevels,
+      applyFullListPointValues(
+        buildRecommendations(
+          routeLevels,
+          currentPlayer,
+          avgTimePerPoint,
+          avgAttemptsPerPoint,
+          maxPoints,
+          routeLevels,
+          verifiedLevels,
+        ),
+        targetPlayer,
       ),
       unverifiedOnly,
     ),
-    [routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, unverifiedOnly]
+    [routeLevels, currentPlayer, targetPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, unverifiedOnly]
   );
 
   const recommendationsWithout2P = useMemo(
@@ -285,7 +325,7 @@ function App() {
     ];
   }, [verifiedLevels, unverifiedLevels]);
 
-  const rankTargetPoints = targetRankSurpassPoints(leaderboard, targetPlayer);
+  const rankTargetPoints = targetRankSurpassPoints(leaderboard, routeTargetPlayer);
   const initialPointsNeeded = Math.max(0, rankTargetPoints - (currentPlayer?.points || 0));
 
   const hasModifications = lockedLevelIds.length > 0 || removedLevelIds.length > 0;
@@ -294,7 +334,7 @@ function App() {
     () => hasModifications
       ? optimizeRouteWithProjectedTarget(
           recommendationsWith2P,
-          targetPlayer,
+          routeTargetPlayer,
           routeLevels,
           currentPlayer?.points || 0,
           lockedLevelIds,
@@ -307,7 +347,7 @@ function App() {
         )
       : optimizeRouteWithProjectedTarget(
           recommendationsWith2P,
-          targetPlayer,
+          routeTargetPlayer,
           routeLevels,
           currentPlayer?.points || 0,
           [],
@@ -318,14 +358,14 @@ function App() {
           maxPoints,
           verifiedLevels
         ),
-    [recommendationsWith2P, targetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
+    [recommendationsWith2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimizedWithout2P = useMemo(
     () => hasModifications
       ? optimizeRouteWithProjectedTarget(
           recommendationsWithout2P,
-          targetPlayer,
+          routeTargetPlayer,
           routeLevels,
           currentPlayer?.points || 0,
           lockedLevelIds,
@@ -338,7 +378,7 @@ function App() {
         )
       : optimizeRouteWithProjectedTarget(
           recommendationsWithout2P,
-          targetPlayer,
+          routeTargetPlayer,
           routeLevels,
           currentPlayer?.points || 0,
           [],
@@ -349,7 +389,7 @@ function App() {
           maxPoints,
           verifiedLevels
         ),
-    [recommendationsWithout2P, targetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
+    [recommendationsWithout2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimized = excludeTwoPlayer ? optimizedWithout2P : optimizedWith2P;
@@ -361,34 +401,6 @@ function App() {
   const totalPoints = projectedPath.reduce((a, b) => a + b.projectedPoints, 0);
   const totalHours = projectedPath.reduce((a, b) => a + b.expectedHours, 0);
   const targetRank = leaderboard.findIndex(p => p.name === targetPlayerName) + 1;
-
-  useEffect(() => {
-    if (!autoExcludeTwoPlayer) return;
-    if (!currentPlayer || !targetPlayer || pointsNeeded <= 0) return;
-
-    const with2PValid = optimizedWith2P?.picks?.length > 0 || pointsNeeded === 0;
-    const without2PValid = optimizedWithout2P?.picks?.length > 0 || pointsNeeded === 0;
-
-    if (with2PValid && !without2PValid) {
-      if (excludeTwoPlayer) setExcludeTwoPlayer(false);
-      return;
-    }
-
-    if (without2PValid && !with2PValid) {
-      if (!excludeTwoPlayer) setExcludeTwoPlayer(true);
-      return;
-    }
-
-    if (!with2PValid && !without2PValid) return;
-
-    const without2PTime = optimizedWithout2P?.time ?? Infinity;
-    const with2PTime = optimizedWith2P?.time ?? Infinity;
-
-    const shouldExclude = without2PTime < with2PTime;
-    if (shouldExclude !== excludeTwoPlayer) {
-      setExcludeTwoPlayer(shouldExclude);
-    }
-  }, [autoExcludeTwoPlayer, currentPlayer, targetPlayer, pointsNeeded, optimizedWith2P, optimizedWithout2P, excludeTwoPlayer]);
 
   if (status === "loading") {
     return (
@@ -431,35 +443,44 @@ function App() {
         ) : (
           <div className="optimizer-player-grid">
             {leaderboard.map((player, i) => {
+              const isFullList = player.isFullList === true;
+              const playerRank = leaderboard
+                .slice(0, i)
+                .filter(entry => entry.isFullList !== true)
+                .length + 1;
               const isMe = player.name === selectedPlayer;
               const isTarget = player.name === targetPlayerName;
               return (
                 <div
                   key={player.name}
-                  className={`optimizer-player-card ${isMe && isTarget ? "optimizer-player-card-active" : isMe ? "optimizer-player-card-me" : isTarget ? "optimizer-player-card-target" : ""}`}
+                  className={`optimizer-player-card ${isFullList ? "optimizer-full-list-card" : ""} ${isMe && isTarget ? "optimizer-player-card-active" : isMe ? "optimizer-player-card-me" : isTarget ? "optimizer-player-card-target" : ""}`}
                 >
                   <div className="optimizer-player-main">
                     <div className="optimizer-player-name">
-                      <span className="optimizer-rank">#{i + 1}</span>
-                      {player.name}
+                      {!isFullList && <span className="optimizer-rank">#{playerRank}</span>}
+                      {isFullList && <span className="optimizer-full-list-icon" aria-hidden="true">▦</span>}
+                      {isFullList ? "The Practice Mode List" : player.name}
+                      {isFullList && <span className="optimizer-full-list-badge">ALL LEVELS</span>}
                     </div>
                     <div className="optimizer-player-meta">
                       {player.levels.length} • {player.points.toFixed(1)} pts
                     </div>
                   </div>
                   <div className="optimizer-player-actions">
-                    <button
-                      onClick={() => handleSelectPlayer(player.name)}
-                      className={`optimizer-action-btn ${isMe ? "optimizer-action-btn-me" : "optimizer-action-btn-default"}`}
-                    >
-                      Me
-                    </button>
+                    {!isFullList && (
+                      <button
+                        onClick={() => handleSelectPlayer(player.name)}
+                        className={`optimizer-action-btn ${isMe ? "optimizer-action-btn-me" : "optimizer-action-btn-default"}`}
+                      >
+                        Me
+                      </button>
+                    )}
                     <button
                       onClick={() => handleSetTarget(player.name)}
                       disabled={isMe}
                       className={`optimizer-action-btn ${isTarget ? "optimizer-action-btn-target" : isMe ? "optimizer-action-btn-disabled" : "optimizer-action-btn-default"}`}
                     >
-                      Target
+                      {isFullList ? "Target list" : "Target"}
                     </button>
                   </div>
                 </div>
