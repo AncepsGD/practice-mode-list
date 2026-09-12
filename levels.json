@@ -2281,7 +2281,9 @@
     "name": "Silent Skrillex",
     "creators": "DiosselMusic",
     "id": "73836744",
+    "length": 79,
     "tps": 720,
+    "precision": 575.4,
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://youtu.be/vGce-8ecomg",
     "image": "",
@@ -3668,7 +3670,7 @@
     "id": "66586224",
     "length": 72,
     "tps": 240,
-    "precision": "",
+    "precision": 689.1,
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=ytmTdzUgjG8",
     "image": "",
@@ -6748,11 +6750,11 @@
     "name": "Silent Silent Club",
     "creators": "Arsenjeex",
     "id": "131355701",
-    "length": "",
+    "length": 87,
     "tps": 240,
-    "precision": "",
+    "precision": 323.1,
     "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/PBiqMUwmosI?si=CjzPZuGeCrNO466D",
+    "showcaseVideo": "https://youtu.be/PBiqMUwmosI",
     "image": "",
     "victors": [
       {
@@ -7034,7 +7036,9 @@
     "name": "sakupen circles v2",
     "creators": "danmaster007, Nick24",
     "id": "78178046",
+    "length": 61,
     "tps": 481,
+    "precision": 597.1,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/mtVuY_23aA0",
     "image": "",
@@ -7046,8 +7050,7 @@
         "attempts": 6408,
         "video": "https://youtu.be/qsJgs6iaBsM"
       }
-    ],
-    "length": 61
+    ]
   },
   {
     "rank": 266,
@@ -7073,8 +7076,10 @@
     "rank": 267,
     "name": "Silent Cycles",
     "creators": "DRshai, Oktavian",
-    "id": "80137830",
+    "id": "147375425",
+    "length": "",
     "tps": 275,
+    "precision": "",
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://youtu.be/ZUGC6Mn_Jz8",
     "image": "",
@@ -7471,7 +7476,9 @@
     "name": "Nierenbaum",
     "creators": "glitchi",
     "id": "67661018",
+    "length": 68,
     "tps": 242,
+    "precision": 570.7,
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/_4hG6g37okI",
     "image": "",
@@ -7504,8 +7511,7 @@
         "attempts": 2444,
         "video": "https://youtu.be/soTzacLKngo"
       }
-    ],
-    "length": 68
+    ]
   },
   {
     "rank": 283,

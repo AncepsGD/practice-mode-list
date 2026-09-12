@@ -201,6 +201,13 @@ function getNearestCalibrationNeighbors(level, calibrationLevels, excludedField 
       if (candidate.is2Player !== level.is2Player) distance += 0.45;
       if (String(candidate.tier || "").trim().toLowerCase() !== String(level.tier || "").trim().toLowerCase()) distance += 0.08;
 
+      const targetVictorCount = Array.isArray(level.victors) ? level.victors.length : Number(level.victorCount);
+      const candidateVictorCount = Array.isArray(candidate.victors) ? candidate.victors.length : Number(candidate.victorCount);
+      if (Number.isFinite(targetVictorCount) && Number.isFinite(candidateVictorCount)) {
+        distance += Math.abs(Math.log((1 + targetVictorCount) / (1 + candidateVictorCount))) * 0.2;
+        comparableSignals++;
+      }
+
       return {
         level: candidate,
         weight: 1 / Math.pow(0.2 + distance, 2),
@@ -241,6 +248,25 @@ function getEstimatedMainListRank(level, calibrationLevels = []) {
     || !Array.isArray(calibrationLevels) || calibrationLevels.length <= 1) return null;
   const normalizedRank = (estimatedRank - 1) / (estimatedListSize - 1);
   return Math.round(1 + normalizedRank * (calibrationLevels.length - 1));
+}
+
+function getTierEstimatedRankRange(level, calibrationLevels = [], estimatedListSize = 0) {
+  if (!level?.isUnverified || !Array.isArray(calibrationLevels) || calibrationLevels.length < 2
+    || !Number.isFinite(estimatedListSize) || estimatedListSize <= 1) return null;
+
+  const tier = String(level.tier || level.tierName || "").trim().toLowerCase();
+  if (!tier) return null;
+  const tierRanks = calibrationLevels
+    .filter(candidate => String(candidate?.tier || candidate?.tierName || "").trim().toLowerCase() === tier)
+    .map(candidate => Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank))
+    .filter(rank => Number.isFinite(rank) && rank > 0);
+  if (!tierRanks.length) return null;
+
+  const range = {
+    min: Math.min(...tierRanks),
+    max: Math.max(...tierRanks),
+  };
+  return range.min <= range.max ? range : { min: range.max, max: range.min };
 }
 
 function buildEstimatedDifficultyAnchors(calibrationLevels, estimatedNames) {
@@ -367,15 +393,37 @@ function buildUnverifiedCalibrationModel(calibrationLevels, estimatedNames) {
 }
 
 function getUnverifiedSourceConfidence(level) {
-  const evidence = [
-    level?.id || level?.levelId,
-    level?.creators || level?.creator,
-    level?.showcaseVideo || level?.showcaseVideoUrl,
-    level?.precision,
-    level?.length,
-    level?.tps,
-  ].filter(value => value !== null && value !== undefined && String(value).trim() !== "").length;
-  return clamp(evidence / 6, 0.25, 1);
+  if (!level?.isUnverified) return 1;
+
+  const hasValue = value => value !== null && value !== undefined && String(value).trim() !== "";
+  const countFrom = (collectionFields, countFields) => {
+    const collectionCount = collectionFields
+      .filter(field => Array.isArray(level?.[field]))
+      .reduce((count, field) => Math.max(count, level[field].length), 0);
+    const numericCount = countFields
+      .map(field => Number(level?.[field]))
+      .find(value => Number.isFinite(value) && value >= 0);
+    return Math.max(collectionCount, numericCount || 0);
+  };
+
+  const evidenceScore = (
+    (hasValue(level.id || level.levelId) ? 0.12 : 0)
+    + (hasValue(level.creators || level.creator) ? 0.1 : 0)
+    + (hasValue(level.showcaseVideo || level.showcaseVideoUrl) ? 0.12 : 0)
+    + (hasValue(level.precision) ? 0.12 : 0)
+    + (hasValue(level.length) ? 0.1 : 0)
+    + (hasValue(level.tps) ? 0.12 : 0)
+    + clamp(countFrom(["submissions", "verificationSubmissions"], [
+      "submissionCount",
+      "submissionsCount",
+      "independentSubmissions",
+    ]) / 3, 0, 1) * 0.16
+    + clamp((Array.isArray(level.victors)
+      ? level.victors.length
+      : Number(level.recordedClearCount || level.clearCount || level.completionCount || level.victorCount) || 0) / 3, 0, 1) * 0.16
+  );
+
+  return clamp(evidenceScore, 0.25, 1);
 }
 
 function predictUnverifiedPoints(level, calibrationModel, estimatedNames) {
@@ -528,9 +576,11 @@ function processRawData(data, options = {}) {
       return {
         rank: item._ladderSource === "unverified" ? null : item.rank,
         modelRank: null,
-        _difficultyRank: item._difficultyRank || item.rank,
+        _difficultyRank: item._ladderSource === "unverified"
+          ? item._difficultyRank
+          : item._difficultyRank || item.rank,
         _estimatedRankMax: item._estimatedRankMax || null,
-        _hasEstimatedRank: Number.isFinite(Number(item._difficultyRank)),
+        _hasEstimatedRank: Number.isFinite(Number(item._difficultyRank)) && Number(item._difficultyRank) > 0,
         name: item.name,
         id: item.id,
         tps: parseLevelMetric(item.tps ?? item.TPS, LEVEL_METRIC_SCHEMA.tps),
@@ -544,6 +594,13 @@ function processRawData(data, options = {}) {
         tier: item.tier || item.tierName || "",
         creators: item.creators || item.creator || item.author || "",
         showcaseVideo: item.showcaseVideo || item.showcaseVideoUrl || item.video || "",
+        submissions: Array.isArray(item.submissions)
+          ? item.submissions
+          : Array.isArray(item.verificationSubmissions)
+            ? item.verificationSubmissions
+            : [],
+        submissionCount: item.submissionCount ?? item.submissionsCount ?? item.independentSubmissions ?? null,
+        recordedClearCount: item.recordedClearCount ?? item.clearCount ?? item.completionCount ?? item.victorCount ?? null,
         sourceConfidence: Number.isFinite(Number(item.sourceConfidence))
           ? clamp(Number(item.sourceConfidence), 0, 1)
           : null,
@@ -570,7 +627,25 @@ function processRawData(data, options = {}) {
     uniqueLevels.push(level);
   });
 
-  assignTiers(uniqueLevels);
+  assignTiers(uniqueLevels.filter(level => !level.isUnverified));
+
+  const estimatedListSize = Array.isArray(options.estimatedNames) ? options.estimatedNames.length : 0;
+  uniqueLevels.forEach(level => {
+    if (!level.isUnverified) return;
+    const tierRange = getTierEstimatedRankRange(level, options.calibrationLevels, estimatedListSize);
+    if (!tierRange) return;
+    level._tierEstimatedRankRange = tierRange;
+    const tierMidpoint = (tierRange.min + tierRange.max) / 2;
+    level._tierPrimaryRank = Math.round(tierMidpoint);
+    level._difficultyRank = level._tierPrimaryRank;
+    level._estimatedRankMax = Math.max(
+      ...options.calibrationLevels.map(candidate => (
+        Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank) || 0
+      )),
+      1,
+    );
+    level._hasEstimatedRank = true;
+  });
 
   const maxRank = Math.max(...uniqueLevels.map(l => l._difficultyRank || l.rank || 0), 1);
   const calibrationLevels = Array.isArray(options.calibrationLevels) ? options.calibrationLevels : [];
@@ -579,22 +654,45 @@ function processRawData(data, options = {}) {
   uniqueLevels.forEach(l => {
     const hasRankCalibration = l.isUnverified && calibrationLevels.length > 1;
     const calibratedRank = hasRankCalibration
-      ? getEstimatedMainListRank(l, calibrationLevels)
+      ? (Number.isFinite(Number(l._tierPrimaryRank))
+        ? Number(l._tierPrimaryRank)
+        : getEstimatedMainListRank(l, calibrationLevels))
       : null;
     const rankPoints = calculatePoints(
       calibratedRank || l._difficultyRank || l.rank,
       hasRankCalibration ? calibrationLevels.length : maxRank,
     );
     l.modelRank = calibratedRank || l.rank || l._difficultyRank || 0;
+    l.tierEstimatedRankRange = l._tierEstimatedRankRange || null;
     const anchorPoints = l.isUnverified
       ? interpolateDifficultyPoints(l, calibrationLevels, options.estimatedNames)
       : null;
     const modelPoints = l.isUnverified && l._hasEstimatedRank
       ? predictUnverifiedPoints(l, calibrationModel, options.estimatedNames)
       : null;
-    const rankBasedPoints = anchorPoints ?? rankPoints;
+    const rankBasedPoints = Number.isFinite(Number(l._tierPrimaryRank))
+      ? rankPoints
+      : (anchorPoints ?? rankPoints);
     if (l.isUnverified && !l._hasEstimatedRank) {
       l.points = 0;
+    } else if (l.isUnverified) {
+      l.metadataPointMultiplier = getUnverifiedMetadataPointMultiplier(l, calibrationLevels);
+      const metadataAdjustedPoints = clamp(rankBasedPoints * l.metadataPointMultiplier, 10, 360);
+      const evidenceAdjustedPoints = modelPoints === null
+        ? metadataAdjustedPoints
+        : clamp(modelPoints * l.metadataPointMultiplier, 10, 360);
+      const evidenceConfidence = l.sourceConfidence ?? getUnverifiedSourceConfidence(l);
+      l.evidenceConfidence = evidenceConfidence;
+      l.evidenceAdjustedPoints = clamp(
+        rankBasedPoints + (evidenceAdjustedPoints - rankBasedPoints) * evidenceConfidence,
+        10,
+        360,
+      );
+      l.points = clamp(
+        rankBasedPoints * 0.65 + l.evidenceAdjustedPoints * 0.35,
+        10,
+        360,
+      );
     } else if (modelPoints === null) {
       l.points = rankBasedPoints;
     } else {
@@ -621,7 +719,7 @@ function processRawData(data, options = {}) {
       .filter(a => Number.isFinite(a) && a > 0);
 
     level.avgVictorTime = victorTimes.length ? trimmedMean(victorTimes) : null;
-    level.avgVictorAttempts = victorAttempts.length ? trimmedMean(victorAttempts) : null;
+    level.avgVictorAttempts = getRobustAttemptBaseline(victorAttempts);
 
     level.victors.forEach(v => {
       const sec = v.seconds;
@@ -653,6 +751,47 @@ function trimmedMean(arr, trimFraction = 0.1) {
   return source.reduce((a, b) => a + b, 0) / source.length;
 }
 
+function median(arr) {
+  if (!Array.isArray(arr) || !arr.length) return null;
+  const sorted = [...arr].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+}
+
+function getRobustAttemptStats(values) {
+  const usable = (Array.isArray(values) ? values : [])
+    .map(value => Number(value))
+    .filter(value => Number.isFinite(value) && value > 0);
+  if (!usable.length) return null;
+
+  const sorted = [...usable].sort((a, b) => a - b);
+  const lowerHalf = sorted.slice(0, Math.ceil(sorted.length / 2));
+  const upperHalf = sorted.slice(Math.floor(sorted.length / 2));
+  const q1 = median(lowerHalf) ?? sorted[0];
+  const q3 = median(upperHalf) ?? sorted[sorted.length - 1];
+  const attemptMedian = median(sorted) ?? sorted[0];
+  const iqr = Math.max(0, q3 - q1);
+  const upperFence = sorted.length <= 2 && sorted[sorted.length - 1] > sorted[0] * 3
+    ? sorted[0] * 3
+    : iqr > 0
+    ? Math.min(q3 + 1.5 * iqr, attemptMedian * 2.5)
+    : attemptMedian * 2.5;
+  const lowerFence = Math.max(1, q1 - 1.5 * iqr);
+  const winsorized = usable.map(value => clamp(value, lowerFence, upperFence));
+  const nonOutlierValues = usable.filter(value => value <= upperFence);
+
+  return {
+    values: usable,
+    winsorized,
+    median: median(nonOutlierValues) ?? median(winsorized) ?? attemptMedian,
+    upperFence,
+  };
+}
+
+function getRobustAttemptBaseline(values) {
+  return getRobustAttemptStats(values)?.median ?? null;
+}
+
 function geometricMean(arr) {
   if (!arr.length) return null;
   const logSum = arr.reduce((acc, v) => acc + Math.log(v), 0);
@@ -676,24 +815,26 @@ function formatHours(hours) {
 }
 
 function formatSkillMultiplier(skill) {
-  return `${skill.toFixed(2)}×`;
+  if (!Number.isFinite(skill) || skill <= 0) return "—";
+  const percent = Math.round(skill * 100);
+  return `${percent}% of average`;
 }
 
 function classifySkill(skill) {
-  if (skill < 0.75) return "Elite";
-  if (skill < 1) return "Above average";
-  if (skill <= 1.25) return "Average";
+  if (skill >= 1.25) return "Elite";
+  if (skill >= 1) return "Above average";
+  if (skill >= 0.9) return "Average";
   return "Below average";
 }
 
 function describeSkillRelative(skill) {
-  if (skill <= 1) {
-    const pct = Math.round((1 - skill) * 100);
-    return pct > 0 ? `Compared to average victor: ${pct}% faster` : "Compared to average victor: on par";
+  if (skill >= 1) {
+    const pct = Math.round((skill - 1) * 100);
+    return pct > 0 ? `Compared to average victor: ${pct}% above average` : "Compared to average victor: on par";
   }
 
-  const pct = Math.round((skill - 1) * 100);
-  return `Compared to average victor: ${pct}% slower`;
+  const pct = Math.round((1 - skill) * 100);
+  return `Compared to average victor: ${pct}% below average`;
 }
 
 function buildTimeModelFeatures(level) {
@@ -709,7 +850,7 @@ function buildTimeModelFeatures(level) {
     rank: level.modelRank || level.rank || 0,
     victorCount: level.victors.length,
     avgVictorTime: victorTimes.length ? trimmedMean(victorTimes) : null,
-    avgVictorAttempts: victorAttempts.length ? trimmedMean(victorAttempts) : null,
+    avgVictorAttempts: getRobustAttemptBaseline(victorAttempts),
     hasWrTime: level.wrTime ? 1 : 0,
     hasWrAttempts: level.wrAttempts ? 1 : 0,
   };
@@ -725,6 +866,31 @@ function timeModelVector(features) {
     features.avgVictorAttempts || 0,
     features.hasWrTime,
     features.hasWrAttempts,
+  ];
+}
+
+function buildAttemptModelFeatures(level) {
+  const points = Number(level.points);
+  const rank = Number(level.modelRank || level.rank);
+  const precision = Number(level.precision);
+  const length = Number(level.length);
+  const tps = Number(level.tps);
+  const tier = String(level.tier || level.tierName || "").trim().toLowerCase();
+  const victorCount = Array.isArray(level.victors) ? level.victors.length : 0;
+
+  return [
+    1,
+    Number.isFinite(points) && points > 0 ? Math.log1p(points) : 0,
+    Number.isFinite(rank) && rank > 0 ? Math.log1p(rank) : 0,
+    CALIBRATION_TIER_SCORES[tier] ?? 0,
+    Number.isFinite(precision) && precision > 0 ? Math.log1p(precision) : 0,
+    Number.isFinite(precision) && precision > 0 ? 1 : 0,
+    Number.isFinite(tps) && tps > 0 ? Math.log1p(tps) : 0,
+    Number.isFinite(tps) && tps > 0 ? 1 : 0,
+    Number.isFinite(length) && length > 0 ? Math.log1p(length) : 0,
+    Number.isFinite(length) && length > 0 ? 1 : 0,
+    level.is2Player === true ? 1 : 0,
+    Math.log1p(Math.max(0, victorCount)),
   ];
 }
 
@@ -748,7 +914,8 @@ function buildFeatureScaler(rows) {
       const weight = Number.isFinite(row.weight) ? Math.max(row.weight, 0) : 1;
       return sum + weight * diff * diff;
     }, 0) / Math.max(totalWeight, 1e-6);
-    stds[i] = Math.sqrt(variance) || 1;
+    const standardDeviation = Math.sqrt(variance);
+    stds[i] = standardDeviation > 1e-9 ? standardDeviation : 1;
   }
 
   return { means, stds };
@@ -759,7 +926,7 @@ function standardizeFeatureVector(x, scaler) {
   return x.map((value, index) => {
     if (index === 0) return 1;
     const std = scaler.stds[index];
-    return std > 0 ? (value - scaler.means[index]) / std : 0;
+    return std > 1e-9 ? (value - scaler.means[index]) / std : 0;
   });
 }
 
@@ -825,6 +992,7 @@ function trainLinearRegression(rows, ridge = 0.01, fixedScaler = null) {
 }
 
 const globalTimeModelCache = new WeakMap();
+const globalAttemptsModelCache = new WeakMap();
 
 function getCachedGlobalTimeModel(levels) {
   if (globalTimeModelCache.has(levels)) return globalTimeModelCache.get(levels);
@@ -859,6 +1027,43 @@ function buildGlobalTimeModel(levels) {
   return {
     weights: [Math.exp(meanTime), 0, 0, 0, 0, 0, 0, 0],
     featureCount: timeModelVector(buildTimeModelFeatures(levels[0] || {})).length,
+    scaler: null,
+  };
+}
+
+function getCachedGlobalAttemptsModel(levels) {
+  if (globalAttemptsModelCache.has(levels)) return globalAttemptsModelCache.get(levels);
+  const model = buildGlobalAttemptsModel(levels);
+  globalAttemptsModelCache.set(levels, model);
+  return model;
+}
+
+function buildGlobalAttemptsModel(levels) {
+  const rows = [];
+
+  levels.forEach(level => {
+    const features = buildAttemptModelFeatures(level);
+    const attemptStats = getRobustAttemptStats(level.victors.map(v => v.attempts));
+    if (!attemptStats) return;
+    rows.push({
+      x: features,
+      y: attemptStats.median,
+      weight: 1,
+    });
+  });
+
+  if (!rows.length) return null;
+
+  const model = trainLinearRegression(rows, 0.1);
+  if (model) return { weights: model.weights, featureCount: model.featureCount, scaler: model.scaler };
+
+  const totalWeight = rows.reduce((sum, row) => sum + row.weight, 0);
+  const meanAttempts = rows.reduce((sum, row) => sum + row.weight * Math.log(Math.max(row.y, 1e-6)), 0)
+    / Math.max(totalWeight, 1e-6);
+  const featureCount = buildAttemptModelFeatures(levels[0] || {}).length;
+  return {
+    weights: [meanAttempts, ...Array(featureCount - 1).fill(0)],
+    featureCount,
     scaler: null,
   };
 }
@@ -942,11 +1147,61 @@ function predictPlayerTime(level, model) {
   return Math.exp(logSeconds);
 }
 
+function getCalibrationAttemptsBaseline(level, calibrationLevels) {
+  if (!Array.isArray(calibrationLevels) || !calibrationLevels.length) return null;
+  const neighbors = getNearestCalibrationNeighbors(level, calibrationLevels);
+  const attempts = neighbors
+    .map(neighbor => {
+      const values = (neighbor.level.victors || [])
+        .map(victor => Number(victor.attempts))
+        .filter(value => Number.isFinite(value) && value > 0);
+      return values.length
+        ? { value: getRobustAttemptBaseline(values), weight: neighbor.weight }
+        : null;
+    })
+    .filter(Boolean);
+  return weightedMedian(attempts);
+}
+
+function predictPlayerAttempts(level, model, calibrationLevels = []) {
+  if (!model || !model.weights) return null;
+  const x = buildAttemptModelFeatures(level);
+  const standardizedX = model.scaler ? standardizeFeatureVector(x, model.scaler) : x;
+  const logAttempts = model.weights.reduce((sum, weight, index) => sum + weight * standardizedX[index], 0);
+  if (!Number.isFinite(logAttempts)) return null;
+  const modelPrediction = clamp(Math.exp(logAttempts), 1, 1000000);
+  const localBaseline = getCalibrationAttemptsBaseline(level, calibrationLevels);
+  if (localBaseline === null) return modelPrediction;
+  return clamp(Math.exp(Math.log(modelPrediction) * 0.4 + Math.log(localBaseline) * 0.6), 1, 1000000);
+}
+
 function calculateSkillComponents(levels, playerName) {
   const speedRatios = [];
   const attemptRatios = [];
   const speedWeights = [];
   const attemptWeights = [];
+  const skillSamples = [];
+  const specializedRatios = {
+    precision: [],
+    highTps: [],
+    endurance: [],
+    coordination: [],
+  };
+
+  const metricValues = (field) => levels
+    .map(level => Number(level?.[field]))
+    .filter(value => Number.isFinite(value) && value > 0)
+    .sort((a, b) => a - b);
+  const upperQuartile = (values) => values.length
+    ? values[Math.min(values.length - 1, Math.floor((values.length - 1) * 0.75))]
+    : null;
+  const precisionThreshold = upperQuartile(metricValues("precision"));
+  const tpsThreshold = upperQuartile(metricValues("tps"));
+  const lengthThreshold = upperQuartile(metricValues("length"));
+
+  const addSpecializedRatio = (dimension, ratio, weight) => {
+    if (Number.isFinite(ratio) && ratio > 0) specializedRatios[dimension].push({ ratio, weight });
+  };
 
   levels.forEach(lvl => {
     const parsedEntries = lvl.victors
@@ -961,59 +1216,158 @@ function calculateSkillComponents(levels, playerName) {
     const playerEntry = parsedEntries.find(v => v.name === playerName);
     if (!playerEntry) return;
 
-    const timeBaseline = trimmedMean(parsedEntries.map(v => v.sec), 0.2);
-    const attemptsWithData = parsedEntries.filter(v => v.attempts !== null && v.attempts > 0);
+    const comparisonEntries = parsedEntries.filter(v => v.name !== playerName);
+    if (!comparisonEntries.length) return;
+
+    const timeBaseline = median(comparisonEntries.map(v => v.sec));
+    const attemptsWithData = comparisonEntries.filter(v => v.attempts !== null && v.attempts > 0);
     const attemptBaseline = attemptsWithData.length
-      ? trimmedMean(attemptsWithData.map(v => v.attempts), 0.2)
+      ? median(attemptsWithData.map(v => v.attempts))
       : null;
 
     if (!timeBaseline || timeBaseline <= 0) return;
 
-    const speedRatio = playerEntry.sec / timeBaseline;
-    speedRatios.push(speedRatio);
+    const timeRatio = Math.log(playerEntry.sec / timeBaseline);
+    const attemptRatio = attemptBaseline && attemptBaseline > 0 && playerEntry.attempts !== null && playerEntry.attempts > 0
+      ? Math.log(playerEntry.attempts / attemptBaseline)
+      : 0;
 
-    if (attemptBaseline && attemptBaseline > 0 && playerEntry.attempts !== null && playerEntry.attempts > 0) {
-      const attemptRatio = playerEntry.attempts / attemptBaseline;
-      attemptRatios.push(attemptRatio);
-      attemptWeights.push(Math.min(1.6, 0.35 + parsedEntries.length * 0.2));
+    const difficultyWeight = Number.isFinite(Number(lvl.points)) && Number(lvl.points) > 0
+      ? clamp(Math.log1p(Number(lvl.points)) / Math.log1p(220), 0.35, 1.8)
+      : 1;
+    const sampleWeight = clamp(0.45 + parsedEntries.length * 0.18, 0.5, 2.5);
+    const tierSimilarity = String(lvl.tier || "").trim().toLowerCase() === String(levels[0]?.tier || "").trim().toLowerCase()
+      ? 1.15
+      : 1;
+    const modeSimilarity = Boolean(lvl.is2Player) === Boolean(playerEntry.is2Player)
+      ? 1.15
+      : 1;
+    const precisionSignal = Number.isFinite(Number(lvl.precision)) && Number(lvl.precision) > 0 && comparisonEntries.length >= 2
+      ? clamp(1.25 - Math.min(1, Math.abs(Math.log(Number(lvl.precision) / median(comparisonEntries.map(v => Number(v.precision || lvl.precision)).filter(value => Number.isFinite(value) && value > 0) || [lvl.precision]))) / 1.8), 0.8, 1.3)
+      : 1;
+    const stabilityWeight = comparisonEntries.length >= 3 ? 1.15 : comparisonEntries.length === 2 ? 1.05 : 1;
+    const isTimeWr = String(lvl?.wrTime?.name || "").trim() === String(playerName || "").trim();
+    const isAttemptWr = String(lvl?.wrAttempts?.name || "").trim() === String(playerName || "").trim();
+    const recordCount = (isTimeWr ? 1 : 0) + (isAttemptWr ? 1 : 0);
+    const recordBoost = 1 + 0.05 * Math.log1p(recordCount);
+    const confidenceWeight = difficultyWeight * sampleWeight * tierSimilarity * modeSimilarity * precisionSignal * stabilityWeight * recordBoost;
+    const zScore = 0.7 * timeRatio + 0.3 * attemptRatio;
+
+    skillSamples.push({ z: zScore, weight: confidenceWeight });
+    speedRatios.push(timeRatio);
+    speedWeights.push(confidenceWeight);
+
+    if (precisionThreshold !== null && Number(lvl.precision) >= precisionThreshold) {
+      addSpecializedRatio("precision", timeRatio, confidenceWeight);
+    }
+    if (tpsThreshold !== null && Number(lvl.tps) >= tpsThreshold) {
+      addSpecializedRatio("highTps", timeRatio, confidenceWeight);
+    }
+    if (lengthThreshold !== null && Number(lvl.length) >= lengthThreshold) {
+      addSpecializedRatio("endurance", timeRatio, confidenceWeight);
+    }
+    if (lvl.is2Player === true) {
+      addSpecializedRatio("coordination", timeRatio, confidenceWeight);
     }
 
-    speedWeights.push(Math.min(1.6, 0.35 + parsedEntries.length * 0.2));
+    if (attemptBaseline && attemptBaseline > 0 && playerEntry.attempts !== null && playerEntry.attempts > 0) {
+      const attemptRatioLog = Math.log(playerEntry.attempts / attemptBaseline);
+      attemptRatios.push(attemptRatioLog);
+      attemptWeights.push(confidenceWeight);
+    }
   });
+
+  const summarizeRatios = (items) => {
+    if (!items.length) return 1;
+    const weightedMeanLog = items.reduce((sum, item) => sum + item.ratio * item.weight, 0)
+      / items.reduce((sum, item) => sum + item.weight, 0);
+    const robustLogRatio = median(items.map(item => item.ratio)) ?? weightedMeanLog;
+    const factor = Math.exp((weightedMeanLog * 0.6) + (robustLogRatio * 0.4));
+    const confidence = Math.min(1, items.length / 4);
+    return clamp(1 + (factor - 1) * confidence, 0.7, 1.5);
+  };
+
+  const weightedSkill = skillSamples.length
+    ? skillSamples.reduce((sum, sample) => sum + sample.z * sample.weight, 0)
+      / skillSamples.reduce((sum, sample) => sum + sample.weight, 0)
+    : 0;
 
   const combinedSpeed = speedRatios.length
     ? (() => {
-      const weightedMean = speedRatios.reduce((sum, ratio, index) => sum + ratio * speedWeights[index], 0)
+      const weightedMeanLog = speedRatios.reduce((sum, ratio, index) => sum + ratio * speedWeights[index], 0)
         / speedWeights.reduce((sum, weight) => sum + weight, 0);
-      const robustRatio = trimmedMean(speedRatios, 0.25) ?? weightedMean;
-      return (weightedMean * 0.6) + (robustRatio * 0.4);
+      const robustLogRatio = median(speedRatios) ?? weightedMeanLog;
+      return Math.exp((weightedMeanLog * 0.6) + (robustLogRatio * 0.4));
     })()
     : 1;
 
   const combinedAttempts = attemptRatios.length
     ? (() => {
-      const weightedMean = attemptRatios.reduce((sum, ratio, index) => sum + ratio * attemptWeights[index], 0)
+      const weightedMeanLog = attemptRatios.reduce((sum, ratio, index) => sum + ratio * attemptWeights[index], 0)
         / attemptWeights.reduce((sum, weight) => sum + weight, 0);
-      const robustRatio = trimmedMean(attemptRatios, 0.25) ?? weightedMean;
-      return (weightedMean * 0.6) + (robustRatio * 0.4);
+      const robustLogRatio = median(attemptRatios) ?? weightedMeanLog;
+      return Math.exp((weightedMeanLog * 0.6) + (robustLogRatio * 0.4));
     })()
     : 1;
 
   const speedScore = clamp(1 + (combinedSpeed - 1) * Math.min(1, speedRatios.length / 6), 0.7, 1.5);
   const attemptsScore = clamp(1 + (combinedAttempts - 1) * Math.min(1, attemptRatios.length / 6), 0.7, 1.5);
+  const precisionScore = summarizeRatios(specializedRatios.precision);
+  const highTpsScore = summarizeRatios(specializedRatios.highTps);
+  const enduranceScore = summarizeRatios(specializedRatios.endurance);
+  const coordinationScore = summarizeRatios(specializedRatios.coordination);
   const model = trainPlayerTimeModel(levels, playerName);
+  const attemptsModel = getCachedGlobalAttemptsModel(levels);
 
   return {
     speed: speedScore,
     attempts: attemptsScore,
+    precision: precisionScore,
+    highTps: highTpsScore,
+    endurance: enduranceScore,
+    coordination: coordinationScore,
+    consistency: attemptsScore,
     model,
+    attemptsModel,
     skillRatio: model ? model.skillRatio : null,
+    weightedSkill,
   };
 }
 
 function calculatePlayerSkill(levels, playerName) {
   const components = calculateSkillComponents(levels, playerName);
-  return components.skillRatio ?? ((components.speed + components.attempts) / 2);
+  const speedFactor = Number.isFinite(components.speed) && components.speed > 0
+    ? components.speed
+    : 1;
+  const weightedFactor = Number.isFinite(components.weightedSkill)
+    ? clamp(Math.exp(components.weightedSkill), 0.5, 2)
+    : (components.skillRatio ?? 1);
+  const attemptsFactor = Number.isFinite(components.attempts) && components.attempts > 0
+    ? components.attempts
+    : 1;
+  const rawSkill = Math.exp(
+    0.55 * Math.log(speedFactor)
+    + 0.25 * Math.log(weightedFactor)
+    + 0.2 * Math.log(attemptsFactor)
+  );
+
+  const recordCount = (Array.isArray(levels) ? levels : []).reduce((count, lvl) => {
+    const timeWr = String(lvl?.wrTime?.name || "").trim() === String(playerName || "").trim();
+    const attemptWr = String(lvl?.wrAttempts?.name || "").trim() === String(playerName || "").trim();
+    return count + (timeWr ? 1 : 0) + (attemptWr ? 1 : 0);
+  }, 0);
+  const recordBonus = 1 + 0.05 * Math.log1p(recordCount);
+  const leaderboard = typeof buildLeaderboard === "function" ? buildLeaderboard(levels) : [];
+  const playerIndex = leaderboard.findIndex(player => player.name === playerName);
+  const rankPercentile = playerIndex >= 0 && leaderboard.length > 1
+    ? 1 - playerIndex / (leaderboard.length - 1)
+    : 0.5;
+  const rankPrior = 0.85 + 0.45 * clamp(rankPercentile, 0, 1);
+
+  const displaySkill = (Number.isFinite(rawSkill) && rawSkill > 0 ? 1 / rawSkill : 1)
+    * recordBonus
+    * rankPrior;
+  return clamp(displaySkill, 0.55, 1.8);
 }
 
 function calculateAvgTimePerPoint(levels) {
@@ -1036,7 +1390,8 @@ function calculateAvgAttemptsPerPoint(levels) {
       .map(v => Number(v.attempts))
       .filter(a => Number.isFinite(a) && a > 0);
     if (attempts.length > 0 && lvl.points > 0) {
-      weightedRatios.push({ ratio: trimmedMean(attempts) / lvl.points, weight: lvl.points });
+      const baseline = getRobustAttemptBaseline(attempts);
+      if (baseline !== null) weightedRatios.push({ ratio: baseline / lvl.points, weight: lvl.points });
     }
   });
   if (!weightedRatios.length) return null;
@@ -1077,6 +1432,52 @@ function getTpsDifficultyMultiplier(level, calibrationLevels = []) {
     ? clamp(1 + (tps - 240) / 1200, 1, 1.5)
     : 1;
   return Math.max(calibratedMultiplier, hardTimingMultiplier);
+}
+
+function getUnverifiedRankDifficultyMultiplier(level, maxPoints, calibrationLevels = []) {
+  if (!level?.isUnverified) return 1;
+  const rank = Number(level.modelRank || level._difficultyRank || level.rank);
+  const maxRank = Math.max(1, Number(level._estimatedRankMax) || Number(maxPoints));
+  if (!Number.isFinite(rank) || rank <= 0 || maxRank <= 1) return 1;
+
+  const rankPercentile = clamp((maxRank - rank) / (maxRank - 1), 0, 1);
+  const rankMultiplier = 0.85 + 0.45 * Math.pow(rankPercentile, 0.85);
+  const precisionMultiplier = getPrecisionDifficultyMultiplier(level, calibrationLevels);
+  return clamp(rankMultiplier * precisionMultiplier, 0.7, 2.2);
+}
+
+function getUnverifiedUncertaintyMultiplier(level) {
+  if (!level?.isUnverified) return 1;
+  const confidence = level.sourceConfidence ?? getUnverifiedSourceConfidence(level);
+  return clamp(1.12 - confidence * 0.12, 1, 1.12);
+}
+
+function getUnverifiedMetadataPointMultiplier(level, calibrationLevels = []) {
+  if (!level?.isUnverified) return 1;
+
+  const precisionMultiplier = getPrecisionDifficultyMultiplier(level, calibrationLevels);
+  const lengthMultiplier = getLengthDifficultyMultiplier(level, calibrationLevels);
+  const tpsMultiplier = getTpsDifficultyMultiplier(level, calibrationLevels);
+  const tierMultiplier = getTierDifficultyMultiplier(level);
+  const elevatedSignals = [precisionMultiplier, lengthMultiplier, tpsMultiplier]
+    .filter(multiplier => multiplier >= 1.2).length;
+  const extremeCombinationMultiplier = elevatedSignals >= 2 ? 1.05 : 1;
+  const coordinationMultiplier = level.is2Player === true ? 1.08 : 1;
+
+  return clamp(
+    Math.pow(precisionMultiplier, 0.35)
+      * Math.pow(lengthMultiplier, 0.35)
+      * Math.pow(tierMultiplier, 0.2)
+      * Math.pow(tpsMultiplier, 0.35)
+      * extremeCombinationMultiplier
+      * coordinationMultiplier,
+    0.85,
+    1.65,
+  );
+}
+
+function getUnverifiedCoordinationDifficultyMultiplier(level) {
+  return level?.isUnverified && level.is2Player === true ? 1.12 : 1;
 }
 
 function getVerifiedTimeCalibration(level, calibrationLevels) {
@@ -1129,12 +1530,25 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
 
   baseTime *= getVerifiedTimeCalibration(level, calibrationLevels);
 
+  if (level.isUnverified) {
+    baseTime *= getUnverifiedRankDifficultyMultiplier(level, maxPoints, calibrationLevels);
+    baseTime *= getTpsDifficultyMultiplier(level, calibrationLevels);
+    baseTime *= getUnverifiedCoordinationDifficultyMultiplier(level);
+  }
+
   let baseAttempts = null;
   if (victorAttempts.length > 0) {
-    baseAttempts = trimmedMean(victorAttempts);
+    baseAttempts = getRobustAttemptBaseline(victorAttempts);
   } else if (avgAttemptsPerPoint !== null && level.points > 0) {
     baseAttempts = level.points * avgAttemptsPerPoint;
   }
+
+  const modelPredictedAttempts = predictPlayerAttempts(
+    level,
+    components && components.attemptsModel ? components.attemptsModel : null,
+    calibrationLevels,
+  );
+  if (modelPredictedAttempts !== null) baseAttempts = modelPredictedAttempts;
 
   function difficultyModifier(level, maxPoints) {
     const maxP = Math.max(1, maxPoints || 1);
@@ -1143,7 +1557,7 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
     const attempts = level.victors
       .map(v => Number(v.attempts))
       .filter(a => Number.isFinite(a) && a > 0);
-    const medianAttempts = attempts.length ? trimmedMean(attempts) : null;
+    const medianAttempts = getRobustAttemptBaseline(attempts);
     const attemptsFactor = medianAttempts === null ? 1 : clamp(1 + (medianAttempts / 50 - 1) * 0.25, 0.8, 2.0);
     const tierMultiplier = level.isUnverified ? getTierDifficultyMultiplier(level) : 1;
     return clamp(
@@ -1165,6 +1579,14 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
   }
 
   const famMod = familiarityModifier(level, components && components._playerName ? components._playerName : null);
+  const dimensionSkillValues = [];
+  if (Number(level.precision) > 0 && components?.precision) dimensionSkillValues.push(components.precision);
+  if (Number(level.tps) > 0 && components?.highTps) dimensionSkillValues.push(components.highTps);
+  if (Number(level.length) > 0 && components?.endurance) dimensionSkillValues.push(components.endurance);
+  if (level.is2Player === true && components?.coordination) dimensionSkillValues.push(components.coordination);
+  const dimensionSkillModifier = dimensionSkillValues.length
+    ? geometricMean(dimensionSkillValues)
+    : 1;
 
   const modelPredictedSeconds = predictPlayerTime(level, components && components.model ? components.model : null);
   if (modelPredictedSeconds !== null) {
@@ -1183,21 +1605,27 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
       const lowerBound = bestObserved !== null ? bestObserved * LOWER_BOUND_FACTOR : null;
 
       let expectedSeconds = modelPredictedSeconds
+        * dimensionSkillModifier
         * (level.isUnverified ? getTierDifficultyMultiplier(level) : 1)
         * getPrecisionDifficultyMultiplier(level, calibrationLevels)
         * getLengthDifficultyMultiplier(level, calibrationLevels);
+      if (level.isUnverified) {
+        expectedSeconds *= getTpsDifficultyMultiplier(level, calibrationLevels);
+        expectedSeconds *= getUnverifiedCoordinationDifficultyMultiplier(level);
+      }
       if (lowerBound !== null && Number.isFinite(expectedSeconds) && expectedSeconds < lowerBound) {
         expectedSeconds = lowerBound;
       }
-      expectedSeconds = Math.max(expectedSeconds, getUnverifiedMinimumSeconds(level, avgTimePerPoint));
-
       return { expectedSeconds, expectedAttempts };
     }
   }
 
   const diffMod = difficultyModifier(level, maxPoints);
 
-  const predictedMultiplier = (components && components.speed ? components.speed : 1) * diffMod * famMod;
+  const predictedMultiplier = (components && components.speed ? components.speed : 1)
+    * dimensionSkillModifier
+    * diffMod
+    * famMod;
   const predicted = baseTime && baseTime > 0 ? baseTime * predictedMultiplier : null;
 
   const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
@@ -1209,16 +1637,11 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
   const expectedSeconds = predicted !== null && lowerBound !== null
     ? Math.max(predicted, lowerBound)
     : predicted;
-  const minimumSeconds = getUnverifiedMinimumSeconds(level, avgTimePerPoint);
-
-  const adjustedExpectedSeconds = expectedSeconds !== null
-    ? Math.max(expectedSeconds, minimumSeconds)
-    : expectedSeconds;
   const expectedAttempts = baseAttempts && baseAttempts > 0
     ? baseAttempts * (components && components.attempts ? components.attempts : 1) * famMod
     : null;
 
-  return { expectedSeconds: adjustedExpectedSeconds, expectedAttempts };
+  return { expectedSeconds, expectedAttempts };
 }
 
 function recordMultiplier(recordCount) {
@@ -1419,6 +1842,7 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
         isUnverified: lvl.isUnverified === true,
         rank: lvl.rank || null,
         estimatedMainListRank: getEstimatedMainListRank(lvl, calibrationLevels),
+        estimatedMainListRankRange: lvl.tierEstimatedRankRange || null,
         basePoints,
         projectedMult,
         projectedPoints,

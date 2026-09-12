@@ -2183,6 +2183,7 @@ nav {
 }
 
 .optimizer-card {
+  min-width: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -2448,7 +2449,8 @@ nav {
 }
 
 .optimizer-skill-summary {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 2fr);
   justify-content: space-between;
   align-items: center;
   gap: 16px;
@@ -2460,6 +2462,7 @@ nav {
 }
 
 .optimizer-skill-main {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -2478,8 +2481,13 @@ nav {
   color: var(--violet-bright);
 }
 
+.optimizer-skill-hint {
+  color: var(--text-faint);
+  font-size: 0.78rem;
+}
+
 .optimizer-skill-details {
-  text-align: right;
+  min-width: 0;
 }
 
 .optimizer-skill-classification {
@@ -2497,19 +2505,32 @@ nav {
 }
 
 .optimizer-skill-breakdown {
-  margin-top: 6px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 10px;
-  color: var(--text-muted);
-  font-size: 0.86rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.optimizer-skill-breakdown span {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+.optimizer-skill-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.optimizer-skill-metric span {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.optimizer-skill-metric strong {
+  color: var(--text);
+  font-size: 0.95rem;
 }
 
 .optimizer-stats-grid {
@@ -2735,11 +2756,17 @@ nav {
 
   .optimizer-skill-summary {
     flex-direction: column;
+    grid-template-columns: 1fr;
     align-items: flex-start;
   }
 
   .optimizer-skill-details {
     text-align: left;
+    width: 100%;
+  }
+
+  .optimizer-skill-breakdown {
+    grid-template-columns: 1fr;
   }
 
   .optimizer-table {

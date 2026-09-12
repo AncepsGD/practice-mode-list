@@ -221,7 +221,15 @@ function App() {
   );
 
   const skillComponents = useMemo(
-    () => (currentPlayer ? calculateSkillComponents(verifiedLevels, currentPlayer.name) : { speed: 1, attempts: 1 }),
+    () => (currentPlayer ? calculateSkillComponents(verifiedLevels, currentPlayer.name) : {
+      speed: 1,
+      attempts: 1,
+      precision: 1,
+      highTps: 1,
+      endurance: 1,
+      coordination: 1,
+      consistency: 1,
+    }),
     [verifiedLevels, currentPlayer]
   );
 
@@ -530,15 +538,37 @@ function App() {
           )}
           <div className="optimizer-skill-summary">
             <div className="optimizer-skill-main">
-              <span className="optimizer-skill-label">Your Skill Rating</span>
+              <span className="optimizer-skill-label">Overall performance</span>
               <span className="optimizer-skill-value">{formatSkillMultiplier(skillMultiplier)}</span>
             </div>
             <div className="optimizer-skill-details">
-              <div className="optimizer-skill-classification">{skillClassification}</div>
-              <div className="optimizer-skill-comparison">{skillComparison}</div>
+              <div className="optimizer-skill-classification">{skillClassification} vs. average victor</div>
+              <div className="optimizer-skill-comparison">{skillComparison.replace("Compared to average victor: ", "")}</div>
               <div className="optimizer-skill-breakdown">
-                <span>Speed: {formatSkillMultiplier(skillComponents.speed)}</span>
-                <span>Attempts: {formatSkillMultiplier(skillComponents.attempts)}</span>
+                <div className="optimizer-skill-metric">
+                  <span>Time</span>
+                  <strong>{formatSkillMultiplier(skillComponents.speed)}</strong>
+                </div>
+                <div className="optimizer-skill-metric">
+                  <span>Attempts</span>
+                  <strong>{formatSkillMultiplier(skillComponents.attempts)}</strong>
+                </div>
+                <div className="optimizer-skill-metric">
+                  <span>Precision</span>
+                  <strong>{formatSkillMultiplier(skillComponents.precision)}</strong>
+                </div>
+                <div className="optimizer-skill-metric">
+                  <span>High-TPS control</span>
+                  <strong>{formatSkillMultiplier(skillComponents.highTps)}</strong>
+                </div>
+                <div className="optimizer-skill-metric">
+                  <span>Endurance</span>
+                  <strong>{formatSkillMultiplier(skillComponents.endurance)}</strong>
+                </div>
+                <div className="optimizer-skill-metric">
+                  <span>2-player coordination</span>
+                  <strong>{formatSkillMultiplier(skillComponents.coordination)}</strong>
+                </div>
               </div>
             </div>
           </div>
@@ -670,7 +700,9 @@ function App() {
                           </td>
                           <td style={{textAlign: "center"}}>
                             {rec.isUnverified
-                              ? rec.estimatedMainListRank ? `#${rec.estimatedMainListRank}~` : "—"
+                              ? rec.estimatedMainListRankRange
+                                ? `#${rec.estimatedMainListRankRange.min}-${rec.estimatedMainListRankRange.max}~`
+                                : rec.estimatedMainListRank ? `#${rec.estimatedMainListRank}~` : "—"
                               : rec.rank ? `#${rec.rank}` : "—"}
                           </td>
                           <td>

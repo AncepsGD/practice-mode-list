@@ -1,5 +1,6 @@
 const LOCAL_KEY = "pml_edit_data";
 const MODEL_STATE_KEY = "pml_demon_system_state";
+const VERIFICATION_TIER_RESET_KEY = "pml_verification_tiers_reset_v1";
 const EDITOR_REMOTE_BASELINE_KEY = "pml_editor_remote_baseline";
 let rawData = [];
 let levels = [];
@@ -23,8 +24,9 @@ function getDemonSystem() {
   return typeof window !== "undefined" ? window.demonSystem : null;
 }
 
-function assignTiers(levelsList) {
+function assignTiers(levelsList, inheritMissing = true) {
   if (!Array.isArray(levelsList) || !levelsList.length) return;
+  if (!inheritMissing) return;
   const markers = [];
   const seenTiers = new Set();
 
@@ -255,6 +257,10 @@ function processRawData(data) {
   renderLeaderboard(leaderboard);
   initializeTimeline();
 
+  if (!localStorage.getItem(VERIFICATION_TIER_RESET_KEY)) {
+    localStorage.removeItem("pml_verifications_data");
+    localStorage.setItem(VERIFICATION_TIER_RESET_KEY, "1");
+  }
   const savedVerifications = localStorage.getItem("pml_verifications_data");
   if (savedVerifications) {
     try {
@@ -272,7 +278,7 @@ function processRawData(data) {
         .filter((item) => item && (item.name || item.levelName || item.id))
         .map((item) => normalizeLevelEntry(item));
       try {
-        assignTiers(verificationsList);
+        assignTiers(verificationsList, false);
       } catch (e) {
         console.error("Failed to assign tiers to verifications", e);
       }

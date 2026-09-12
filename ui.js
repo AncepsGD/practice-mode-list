@@ -715,6 +715,7 @@ function renderLevels(data) {
   }
 
   const fragment = document.createDocumentFragment();
+  const victorPointAwards = buildVictorPointAwards(levels);
 
   const wrapper = document.createElement('div');
 
@@ -792,18 +793,23 @@ function renderLevels(data) {
               <th>Date</th>
               <th>Time</th>
               <th>Attempts</th>
+              <th>Points</th>
               <th>Video</th>
             </tr>
           </thead>
 
           <tbody>
-          ${lvl._sortedVictors.map((v,i)=>`
+          ${lvl._sortedVictors.map((v,i)=>{
+            const award = getVictorPointAward(victorPointAwards, lvl, v);
+            const pointsDisplay = `${award.points.toFixed(1)} (${award.multiplier.toFixed(2)}×)`;
+            return `
             <tr>
               <td>${i+1}</td>
               <td>${getPlayerCountryEmoji(v.name) ? getPlayerCountryEmoji(v.name) + ' ' : ''}${escapeHTML(v.name)}</td>
               <td>${v.date}</td>
               <td>${v.wrTime ? v.wrTime : '—'}</td>
               <td>${v.wrAttempts == null ? '—' : v.wrAttempts.toLocaleString()}</td>
+              <td class="stat-cell">${escapeHTML(pointsDisplay)}</td>
               <td>
                 ${
                   v.victorVideoUrl
@@ -812,7 +818,8 @@ function renderLevels(data) {
                 }
               </td>
             </tr>
-          `).join('')}
+          `;
+          }).join('')}
           </tbody>
 
           </table>
