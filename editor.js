@@ -5,6 +5,8 @@ let editorHasLocalChanges = false;
 let editorLastSavedSnapshot = null;
 let editorConflictNoticeShown = false;
 let editorBaselineData = null;
+let editorEstimatedNames = [];
+let editorEstimatedRankRange = null;
 
 function updateEditorTierVisibility() {
   const table = document.getElementById("edit-level-table");
@@ -82,6 +84,13 @@ function normalizeEditorItem(item, fallbackRank = null) {
   const precision = Number.isFinite(precisionValue) && precisionValue > 0 ? String(precisionValue) : "";
   const victors = Array.isArray(item.victors) ? item.victors : [];
   const tier = readString(item.tier, item.tierName);
+  const rawRankRange = item.rankRange || item.estimatedRankRange;
+  const rankRangeMin = Number(rawRankRange?.min ?? item.estimatedRankMin);
+  const rankRangeMax = Number(rawRankRange?.max ?? item.estimatedRankMax);
+  const rankRange = Number.isFinite(rankRangeMin) && Number.isFinite(rankRangeMax)
+    && rankRangeMin > 0 && rankRangeMax > 0
+    ? { min: Math.min(rankRangeMin, rankRangeMax), max: Math.max(rankRangeMin, rankRangeMax) }
+    : null;
 
   return {
     rank,
@@ -96,8 +105,73 @@ function normalizeEditorItem(item, fallbackRank = null) {
     image,
     victors,
     tier,
+    rankRange,
   };
 }
+
+function estimateRankFromLevel() {
+  const level = {
+    tier: document.getElementById("f-tier").value,
+    tps: document.getElementById("f-tps").value,
+    length: document.getElementById("f-length").value,
+    precision: document.getElementById("f-precision").value,
+    is2Player: document.getElementById("f-twoplayer").value === "2 Player",
+    victorCount: document.querySelectorAll("#victors-list .victor-entry").length,
+  };
+  const enteredMin = Number(document.getElementById("f-rank-min").value);
+  const enteredMax = Number(document.getElementById("f-rank-max").value);
+  const hasEnteredRange = Number.isFinite(enteredMin) && Number.isFinite(enteredMax)
+    && enteredMin > 0 && enteredMax > 0;
+  const matchesGeneratedRange = editorEstimatedRankRange
+    && enteredMin === editorEstimatedRankRange.min
+    && enteredMax === editorEstimatedRankRange.max;
+  const preservesManualRange = hasEnteredRange && !matchesGeneratedRange;
+  if (preservesManualRange) {
+    level.rankRange = {
+      min: Math.min(enteredMin, enteredMax),
+      max: Math.max(enteredMin, enteredMax),
+    };
+  }
+
+  const range = LadderUtils.getEstimatedRankRange(
+    level,
+    Array.isArray(rawData) ? rawData : [],
+    editorEstimatedNames,
+  );
+  if (range) {
+    const { min, max } = range;
+    const estimatedRank = range.estimatedRank ?? Math.round((min + max) / 2);
+    if (!preservesManualRange) {
+      document.getElementById("f-rank-min").value = min;
+      document.getElementById("f-rank-max").value = max;
+      editorEstimatedRankRange = { min, max };
+    }
+    let outputRank = estimatedRank;
+    if (preservesManualRange) {
+      const sourceSpan = max - min;
+      const relativePosition = sourceSpan > 0
+        ? Math.max(0, Math.min(1, (estimatedRank - min) / sourceSpan))
+        : 0.5;
+      const manualMin = Math.min(enteredMin, enteredMax);
+      const manualMax = Math.max(enteredMin, enteredMax);
+      outputRank = manualMin + relativePosition * (manualMax - manualMin);
+    }
+    document.getElementById("f-rank").value = Math.round(outputRank);
+    return;
+  }
+
+  const tier = String(level.tier || "").trim().toLowerCase();
+  const min = Number(document.getElementById("f-rank-min").value);
+  const max = Number(document.getElementById("f-rank-max").value);
+  if (Number.isFinite(min) && Number.isFinite(max) && min > 0 && max > 0) {
+    document.getElementById("f-rank").value = Math.round((min + max) / 2);
+    return;
+  }
+
+  alert(tier ? `No ranked levels found in the ${tier} tier.` : "Select a tier or enter both placement bounds first.");
+}
+
+window.estimateRankFromLevel = estimateRankFromLevel;
 
 function getEditorData() {
   return editingSource === "verifications" ? window.verifications : rawData;
@@ -316,6 +390,18 @@ window.renderPublishBanner = renderPublishBanner;
 async function init() {
   const data = await loadData();
 
+  try {
+    const response = await fetchWithTimeout("secret.txt");
+    if (response.ok) {
+      editorEstimatedNames = (await response.text())
+        .split(/\r?\n/)
+        .map(name => name.trim())
+        .filter(Boolean);
+    }
+  } catch (err) {
+    console.warn("Unable to load secret.txt for estimated rank ranges", err);
+  }
+
   window.playerCountries = {};
   try {
     const controller = new AbortController();
@@ -416,9 +502,11 @@ function dropRow(e, targetIndex) {
   const data = getEditorData();
   const moved = data.splice(dragSrcIndex, 1)[0];
   data.splice(targetIndex, 0, moved);
-  data.forEach((item, i) => {
-    item.rank = i + 1;
-  });
+  if (editingSource !== "verifications") {
+    data.forEach((item, i) => {
+      item.rank = i + 1;
+    });
+  }
   document.querySelectorAll("#edit-table-body tr").forEach((r) => {
     r.classList.remove("dragging");
     r.classList.remove("drag-over");
@@ -437,9 +525,11 @@ function deleteLevel(index) {
   }
   if (!confirm(`Delete "${data[index].name}"?`)) return;
   data.splice(index, 1);
-  data.forEach((item, i) => {
-    item.rank = i + 1;
-  });
+  if (editingSource !== "verifications") {
+    data.forEach((item, i) => {
+      item.rank = i + 1;
+    });
+  }
   persistEditorDraftState();
   saveAndRefresh();
   renderEditTable();
@@ -447,6 +537,7 @@ function deleteLevel(index) {
 
 function openLevelForm(index) {
   editingIndex = -1;
+  editorEstimatedRankRange = null;
   const isNew = index === -1;
 
   document.getElementById("form-delete-btn").style.display = isNew ? "none" : "";
@@ -488,6 +579,8 @@ function openLevelForm(index) {
   document.getElementById("f-creators").value = normalizedItem.creators || "";
   document.getElementById("f-id").value = normalizedItem.id || "";
   document.getElementById("f-rank").value = normalizedItem.rank || data.length + 1;
+  document.getElementById("f-rank-min").value = normalizedItem.rankRange?.min || "";
+  document.getElementById("f-rank-max").value = normalizedItem.rankRange?.max || "";
   document.getElementById("f-length").value = normalizedItem.length === "" ? "" : normalizedItem.length;
   document.getElementById("f-tps").value = normalizedItem.tps === 0 || normalizedItem.tps === "0" || normalizedItem.tps == null || normalizedItem.tps === "" ? "" : normalizedItem.tps;
   document.getElementById("f-precision").value = normalizedItem.precision || "";
@@ -618,20 +711,33 @@ function saveLevelForm() {
 
   if (editingSource === "verifications") {
     item.tier = document.getElementById("f-tier").value;
+    const rankMin = Number(document.getElementById("f-rank-min").value);
+    const rankMax = Number(document.getElementById("f-rank-max").value);
+    if (Number.isFinite(rankMin) && Number.isFinite(rankMax) && rankMin > 0 && rankMax > 0) {
+      item.rankRange = { min: Math.min(rankMin, rankMax), max: Math.max(rankMin, rankMax) };
+    }
   } else if (currentIndex !== -1) {
     item.tier = data[currentIndex].tier;
   }
 
-  if (currentIndex === -1) {
-    data.push(item);
+  if (editingSource !== "verifications") {
+    const requestedRank = Math.max(1, item.rank);
+    if (currentIndex !== -1) {
+      data.splice(currentIndex, 1);
+    }
+    data.sort((a, b) => (a.rank || 999) - (b.rank || 999));
+    data.splice(Math.min(requestedRank - 1, data.length), 0, item);
+    data.forEach((d, i) => {
+      d.rank = i + 1;
+    });
   } else {
-    data[currentIndex] = item;
+    if (currentIndex === -1) {
+      data.push(item);
+    } else {
+      data[currentIndex] = item;
+    }
+    data.sort((a, b) => (a.rank || 999) - (b.rank || 999));
   }
-
-  data.sort((a, b) => (a.rank || 999) - (b.rank || 999));
-  data.forEach((d, i) => {
-    d.rank = i + 1;
-  });
 
   persistEditorDraftState();
   saveAndRefresh();
@@ -648,9 +754,11 @@ function deleteCurrentLevel() {
   }
   if (!confirm(`Delete "${data[editingIndex].name}"?`)) return;
   data.splice(editingIndex, 1);
-  data.forEach((item, i) => {
-    item.rank = i + 1;
-  });
+  if (editingSource !== "verifications") {
+    data.forEach((item, i) => {
+      item.rank = i + 1;
+    });
+  }
   persistEditorDraftState();
   saveAndRefresh();
   showEditView("list");

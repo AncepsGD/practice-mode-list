@@ -1,6 +1,7 @@
 const LOCAL_KEY = "pml_edit_data";
 
 const LEVEL_METRIC_SCHEMA = Object.freeze({
+
   tps: Object.freeze({ unit: "ticks/second", minimum: 1, maximum: 10000 }),
   length: Object.freeze({ unit: "seconds", minimum: 1, maximum: 3600 }),
   precision: Object.freeze({ unit: "dataset precision units", minimum: 1, maximum: 100000 }),
@@ -262,11 +263,10 @@ function getTierEstimatedRankRange(level, calibrationLevels = [], estimatedListS
     .filter(rank => Number.isFinite(rank) && rank > 0);
   if (!tierRanks.length) return null;
 
-  const range = {
+  return {
     min: Math.min(...tierRanks),
     max: Math.max(...tierRanks),
   };
-  return range.min <= range.max ? range : { min: range.max, max: range.min };
 }
 
 function buildEstimatedDifficultyAnchors(calibrationLevels, estimatedNames) {
@@ -375,7 +375,6 @@ function getCalibrationFeatureVector(level, estimatedRanks, estimatedListSize) {
 }
 
 function buildUnverifiedCalibrationModel(calibrationLevels, estimatedNames) {
-  if (!Array.isArray(calibrationLevels) || !Array.isArray(estimatedNames)) return null;
   const estimatedRanks = new Map();
   estimatedNames.forEach((name, index) => {
     const key = normalizeLadderName(name);
@@ -467,7 +466,7 @@ function prepareUnverifiedData(verifications, estimatedNames, verifiedLevels = [
       return {
         ...item,
         name,
-        rank: null,
+          rank: Number.isFinite(Number(item.rank)) && Number(item.rank) > 0 ? Number(item.rank) : null,
         _difficultyRank: estimatedRanks.get(key)
           || null,
         _estimatedRankMax: Array.isArray(estimatedNames) ? estimatedNames.length : null,
@@ -574,12 +573,15 @@ function processRawData(data, options = {}) {
         };
       });
       return {
-        rank: item._ladderSource === "unverified" ? null : item.rank,
+        rank: item._ladderSource === "unverified"
+          ? (Number.isFinite(Number(item.rank)) && Number(item.rank) > 0 ? Number(item.rank) : null)
+          : item.rank,
         modelRank: null,
         _difficultyRank: item._ladderSource === "unverified"
           ? item._difficultyRank
           : item._difficultyRank || item.rank,
         _estimatedRankMax: item._estimatedRankMax || null,
+        rankRange: item.rankRange || item.estimatedRankRange || null,
         _hasEstimatedRank: Number.isFinite(Number(item._difficultyRank)) && Number(item._difficultyRank) > 0,
         name: item.name,
         id: item.id,
@@ -635,8 +637,8 @@ function processRawData(data, options = {}) {
     const tierRange = getTierEstimatedRankRange(level, options.calibrationLevels, estimatedListSize);
     if (!tierRange) return;
     level._tierEstimatedRankRange = tierRange;
-    const tierMidpoint = (tierRange.min + tierRange.max) / 2;
-    level._tierPrimaryRank = Math.round(tierMidpoint);
+    level._tierPrimaryRank = tierRange.estimatedRank
+      ?? Math.round((tierRange.min + tierRange.max) / 2);
     level._difficultyRank = level._tierPrimaryRank;
     level._estimatedRankMax = Math.max(
       ...options.calibrationLevels.map(candidate => (
@@ -1187,6 +1189,24 @@ function calculateSkillComponents(levels, playerName) {
     endurance: [],
     coordination: [],
   };
+  const getCompletionTimestamp = (victor) => {
+    if (typeof getVictorSortValue === "function") return getVictorSortValue(victor);
+    const parsed = Date.parse(String(victor?.date || ""));
+    return Number.isFinite(parsed) ? parsed : null;
+  };
+  const playerCompletionDates = levels.flatMap(level => level.victors || [])
+    .filter(victor => victor.name === playerName)
+    .map(getCompletionTimestamp)
+    .filter(timestamp => timestamp !== null);
+  const recencyRanks = new Map(
+    [...new Set(playerCompletionDates)]
+      .sort((a, b) => b - a)
+      .map((timestamp, index) => [timestamp, index])
+  );
+  const getRecencyWeight = (timestamp) => {
+    const recencyRank = recencyRanks.get(timestamp);
+    return recencyRank === undefined ? 1 : 1 / Math.sqrt(recencyRank + 1);
+  };
 
   const metricValues = (field) => levels
     .map(level => Number(level?.[field]))
@@ -1209,6 +1229,7 @@ function calculateSkillComponents(levels, playerName) {
         name: v.name,
         sec: v.seconds,
         attempts: Number.isFinite(v.attempts) ? v.attempts : null,
+        date: getCompletionTimestamp(v),
       }))
       .filter(v => v.sec !== null && v.sec > 0);
     if (parsedEntries.length < 2) return;
@@ -1242,6 +1263,7 @@ function calculateSkillComponents(levels, playerName) {
     const modeSimilarity = Boolean(lvl.is2Player) === Boolean(playerEntry.is2Player)
       ? 1.15
       : 1;
+    const recencyWeight = getRecencyWeight(playerEntry.date);
     const precisionSignal = Number.isFinite(Number(lvl.precision)) && Number(lvl.precision) > 0 && comparisonEntries.length >= 2
       ? clamp(1.25 - Math.min(1, Math.abs(Math.log(Number(lvl.precision) / median(comparisonEntries.map(v => Number(v.precision || lvl.precision)).filter(value => Number.isFinite(value) && value > 0) || [lvl.precision]))) / 1.8), 0.8, 1.3)
       : 1;
@@ -1250,7 +1272,7 @@ function calculateSkillComponents(levels, playerName) {
     const isAttemptWr = String(lvl?.wrAttempts?.name || "").trim() === String(playerName || "").trim();
     const recordCount = (isTimeWr ? 1 : 0) + (isAttemptWr ? 1 : 0);
     const recordBoost = 1 + 0.05 * Math.log1p(recordCount);
-    const confidenceWeight = difficultyWeight * sampleWeight * tierSimilarity * modeSimilarity * precisionSignal * stabilityWeight * recordBoost;
+    const confidenceWeight = difficultyWeight * sampleWeight * tierSimilarity * modeSimilarity * precisionSignal * stabilityWeight * recordBoost * recencyWeight;
     const zScore = 0.7 * timeRatio + 0.3 * attemptRatio;
 
     skillSamples.push({ z: zScore, weight: confidenceWeight });
