@@ -6452,6 +6452,27 @@
   },
   {
     "rank": 235,
+    "name": "Deadly Silent Astro",
+    "creators": "DavGeometrico, samename",
+    "id": "148404193",
+    "length": 61,
+    "tps": "",
+    "precision": "",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "samename",
+        "date": "2026-09-09",
+        "time": "1h 8m 25s",
+        "attempts": 39335,
+        "video": "https://www.youtube.com/watch?v=2mvqhiBsOsc"
+      }
+    ]
+  },
+  {
+    "rank": 236,
     "name": "Winterbliss",
     "creators": "cheapyyyyy",
     "id": "142171098",
@@ -6479,7 +6500,7 @@
     ]
   },
   {
-    "rank": 236,
+    "rank": 237,
     "name": "hypothermia",
     "creators": "maxfs",
     "id": "67322787",
@@ -6513,7 +6534,7 @@
     "length": 43
   },
   {
-    "rank": 237,
+    "rank": 238,
     "name": "Where",
     "creators": "Miguette",
     "id": "81243030",
@@ -6534,7 +6555,7 @@
     ]
   },
   {
-    "rank": 238,
+    "rank": 239,
     "name": "Top 0",
     "creators": "Exen",
     "id": "98327676",
@@ -6555,7 +6576,7 @@
     ]
   },
   {
-    "rank": 239,
+    "rank": 240,
     "name": "Rainstorm",
     "creators": "Relayne",
     "id": "143680386",
@@ -6582,27 +6603,6 @@
       }
     ],
     "tier": "Intermediate"
-  },
-  {
-    "rank": 240,
-    "name": "Deadly Silent Astro",
-    "creators": "DavGeometrico, samename",
-    "id": "148404193",
-    "length": 61,
-    "tps": "",
-    "precision": "",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "samename",
-        "date": "2026-09-09",
-        "time": "1h 8m 25s",
-        "attempts": 39335,
-        "video": "https://www.youtube.com/watch?v=2mvqhiBsOsc"
-      }
-    ]
   },
   {
     "rank": 241,
