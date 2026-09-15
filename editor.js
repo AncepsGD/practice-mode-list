@@ -314,7 +314,7 @@ function renderEditTable() {
   if (!data.length) {
     const msg = editingSource === "verifications" ? "No verifications loaded" : "No data loaded";
     tbody.innerHTML =
-      `<tr><td colspan="10" class="empty-state" style="padding:24px">${msg}</td></tr>`;
+      `<tr><td colspan="11" class="empty-state" style="padding:24px">${msg}</td></tr>`;
     renderPublishBanner();
     return;
   }
@@ -330,6 +330,9 @@ function renderEditTable() {
         <td class="creator-td">${escapeEditorText(normalizedItem.creators || "—")}</td>
         <td class="tier-td">${escapeEditorText(editingSource === "verifications" ? normalizedItem.tier || "—" : "—")}</td>
         <td class="id-td">${escapeEditorText(normalizedItem.id || "—")}</td>
+        <td class="length-td">${escapeEditorText(normalizedItem.length || "—")}</td>
+        <td class="tps-td">${escapeEditorText(normalizedItem.tps || "—")}</td>
+        <td class="precision-td">${escapeEditorText(normalizedItem.precision || "—")}</td>
         <td class="victors-td">${(normalizedItem.victors || []).length}</td>
         <td class="actions-td">
           <button class="ebtn ebtn-ghost ebtn-sm" onclick="openLevelForm(${i})">Edit</button>

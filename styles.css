@@ -281,7 +281,7 @@ nav {
   background: var(--surface);
   border: 1px solid var(--border);
   display: grid;
-  grid-template-columns: 64px 1fr 120px;
+  grid-template-columns: 64px 1fr 88px;
   position: relative;
   overflow: hidden;
   margin-bottom: 10px;
@@ -535,7 +535,7 @@ nav {
   align-items: stretch;
   justify-content: center;
   gap: 8px;
-  padding: 16px 64px;
+  padding: 16px 12px;
   position: relative;
   z-index: 2;
   --actions-bg: transparent;
@@ -1487,7 +1487,7 @@ nav {
 }
 
 .edit-wrap {
-  max-width: 960px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 36px 24px 80px;
 }
@@ -1612,6 +1612,7 @@ nav {
 .edit-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .edit-table th {
@@ -1624,6 +1625,12 @@ nav {
   padding: 11px 14px;
   background: var(--surface2);
   border-bottom: 1px solid var(--border);
+}
+
+.edit-table th:nth-child(4),
+.edit-table td.creator-td {
+  width: 120px;
+  max-width: 120px;
 }
 
 .edit-table td {
@@ -1645,12 +1652,31 @@ nav {
   font-family: var(--font-mono);
   color: var(--text-muted);
   font-size: 13px;
-  width: 52px;
+  width: 36px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: center;
+}
+
+.edit-table th:nth-child(2) {
+  width: 36px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: center;
 }
 
 .edit-table td.name-td {
+  width: clamp(180px, 34vw, 380px);
   color: #fff;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.edit-table th:nth-child(3) {
+  width: clamp(180px, 34vw, 380px);
 }
 
 .edit-table td.creator-td {
@@ -1661,8 +1687,8 @@ nav {
 
 .edit-table th:nth-child(6),
 .edit-table td.id-td {
-  width: 92px;
-  max-width: 92px;
+  width: 78px;
+  max-width: 78px;
 }
 
 .edit-table td.id-td {
@@ -1678,8 +1704,33 @@ nav {
   color: #aac5ff;
   font-family: var(--font-mono);
   font-size: 12px;
-  font-weight: 700;
   letter-spacing: 0.04em;
+}
+
+.edit-table th:nth-child(7),
+.edit-table td.length-td {
+  width: 58px;
+  max-width: 58px;
+}
+
+.edit-table th:nth-child(8),
+.edit-table td.tps-td {
+  width: 60px;
+  max-width: 60px;
+}
+
+.edit-table th:nth-child(9),
+.edit-table td.precision-td {
+  width: 72px;
+  max-width: 72px;
+}
+
+.edit-table td.length-td,
+.edit-table td.precision-td {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .edit-table td.tier-td {
@@ -1692,6 +1743,22 @@ nav {
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 11px;
+  width: 58px;
+  max-width: 58px;
+  text-align: center;
+}
+
+.edit-table th:nth-child(10) {
+  width: 58px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: center;
+}
+
+.edit-table th:nth-child(11),
+.edit-table td.actions-td {
+  width: 126px;
+  max-width: 126px;
 }
 
 .edit-table.verifications-only td.tier-td,
@@ -1727,6 +1794,10 @@ nav {
   letter-spacing: -0.2px;
   color: var(--text);
   flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .form-grid {

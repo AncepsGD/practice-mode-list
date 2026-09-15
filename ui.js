@@ -14,6 +14,29 @@ function flashCopied() {
   }, 2000);
 }
 
+function fitLevelNames() {
+  document.querySelectorAll('.level-name').forEach((nameElement) => {
+    nameElement.style.fontSize = '';
+    const baseSize = parseFloat(getComputedStyle(nameElement).fontSize);
+    if (!Number.isFinite(baseSize) || nameElement.scrollWidth <= nameElement.clientWidth) return;
+
+    let low = 1;
+    let high = baseSize;
+    while (high - low > 0.1) {
+      const size = (low + high) / 2;
+      nameElement.style.fontSize = `${size}px`;
+      if (nameElement.scrollWidth <= nameElement.clientWidth) {
+        low = size;
+      } else {
+        high = size;
+      }
+    }
+    nameElement.style.fontSize = `${low}px`;
+  });
+}
+
+window.addEventListener('resize', fitLevelNames);
+
 function renderStats() {
   const totalVictors = new Set(levels.flatMap(lvl => lvl.victors.map(victor => victor.name))).size;
   const totalCompletions = levels.reduce((sum, lvl) => sum + lvl.victors.length, 0);
@@ -173,6 +196,7 @@ function renderTargetedLevels() {
     }).join('');
 
   container.innerHTML = cards;
+  fitLevelNames();
   initLazyThumbnails();
 }
 
@@ -830,6 +854,7 @@ function renderLevels(data) {
 
   fragment.appendChild(wrapper);
   container.replaceChildren(fragment);
+  fitLevelNames();
 
   initExpandHandlers();
   initLazyThumbnails();
@@ -1130,6 +1155,7 @@ function renderVerifications(data) {
     .join('');
 
   container.innerHTML = cards;
+  fitLevelNames();
   initLazyThumbnails();
 }
 
@@ -1180,6 +1206,7 @@ function renderTimeline(data) {
   }).join('');
 
   container.innerHTML = cards;
+  fitLevelNames();
   initLazyThumbnails();
 }
 
