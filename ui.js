@@ -611,6 +611,12 @@ function escapeHTML(value) {
     .replaceAll("'", '&#039;');
 }
 
+function truncateDisplayText(value, maxLength) {
+  const text = String(value ?? '');
+  if (text.length <= maxLength) return text;
+  return `${Array.from(text).slice(0, Math.max(0, maxLength - 3)).join('')}...`;
+}
+
 function getPlayerCountryEmoji(name) {
   if (!name || typeof name !== 'string') return '';
   const code = window.playerCountries && window.playerCountries[name.trim()];
@@ -967,11 +973,11 @@ function renderLeaderboard(data) {
         return (Number(current.points) || 0) > (Number(best.points) || 0) ? current : best;
       }, null);
       const hardestLabel = hardestCompletion
-        ? `<span class="hardest-completion-primary">${escapeHTML(hardestCompletion.name)}</span><span class="hardest-completion-secondary">${escapeHTML(hardestCompletion.tier || 'Unknown')} · ${Number(hardestCompletion.points || 0).toFixed(0)} pts</span>`
+        ? `<span class="hardest-completion-primary">${escapeHTML(truncateDisplayText(hardestCompletion.name, 32))}</span><span class="hardest-completion-secondary">${escapeHTML(hardestCompletion.tier || 'Unknown')} · ${Number(hardestCompletion.points || 0).toFixed(0)} pts</span>`
         : '<span class="hardest-completion-primary">None</span>';
       const orderedLevelsMarkup = completionDetails.map((entry) => `
         <li class="completion-order-item">
-          <span class="completion-order-name">${escapeHTML(entry.name)}</span>
+          <span class="completion-order-name">${escapeHTML(truncateDisplayText(entry.name, 32))}</span>
           <span class="completion-order-meta">${escapeHTML(entry.tier || 'unknown')} · ${Number(entry.points || 0).toFixed(0)} pts</span>
         </li>
       `).join('');
@@ -994,7 +1000,7 @@ function renderLeaderboard(data) {
                 <span class="completion-stat-label">Total Attempts</span>
                 <strong>${Number(p.totalAttempts ?? 0).toLocaleString()}</strong>
               </div>
-              <div class="completion-stat-pill">
+              <div class="completion-stat-pill completion-stat-pill--hardest">
                 <span class="completion-stat-label">Hardest</span>
                 <strong>${hardestLabel}</strong>
               </div>

@@ -1,6 +1,22 @@
 ﻿const { useMemo, useState, useEffect } = React;
 const MIN_UNVERIFIED_ROUTE_HOURS = 8 / 60;
 const UNVERIFIED_BASELINE_LEVEL = "Aeternus";
+const LADDER_STATE_STORAGE_KEY = "pml_ladder_state";
+
+function readSavedLadderState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LADDER_STATE_STORAGE_KEY) || "{}");
+    return saved && typeof saved === "object" ? saved : {};
+  } catch {
+    return {};
+  }
+}
+
+function truncateLadderLevelName(value, maxLength = 32) {
+  const text = String(value ?? "");
+  if (text.length <= maxLength) return text;
+  return `${Array.from(text).slice(0, Math.max(0, maxLength - 3)).join("")}...`;
+}
 
 function getUnverifiedBaselineRank(estimatedNames) {
   const baselineIndex = estimatedNames.findIndex(
@@ -58,20 +74,47 @@ function getFullListRouteTarget(targetPlayer, currentPlayer, levels) {
 }
 
 function App() {
+  const [savedLadderState] = useState(readSavedLadderState);
   const [status, setStatus] = useState("loading");
   const [errorMsg, setErrorMsg] = useState("");
   const [levels, setLevels] = useState([]);
   const [verifiedLevels, setVerifiedLevels] = useState([]);
   const [unverifiedLevels, setUnverifiedLevels] = useState([]);
   const [ladderSources, setLadderSources] = useState(null);
-  const [includeUnverified, setIncludeUnverified] = useState(false);
-  const [unverifiedOnly, setUnverifiedOnly] = useState(false);
-  const [useFullSecretList, setUseFullSecretList] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState("");
-  const [targetPlayerName, setTargetPlayerName] = useState("");
+  const [includeUnverified, setIncludeUnverified] = useState(
+    typeof savedLadderState.includeUnverified === "boolean" ? savedLadderState.includeUnverified : false
+  );
+  const [unverifiedOnly, setUnverifiedOnly] = useState(
+    typeof savedLadderState.unverifiedOnly === "boolean" ? savedLadderState.unverifiedOnly : false
+  );
+  const [useFullSecretList, setUseFullSecretList] = useState(
+    typeof savedLadderState.useFullSecretList === "boolean" ? savedLadderState.useFullSecretList : false
+  );
+  const [selectedPlayer, setSelectedPlayer] = useState(
+    typeof savedLadderState.selectedPlayer === "string" ? savedLadderState.selectedPlayer : ""
+  );
+  const [targetPlayerName, setTargetPlayerName] = useState(
+    typeof savedLadderState.targetPlayerName === "string" ? savedLadderState.targetPlayerName : ""
+  );
   const [lockedLevelIds, setLockedLevelIds] = useState([]);
   const [removedLevelIds, setRemovedLevelIds] = useState([]);
-  const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(true);
+  const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(
+    typeof savedLadderState.excludeTwoPlayer === "boolean" ? savedLadderState.excludeTwoPlayer : true
+  );
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LADDER_STATE_STORAGE_KEY, JSON.stringify({
+        includeUnverified,
+        unverifiedOnly,
+        useFullSecretList,
+        selectedPlayer,
+        targetPlayerName,
+        excludeTwoPlayer,
+      }));
+    } catch {
+    }
+  }, [includeUnverified, unverifiedOnly, useFullSecretList, selectedPlayer, targetPlayerName, excludeTwoPlayer]);
 
   useEffect(() => {
     loadLadderData()
@@ -169,6 +212,7 @@ function App() {
   }, [unverifiedOnly, includeUnverified, targetPlayerName, verifiedLevels, unverifiedLevels, processedUnverified]);
 
   useEffect(() => {
+    if (!ladderSources) return;
     if (leaderboard.length === 0) {
       setSelectedPlayer("");
       setTargetPlayerName("");
@@ -727,7 +771,9 @@ function App() {
                               : rec.rank ? `#${rec.rank}` : "—"}
                           </td>
                           <td>
-                            <strong>{rec.level}</strong>
+                            <strong className="optimizer-level-name" title={rec.level}>
+                              {truncateLadderLevelName(rec.level)}
+                            </strong>
                             {rec.isUnverified && <span style={{marginLeft: "6px", color: "#b7791f", fontSize: "0.8em"}}>(unverified)</span>}
                           </td>
                           <td>{rec.victorCount}</td>
