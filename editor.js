@@ -111,6 +111,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
 
 function estimateRankFromLevel() {
   const level = {
+    name: document.getElementById("f-name").value,
     tier: document.getElementById("f-tier").value,
     tps: document.getElementById("f-tps").value,
     length: document.getElementById("f-length").value,
@@ -133,11 +134,17 @@ function estimateRankFromLevel() {
     };
   }
 
-  const range = LadderUtils.getEstimatedRankRange(
+  const normalizedLevelName = String(level.name || "").trim().toLowerCase();
+  const hasSecretEstimate = normalizedLevelName
+    && editorEstimatedNames.some(name => String(name || "").trim().toLowerCase() === normalizedLevelName);
+  let range = LadderUtils.getEstimatedRankRange(
     level,
     Array.isArray(rawData) ? rawData : [],
-    editorEstimatedNames,
+    hasSecretEstimate ? editorEstimatedNames : [],
   );
+  if (!range && Array.isArray(rawData) && rawData.length) {
+    range = LadderUtils.getEstimatedRankRange(level, rawData, []);
+  }
   if (range) {
     const { min, max } = range;
     const estimatedRank = range.estimatedRank ?? Math.round((min + max) / 2);

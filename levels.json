@@ -1514,6 +1514,13 @@
         "time": "42m 54s",
         "attempts": 5367,
         "video": "https://youtu.be/dTOOI_8nxeo"
+      },
+      {
+        "name": "Duelo Maestro Guy",
+        "date": "2026-07-27",
+        "time": "58m 34s",
+        "attempts": 6489,
+        "video": "https://www.youtube.com/live/SBGSGqNwb94"
       }
     ]
   },
@@ -6452,27 +6459,6 @@
   },
   {
     "rank": 235,
-    "name": "Deadly Silent Astro",
-    "creators": "DavGeometrico, samename",
-    "id": "148404193",
-    "length": 61,
-    "tps": "",
-    "precision": "",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "samename",
-        "date": "2026-09-09",
-        "time": "1h 8m 25s",
-        "attempts": 39335,
-        "video": "https://www.youtube.com/watch?v=2mvqhiBsOsc"
-      }
-    ]
-  },
-  {
-    "rank": 236,
     "name": "Winterbliss",
     "creators": "cheapyyyyy",
     "id": "142171098",
@@ -6500,7 +6486,7 @@
     ]
   },
   {
-    "rank": 237,
+    "rank": 236,
     "name": "hypothermia",
     "creators": "maxfs",
     "id": "67322787",
@@ -6534,7 +6520,7 @@
     "length": 43
   },
   {
-    "rank": 238,
+    "rank": 237,
     "name": "Where",
     "creators": "Miguette",
     "id": "81243030",
@@ -6555,7 +6541,7 @@
     ]
   },
   {
-    "rank": 239,
+    "rank": 238,
     "name": "Top 0",
     "creators": "Exen",
     "id": "98327676",
@@ -6576,7 +6562,7 @@
     ]
   },
   {
-    "rank": 240,
+    "rank": 239,
     "name": "Rainstorm",
     "creators": "Relayne",
     "id": "143680386",
@@ -6603,6 +6589,27 @@
       }
     ],
     "tier": "Intermediate"
+  },
+  {
+    "rank": 240,
+    "name": "Deadly Silent Astro",
+    "creators": "DavGeometrico, samename",
+    "id": "148404193",
+    "length": 61,
+    "tps": "",
+    "precision": "",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "samename",
+        "date": "2026-09-09",
+        "time": "1h 8m 25s",
+        "attempts": 39335,
+        "video": "https://www.youtube.com/watch?v=2mvqhiBsOsc"
+      }
+    ]
   },
   {
     "rank": 241,
