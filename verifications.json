@@ -195,21 +195,6 @@
     "tps": null
   },
   {
-    "rank": 14,
-    "name": "MINUSclub",
-    "thumbnail": "",
-    "id": "65476277",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": "",
-    "tps": 1200
-  },
-  {
     "rank": 15,
     "name": "Hell to play II",
     "thumbnail": "",
@@ -289,21 +274,6 @@
     "name": "silent landscape",
     "thumbnail": "",
     "id": "116337387",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "",
-    "creators": "",
-    "is2Player": false,
-    "showcaseVideoUrl": "",
-    "tier": "",
-    "tps": null
-  },
-  {
-    "rank": 21,
-    "name": "Back On Track",
-    "thumbnail": "",
-    "id": "80481445",
     "points": 0,
     "victors": [],
     "firstVictor": null,
@@ -510,21 +480,6 @@
     "tps": 720
   },
   {
-    "rank": 35,
-    "name": "Ultra Coffee",
-    "thumbnail": "",
-    "id": "126427346",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "chronosify2",
-    "creators": "chronosify2",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=SyUxx7dD_zM",
-    "tier": "Master",
-    "tps": 240
-  },
-  {
     "rank": 36,
     "name": "Anceps Worst Fear",
     "thumbnail": "",
@@ -613,36 +568,6 @@
     "showcaseVideoUrl": "https://youtu.be/Y6T7QtF2S5g",
     "tier": "",
     "tps": null
-  },
-  {
-    "rank": 42,
-    "name": "XANE GETS SEQUELL",
-    "thumbnail": "",
-    "id": "138689383",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "ProgNostico",
-    "creators": "ProgNostico",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=nhe0KLfWDfo",
-    "tier": "",
-    "tps": 240
-  },
-  {
-    "rank": 43,
-    "name": "Basalt Caverns",
-    "thumbnail": "",
-    "id": "126105053",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "higuy2016 & more",
-    "creators": "higuy2016 & more",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=pQavsKphLlo",
-    "tier": "",
-    "tps": 416
   },
   {
     "rank": 44,
@@ -930,21 +855,6 @@
     "tps": 240
   },
   {
-    "rank": 63,
-    "name": "Silent Jawbreaker",
-    "thumbnail": "",
-    "id": "136063350",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "thecyberr, jcob, evileyegalaxy",
-    "creators": "thecyberr, jcob, evileyegalaxy",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=sMSnsVyGS4o",
-    "tier": "",
-    "tps": 240
-  },
-  {
     "rank": 64,
     "name": "MINUSdash",
     "thumbnail": "",
@@ -1200,21 +1110,6 @@
     "tps": null
   },
   {
-    "rank": 81,
-    "name": "Where",
-    "thumbnail": "",
-    "id": "81243030",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "Miguette",
-    "creators": "Miguette",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/O90YcbfRiC8",
-    "tier": "",
-    "tps": 360
-  },
-  {
     "rank": 82,
     "name": "Galatic Blood",
     "thumbnail": "",
@@ -1303,21 +1198,6 @@
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=yTa7fBEhzm0",
     "tier": "",
     "tps": 240
-  },
-  {
-    "rank": 88,
-    "name": "spike avoider",
-    "thumbnail": "",
-    "id": "117180622",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "alle",
-    "creators": "alle",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=vXjbA2o9DGI",
-    "tier": "Novice",
-    "tps": 295
   },
   {
     "rank": 89,
@@ -1483,36 +1363,6 @@
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=EPg_ukAT6wQ",
     "tier": "Divine",
     "tps": 900
-  },
-  {
-    "rank": 100,
-    "name": "Dreamopolis V2",
-    "thumbnail": "",
-    "id": "83372499",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "2A0L0I3, gdmiracle",
-    "creators": "2A0L0I3, gdmiracle",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=E-R87ZYm6dI",
-    "tier": "Divine",
-    "tps": 1077
-  },
-  {
-    "rank": 101,
-    "name": "KALCULUS COLLAB 101",
-    "thumbnail": "",
-    "id": "147838076",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "Kalculus19 & more",
-    "creators": "Kalculus19 & more",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://youtu.be/8kE984kNrNs",
-    "tier": "Transcendent",
-    "tps": 240
   },
   {
     "rank": 102,
@@ -1800,21 +1650,6 @@
     "tps": 240
   },
   {
-    "rank": 121,
-    "name": "Detrimental Effect",
-    "thumbnail": "",
-    "id": "88067126",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "AnonIIExt",
-    "creators": "AnonIIExt",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=yDIupIxomII",
-    "tier": "",
-    "tps": 480
-  },
-  {
     "rank": 122,
     "name": "The Midnight Rush",
     "thumbnail": "",
@@ -1935,21 +1770,6 @@
     "tps": 240
   },
   {
-    "rank": 130,
-    "name": "Hell Corridor",
-    "thumbnail": "",
-    "id": "92921305",
-    "points": 0,
-    "victors": [],
-    "firstVictor": null,
-    "creator": "xdhalcyon",
-    "creators": "xdhalcyon",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=JJlAtyf8Pxc",
-    "tier": "",
-    "tps": 240
-  },
-  {
     "rank": 131,
     "name": "haunted corridor v2",
     "thumbnail": "",
@@ -2025,19 +1845,49 @@
     "tps": 240
   },
   {
-    "rank": 136,
-    "name": "Chaotic Circles (RMGD)",
+    "rank": 135,
+    "name": "Formosa",
     "thumbnail": "",
-    "id": "148562055",
+    "id": "92796375",
     "points": 0,
     "victors": [],
     "firstVictor": null,
-    "creator": "Kylra, RMGD",
-    "creators": "Kylra, RMGD",
-    "is2Player": true,
-    "showcaseVideoUrl": "",
+    "creator": "eightos",
+    "creators": "eightos",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Rl2IALks5_E",
+    "tier": "Divine",
+    "tps": 20000
+  },
+  {
+    "rank": 135,
+    "name": "DARK NEVER CLEAR",
+    "thumbnail": "",
+    "id": "81501733",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "darkoshi",
+    "creators": "darkoshi",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=ShuKFdiivwM",
+    "tier": "Transcendent",
+    "tps": 54630
+  },
+  {
+    "rank": 136,
+    "name": "Plushie Legend",
+    "thumbnail": "",
+    "id": "148765252",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "realplushieee",
+    "creators": "realplushieee",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://youtu.be/9Er7NGnQACg",
     "tier": "",
-    "tps": null
+    "tps": 660
   },
   {
     "rank": 137,
@@ -2143,5 +1993,35 @@
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=sjamtuoHjQQ",
     "tier": "",
     "tps": 240
+  },
+  {
+    "rank": 144,
+    "name": "Mirum In Modum Incommoditas",
+    "thumbnail": "",
+    "id": "85238302",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "C4mlX & more",
+    "creators": "C4mlX & more",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=YNbEr5YhJmI",
+    "tier": "",
+    "tps": 360
+  },
+  {
+    "rank": 145,
+    "name": "Artemis 13 Circles",
+    "thumbnail": "",
+    "id": "148789389",
+    "points": 0,
+    "victors": [],
+    "firstVictor": null,
+    "creator": "RMGD",
+    "creators": "RMGD",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://youtu.be/esdBQclwPiQ",
+    "tier": "Master",
+    "tps": 2090
   }
 ]
