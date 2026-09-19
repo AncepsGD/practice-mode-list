@@ -108,9 +108,22 @@ function normalizeLevelEntry(item) {
   const imageValue = item.image || item.thumbnail || item.thumb || "";
   const twoPlayerValue = item.twoPlayer === true || item.twoPlayer === "2 Player" || item.twoPlayer === "2P" || item.twoPlayer === "true" || item.is2Player === true;
   const rankValue = Number.isFinite(Number(item.rank)) ? Number(item.rank) : null;
+  const rawLength = item.length ?? item.levelLength;
+  const lengthValue = rawLength === null || rawLength === undefined || (typeof rawLength === "string" && rawLength.trim() === "") ? null : Number(rawLength);
+  const normalizedLength = Number.isFinite(lengthValue) && lengthValue > 0 ? lengthValue : "";
+  const rawPrecision = item.precision ?? item.Precision;
+  const precisionValue = rawPrecision === null || rawPrecision === undefined || (typeof rawPrecision === "string" && rawPrecision.trim() === "") ? null : Number(rawPrecision);
+  const normalizedPrecision = Number.isFinite(precisionValue) && precisionValue > 0 ? precisionValue : "";
   const rawTps = item.tps ?? item.TPS ?? item.tpsValue;
   const normalizedTps = rawTps === null || rawTps === undefined || (typeof rawTps === "string" && rawTps.trim() === "") || Number(rawTps) === 0 ? null : Number(rawTps);
   const parsedTps = Number.isFinite(normalizedTps) ? normalizedTps : null;
+  const rawRankRange = item.rankRange || item.estimatedRankRange;
+  const rankRangeMin = Number(rawRankRange?.min ?? item.estimatedRankMin);
+  const rankRangeMax = Number(rawRankRange?.max ?? item.estimatedRankMax);
+  const rankRange = Number.isFinite(rankRangeMin) && Number.isFinite(rankRangeMax)
+    && rankRangeMin > 0 && rankRangeMax > 0
+    ? { min: Math.min(rankRangeMin, rankRangeMax), max: Math.max(rankRangeMin, rankRangeMax) }
+    : null;
 
   const normalized = {
     rank: rankValue,
@@ -123,9 +136,15 @@ function normalizeLevelEntry(item) {
     creator: creatorsValue,
     creators: creatorsValue,
     is2Player: twoPlayerValue,
+    twoPlayer: twoPlayerValue ? "2 Player" : "",
     showcaseVideoUrl,
+    showcaseVideo: showcaseVideoUrl,
+    image: autoThumbnail(imageValue),
     tier: item.tier || item.tierName || "",
+    length: normalizedLength,
     tps: parsedTps,
+    precision: normalizedPrecision,
+    rankRange,
   };
 
   const sortedVictors = sortVictorsByDate(victors);
