@@ -109,8 +109,8 @@ function normalizeLevelEntry(item) {
   const twoPlayerValue = item.twoPlayer === true || item.twoPlayer === "2 Player" || item.twoPlayer === "2P" || item.twoPlayer === "true" || item.is2Player === true;
   const rankValue = Number.isFinite(Number(item.rank)) ? Number(item.rank) : null;
   const rawLength = item.length ?? item.levelLength;
-  const lengthValue = rawLength === null || rawLength === undefined || (typeof rawLength === "string" && rawLength.trim() === "") ? null : Number(rawLength);
-  const normalizedLength = Number.isFinite(lengthValue) && lengthValue > 0 ? lengthValue : "";
+  const parsedLength = parseDurationToSeconds(rawLength) ?? Number(rawLength);
+  const normalizedLength = Number.isFinite(parsedLength) && parsedLength > 0 ? formatSecondsAsDuration(parsedLength) : "";
   const rawPrecision = item.precision ?? item.Precision;
   const precisionValue = rawPrecision === null || rawPrecision === undefined || (typeof rawPrecision === "string" && rawPrecision.trim() === "") ? null : Number(rawPrecision);
   const normalizedPrecision = Number.isFinite(precisionValue) && precisionValue > 0 ? precisionValue : "";
@@ -126,6 +126,7 @@ function normalizeLevelEntry(item) {
     : null;
 
   const normalized = {
+    ...item,
     rank: rankValue,
     name: item.name || item.levelName || "",
     thumbnail: autoThumbnail(imageValue),
@@ -156,6 +157,34 @@ function normalizeLevelEntry(item) {
   }
 
   return normalized;
+}
+
+function mergeVerificationSources(remoteData, savedData) {
+  const savedByIdentity = new Map();
+  (Array.isArray(savedData) ? savedData : []).forEach((item) => {
+    const identity = String(item?.id || item?.levelId || item?.name || item?.levelName || "").trim().toLowerCase();
+    if (identity) savedByIdentity.set(identity, item);
+  });
+
+  const merged = (Array.isArray(remoteData) ? remoteData : []).map((remoteItem) => {
+    const identity = String(remoteItem?.id || remoteItem?.levelId || remoteItem?.name || remoteItem?.levelName || "").trim().toLowerCase();
+    const savedItem = savedByIdentity.get(identity);
+    if (!savedItem) return remoteItem;
+
+    const result = { ...remoteItem, ...savedItem };
+    ["creator", "creators", "tier", "length", "precision", "tps", "twoPlayer", "showcaseVideo", "showcaseVideoUrl", "image", "thumbnail"].forEach((field) => {
+      if (savedItem[field] === "" || savedItem[field] === null || savedItem[field] === undefined) {
+        result[field] = remoteItem[field];
+      }
+    });
+    return result;
+  });
+
+  const remoteIdentities = new Set(merged.map((item) => String(item?.id || item?.levelId || item?.name || item?.levelName || "").trim().toLowerCase()));
+  return merged.concat((Array.isArray(savedData) ? savedData : []).filter((item) => {
+    const identity = String(item?.id || item?.levelId || item?.name || item?.levelName || "").trim().toLowerCase();
+    return identity && !remoteIdentities.has(identity);
+  }));
 }
 
 function loadData() {
@@ -283,9 +312,28 @@ function processRawData(data) {
   const savedVerifications = localStorage.getItem("pml_verifications_data");
   if (savedVerifications) {
     try {
-      window.verifications = JSON.parse(savedVerifications);
-      initializeVerifications();
-      syncDemonSystemFromRawData();
+      const savedData = JSON.parse(savedVerifications);
+      fetchWithTimeout("verifications.json")
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .then((data) => {
+          const mergedData = mergeVerificationSources(data, savedData);
+          const verificationsList = mergedData
+            .filter((item) => item && (item.name || item.levelName || item.id))
+            .map((item) => normalizeLevelEntry(item));
+          assignTiers(verificationsList, false);
+          window.verifications = verificationsList;
+          persistEditorRemoteBaseline(verificationsList, "verifications");
+          initializeVerifications();
+          syncDemonSystemFromRawData();
+        })
+        .catch(() => {
+          window.verifications = savedData;
+          initializeVerifications();
+          syncDemonSystemFromRawData();
+        });
       return;
     } catch (e) { }
   }
@@ -394,8 +442,95 @@ function setLastPublishedSignature(signature) {
   localStorage.setItem(LAST_PUBLISHED_KEY, signature);
 }
 
+const VERIFICATION_EXPORT_TIER_ORDER = [
+  "ethereal",
+  "transcendent",
+  "divine",
+  "master",
+  "legendary",
+  "insane",
+  "advanced",
+  "intermediate",
+  "novice",
+];
+
+function sortVerificationExportData(data) {
+  const sortableItems = (Array.isArray(data) ? data : []).map((item, index) => {
+    const tier = String(item?.tier || item?.tierName || "").trim().toLowerCase();
+    const tierRank = VERIFICATION_EXPORT_TIER_ORDER.indexOf(tier);
+    const length = parseDurationToSeconds(item?.length ?? item?.levelLength)
+      ?? Number(item?.length ?? item?.levelLength);
+    const rank = Number(item?.rank);
+    return {
+      item,
+      index,
+      predictedRank: getVerificationPredictedRank(item),
+      tier,
+      tierRank: tierRank === -1 ? VERIFICATION_EXPORT_TIER_ORDER.length : tierRank,
+      length: Number.isFinite(length) && length > 0 ? length : null,
+      rank: Number.isFinite(rank) ? rank : null,
+    };
+  });
+
+  return sortableItems.sort((a, b) => {
+    const predictedRankA = a.predictedRank;
+    const predictedRankB = b.predictedRank;
+    const hasPredictedRankA = Number.isFinite(predictedRankA);
+    const hasPredictedRankB = Number.isFinite(predictedRankB);
+    if (hasPredictedRankA !== hasPredictedRankB) return hasPredictedRankA ? -1 : 1;
+    if (hasPredictedRankA && predictedRankA !== predictedRankB) return predictedRankA - predictedRankB;
+
+    if (a.tierRank !== b.tierRank) {
+      return a.tierRank - b.tierRank;
+    }
+
+    if (a.tierRank === VERIFICATION_EXPORT_TIER_ORDER.length && a.tier !== b.tier) {
+      return a.tier.localeCompare(b.tier);
+    }
+
+    const hasLengthA = a.length !== null;
+    const hasLengthB = b.length !== null;
+    if (hasLengthA !== hasLengthB) return hasLengthA ? -1 : 1;
+    if (hasLengthA && a.length !== b.length) return a.length - b.length;
+
+    if (a.rank !== null && b.rank !== null && a.rank !== b.rank) {
+      return a.rank - b.rank;
+    }
+    const nameComparison = String(a.item?.name || "").localeCompare(String(b.item?.name || ""));
+    return nameComparison || a.index - b.index;
+  }).map(entry => entry.item);
+}
+
+function getVerificationPredictedRank(item) {
+  if (typeof LadderUtils !== "undefined"
+    && typeof LadderUtils.getEstimatedRankRange === "function"
+    && Array.isArray(levels)
+    && levels.length) {
+    const prediction = LadderUtils.getEstimatedRankRange(item, levels, []);
+    if (Number.isFinite(prediction?.estimatedRank)) return prediction.estimatedRank;
+  }
+
+  const explicitRange = item?.rankRange || item?.estimatedRankRange;
+  const min = Number(explicitRange?.min ?? item?.estimatedRankMin);
+  const max = Number(explicitRange?.max ?? item?.estimatedRankMax);
+  if (Number.isFinite(min) && Number.isFinite(max) && min > 0 && max > 0) {
+    return (Math.min(min, max) + Math.max(min, max)) / 2;
+  }
+  return null;
+}
+
+function buildVerificationExportData(data) {
+  return sortVerificationExportData(data).map((item, index) => ({
+    ...item,
+    rank: index + 1,
+  }));
+}
+
 function exportJSON() {
-  const data = editingSource === "verifications" ? window.verifications : rawData;
+  const sourceData = editingSource === "verifications" ? window.verifications : rawData;
+  const data = editingSource === "verifications"
+    ? buildVerificationExportData(sourceData)
+    : sourceData;
   const json = JSON.stringify(data, null, 2);
   const signature = EditorStateUtils.buildDataSignature(data || []);
   navigator.clipboard.writeText(json).then(() => {

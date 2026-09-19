@@ -75,9 +75,8 @@ function normalizeEditorItem(item, fallbackRank = null) {
   const normalizedTps = rawTps === null || rawTps === undefined || (typeof rawTps === "string" && rawTps.trim() === "") || Number(rawTps) === 0 ? "" : String(Number(rawTps));
   const tps = Number.isFinite(Number(normalizedTps)) ? String(Number(normalizedTps)) : "";
   const rawLength = item.length ?? item.levelLength;
-  const normalizedLength = rawLength === null || rawLength === undefined || (typeof rawLength === "string" && rawLength.trim() === "") ? "" : String(Number(rawLength));
-  const lengthValue = Number(normalizedLength);
-  const length = Number.isFinite(lengthValue) && lengthValue > 0 ? String(lengthValue) : "";
+  const lengthValue = parseDurationToSeconds(rawLength) ?? Number(rawLength);
+  const length = Number.isFinite(lengthValue) && lengthValue > 0 ? formatSecondsAsDuration(lengthValue) : "";
   const rawPrecision = item.precision ?? item.Precision;
   const normalizedPrecision = rawPrecision === null || rawPrecision === undefined || (typeof rawPrecision === "string" && rawPrecision.trim() === "") ? "" : String(Number(rawPrecision));
   const precisionValue = Number(normalizedPrecision);
@@ -109,6 +108,74 @@ function normalizeEditorItem(item, fallbackRank = null) {
   };
 }
 
+function validateEditorRankRange(listSize) {
+  const minInput = document.getElementById("f-rank-min");
+  const maxInput = document.getElementById("f-rank-max");
+  const minText = minInput.value.trim();
+  const maxText = maxInput.value.trim();
+  if (!minText && !maxText) return { range: null, valid: true };
+  if (!minText || !maxText) {
+    alert("Enter both the minimum and maximum rank, or leave both blank.");
+    return { range: null, valid: false };
+  }
+
+  let min = Number(minText);
+  let max = Number(maxText);
+  if (!Number.isFinite(min) || !Number.isFinite(max)) {
+    alert("Rank range values must be valid numbers.");
+    return { range: null, valid: false };
+  }
+  if (min < 1 || max < 1) {
+    alert("Rank range values cannot be below 1.");
+    return { range: null, valid: false };
+  }
+  if (min > max) {
+    alert("The minimum rank cannot be greater than the maximum rank.");
+    return { range: null, valid: false };
+  }
+
+  if (Number.isFinite(listSize) && listSize > 0 && max > listSize) {
+    alert(`The maximum rank exceeds the current list size (${listSize}) and will be clamped.`);
+    max = listSize;
+    maxInput.value = max;
+  }
+  if (Number.isFinite(listSize) && listSize > 0 && min > listSize) {
+    alert(`The minimum rank exceeds the current list size (${listSize}).`);
+    return { range: null, valid: false };
+  }
+
+  return { range: { min, max }, valid: true };
+}
+
+function renderRankEstimateBasis(level, hasSecretEstimate) {
+  const container = document.getElementById("rank-estimate-basis");
+  if (!container) return;
+  const used = [];
+  const missing = [];
+  ["tps", "length", "precision"].forEach(field => {
+    const label = field === "tps" ? "TPS" : field.charAt(0).toUpperCase() + field.slice(1);
+    const value = field === "length" ? parseDurationToSeconds(level[field]) : Number(level[field]);
+    if (Number.isFinite(value) && value > 0) used.push(label);
+    else missing.push(label);
+  });
+  if (level.tier) used.push("tier");
+  else missing.push("tier");
+
+  const victors = Array.isArray(level.victors) ? level.victors : [];
+  const usableVictorEvidence = victors.some(victor => {
+    const hasTime = typeof victor.time === "string" && victor.time.trim();
+    const hasAttempts = Number(victor.attempts) > 0;
+    return String(victor.name || "").trim() && (hasTime || hasAttempts);
+  });
+  if (usableVictorEvidence) used.push("victor names, times, and attempts");
+  else missing.push("victor evidence");
+  if (hasSecretEstimate) used.push("estimated difficulty list position");
+
+  container.textContent = `Estimated using ${used.join(", ") || "no matching inputs"}.`
+    + (missing.length ? ` Missing: ${missing.join(", ")}.` : "");
+  container.classList.add("visible");
+}
+
 function estimateRankFromLevel() {
   const level = {
     name: document.getElementById("f-name").value,
@@ -117,12 +184,17 @@ function estimateRankFromLevel() {
     length: document.getElementById("f-length").value,
     precision: document.getElementById("f-precision").value,
     is2Player: document.getElementById("f-twoplayer").value === "2 Player",
-    victorCount: document.querySelectorAll("#victors-list .victor-entry").length,
+    victors: Array.from(document.querySelectorAll("#victors-list .victor-entry")).map(entry => ({
+      name: entry.querySelector('[data-field="name"]').value,
+      time: entry.querySelector('[data-field="time"]').value,
+      attempts: entry.querySelector('[data-field="attempts"]').value,
+    })),
   };
-  const enteredMin = Number(document.getElementById("f-rank-min").value);
-  const enteredMax = Number(document.getElementById("f-rank-max").value);
-  const hasEnteredRange = Number.isFinite(enteredMin) && Number.isFinite(enteredMax)
-    && enteredMin > 0 && enteredMax > 0;
+  const rangeValidation = validateEditorRankRange(Array.isArray(rawData) ? rawData.length : 0);
+  if (!rangeValidation.valid) return;
+  const enteredMin = rangeValidation.range?.min;
+  const enteredMax = rangeValidation.range?.max;
+  const hasEnteredRange = Boolean(rangeValidation.range);
   const matchesGeneratedRange = editorEstimatedRankRange
     && enteredMin === editorEstimatedRankRange.min
     && enteredMax === editorEstimatedRankRange.max;
@@ -153,25 +225,17 @@ function estimateRankFromLevel() {
       document.getElementById("f-rank-max").value = max;
       editorEstimatedRankRange = { min, max };
     }
-    let outputRank = estimatedRank;
-    if (preservesManualRange) {
-      const sourceSpan = max - min;
-      const relativePosition = sourceSpan > 0
-        ? Math.max(0, Math.min(1, (estimatedRank - min) / sourceSpan))
-        : 0.5;
-      const manualMin = Math.min(enteredMin, enteredMax);
-      const manualMax = Math.max(enteredMin, enteredMax);
-      outputRank = manualMin + relativePosition * (manualMax - manualMin);
-    }
-    document.getElementById("f-rank").value = Math.round(outputRank);
+    document.getElementById("f-rank").value = Math.round(estimatedRank);
+    renderRankEstimateBasis(level, hasSecretEstimate);
     return;
   }
 
   const tier = String(level.tier || "").trim().toLowerCase();
-  const min = Number(document.getElementById("f-rank-min").value);
-  const max = Number(document.getElementById("f-rank-max").value);
-  if (Number.isFinite(min) && Number.isFinite(max) && min > 0 && max > 0) {
-    document.getElementById("f-rank").value = Math.round((min + max) / 2);
+  if (rangeValidation.range) {
+    document.getElementById("f-rank").value = Math.round(
+      (rangeValidation.range.min + rangeValidation.range.max) / 2,
+    );
+    renderRankEstimateBasis(level, false);
     return;
   }
 
@@ -591,6 +655,11 @@ function openLevelForm(index) {
   document.getElementById("f-rank").value = normalizedItem.rank || data.length + 1;
   document.getElementById("f-rank-min").value = normalizedItem.rankRange?.min || "";
   document.getElementById("f-rank-max").value = normalizedItem.rankRange?.max || "";
+  const estimateBasis = document.getElementById("rank-estimate-basis");
+  if (estimateBasis) {
+    estimateBasis.textContent = "";
+    estimateBasis.classList.remove("visible");
+  }
   document.getElementById("f-length").value = normalizedItem.length === "" ? "" : normalizedItem.length;
   document.getElementById("f-tps").value = normalizedItem.tps === 0 || normalizedItem.tps === "0" || normalizedItem.tps == null || normalizedItem.tps === "" ? "" : normalizedItem.tps;
   document.getElementById("f-precision").value = normalizedItem.precision || "";
@@ -701,7 +770,7 @@ function saveLevelForm() {
   const tpsInput = document.getElementById("f-tps").value.trim();
   const parsedTps = tpsInput === "" || Number(tpsInput) === 0 ? "" : Number.parseFloat(tpsInput);
   const lengthInput = document.getElementById("f-length").value.trim();
-  const parsedLength = lengthInput === "" ? "" : Number.parseFloat(lengthInput);
+  const parsedLength = parseDurationToSeconds(lengthInput) ?? Number(lengthInput);
   const precisionInput = document.getElementById("f-precision").value.trim();
   const parsedPrecision = precisionInput === "" ? "" : Number.parseFloat(precisionInput);
 
@@ -710,7 +779,7 @@ function saveLevelForm() {
     name,
     creators: document.getElementById("f-creators").value.trim(),
     id,
-    length: Number.isFinite(parsedLength) && parsedLength > 0 ? parsedLength : "",
+    length: Number.isFinite(parsedLength) && parsedLength > 0 ? formatSecondsAsDuration(parsedLength) : "",
     tps: Number.isFinite(parsedTps) ? parsedTps : "",
     precision: Number.isFinite(parsedPrecision) && parsedPrecision > 0 ? parsedPrecision : "",
     twoPlayer: document.getElementById("f-twoplayer").value,
@@ -721,11 +790,10 @@ function saveLevelForm() {
 
   if (editingSource === "verifications") {
     item.tier = document.getElementById("f-tier").value;
-    const rankMin = Number(document.getElementById("f-rank-min").value);
-    const rankMax = Number(document.getElementById("f-rank-max").value);
-    if (Number.isFinite(rankMin) && Number.isFinite(rankMax) && rankMin > 0 && rankMax > 0) {
-      item.rankRange = { min: Math.min(rankMin, rankMax), max: Math.max(rankMin, rankMax) };
-    }
+    const listSize = currentIndex === -1 ? data.length + 1 : data.length;
+    const rangeValidation = validateEditorRankRange(listSize);
+    if (!rangeValidation.valid) return;
+    if (rangeValidation.range) item.rankRange = rangeValidation.range;
   } else if (currentIndex !== -1) {
     item.tier = data[currentIndex].tier;
   }

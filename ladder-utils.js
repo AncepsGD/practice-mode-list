@@ -8,7 +8,9 @@ const LEVEL_METRIC_SCHEMA = Object.freeze({
 });
 
 function parseLevelMetric(value, schema) {
-  const numericValue = Number(value);
+  const numericValue = schema.unit === "seconds"
+    ? (parseTimeToSeconds(value) ?? Number(value))
+    : Number(value);
   if (!Number.isFinite(numericValue) || numericValue < schema.minimum || numericValue > schema.maximum) return null;
   return numericValue;
 }
@@ -1208,6 +1210,20 @@ function calculateSkillComponents(levels, playerName) {
     return recencyRank === undefined ? 1 : 1 / Math.sqrt(recencyRank + 1);
   };
 
+  const playerLevels = levels.filter(level =>
+    (level.victors || []).some(victor => victor.name === playerName)
+  );
+  const playerTierCounts = new Map();
+  playerLevels.forEach(level => {
+    const tier = String(level.tier || "").trim().toLowerCase();
+    if (tier) playerTierCounts.set(tier, (playerTierCounts.get(tier) || 0) + 1);
+  });
+  const playerPrimaryTier = [...playerTierCounts.entries()]
+    .sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+  const playerTwoPlayerCount = playerLevels.filter(level => level.is2Player === true).length;
+  const playerMostlyTwoPlayer = playerLevels.length > 0
+    && playerTwoPlayerCount / playerLevels.length >= 0.5;
+
   const metricValues = (field) => levels
     .map(level => Number(level?.[field]))
     .filter(value => Number.isFinite(value) && value > 0)
@@ -1257,15 +1273,22 @@ function calculateSkillComponents(levels, playerName) {
       ? clamp(Math.log1p(Number(lvl.points)) / Math.log1p(220), 0.35, 1.8)
       : 1;
     const sampleWeight = clamp(0.45 + parsedEntries.length * 0.18, 0.5, 2.5);
-    const tierSimilarity = String(lvl.tier || "").trim().toLowerCase() === String(levels[0]?.tier || "").trim().toLowerCase()
+    const tierSimilarity = playerPrimaryTier
+      && String(lvl.tier || "").trim().toLowerCase() === playerPrimaryTier
       ? 1.15
       : 1;
-    const modeSimilarity = Boolean(lvl.is2Player) === Boolean(playerEntry.is2Player)
+    const modeSimilarity = playerLevels.length > 0
+      && Boolean(lvl.is2Player) === playerMostlyTwoPlayer
       ? 1.15
       : 1;
     const recencyWeight = getRecencyWeight(playerEntry.date);
-    const precisionSignal = Number.isFinite(Number(lvl.precision)) && Number(lvl.precision) > 0 && comparisonEntries.length >= 2
-      ? clamp(1.25 - Math.min(1, Math.abs(Math.log(Number(lvl.precision) / median(comparisonEntries.map(v => Number(v.precision || lvl.precision)).filter(value => Number.isFinite(value) && value > 0) || [lvl.precision]))) / 1.8), 0.8, 1.3)
+    const playerPrecisionValues = playerLevels
+      .map(level => Number(level.precision))
+      .filter(value => Number.isFinite(value) && value > 0);
+    const playerPrecisionBaseline = median(playerPrecisionValues);
+    const precisionSignal = Number.isFinite(Number(lvl.precision)) && Number(lvl.precision) > 0
+      && playerPrecisionBaseline
+      ? clamp(1 + Math.min(0.25, Math.abs(Math.log(Number(lvl.precision) / playerPrecisionBaseline)) / 2), 1, 1.25)
       : 1;
     const stabilityWeight = comparisonEntries.length >= 3 ? 1.15 : comparisonEntries.length === 2 ? 1.05 : 1;
     const isTimeWr = String(lvl?.wrTime?.name || "").trim() === String(playerName || "").trim();
@@ -1332,7 +1355,7 @@ function calculateSkillComponents(levels, playerName) {
     })()
     : 1;
 
-  const speedScore = clamp(1 + (combinedSpeed - 1) * Math.min(1, speedRatios.length / 6), 0.7, 1.5);
+  const speedScore = clamp(1 + (combinedSpeed - 1) * Math.min(1, speedRatios.length / 3), 0.55, 1.5);
   const attemptsScore = clamp(1 + (combinedAttempts - 1) * Math.min(1, attemptRatios.length / 6), 0.7, 1.5);
   const precisionScore = summarizeRatios(specializedRatios.precision);
   const highTpsScore = summarizeRatios(specializedRatios.highTps);
@@ -1532,6 +1555,13 @@ function getUnverifiedMinimumSeconds(level, avgTimePerPoint) {
   return Math.max(8 * 60, calibratedFloor);
 }
 
+function blendPositiveEstimates(primary, fallback, primaryWeight = 0.7) {
+  if (!Number.isFinite(primary) || primary <= 0) return fallback;
+  if (!Number.isFinite(fallback) || fallback <= 0) return primary;
+  const weight = clamp(primaryWeight, 0.1, 0.9);
+  return Math.exp(weight * Math.log(primary) + (1 - weight) * Math.log(fallback));
+}
+
 function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, calibrationLevels = []) {
   const victorTimes = level.victors
     .map(v => v.seconds)
@@ -1614,31 +1644,6 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
     : 1;
 
   const modelPredictedSeconds = predictPlayerTime(level, components && components.model ? components.model : null);
-  if (modelPredictedSeconds !== null && !hasObservedTime) {
-      const expectedAttempts = baseAttempts && baseAttempts > 0
-        ? baseAttempts * (components && components.attempts ? components.attempts : 1) * famMod
-        : null;
-      const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
-      const minObserved = victorTimes.length ? Math.min(...victorTimes) : null;
-      const bestObserved = wrTimeSeconds !== null ? wrTimeSeconds : minObserved;
-      const LOWER_BOUND_FACTOR = 0.6;
-      const lowerBound = bestObserved !== null ? bestObserved * LOWER_BOUND_FACTOR : null;
-
-      let expectedSeconds = modelPredictedSeconds
-        * dimensionSkillModifier
-        * (level.isUnverified ? getTierDifficultyMultiplier(level) : 1)
-        * getPrecisionDifficultyMultiplier(level, calibrationLevels)
-        * getLengthDifficultyMultiplier(level, calibrationLevels);
-      if (level.isUnverified) {
-        expectedSeconds *= getTpsDifficultyMultiplier(level, calibrationLevels);
-        expectedSeconds *= getUnverifiedCoordinationDifficultyMultiplier(level);
-      }
-      if (lowerBound !== null && Number.isFinite(expectedSeconds) && expectedSeconds < lowerBound) {
-        expectedSeconds = lowerBound;
-      }
-      return { expectedSeconds, expectedAttempts };
-  }
-
   const diffMod = hasObservedTime ? 1 : difficultyModifier(level, maxPoints);
 
   const predictedMultiplier = (components && components.speed ? components.speed : 1)
@@ -1647,18 +1652,42 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
     * famMod;
   const predicted = baseTime && baseTime > 0 ? baseTime * predictedMultiplier : null;
 
+  const modelSecondsCandidate = modelPredictedSeconds !== null && !hasObservedTime
+    ? modelPredictedSeconds
+      * dimensionSkillModifier
+      * (level.isUnverified ? getTierDifficultyMultiplier(level) : 1)
+      * getPrecisionDifficultyMultiplier(level, calibrationLevels)
+      * getLengthDifficultyMultiplier(level, calibrationLevels)
+      * (level.isUnverified ? getTpsDifficultyMultiplier(level, calibrationLevels) : 1)
+      * (level.isUnverified ? getUnverifiedCoordinationDifficultyMultiplier(level) : 1)
+    : null;
+
   const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
   const minObserved = victorTimes.length ? Math.min(...victorTimes) : null;
   const bestObserved = wrTimeSeconds !== null ? wrTimeSeconds : minObserved;
   const LOWER_BOUND_FACTOR = 0.6;
   const lowerBound = bestObserved !== null ? bestObserved * LOWER_BOUND_FACTOR : null;
 
-  const expectedSeconds = predicted !== null && lowerBound !== null
-    ? Math.max(predicted, lowerBound)
-    : predicted;
-  const expectedAttempts = baseAttempts && baseAttempts > 0
-    ? baseAttempts * (components && components.attempts ? components.attempts : 1) * famMod
-    : null;
+  const expectedSeconds = (() => {
+    const blended = modelSecondsCandidate !== null && predicted !== null
+      ? blendPositiveEstimates(modelSecondsCandidate, predicted, hasObservedTime ? 0.45 : 0.7)
+      : (modelSecondsCandidate ?? predicted);
+    if (blended === null || !Number.isFinite(blended)) return null;
+    if (lowerBound !== null && blended < lowerBound) return lowerBound;
+    return blended;
+  })();
+
+  const expectedAttempts = (() => {
+    const baselineAttempts = baseAttempts && baseAttempts > 0
+      ? baseAttempts * (components && components.attempts ? components.attempts : 1) * famMod
+      : null;
+    const mergedModelAttempts = modelPredictedAttempts !== null && baselineAttempts !== null
+      ? blendPositiveEstimates(modelPredictedAttempts, baselineAttempts, 0.7)
+      : (modelPredictedAttempts ?? baselineAttempts);
+    return mergedModelAttempts !== null && Number.isFinite(mergedModelAttempts)
+      ? Math.max(mergedModelAttempts, 1)
+      : null;
+  })();
 
   return { expectedSeconds, expectedAttempts };
 }
@@ -1758,21 +1787,39 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
   }
 
   const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
+  const alreadyOwnsTimeWr = String(level?.wrTime?.name || "").trim() === String(playerName || "").trim();
   const timePossible = canHoldRecord
-    && wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds;
+    && (
+      alreadyOwnsTimeWr
+      || (wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds)
+    );
 
   const wrAttempts = level.wrAttempts ? Number(level.wrAttempts.attempts) : null;
+  const alreadyOwnsAttemptWr = String(level?.wrAttempts?.name || "").trim() === String(playerName || "").trim();
   const attemptsPossible = canHoldRecord
-    && wrAttempts !== null && Number.isFinite(wrAttempts) && expectedAttempts !== null && expectedAttempts < wrAttempts;
+    && (
+      alreadyOwnsAttemptWr
+      || (wrAttempts !== null && Number.isFinite(wrAttempts) && expectedAttempts !== null && expectedAttempts < wrAttempts)
+    );
 
   const firstVictoryPossible = existingVictorCount === 0 ? 1 : 0;
   const recordCount = firstVictoryPossible + (timePossible ? 1 : 0) + (attemptsPossible ? 1 : 0);
   return recordMultiplier(recordCount);
 }
 
+function getSkillAdjustedWrPotential(playerSkill, wrHolderName, levels, rawPotential) {
+  if (!rawPotential) return false;
+  if (!wrHolderName) return true;
+  const holderSkill = calculatePlayerSkill(levels, wrHolderName);
+  if (!Number.isFinite(holderSkill) || holderSkill <= 0) return true;
+  const skillGap = playerSkill / holderSkill;
+  return skillGap >= 0.8;
+}
+
 function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, allLevels = levels, calibrationLevels = []) {
   if (!player) return [];
   const beaten = new Set(player.levels);
+  const playerSkill = calculatePlayerSkill(levels, player.name);
   const components = calculateSkillComponents(
     calibrationLevels.length ? calibrationLevels : levels,
     player.name,
@@ -1835,13 +1882,29 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
         ? clamp(0.35 - confidence * 0.2, 0.1, 0.35)
         : clamp(0.18 - confidence * 0.1, 0.05, 0.18);
 
-      const timeWrPossible = wrTimeSeconds !== null
+      const alreadyOwnsTimeWr = String(lvl?.wrTime?.name || "").trim() === String(player.name || "").trim();
+      const timeRawPotential = wrTimeSeconds !== null
         && expectedSeconds !== null
         && expectedSeconds < wrTimeSeconds;
-      const attemptsWrPossible = wrAttempts !== null
+      const timeWrPossible = alreadyOwnsTimeWr
+        || getSkillAdjustedWrPotential(
+          playerSkill,
+          lvl?.wrTime?.name,
+          levels,
+          timeRawPotential,
+        );
+      const alreadyOwnsAttemptWr = String(lvl?.wrAttempts?.name || "").trim() === String(player.name || "").trim();
+      const attemptsRawPotential = wrAttempts !== null
         && Number.isFinite(wrAttempts)
         && expectedAttempts !== null
         && expectedAttempts < wrAttempts;
+      const attemptsWrPossible = alreadyOwnsAttemptWr
+        || getSkillAdjustedWrPotential(
+          playerSkill,
+          lvl?.wrAttempts?.name,
+          levels,
+          attemptsRawPotential,
+        );
       const hasWrTime = wrTimeSeconds !== null;
       const hasWrAttempts = wrAttempts !== null && Number.isFinite(wrAttempts);
 

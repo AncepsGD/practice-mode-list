@@ -120,10 +120,9 @@
       </div>
       <div class="verifications-header">
         <h2>Levels Pending Verification</h2>
-        <p class="verifications-subtitle">Random selection of levels with no verified completions yet. Refresh to see a
-          new set.</p>
+        <p class="verifications-subtitle">Levels with no verified completions yet, ordered by estimated difficulty.</p>
         <button class="btn-refresh-verifications" onclick="shuffleVerifications()"><i
-            class="fa-solid fa-rotate-right"></i> Refresh List</button>
+            class="fa-solid fa-shuffle"></i> Randomize List</button>
       </div>
       <div id="verifications-container"></div>
     </div>
@@ -244,10 +243,11 @@
               <input class="form-input" id="f-rank-max" type="number" placeholder="Max" min="1" />
               <button class="ebtn ebtn-ghost ebtn-sm" type="button" onclick="estimateRankFromLevel()">Estimate from ladder</button>
             </div>
+            <div id="rank-estimate-basis" class="rank-estimate-basis" role="status" aria-live="polite"></div>
           </div>
           <div class="form-group">
-            <label class="form-label">Length (seconds)</label>
-            <input class="form-input" id="f-length" type="number" placeholder="e.g. 60" min="0" step="0.01" />
+            <label class="form-label">Length</label>
+            <input class="form-input" id="f-length" type="text" placeholder="e.g. 2m 5s" />
           </div>
           <div class="form-group">
             <label class="form-label">TPS</label>

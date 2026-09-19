@@ -13,6 +13,40 @@ function getYouTubeVideoId(url) {
     return null;
 }
 
+function parseDurationToSeconds(value) {
+    if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+    if (typeof value !== 'string' || !value.trim()) return null;
+
+    const matches = [...value.matchAll(/(\d+(?:\.\d+)?)\s*([hms])/gi)];
+    if (!matches.length) return null;
+
+    const parts = {};
+    for (const match of matches) {
+        const unit = match[2].toLowerCase();
+        if (parts[unit] !== undefined) return null;
+        parts[unit] = Number(match[1]);
+    }
+    if (parts.m >= 60 || parts.s >= 60) return null;
+
+    const seconds = (parts.h || 0) * 3600 + (parts.m || 0) * 60 + (parts.s || 0);
+    return Number.isFinite(seconds) ? seconds : null;
+}
+
+function formatSecondsAsDuration(value) {
+    const seconds = Number(value);
+    if (!Number.isFinite(seconds) || seconds <= 0) return '';
+
+    const wholeSeconds = Math.round(seconds);
+    const parts = [];
+    const hours = Math.floor(wholeSeconds / 3600);
+    const minutes = Math.floor((wholeSeconds % 3600) / 60);
+    const remainingSeconds = wholeSeconds % 60;
+    if (hours) parts.push(`${hours}h`);
+    if (minutes) parts.push(`${minutes}m`);
+    if (remainingSeconds || !parts.length) parts.push(`${remainingSeconds}s`);
+    return parts.join(' ');
+}
+
 function buildYoutubeCdnUrls(videoId) {
     return [
         `https://img.youtube.com/vi/${videoId}/hq1.jpg`

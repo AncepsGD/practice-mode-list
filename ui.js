@@ -1095,11 +1095,35 @@ function shuffleArray(array) {
   return shuffled;
 }
 
+const unverifiedEstimatedRankCache = new WeakMap();
+
+function getUnverifiedEstimatedRank(level) {
+  if (!level || typeof level !== 'object') return null;
+  if (unverifiedEstimatedRankCache.has(level)) return unverifiedEstimatedRankCache.get(level);
+
+  const prediction = typeof LadderUtils !== 'undefined'
+    && typeof LadderUtils.getEstimatedRankRange === 'function'
+    ? LadderUtils.getEstimatedRankRange(level, levels, [])
+    : null;
+  const rank = Number.isFinite(prediction?.estimatedRank) ? prediction.estimatedRank : null;
+  unverifiedEstimatedRankCache.set(level, rank);
+  return rank;
+}
+
+function sortUnverifiedByEstimatedDifficulty(unverifiedLevels) {
+  return [...unverifiedLevels].sort((a, b) => {
+    const rankA = getUnverifiedEstimatedRank(a) ?? Infinity;
+    const rankB = getUnverifiedEstimatedRank(b) ?? Infinity;
+    if (rankA !== rankB) return rankA - rankB;
+    return String(a.name || '').localeCompare(String(b.name || ''));
+  });
+}
+
 function initializeVerifications() {
   const unverifiedLevels = getUnverifiedLevels();
-  const shuffledLevels = shuffleArray(unverifiedLevels);
-  sessionStorage.setItem('verifications-list', JSON.stringify(shuffledLevels));
-  renderVerifications(shuffledLevels);
+  const sortedLevels = sortUnverifiedByEstimatedDifficulty(unverifiedLevels);
+  sessionStorage.setItem('verifications-list', JSON.stringify(sortedLevels));
+  renderVerifications(sortedLevels);
   renderTargetedLevels();
 }
 
@@ -1129,10 +1153,8 @@ function renderVerifications(data) {
       const levelKey = getLevelCardKey(lvl, index);
       const thumbnailMarkup = getThumbnailMarkup(lvl);
       const metaMarkup = getLevelMetaMarkup(lvl);
-      const tierRankRange = getTodoTierRankRange(lvl);
-      const rankLabel = tierRankRange
-        ? `#${tierRankRange.min}-${tierRankRange.max}~`
-        : '•';
+      const estimatedRank = getUnverifiedEstimatedRank(lvl);
+      const rankLabel = estimatedRank === null ? '•' : `#${Math.round(estimatedRank)}~`;
       const summaryRowsMarkup = getLevelSummaryRows(lvl)
         .map((row) => `<div class="victor-row"><span class="victor-label">${escapeHTML(row.label || '')}:</span><span class="victor-name">${escapeHTML(row.name || '')}</span><span class="victor-stats">${escapeHTML(row.stat || '')}</span></div>`)
         .join('');
