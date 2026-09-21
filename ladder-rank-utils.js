@@ -3,8 +3,27 @@
     tps: 1,
     length: 0.75,
     precision: 1.25,
+    ratio: 1,
     victorCount: 0.2,
     victorEvidence: 0.8,
+  });
+
+  const GAMEMODE_DIFFICULTY_ORDER = Object.freeze({
+    SH: 8,
+    U: 7,
+    R: 6,
+    SW: 5,
+    C: 4,
+    B: 3,
+    SP: 2,
+    W: 1,
+  });
+  const SPEED_DIFFICULTY_ORDER = Object.freeze({
+    "4x": 5,
+    "3x": 4,
+    "2x": 3,
+    "1x": 2,
+    "0.5x": 1,
   });
 
   const ESTIMATED_RANK_PENALTIES = Object.freeze({
@@ -27,8 +46,64 @@
 
   function getMetricValue(level, field) {
     if (field === "length") return parseVictorTime(level?.[field]);
+    if (field === "ratio") return getRatioDifficultyScore(level?.ratio);
     const value = Number(level?.[field]);
     return Number.isFinite(value) ? value : null;
+  }
+
+  function getRatioDifficultyScore(value) {
+    const text = String(value || "");
+    if (!text.trim()) return null;
+
+    const modeScores = [];
+    const modePattern = /\b(Ship|UFO|Robot|Swing|Cube|Ball|Spider|Wave)\s+(\d+(?:\.\d+)?)%/gi;
+    const shortModePattern = /(?:^|\s)(SH|SP|SW|C|B|U|W|R)(\d+(?:\.\d+)?)\(\d+\)/g;
+    const modeKeys = {
+      ship: "SH",
+      ufo: "U",
+      robot: "R",
+      swing: "SW",
+      cube: "C",
+      ball: "B",
+      spider: "SP",
+      wave: "W",
+    };
+    for (const match of text.matchAll(modePattern)) {
+      modeScores.push({ score: GAMEMODE_DIFFICULTY_ORDER[modeKeys[match[1].toLowerCase()]], percent: Number(match[2]) });
+    }
+    for (const match of text.matchAll(shortModePattern)) {
+      modeScores.push({ score: GAMEMODE_DIFFICULTY_ORDER[match[1]], percent: Number(match[2]) });
+    }
+
+    const speedScores = [];
+    const speedPattern = /\b(0\.5x|1x|2x|3x|4x)\s+(\d+(?:\.\d+)?)%/gi;
+    const shortSpeedPattern = /(?:^|\s)(0\.5|1|2|3|4)X(\d+(?:\.\d+)?)\(\d+\)/g;
+    for (const match of text.matchAll(speedPattern)) {
+      speedScores.push({ score: SPEED_DIFFICULTY_ORDER[match[1].toLowerCase()], percent: Number(match[2]) });
+    }
+    for (const match of text.matchAll(shortSpeedPattern)) {
+      speedScores.push({ score: SPEED_DIFFICULTY_ORDER[`${match[1]}x`], percent: Number(match[2]) });
+    }
+
+    const weightedScore = (entries, maximum) => {
+      const usable = entries.filter(entry => Number.isFinite(entry.score) && Number.isFinite(entry.percent) && entry.percent > 0);
+      const totalPercent = usable.reduce((sum, entry) => sum + entry.percent, 0);
+      return totalPercent ? usable.reduce((sum, entry) => sum + entry.score * entry.percent, 0) / totalPercent / maximum : null;
+    };
+    const mirrorSwitches = Number(text.match(/\bMirror\s*\((\d+)\)/i)?.[1] || 0);
+    const dualPercent = Number(text.match(/\bDual\s+(\d+(?:\.\d+)?)%/i)?.[1] || text.match(/\bD(\d+(?:\.\d+)?)/i)?.[1] || 0);
+    const inversePercent = Number(text.match(/\bInverse\s+(\d+(?:\.\d+)?)%/i)?.[1] || text.match(/\bIM(\d+(?:\.\d+)?)/i)?.[1] || 0);
+    const signals = [
+      [weightedScore(modeScores, 8), 0.4],
+      [weightedScore(speedScores, 5), 0.25],
+      [dualPercent > 0 ? Math.min(dualPercent / 100, 1) : null, 0.15],
+      [inversePercent > 0 ? Math.min(inversePercent / 100, 1) : null, 0.1],
+      [mirrorSwitches > 0 ? Math.min(Math.log1p(mirrorSwitches) / Math.log1p(12), 1) : null, 0.1],
+    ].filter(([score]) => score !== null);
+    const totalWeight = signals.reduce((sum, [, weight]) => sum + weight, 0);
+    return totalWeight
+      ? signals.reduce((sum, [score, weight]) => sum + score * weight, 0) / totalWeight
+      : null;
   }
 
   function getNormalizedDifficulty(level, metricFields, metricDistributions) {
@@ -184,7 +259,7 @@
       : tierCandidates;
     const candidates = rangedCandidates.length ? rangedCandidates : tierCandidates;
     const hasBaselineCandidates = rangedCandidates.length > 0;
-    const metricFields = ["tps", "length", "precision"];
+    const metricFields = ["tps", "length", "precision", "ratio"];
     const metricDistributions = Object.fromEntries(metricFields.map(field => [
       field,
       tierCandidates

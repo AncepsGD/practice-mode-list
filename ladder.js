@@ -90,6 +90,12 @@ function App() {
   const [useFullSecretList, setUseFullSecretList] = useState(
     typeof savedLadderState.useFullSecretList === "boolean" ? savedLadderState.useFullSecretList : false
   );
+  const [includeRebeats, setIncludeRebeats] = useState(
+    typeof savedLadderState.includeRebeats === "boolean" ? savedLadderState.includeRebeats : false
+  );
+  const [rebeatsOnly, setRebeatsOnly] = useState(
+    typeof savedLadderState.rebeatsOnly === "boolean" ? savedLadderState.rebeatsOnly : false
+  );
   const [selectedPlayer, setSelectedPlayer] = useState(
     typeof savedLadderState.selectedPlayer === "string" ? savedLadderState.selectedPlayer : ""
   );
@@ -101,6 +107,7 @@ function App() {
   const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(
     typeof savedLadderState.excludeTwoPlayer === "boolean" ? savedLadderState.excludeTwoPlayer : true
   );
+  const [showAllRatioExposure, setShowAllRatioExposure] = useState(false);
 
   useEffect(() => {
     try {
@@ -108,13 +115,15 @@ function App() {
         includeUnverified,
         unverifiedOnly,
         useFullSecretList,
+        includeRebeats,
+        rebeatsOnly,
         selectedPlayer,
         targetPlayerName,
         excludeTwoPlayer,
       }));
     } catch {
     }
-  }, [includeUnverified, unverifiedOnly, useFullSecretList, selectedPlayer, targetPlayerName, excludeTwoPlayer]);
+  }, [includeUnverified, unverifiedOnly, useFullSecretList, includeRebeats, rebeatsOnly, selectedPlayer, targetPlayerName, excludeTwoPlayer]);
 
   useEffect(() => {
     loadLadderData()
@@ -279,6 +288,18 @@ function App() {
     setExcludeTwoPlayer(prev => !prev);
   }
 
+  function toggleRebeats() {
+    setIncludeRebeats(prev => !prev);
+  }
+
+  function toggleRebeatsOnly() {
+    setRebeatsOnly(prev => {
+      const next = !prev;
+      if (next) setIncludeRebeats(true);
+      return next;
+    });
+  }
+
   function toggleIncludeUnverified(event) {
     if (event.shiftKey) setUseFullSecretList(prev => !prev);
     setIncludeUnverified(prev => !prev);
@@ -305,9 +326,92 @@ function App() {
       endurance: 1,
       coordination: 1,
       consistency: 1,
+      gamemodes: {},
+      speedModes: {},
+      ratioScore: 1,
+      ratioGamemodeSkill: null,
+      ratioSpeedSkill: null,
+      dualSkill: null,
+      inverseMirrorSkill: null,
+      mirrorSwitching: null,
+      ratioExposure: { levels: 0, modes: {}, speeds: {}, dualPercent: 0, inversePercent: 0, mirrorSwitches: 0 },
     }),
     [verifiedLevels, currentPlayer]
   );
+
+  const skillMetrics = useMemo(() => [
+    ["Dual", skillComponents.dualSkill],
+    ["2 Player Coordination", skillComponents.coordination],
+    ["High TPS Control", skillComponents.highTps],
+    ["Precision", skillComponents.precision],
+    ["Time", skillComponents.speed, true],
+    ["Attempts", skillComponents.attempts, true],
+    ["Endurance", skillComponents.endurance],
+    ...Object.entries(skillComponents.gamemodes || {})
+      .map(([mode, skill]) => [GAMEMODE_RATIO_NAMES[mode] || mode, skill]),
+    ...Object.entries(skillComponents.speedModes || {})
+      .map(([speed, skill]) => [speed, skill]),
+    ["Mirror Switching", skillComponents.mirrorSwitching],
+  ].filter(([, skill]) => Number.isFinite(skill) && skill > 0)
+    .map(([name, skill, lowerIsBetter = false]) => ({
+      name,
+      skill,
+      lowerIsBetter,
+      displaySkill: name === "Time"
+        ? 1 + skill
+        : name === "Attempts"
+          ? 2 - skill
+          : skill,
+    }))
+    .sort((left, right) => right.displaySkill - left.displaySkill), [skillComponents]);
+
+  const ratioExposureSummary = useMemo(() => {
+    const exposure = skillComponents.ratioExposure;
+    const datasetRatioLevels = verifiedLevels.filter(level => String(level?.ratio || "").trim()).length;
+    if (!exposure?.levels) {
+      return {
+        levels: 0,
+        items: [],
+        emptyMessage: datasetRatioLevels
+          ? `No matching completions (${datasetRatioLevels} levels in dataset)`
+          : "No Ratio data loaded",
+      };
+    }
+
+    const items = [
+      ...Object.values(exposure.modes || {}).map(mode => ({
+        key: `mode-${mode.name}`,
+        name: mode.name,
+        percent: (mode.percent / exposure.levels) * 100,
+      })),
+      ...Object.entries(exposure.speeds || {}).map(([speed, percent]) => ({
+        key: `speed-${speed}`,
+        name: speed,
+        percent: (percent / exposure.levels) * 100,
+      })),
+      {
+        key: "dual",
+        name: "Dual",
+        percent: exposure.dualPercent / exposure.levels * 100,
+      },
+      {
+        key: "inverse",
+        name: "Inverse Mirror",
+        percent: exposure.inversePercent / exposure.levels * 100,
+      },
+      {
+        key: "mirrors",
+        name: "Mirrors",
+        percent: exposure.mirrorSwitches / exposure.levels * 100,
+        value: `${(exposure.mirrorSwitches / exposure.levels).toFixed(1)}/level`,
+      },
+    ].sort((left, right) => right.percent - left.percent);
+
+    return {
+      levels: exposure.levels,
+      items,
+    };
+  }, [skillComponents]);
 
   const skillMultiplier = useMemo(
     () => (currentPlayer ? calculatePlayerSkill(verifiedLevels, currentPlayer.name) : 1),
@@ -315,7 +419,52 @@ function App() {
   );
 
   const skillClassification = useMemo(() => classifySkill(skillMultiplier), [skillMultiplier]);
-  const skillComparison = useMemo(() => describeSkillRelative(skillMultiplier), [skillMultiplier]);
+
+  const renderSkillExposure = (label, items, showAll, setShowAll, collapsible = true) => {
+    if (!items.length) return null;
+    const strongestSkill = Math.max(...items.map(item => item.displaySkill ?? item.skill), 1);
+    const visibleItems = !collapsible || showAll ? items : items.slice(0, 4);
+
+    return (
+      <div className="optimizer-skill-summary-section">
+        <div className="optimizer-skill-section-label">{label}</div>
+        <div className="optimizer-skill-exposure">
+        <div className="optimizer-skill-exposure-header">
+          <span className="optimizer-skill-exposure-unit">Relative to average</span>
+        </div>
+        <div className="optimizer-skill-exposure-list">
+          {visibleItems.map(item => (
+            <div
+              className={`optimizer-skill-exposure-row optimizer-skill-metric-${classifySkill(item.displaySkill ?? item.skill).toLowerCase().replaceAll(" ", "-")}`}
+              key={item.key || item.name}
+            >
+              <span>{item.name}</span>
+              <div className="optimizer-skill-exposure-bar" aria-hidden="true">
+                <span
+                  style={{
+                    width: `${Math.min(((item.displaySkill ?? item.skill) / strongestSkill) * 100, 100)}%`,
+                    backgroundColor: `hsl(${Math.round(Math.min(Math.max(((item.displaySkill ?? item.skill) - 0.55) / 0.95, 0), 1) * 270)}, 75%, 60%)`,
+                  }}
+                ></span>
+              </div>
+              <strong>{formatSkillPercent(item.displaySkill ?? item.skill)}</strong>
+            </div>
+          ))}
+        </div>
+        {collapsible && items.length > 4 && (
+          <button
+            className="optimizer-skill-exposure-toggle"
+            type="button"
+            aria-expanded={showAll}
+            onClick={() => setShowAll(previous => !previous)}
+          >
+            {showAll ? "Show less" : `Show ${items.length - 4} more`}
+          </button>
+        )}
+        </div>
+      </div>
+    );
+  };
 
   const targetPlayer = useMemo(
     () => leaderboard.find(p => p.name === targetPlayerName) || null,
@@ -338,12 +487,13 @@ function App() {
           maxPoints,
           routeLevels,
           verifiedLevels,
-        ),
+          includeRebeats || rebeatsOnly,
+        ).filter(level => !rebeatsOnly || level.isRebeat),
         targetPlayer,
       ),
       unverifiedOnly,
     ),
-    [routeLevels, currentPlayer, targetPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, unverifiedOnly]
+    [routeLevels, currentPlayer, targetPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, unverifiedOnly, includeRebeats, rebeatsOnly]
   );
 
   const recommendationsWithout2P = useMemo(
@@ -590,6 +740,34 @@ function App() {
                 <span className="optimizer-toggle-text">{excludeTwoPlayer ? "On" : "Off"}</span>
               </button>
             </div>
+            <div className="optimizer-toggle-row">
+              <span className="optimizer-toggle-label">Include rebeats</span>
+              <button
+                type="button"
+                className={`optimizer-toggle ${includeRebeats ? "active" : ""}`}
+                onClick={toggleRebeats}
+                aria-pressed={includeRebeats}
+              >
+                <span className="optimizer-toggle-track">
+                  <span className="optimizer-toggle-thumb" />
+                </span>
+                <span className="optimizer-toggle-text">{includeRebeats ? "On" : "Off"}</span>
+              </button>
+            </div>
+            <div className="optimizer-toggle-row">
+              <span className="optimizer-toggle-label">Rebeats only</span>
+              <button
+                type="button"
+                className={`optimizer-toggle ${rebeatsOnly ? "active" : ""}`}
+                onClick={toggleRebeatsOnly}
+                aria-pressed={rebeatsOnly}
+              >
+                <span className="optimizer-toggle-track">
+                  <span className="optimizer-toggle-thumb" />
+                </span>
+                <span className="optimizer-toggle-text">{rebeatsOnly ? "On" : "Off"}</span>
+              </button>
+            </div>
           </div>
           {includeUnverified && (
             <div className="optimizer-note">
@@ -601,42 +779,12 @@ function App() {
           {excludeTwoPlayer && (
             <div className="optimizer-note">2-player levels are excluded from route generation.</div>
           )}
-          <div className="optimizer-skill-summary">
-            <div className="optimizer-skill-main">
-              <span className="optimizer-skill-label">Overall performance</span>
-              <span className="optimizer-skill-value">{formatSkillMultiplier(skillMultiplier)}</span>
-            </div>
-            <div className="optimizer-skill-details">
-              <div className="optimizer-skill-classification">{skillClassification} vs. average victor</div>
-              <div className="optimizer-skill-comparison">{skillComparison.replace("Compared to average victor: ", "")}</div>
-              <div className="optimizer-skill-breakdown">
-                <div className="optimizer-skill-metric">
-                  <span>Time</span>
-                  <strong>{formatSkillMultiplier(skillComponents.speed)}</strong>
-                </div>
-                <div className="optimizer-skill-metric">
-                  <span>Attempts</span>
-                  <strong>{formatSkillMultiplier(skillComponents.attempts)}</strong>
-                </div>
-                <div className="optimizer-skill-metric">
-                  <span>Precision</span>
-                  <strong>{formatSkillMultiplier(skillComponents.precision)}</strong>
-                </div>
-                <div className="optimizer-skill-metric">
-                  <span>High-TPS control</span>
-                  <strong>{formatSkillMultiplier(skillComponents.highTps)}</strong>
-                </div>
-                <div className="optimizer-skill-metric">
-                  <span>Endurance</span>
-                  <strong>{formatSkillMultiplier(skillComponents.endurance)}</strong>
-                </div>
-                <div className="optimizer-skill-metric">
-                  <span>2-player coordination</span>
-                  <strong>{formatSkillMultiplier(skillComponents.coordination)}</strong>
-                </div>
-              </div>
-            </div>
-          </div>
+          {includeRebeats && (
+            <div className="optimizer-note">Rebeats show only the additional points available from improving an existing completion.</div>
+          )}
+          {rebeatsOnly && (
+            <div className="optimizer-note">Only rebeats with improvements in both time and attempts are shown.</div>
+          )}
           <div className="optimizer-stats-grid">
             <div className="optimizer-stat-box">
               <span className="optimizer-stat-label">Your Points</span>
@@ -775,10 +923,21 @@ function App() {
                               {truncateLadderLevelName(rec.level)}
                             </strong>
                             {rec.isUnverified && <span style={{marginLeft: "6px", color: "#b7791f", fontSize: "0.8em"}}>(unverified)</span>}
+                            {rec.isRebeat && (
+                              <span
+                                style={{marginLeft: "6px", color: "var(--mint)", fontSize: "0.8em"}}
+                                title={rec.completionAgeYears > 0 ? `Completion age: ${rec.completionAgeYears.toFixed(1)} years` : "Completion age unavailable"}
+                              >
+                                (rebeat)
+                              </span>
+                            )}
                           </td>
                           <td>{rec.victorCount}</td>
                           <td>{rec.basePoints.toFixed(1)}</td>
-                          <td><strong>{rec.projectedPoints.toFixed(1)}</strong> <span style={{fontSize: "0.9em", color: "#999"}}>({rec.projectedMult.toFixed(2)}×)</span></td>
+                          <td title={rec.isRebeat ? `Current award: ${(rec.currentPoints || 0).toFixed(1)} pts` : undefined}>
+                            <strong>{rec.isRebeat ? "+" : ""}{rec.projectedPoints.toFixed(1)}</strong>
+                            <span style={{fontSize: "0.9em", color: "#999"}}>({rec.projectedMult.toFixed(2)}×)</span>
+                          </td>
                           <td>{formatHours(rec.expectedHours)}</td>
                           <td>{Number.isFinite(rec.expectedAttempts) && rec.expectedAttempts > 0
                             ? Math.round(rec.expectedAttempts).toLocaleString()
@@ -791,6 +950,71 @@ function App() {
                     })}
                   </tbody>
                 </table>
+              </div>
+              <div className="optimizer-skill-summary">
+                <div className="optimizer-skill-main">
+                  <span className="optimizer-skill-label">Overall performance</span>
+                  <span className="optimizer-skill-value">{formatSkillMultiplier(skillMultiplier)}</span>
+                  <div className="optimizer-skill-meter" style={{ "--optimizer-skill-progress": `${Math.min(Math.max(skillMultiplier * 50, 0), 100)}%` }} aria-hidden="true">
+                    <span
+                      className="optimizer-skill-meter-fill"
+                      style={{
+                        background: `hsl(${Math.round(Math.min(Math.max((skillMultiplier - 0.55) / 0.95, 0), 1) * 270)}, 75%, 60%)`,
+                      }}
+                    ></span>
+                  </div>
+                </div>
+                <div className="optimizer-skill-details">
+                  <div className="optimizer-skill-unit">Performance relative to average</div>
+                  <div className="optimizer-skill-classification">{skillClassification} vs. average victor</div>
+                  <div className="optimizer-skill-exposure optimizer-skill-ratio-exposure-block">
+                    <div className="optimizer-skill-exposure-header">
+                      <div>
+                        <span className="optimizer-skill-exposure-label">Ratio exposure</span>
+                        {ratioExposureSummary.levels > 0 && (
+                          <strong>{ratioExposureSummary.levels} level{ratioExposureSummary.levels === 1 ? "" : "s"}</strong>
+                        )}
+                      </div>
+                      <span className="optimizer-skill-exposure-unit">Share of ratio levels</span>
+                    </div>
+                    {ratioExposureSummary.items.length > 0 ? (
+                      <>
+                        <div className="optimizer-skill-exposure-list">
+                          {(showAllRatioExposure
+                            ? ratioExposureSummary.items
+                            : ratioExposureSummary.items.slice(0, 4)
+                          ).map(item => (
+                            <div className="optimizer-skill-exposure-row" key={item.key}>
+                              <span>{item.name}</span>
+                              <div className="optimizer-skill-exposure-bar" aria-hidden="true">
+                                <span
+                                  style={{
+                                    width: `${Math.min(item.percent, 100)}%`,
+                                    backgroundColor: `hsl(${Math.round(Math.min(item.percent, 100) * 1.35)}, 75%, 60%)`,
+                                  }}
+                                ></span>
+                              </div>
+                              <strong>{item.value || `${item.percent.toFixed(1)}%`}</strong>
+                            </div>
+                          ))}
+                        </div>
+                        {ratioExposureSummary.items.length > 4 && (
+                          <button
+                            className="optimizer-skill-exposure-toggle"
+                            type="button"
+                            aria-expanded={showAllRatioExposure}
+                            onClick={() => setShowAllRatioExposure(prev => !prev)}
+                          >
+                            {showAllRatioExposure ? "Show less" : `Show ${ratioExposureSummary.items.length - 4} more`}
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <span className="optimizer-skill-exposure-empty">{ratioExposureSummary.emptyMessage}</span>
+                    )}
+                  </div>
+                  {renderSkillExposure("Skill metrics", skillMetrics, false, null, false)}
+                </div>
               </div>
             </>
           )}

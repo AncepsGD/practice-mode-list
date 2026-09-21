@@ -47,6 +47,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
       length: "",
       tps: "",
       precision: "",
+      ratio: "",
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
@@ -81,6 +82,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
   const normalizedPrecision = rawPrecision === null || rawPrecision === undefined || (typeof rawPrecision === "string" && rawPrecision.trim() === "") ? "" : String(Number(rawPrecision));
   const precisionValue = Number(normalizedPrecision);
   const precision = Number.isFinite(precisionValue) && precisionValue > 0 ? String(precisionValue) : "";
+  const ratio = typeof item.ratio === "string" ? item.ratio.trim() : "";
   const victors = Array.isArray(item.victors) ? item.victors : [];
   const tier = readString(item.tier, item.tierName);
   const rawRankRange = item.rankRange || item.estimatedRankRange;
@@ -99,6 +101,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
     length,
     tps,
     precision,
+    ratio,
     twoPlayer,
     showcaseVideo,
     image,
@@ -158,6 +161,9 @@ function renderRankEstimateBasis(level, hasSecretEstimate) {
     if (Number.isFinite(value) && value > 0) used.push(label);
     else missing.push(label);
   });
+  const ratioValue = String(level.ratio ?? document.getElementById("f-ratio")?.value ?? "").trim();
+  if (ratioValue) used.push("Ratio");
+  else missing.push("Ratio");
   if (level.tier) used.push("tier");
   else missing.push("tier");
 
@@ -183,6 +189,7 @@ function estimateRankFromLevel() {
     tps: document.getElementById("f-tps").value,
     length: document.getElementById("f-length").value,
     precision: document.getElementById("f-precision").value,
+    ratio: document.getElementById("f-ratio").value,
     is2Player: document.getElementById("f-twoplayer").value === "2 Player",
     victors: Array.from(document.querySelectorAll("#victors-list .victor-entry")).map(entry => ({
       name: entry.querySelector('[data-field="name"]').value,
@@ -631,6 +638,7 @@ function openLevelForm(index) {
       length: "",
       tps: "",
       precision: "",
+      ratio: "",
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
@@ -663,6 +671,7 @@ function openLevelForm(index) {
   document.getElementById("f-length").value = normalizedItem.length === "" ? "" : normalizedItem.length;
   document.getElementById("f-tps").value = normalizedItem.tps === 0 || normalizedItem.tps === "0" || normalizedItem.tps == null || normalizedItem.tps === "" ? "" : normalizedItem.tps;
   document.getElementById("f-precision").value = normalizedItem.precision || "";
+  document.getElementById("f-ratio").value = normalizedItem.ratio || "";
   document.getElementById("f-twoplayer").value = normalizedItem.twoPlayer || "";
   document.getElementById("f-showcase").value = normalizedItem.showcaseVideo || "";
   document.getElementById("f-image").value = normalizedItem.image || "";
@@ -782,6 +791,7 @@ function saveLevelForm() {
     length: Number.isFinite(parsedLength) && parsedLength > 0 ? formatSecondsAsDuration(parsedLength) : "",
     tps: Number.isFinite(parsedTps) ? parsedTps : "",
     precision: Number.isFinite(parsedPrecision) && parsedPrecision > 0 ? parsedPrecision : "",
+    ratio: document.getElementById("f-ratio").value.trim(),
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),

@@ -249,6 +249,10 @@ function buildLeaderboard(lvls) {
             map[playerName].completionDetails.push({
                 name: levelName,
                 points: Number(lvl.points) || 0,
+                earnedPoints: lvl.points * timeScore * bonusMultiplier * completionMultiplier,
+                date: victor.date || "",
+                seconds: Number.isFinite(victor.seconds) ? victor.seconds : null,
+                attempts: Number.isFinite(victor.attempts) ? victor.attempts : null,
                 tier: String(lvl.tier || "unknown").trim() || "unknown",
                 listIndex: levelOrder.get(levelName.toLowerCase()) ?? Number.MAX_SAFE_INTEGER,
             });

@@ -64,6 +64,70 @@ function formatDuration(seconds) {
   return parts.join(' ');
 }
 
+function getRatioStatisticsMarkup(ratio) {
+  const tokens = [];
+  const tokenPattern = /(?:^|\s)(0\.5X|1X|2X|3X|4X|IM|NM|[A-Z]+)(\d+(?:\.\d+)?)\((\d+)\)/gi;
+  for (const match of String(ratio || '').matchAll(tokenPattern)) {
+    tokens.push({
+      key: match[1].toUpperCase(),
+      percent: match[2],
+      count: match[3],
+    });
+  }
+
+  if (!tokens.length) return '';
+
+  const modeLabels = {
+    C: 'Cube',
+    SH: 'Ship',
+    B: 'Ball',
+    U: 'UFO',
+    W: 'Wave',
+    R: 'Robot',
+    SP: 'Spider',
+    SW: 'Swing',
+  };
+  const groups = [
+    { label: 'Gamemodes', keys: Object.keys(modeLabels), format: key => modeLabels[key] || key },
+    { label: 'Play', keys: ['D', 'S', 'IM', 'NM'], format: key => ({ D: 'Dual', S: 'Solo', IM: 'Inverse Mirror', NM: 'Normal Mirror' })[key] },
+    { label: 'Speed', keys: ['0.5X', '1X', '2X', '3X', '4X'], format: key => key.toLowerCase() },
+  ];
+
+  return `
+    <section class="ratio-statistics" aria-label="Ratio statistics">
+      <table class="victors-table ratio-statistics-table">
+        <tbody>
+        ${groups.map(group => {
+          const groupTokens = tokens.filter(token => group.keys.includes(token.key));
+          if (!groupTokens.length) return '';
+          const groupRows = [];
+          for (let index = 0; index < groupTokens.length; index += 6) {
+            groupRows.push(groupTokens.slice(index, index + 6));
+          }
+          return `
+            <tr class="ratio-statistics-group-row">
+              <th colspan="6">${group.label}</th>
+            </tr>
+            ${groupRows.map(row => `
+              <tr>
+                ${row.map(token => `
+                  <td class="ratio-statistics-entry">
+                    <strong>${group.format(token.key)}</strong>
+                    <span>${token.percent}%</span>
+                    <small>${token.count} changes</small>
+                  </td>
+                `).join('')}
+                ${Array.from({ length: 6 - row.length }, () => '<td></td>').join('')}
+              </tr>
+            `).join('')}
+          `;
+        }).join('')}
+        </tbody>
+      </table>
+    </section>
+  `;
+}
+
 const TARGETED_LEVELS_STORAGE_KEY = 'pml_targeted_levels';
 
 function getTargetedLevelKey(level) {
@@ -853,6 +917,7 @@ function renderLevels(data) {
           </tbody>
 
           </table>
+          ${getRatioStatisticsMarkup(lvl.ratio)}
         </div>
       </div>`;
     }).join('')}

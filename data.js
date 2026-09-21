@@ -79,6 +79,7 @@ function normalizeLevelEntry(item) {
       is2Player: false,
       showcaseVideoUrl: "",
       tier: "",
+      ratio: "",
     };
   }
 
@@ -117,6 +118,7 @@ function normalizeLevelEntry(item) {
   const rawTps = item.tps ?? item.TPS ?? item.tpsValue;
   const normalizedTps = rawTps === null || rawTps === undefined || (typeof rawTps === "string" && rawTps.trim() === "") || Number(rawTps) === 0 ? null : Number(rawTps);
   const parsedTps = Number.isFinite(normalizedTps) ? normalizedTps : null;
+  const ratio = typeof item.ratio === "string" ? item.ratio.trim() : "";
   const rawRankRange = item.rankRange || item.estimatedRankRange;
   const rankRangeMin = Number(rawRankRange?.min ?? item.estimatedRankMin);
   const rankRangeMax = Number(rawRankRange?.max ?? item.estimatedRankMax);
@@ -145,6 +147,7 @@ function normalizeLevelEntry(item) {
     length: normalizedLength,
     tps: parsedTps,
     precision: normalizedPrecision,
+    ratio,
     rankRange,
   };
 
@@ -172,7 +175,7 @@ function mergeVerificationSources(remoteData, savedData) {
     if (!savedItem) return remoteItem;
 
     const result = { ...remoteItem, ...savedItem };
-    ["creator", "creators", "tier", "length", "precision", "tps", "twoPlayer", "showcaseVideo", "showcaseVideoUrl", "image", "thumbnail"].forEach((field) => {
+    ["creator", "creators", "tier", "length", "precision", "tps", "ratio", "twoPlayer", "showcaseVideo", "showcaseVideoUrl", "image", "thumbnail"].forEach((field) => {
       if (savedItem[field] === "" || savedItem[field] === null || savedItem[field] === undefined) {
         result[field] = remoteItem[field];
       }
