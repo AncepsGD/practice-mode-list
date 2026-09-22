@@ -1254,6 +1254,13 @@
         "time": "1h 9m 17s",
         "attempts": 5396,
         "video": "https://youtu.be/ahJvVQky6Os"
+      },
+      {
+        "name": "kyle1saurus",
+        "date": "2026-09-22",
+        "time": "50m 54s",
+        "attempts": 3295,
+        "video": "https://youtu.be/JUVdeE93jUk"
       }
     ]
   },
@@ -1327,6 +1334,13 @@
         "time": "1h 2m 32s",
         "attempts": 6399,
         "video": "https://www.youtube.com/playlist?list=PLbSPMG6KzZsY"
+      },
+      {
+        "name": "kyle1saurus",
+        "date": "2026-09-22",
+        "time": "55m 41s",
+        "attempts": 4765,
+        "video": "https://www.youtube.com/playlist?list=PLA3r3Gz1Elw0"
       }
     ]
   },
@@ -9760,28 +9774,6 @@
   },
   {
     "rank": 338,
-    "name": "Minecraft",
-    "creators": "realhutoew",
-    "id": "75560026",
-    "length": "31s",
-    "tps": 277,
-    "precision": 476.7,
-    "ratio": "C88.2(2) W7.3(1) SH4.5(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X100(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/XW8k8Arxl78?si=wAUQJ0GYIPoNpjA7",
-    "image": "",
-    "victors": [
-      {
-        "name": "Duelo Maestro Guy",
-        "date": "2026-07-26",
-        "time": "14m 33s",
-        "attempts": 2201,
-        "video": "https://youtube.com/live/IfQ7eIEI_6I?feature=share"
-      }
-    ]
-  },
-  {
-    "rank": 339,
     "name": "silent kirkles",
     "creators": "kartz, fern,piesy, 1st3y1",
     "id": "128767386",
@@ -9810,7 +9802,7 @@
     ]
   },
   {
-    "rank": 340,
+    "rank": 339,
     "name": "DIE IMBECIEL",
     "creators": "RMGD",
     "id": "142927911",
@@ -9832,7 +9824,7 @@
     ]
   },
   {
-    "rank": 341,
+    "rank": 340,
     "name": "TCD Builds a Top 1",
     "creators": "TCDofficial",
     "id": "126701660",
@@ -9854,7 +9846,7 @@
     ]
   },
   {
-    "rank": 342,
+    "rank": 341,
     "name": "Silent Processing",
     "creators": "plutonium238, garfieldgreef, RobTop",
     "id": "126380017",
@@ -9876,7 +9868,7 @@
     ]
   },
   {
-    "rank": 343,
+    "rank": 342,
     "name": "Silent Dry",
     "creators": "CDMusic",
     "id": "69608644",
@@ -9933,7 +9925,7 @@
     ]
   },
   {
-    "rank": 344,
+    "rank": 343,
     "name": "Wrath of the Faraon",
     "creators": "KidJolly",
     "id": "66683722",
@@ -9983,7 +9975,7 @@
     ]
   },
   {
-    "rank": 345,
+    "rank": 344,
     "name": "Wrath of the Faraon (1P)",
     "creators": "KidJolly",
     "id": "148305382",
@@ -10012,7 +10004,7 @@
     ]
   },
   {
-    "rank": 346,
+    "rank": 345,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -10076,7 +10068,7 @@
     ]
   },
   {
-    "rank": 347,
+    "rank": 346,
     "name": "Silent poltergeist v666",
     "creators": "TheRealSailent, RMGD",
     "id": "143298563",
@@ -10105,7 +10097,7 @@
     ]
   },
   {
-    "rank": 348,
+    "rank": 347,
     "name": "Hi GDArchives Extra",
     "creators": "kyle1saurus",
     "id": "144103311",
@@ -10134,7 +10126,7 @@
     ]
   },
   {
-    "rank": 349,
+    "rank": 348,
     "name": "Hush (Unnerfed)",
     "creators": "Ariwl",
     "id": "126079844",
@@ -10156,7 +10148,7 @@
     ]
   },
   {
-    "rank": 350,
+    "rank": 349,
     "name": "Colorful Twilight (Dual Skip)",
     "creators": "RMGD",
     "id": "121449919",
@@ -10178,7 +10170,7 @@
     ]
   },
   {
-    "rank": 351,
+    "rank": 350,
     "name": "Old Thinking Blood",
     "creators": "Vyzenix, JBKris, Stereogamer992, Rebornnn, pa1ne",
     "id": "146316976",
@@ -10207,7 +10199,7 @@
     ]
   },
   {
-    "rank": 352,
+    "rank": 351,
     "name": "Bakemonogatari dead",
     "creators": "hhuko, kyle1saurus",
     "id": "147093222",
@@ -10229,7 +10221,7 @@
     ]
   },
   {
-    "rank": 353,
+    "rank": 352,
     "name": "Copyable Chamber",
     "creators": "Bukkk",
     "id": "74246961",
@@ -10258,7 +10250,7 @@
     ]
   },
   {
-    "rank": 354,
+    "rank": 353,
     "name": "Shatter Synapse",
     "creators": "AngelEffect",
     "id": "111005000",
@@ -10287,7 +10279,7 @@
     ]
   },
   {
-    "rank": 355,
+    "rank": 354,
     "name": "rare (Old)",
     "creators": "greafer",
     "id": "95647061",
@@ -10309,7 +10301,7 @@
     ]
   },
   {
-    "rank": 356,
+    "rank": 355,
     "name": "New Listworthy Level",
     "creators": "mewj13",
     "id": "147633529",
@@ -10338,7 +10330,7 @@
     ]
   },
   {
-    "rank": 357,
+    "rank": 356,
     "name": "Silent Theory",
     "creators": "HaloZombies",
     "id": "102607395",
@@ -10360,7 +10352,7 @@
     ]
   },
   {
-    "rank": 358,
+    "rank": 357,
     "name": "AQUAHEART (Old)",
     "creators": "Dessepoir",
     "id": "125039721",
@@ -10403,7 +10395,7 @@
     ]
   },
   {
-    "rank": 359,
+    "rank": 358,
     "name": "denouement hard 2",
     "creators": "kyle1saurus",
     "id": "148860723",
@@ -10425,7 +10417,7 @@
     ]
   },
   {
-    "rank": 360,
+    "rank": 359,
     "name": "T E M P L E",
     "creators": "FHippo‬",
     "id": "126901517",
@@ -10447,7 +10439,7 @@
     ]
   },
   {
-    "rank": 361,
+    "rank": 360,
     "name": "Nowon Yung Jae Won",
     "creators": "DiaCreeper, kangerlussuaq",
     "id": "145529918",
@@ -10476,7 +10468,7 @@
     ]
   },
   {
-    "rank": 362,
+    "rank": 361,
     "name": "Omega Circles II",
     "creators": "HackedHardest",
     "id": "83717092",
@@ -10505,7 +10497,7 @@
     ]
   },
   {
-    "rank": 363,
+    "rank": 362,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
