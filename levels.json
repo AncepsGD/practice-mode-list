@@ -697,7 +697,7 @@
     "length": "1m",
     "tps": 970,
     "precision": "",
-    "ratio": "",
+    "ratio": "W66.6(6) C19.3(5) SH8.8(1) U3(1) B2.3(1) D65.5(5) S34.5(4) IM2.9(1) NM97.1(1) 2X71.4(3) 0.5X28.6(2)",
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://www.youtube.com/watch?v=4EQ9nG6NIak",
     "image": "",
@@ -3417,6 +3417,13 @@
         "time": "31m 19s",
         "attempts": 9682,
         "video": "https://www.youtube.com/playlist?list=PLNRlldVpR4Gs"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "24m 50s",
+        "attempts": 8885,
+        "video": "https://youtu.be/MxeNgxqjBQo"
       }
     ]
   },
@@ -5989,6 +5996,13 @@
         "time": "22m 19s",
         "attempts": 10211,
         "video": "https://youtu.be/patJkOFYOf8"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "11m 47s",
+        "attempts": 2871,
+        "video": "https://youtu.be/Z20fooXWNrY"
       }
     ]
   },
@@ -6069,6 +6083,13 @@
         "time": "44m 51s",
         "attempts": 3012,
         "video": "https://youtu.be/-8fy8wOAsDQ"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "35m 38s",
+        "attempts": 4269,
+        "video": "https://youtu.be/s8oGVko6fig"
       }
     ]
   },
@@ -6331,6 +6352,13 @@
         "time": "42m 34s",
         "attempts": 2419,
         "video": "https://youtu.be/jJshxTBtSdA"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "24m 56s",
+        "attempts": 3089,
+        "video": "https://youtu.be/7QdxKaU4DTA"
       }
     ]
   },
@@ -8691,6 +8719,13 @@
         "time": "16m 50s",
         "attempts": 1556,
         "video": "https://www.youtube.com/watch?v=9VRkwCfIrFQ"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "11m 38s",
+        "attempts": 1481,
+        "video": "https://youtu.be/4j_uXzg3MFI"
       }
     ]
   },
@@ -9776,6 +9811,13 @@
         "time": "15m 46s",
         "attempts": 17285,
         "video": "https://www.youtube.com/watch?v=ekWdKeIccco"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "7m 27s",
+        "attempts": 2910,
+        "video": "https://youtu.be/O4mKaKLZd5A"
       }
     ]
   },
@@ -10398,11 +10440,40 @@
         "time": "19m 21s",
         "attempts": 1332,
         "video": "https://youtu.be/i0FDMHYg_4c"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "14m 22s",
+        "attempts": 1998,
+        "video": "https://youtu.be/ngZQ1F-vA6c"
       }
     ]
   },
   {
     "rank": 358,
+    "name": "haunted corridor v3",
+    "creators": "KaotikJumper & more, Arcadie",
+    "id": "148748065",
+    "length": "2m 20s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "W51(11) SH15.2(10) B10.7(6) C10.3(9) R8.4(2) U2.8(4) SP1.5(2) D13.7(7) S86.3(6) IM0.0(0) NM100.0(0) 0.5X51.7(5) 1X35.3(3) 3X12.1(6) 2X0.9(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "",
+        "attempts": 5893,
+        "video": "https://youtu.be/sTXF--Z-2d4"
+      }
+    ]
+  },
+  {
+    "rank": 359,
     "name": "AQUAHEART (Old)",
     "creators": "Dessepoir",
     "id": "125039721",
@@ -10445,7 +10516,7 @@
     ]
   },
   {
-    "rank": 359,
+    "rank": 360,
     "name": "denouement hard 2",
     "creators": "kyle1saurus",
     "id": "148860723",
@@ -10467,7 +10538,7 @@
     ]
   },
   {
-    "rank": 360,
+    "rank": 361,
     "name": "Checkmate (san andreas)",
     "creators": "san andreas",
     "id": "127140356",
@@ -10489,7 +10560,7 @@
     ]
   },
   {
-    "rank": 361,
+    "rank": 362,
     "name": "T E M P L E",
     "creators": "FHippo‬",
     "id": "126901517",
@@ -10511,7 +10582,7 @@
     ]
   },
   {
-    "rank": 362,
+    "rank": 363,
     "name": "Nowon Yung Jae Won",
     "creators": "DiaCreeper, kangerlussuaq",
     "id": "145529918",
@@ -10540,7 +10611,7 @@
     ]
   },
   {
-    "rank": 363,
+    "rank": 364,
     "name": "Omega Circles II",
     "creators": "HackedHardest",
     "id": "83717092",
@@ -10569,14 +10640,14 @@
     ]
   },
   {
-    "rank": 364,
+    "rank": 365,
     "name": "Monochrome Wave",
     "creators": "Gurt63",
     "id": "145597643",
     "length": "1m 38s",
     "tps": 360,
     "precision": 780.9,
-    "ratio": "",
+    "ratio": "W100(0) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X81.3(7) 4X8.4(3) 1X5.2(4) 2X2.9(4) 3X2.2(4)",
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/ZIEIPePFVcM",
     "image": "",
@@ -10591,7 +10662,7 @@
     ]
   },
   {
-    "rank": 365,
+    "rank": 366,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
