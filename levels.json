@@ -10423,6 +10423,28 @@
   },
   {
     "rank": 357,
+    "name": "haunted corridor v3",
+    "creators": "KaotikJumper & more, Arcadie",
+    "id": "148748065",
+    "length": "2m 20s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "W51(11) SH15.2(10) B10.7(6) C10.3(9) R8.4(2) U2.8(4) SP1.5(2) D13.7(7) S86.3(6) IM0.0(0) NM100.0(0) 0.5X51.7(5) 1X35.3(3) 3X12.1(6) 2X0.9(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "Anceps",
+        "date": "2026-09-23",
+        "time": "23m 12s",
+        "attempts": 5893,
+        "video": "https://youtu.be/sTXF--Z-2d4"
+      }
+    ]
+  },
+  {
+    "rank": 358,
     "name": "Silent Theory",
     "creators": "HaloZombies",
     "id": "102607395",
@@ -10447,28 +10469,6 @@
         "time": "14m 22s",
         "attempts": 1998,
         "video": "https://youtu.be/ngZQ1F-vA6c"
-      }
-    ]
-  },
-  {
-    "rank": 358,
-    "name": "haunted corridor v3",
-    "creators": "KaotikJumper & more, Arcadie",
-    "id": "148748065",
-    "length": "2m 20s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "W51(11) SH15.2(10) B10.7(6) C10.3(9) R8.4(2) U2.8(4) SP1.5(2) D13.7(7) S86.3(6) IM0.0(0) NM100.0(0) 0.5X51.7(5) 1X35.3(3) 3X12.1(6) 2X0.9(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "Anceps",
-        "date": "2026-09-23",
-        "time": "",
-        "attempts": 5893,
-        "video": "https://youtu.be/sTXF--Z-2d4"
       }
     ]
   },
