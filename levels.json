@@ -19,7 +19,8 @@
         "attempts": 454968,
         "video": "https://youtube.com/live/bd9X06krz0w?feature=share"
       }
-    ]
+    ],
+    "tier": "Ethereal"
   },
   {
     "rank": 2,
@@ -41,8 +42,7 @@
         "attempts": 695759,
         "video": "https://www.youtube.com/playlist?list=PLYRdTDDy6Qgc"
       }
-    ],
-    "tier": "Ethereal"
+    ]
   },
   {
     "rank": 3,
