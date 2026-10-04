@@ -190,6 +190,19 @@ function mergeVerificationSources(remoteData, savedData) {
   }));
 }
 
+function markPendingVictorLevels(verificationData) {
+  const mainLevelIds = new Set(levels.map((item) => String(item.id || item.levelId || "").trim().toLowerCase()).filter(Boolean));
+  const mainLevelNames = new Set(levels.map((item) => String(item.name || item.levelName || "").trim().toLowerCase()).filter(Boolean));
+
+  return (Array.isArray(verificationData) ? verificationData : []).map((item) => {
+    const id = String(item?.id || item?.levelId || "").trim().toLowerCase();
+    const name = String(item?.name || item?.levelName || "").trim().toLowerCase();
+    const isInMainList = (id && mainLevelIds.has(id)) || (name && mainLevelNames.has(name));
+    if (isInMainList || !Array.isArray(item?.victors) || item.victors.length === 0) return item;
+    return { ...item, tier: "Pending" };
+  });
+}
+
 function loadData() {
   return fetchWithTimeout("levels.json")
     .then((r) => {
@@ -326,14 +339,15 @@ function processRawData(data) {
           const verificationsList = mergedData
             .filter((item) => item && (item.name || item.levelName || item.id))
             .map((item) => normalizeLevelEntry(item));
-          assignTiers(verificationsList, false);
-          window.verifications = verificationsList;
-          persistEditorRemoteBaseline(verificationsList, "verifications");
+          const pendingVerificationsList = markPendingVictorLevels(verificationsList);
+          assignTiers(pendingVerificationsList, false);
+          window.verifications = pendingVerificationsList;
+          persistEditorRemoteBaseline(pendingVerificationsList, "verifications");
           initializeVerifications();
           syncDemonSystemFromRawData();
         })
         .catch(() => {
-          window.verifications = savedData;
+          window.verifications = markPendingVictorLevels(savedData);
           initializeVerifications();
           syncDemonSystemFromRawData();
         });
@@ -347,13 +361,14 @@ function processRawData(data) {
       const verificationsList = data
         .filter((item) => item && (item.name || item.levelName || item.id))
         .map((item) => normalizeLevelEntry(item));
+      const pendingVerificationsList = markPendingVictorLevels(verificationsList);
       try {
-        assignTiers(verificationsList, false);
+        assignTiers(pendingVerificationsList, false);
       } catch (e) {
         console.error("Failed to assign tiers to verifications", e);
       }
-      window.verifications = verificationsList;
-      persistEditorRemoteBaseline(verificationsList, "verifications");
+      window.verifications = pendingVerificationsList;
+      persistEditorRemoteBaseline(pendingVerificationsList, "verifications");
       initializeVerifications();
       syncDemonSystemFromRawData();
     })

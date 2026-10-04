@@ -742,6 +742,29 @@ function renumberVictors() {
   });
 }
 
+function createScoringBaseline(existingVictors, existingBaseline, submittedVictors) {
+  const eligibleVictors = (victors) => (victors || []).filter(isEligibleVictor);
+  const bestTime = (victors) => eligibleVictors(victors)
+    .map((victor) => parseTimeToSeconds(victor.time))
+    .filter((seconds) => Number.isFinite(seconds) && seconds > 0)
+    .reduce((best, seconds) => best === null || seconds < best ? seconds : best, null);
+  const bestAttempts = (victors) => eligibleVictors(victors)
+    .map((victor) => Number(victor.attempts))
+    .filter((attempts) => Number.isFinite(attempts) && attempts > 0)
+    .reduce((best, attempts) => best === null || attempts < best ? attempts : best, null);
+  const savedTime = Number(existingBaseline?.timeSeconds);
+  const savedAttempts = Number(existingBaseline?.attempts);
+
+  return {
+    timeSeconds: Number.isFinite(savedTime) && savedTime > 0
+      ? savedTime
+      : (bestTime(existingVictors) ?? bestTime(submittedVictors)),
+    attempts: Number.isFinite(savedAttempts) && savedAttempts > 0
+      ? savedAttempts
+      : (bestAttempts(existingVictors) ?? bestAttempts(submittedVictors)),
+  };
+}
+
 function saveLevelForm() {
   const name = document.getElementById("f-name").value.trim();
   if (!name) {
@@ -758,6 +781,7 @@ function saveLevelForm() {
   const data = getEditorData();
   const existingIndex = data.findIndex(l => l.id === id);
   const currentIndex = editingIndex;
+  const existingItem = currentIndex === -1 ? null : data[currentIndex];
 
   if (existingIndex !== -1 && existingIndex !== currentIndex) {
     console.warn("Duplicate level ID detected while saving; continuing with save.", {
@@ -805,7 +829,15 @@ function saveLevelForm() {
     if (!rangeValidation.valid) return;
     if (rangeValidation.range) item.rankRange = rangeValidation.range;
   } else if (currentIndex !== -1) {
-    item.tier = data[currentIndex].tier;
+    item.tier = existingItem.tier;
+  }
+
+  if (editingSource !== "verifications") {
+    item.scoringBaseline = createScoringBaseline(
+      existingItem?.victors,
+      existingItem?.scoringBaseline,
+      victors,
+    );
   }
 
   if (editingSource !== "verifications") {

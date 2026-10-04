@@ -20,7 +20,11 @@
         "video": "https://youtu.be/HqqdOi4VS9s"
       }
     ],
-    "tier": "Ethereal"
+    "tier": "Ethereal",
+    "scoringBaseline": {
+      "timeSeconds": 67198,
+      "attempts": 454968
+    }
   },
   {
     "rank": 2,
@@ -42,7 +46,11 @@
         "attempts": 695759,
         "video": "https://www.youtube.com/playlist?list=PLYRdTDDy6Qgc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 37281,
+      "attempts": 695759
+    }
   },
   {
     "rank": 3,
@@ -72,7 +80,11 @@
         "video": "https://www.youtube.com/watch?v=Br3A6JYOMUk"
       }
     ],
-    "tier": "Transcendent"
+    "tier": "Transcendent",
+    "scoringBaseline": {
+      "timeSeconds": 34187,
+      "attempts": 242157
+    }
   },
   {
     "rank": 4,
@@ -94,7 +106,11 @@
         "attempts": 61224,
         "video": "https://www.youtube.com/playlist?list=PLNyinuOwzvXU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 17768,
+      "attempts": 61224
+    }
   },
   {
     "rank": 5,
@@ -116,7 +132,11 @@
         "attempts": 57259,
         "video": "https://www.youtube.com/playlist?list=PLeg_U3EDbLgo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 53032,
+      "attempts": 57259
+    }
   },
   {
     "rank": 6,
@@ -152,7 +172,11 @@
         "attempts": 89121,
         "video": "https://www.youtube.com/playlist?list=PLFwHs1MSQqJ8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 15345,
+      "attempts": 89121
+    }
   },
   {
     "rank": 7,
@@ -181,7 +205,11 @@
         "attempts": 271587,
         "video": "https://www.youtube.com/watch?v=LaEyJ46j7AU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 15703,
+      "attempts": 93601
+    }
   },
   {
     "rank": 8,
@@ -203,7 +231,11 @@
         "attempts": 68268,
         "video": "https://www.youtube.com/playlist?list=PLZgXrgaZoPiQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6457,
+      "attempts": 68268
+    }
   },
   {
     "rank": 9,
@@ -225,7 +257,11 @@
         "attempts": 76157,
         "video": "https://youtu.be/dNoCLKARLoY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 10566,
+      "attempts": 76157
+    }
   },
   {
     "rank": 10,
@@ -247,7 +283,11 @@
         "attempts": 31852,
         "video": "https://www.youtube.com/playlist?list=PLAWI8Ew8YPLI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 11549,
+      "attempts": 31852
+    }
   },
   {
     "rank": 11,
@@ -276,7 +316,11 @@
         "attempts": 15598,
         "video": "https://youtu.be/0ukRcuiqIOc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 7651,
+      "attempts": 15598
+    }
   },
   {
     "rank": 12,
@@ -298,7 +342,11 @@
         "attempts": 181370,
         "video": "https://youtu.be/Cp1zMiDmsIA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 9452,
+      "attempts": 181370
+    }
   },
   {
     "rank": 13,
@@ -320,7 +368,11 @@
         "attempts": 133429,
         "video": "https://youtu.be/7Xdthw8FkTs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 9583,
+      "attempts": 133429
+    }
   },
   {
     "rank": 14,
@@ -342,7 +394,11 @@
         "attempts": 106958,
         "video": "https://youtu.be/z_L5cb0mhOI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 8219,
+      "attempts": 106958
+    }
   },
   {
     "rank": 15,
@@ -364,7 +420,11 @@
         "attempts": 34066,
         "video": "https://www.youtube.com/playlist?list=PLL6-haL3bDSc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 10997,
+      "attempts": 34066
+    }
   },
   {
     "rank": 16,
@@ -386,7 +446,11 @@
         "attempts": 56818,
         "video": "https://youtu.be/W3i7t9RWyLk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 13318,
+      "attempts": 56818
+    }
   },
   {
     "rank": 17,
@@ -408,7 +472,11 @@
         "attempts": 38479,
         "video": "https://youtube.com/playlist?list=PLcpkS-keFxBg&si=B_Q6mUtVSEgmTOsQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 7177,
+      "attempts": 38479
+    }
   },
   {
     "rank": 18,
@@ -437,7 +505,11 @@
         "attempts": 60105,
         "video": "https://youtube.com/playlist?list=PLInQ9Vmn0GGM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 8092,
+      "attempts": 60105
+    }
   },
   {
     "rank": 19,
@@ -459,7 +531,11 @@
         "attempts": 28821,
         "video": "https://youtu.be/bN9N2C3i_QM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 10030,
+      "attempts": 28821
+    }
   },
   {
     "rank": 20,
@@ -481,7 +557,11 @@
         "attempts": 16249,
         "video": "https://www.youtube.com/playlist?list=PLObay5yY1g0A"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 7437,
+      "attempts": 16249
+    }
   },
   {
     "rank": 21,
@@ -503,7 +583,11 @@
         "attempts": 10957,
         "video": "https://youtu.be/dRFuq8VwaBY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5324,
+      "attempts": 10957
+    }
   },
   {
     "rank": 22,
@@ -525,7 +609,11 @@
         "attempts": 82527,
         "video": "https://youtu.be/xgtZ_NuTZ8A"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 10522,
+      "attempts": 82527
+    }
   },
   {
     "rank": 23,
@@ -547,7 +635,11 @@
         "attempts": 53117,
         "video": "https://youtu.be/rF6Ga1UmTZ4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4915,
+      "attempts": 53117
+    }
   },
   {
     "rank": 24,
@@ -569,7 +661,11 @@
         "attempts": 23039,
         "video": "https://www.youtube.com/playlist?list=PLZraMVeHaAFI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 21653,
+      "attempts": 23039
+    }
   },
   {
     "rank": 25,
@@ -599,7 +695,11 @@
         "video": "https://youtu.be/_uEXimldUHE"
       }
     ],
-    "tier": "Divine"
+    "tier": "Divine",
+    "scoringBaseline": {
+      "timeSeconds": 6679,
+      "attempts": 14081
+    }
   },
   {
     "rank": 26,
@@ -621,7 +721,11 @@
         "attempts": 14675,
         "video": "https://youtu.be/JfZTdvNMQsU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4861,
+      "attempts": 14675
+    }
   },
   {
     "rank": 27,
@@ -643,7 +747,11 @@
         "attempts": 28685,
         "video": "https://www.youtube.com/playlist?list=PLc_Q2eXdN7-g"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5989,
+      "attempts": 28685
+    }
   },
   {
     "rank": 28,
@@ -665,7 +773,11 @@
         "attempts": 29817,
         "video": "https://youtu.be/fvHPsynHlvc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 7612,
+      "attempts": 29817
+    }
   },
   {
     "rank": 29,
@@ -687,7 +799,11 @@
         "attempts": 17355,
         "video": "https://www.youtube.com/playlist?list=PLDdvpMsfNRAA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6668,
+      "attempts": 17355
+    }
   },
   {
     "rank": 30,
@@ -709,7 +825,11 @@
         "attempts": 37408,
         "video": "https://youtu.be/L5FyPFhKFx4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3554,
+      "attempts": 37408
+    }
   },
   {
     "rank": 31,
@@ -731,7 +851,11 @@
         "attempts": 79941,
         "video": "https://www.youtube.com/playlist?list=PLf-TJdgnZLg4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 10273,
+      "attempts": 79941
+    }
   },
   {
     "rank": 32,
@@ -753,7 +877,11 @@
         "attempts": 46847,
         "video": "https://www.youtube.com/playlist?list=PLQCupIEOO-iQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 10900,
+      "attempts": 46847
+    }
   },
   {
     "rank": 33,
@@ -775,7 +903,11 @@
         "attempts": 4001,
         "video": "https://youtu.be/rVUOSD8TPT8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5704,
+      "attempts": 4001
+    }
   },
   {
     "rank": 34,
@@ -797,7 +929,11 @@
         "attempts": 11358,
         "video": "https://www.youtube.com/playlist?list=PLVbHn3d3D-qQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 9168,
+      "attempts": 11358
+    }
   },
   {
     "rank": 35,
@@ -819,7 +955,11 @@
         "attempts": 9459,
         "video": "https://www.youtube.com/playlist?list=PLNVDCk6ute6E"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 9197,
+      "attempts": 9459
+    }
   },
   {
     "rank": 36,
@@ -848,7 +988,11 @@
         "attempts": 44920,
         "video": "https://www.youtube.com/playlist?list=PLXzCoAsRYODc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 8603,
+      "attempts": 44920
+    }
   },
   {
     "rank": 37,
@@ -870,7 +1014,11 @@
         "attempts": 8833,
         "video": "https://youtu.be/9b5cWZSd3Qk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 8518,
+      "attempts": 8833
+    }
   },
   {
     "rank": 38,
@@ -892,7 +1040,11 @@
         "attempts": 21790,
         "video": "https://www.youtube.com/watch?v=hBnyKQ35u1w&list=PLVs1ipa724nQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 15874,
+      "attempts": 21790
+    }
   },
   {
     "rank": 39,
@@ -914,7 +1066,11 @@
         "attempts": 86009,
         "video": "https://www.youtube.com/playlist?list=PLV6xMvPswnk4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 13979,
+      "attempts": 86009
+    }
   },
   {
     "rank": 40,
@@ -992,7 +1148,11 @@
         "attempts": 122089,
         "video": "https://www.youtube.com/playlist?list=PLJ56KYmX1X88"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 7064,
+      "attempts": 55930
+    }
   },
   {
     "rank": 41,
@@ -1021,7 +1181,11 @@
         "attempts": 63419,
         "video": "https://youtu.be/Q-TcAc4GeKY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 8418,
+      "attempts": 28343
+    }
   },
   {
     "rank": 42,
@@ -1043,7 +1207,11 @@
         "attempts": 24775,
         "video": "https://youtu.be/Ug4QvWlRxF0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6320,
+      "attempts": 24775
+    }
   },
   {
     "rank": 43,
@@ -1065,7 +1233,11 @@
         "attempts": 8855,
         "video": "https://www.youtube.com/playlist?list=PLdAig740T4ho"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6893,
+      "attempts": 8855
+    }
   },
   {
     "rank": 44,
@@ -1087,7 +1259,11 @@
         "attempts": 129253,
         "video": "https://youtu.be/n-q5iW10d94"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4101,
+      "attempts": 129253
+    }
   },
   {
     "rank": 45,
@@ -1109,7 +1285,11 @@
         "attempts": 8711,
         "video": "https://youtu.be/c7zgYyj8ltE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5633,
+      "attempts": 8711
+    }
   },
   {
     "rank": 46,
@@ -1131,7 +1311,11 @@
         "attempts": 9696,
         "video": "https://youtu.be/zv3_r1uoufI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6262,
+      "attempts": 9696
+    }
   },
   {
     "rank": 47,
@@ -1153,7 +1337,11 @@
         "attempts": 7542,
         "video": "https://www.youtube.com/playlist?list=PLJvTwEIKBPi8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4620,
+      "attempts": 7542
+    }
   },
   {
     "rank": 48,
@@ -1175,7 +1363,11 @@
         "attempts": 5666,
         "video": "https://www.youtube.com/playlist?list=PLGG_KOT1X0Us"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4543,
+      "attempts": 5666
+    }
   },
   {
     "rank": 49,
@@ -1204,7 +1396,11 @@
         "attempts": 9480,
         "video": "https://youtu.be/MD1PxHkt8D8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4385,
+      "attempts": 6218
+    }
   },
   {
     "rank": 50,
@@ -1226,7 +1422,11 @@
         "attempts": 5638,
         "video": "https://www.youtube.com/playlist?list=PLH8aET0e4ccs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4410,
+      "attempts": 5638
+    }
   },
   {
     "rank": 51,
@@ -1255,7 +1455,11 @@
         "attempts": 30796,
         "video": "https://youtu.be/L1u_W2-h6no"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4598,
+      "attempts": 30796
+    }
   },
   {
     "rank": 52,
@@ -1284,7 +1488,11 @@
         "attempts": 8783,
         "video": "https://youtu.be/6i9jmpPCdD4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5203,
+      "attempts": 8783
+    }
   },
   {
     "rank": 53,
@@ -1306,7 +1514,11 @@
         "attempts": 19847,
         "video": "https://youtu.be/P07f5PVCm_U1"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3234,
+      "attempts": 19847
+    }
   },
   {
     "rank": 54,
@@ -1335,7 +1547,11 @@
         "attempts": 77236,
         "video": "https://www.youtube.com/playlist?list=PLQgN4bOXtRrY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5138,
+      "attempts": 25181
+    }
   },
   {
     "rank": 55,
@@ -1357,7 +1573,11 @@
         "attempts": 28362,
         "video": "https://youtu.be/n7tcgx9fMNc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2498,
+      "attempts": 28362
+    }
   },
   {
     "rank": 56,
@@ -1386,7 +1606,11 @@
         "attempts": 68117,
         "video": "https://youtu.be/sEWYMg_aQ6I"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4726,
+      "attempts": 68117
+    }
   },
   {
     "rank": 57,
@@ -1408,7 +1632,11 @@
         "attempts": 7130,
         "video": "https://youtu.be/0ls4awSOrcc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4619,
+      "attempts": 7130
+    }
   },
   {
     "rank": 58,
@@ -1430,7 +1658,11 @@
         "attempts": 15633,
         "video": "https://www.youtube.com/playlist?list=PLdqemjMYkovo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3796,
+      "attempts": 15633
+    }
   },
   {
     "rank": 59,
@@ -1459,7 +1691,11 @@
         "attempts": 3295,
         "video": "https://youtu.be/JUVdeE93jUk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3054,
+      "attempts": 3295
+    }
   },
   {
     "rank": 60,
@@ -1481,7 +1717,11 @@
         "attempts": 4449,
         "video": "https://www.youtube.com/playlist?list=PLKyvt_vZl-KM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3582,
+      "attempts": 4449
+    }
   },
   {
     "rank": 61,
@@ -1503,7 +1743,11 @@
         "attempts": 82295,
         "video": "https://youtu.be/0laeoMqtA4w"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4085,
+      "attempts": 82295
+    }
   },
   {
     "rank": 62,
@@ -1532,7 +1776,11 @@
         "attempts": 91273,
         "video": "https://youtu.be/H8CUMdXtnmM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3650,
+      "attempts": 82525
+    }
   },
   {
     "rank": 63,
@@ -1561,7 +1809,11 @@
         "attempts": 4765,
         "video": "https://www.youtube.com/playlist?list=PLA3r3Gz1Elw0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3341,
+      "attempts": 4765
+    }
   },
   {
     "rank": 64,
@@ -1583,7 +1835,11 @@
         "attempts": 20525,
         "video": "https://youtu.be/IdfXc_4K-n0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3793,
+      "attempts": 20525
+    }
   },
   {
     "rank": 65,
@@ -1605,7 +1861,11 @@
         "attempts": 40842,
         "video": "https://youtu.be/kXchXOr61-s"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3243,
+      "attempts": 40842
+    }
   },
   {
     "rank": 66,
@@ -1634,7 +1894,11 @@
         "attempts": 4214,
         "video": "https://www.youtube.com/playlist?list=PLCWZZWEf_5WM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3254,
+      "attempts": 4214
+    }
   },
   {
     "rank": 67,
@@ -1656,7 +1920,11 @@
         "attempts": 25086,
         "video": "https://www.youtube.com/playlist?list=PLd6t41VjEEOg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3482,
+      "attempts": 25086
+    }
   },
   {
     "rank": 68,
@@ -1678,7 +1946,11 @@
         "attempts": 42460,
         "video": "https://www.youtube.com/playlist?list=PLdtBOA2Re0tM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6956,
+      "attempts": 42460
+    }
   },
   {
     "rank": 69,
@@ -1707,7 +1979,11 @@
         "attempts": 4633,
         "video": "https://youtu.be/vwJeh10LP38"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3159,
+      "attempts": 4633
+    }
   },
   {
     "rank": 70,
@@ -1729,7 +2005,11 @@
         "attempts": 5428,
         "video": "https://www.youtube.com/playlist?list=PLc5zGisbqyPU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4281,
+      "attempts": 5428
+    }
   },
   {
     "rank": 71,
@@ -1751,7 +2031,11 @@
         "attempts": 8596,
         "video": "https://www.youtube.com/playlist?list=PLJM8D8DAIxZQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3646,
+      "attempts": 8596
+    }
   },
   {
     "rank": 72,
@@ -1787,7 +2071,11 @@
         "attempts": 6877,
         "video": "https://youtu.be/T_kAO4M3FWY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3890,
+      "attempts": 6046
+    }
   },
   {
     "rank": 73,
@@ -1809,7 +2097,11 @@
         "attempts": 34244,
         "video": "https://youtu.be/RT8h5ydkT4I"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4188,
+      "attempts": 34244
+    }
   },
   {
     "rank": 74,
@@ -1831,7 +2123,11 @@
         "attempts": 7437,
         "video": "https://www.youtube.com/playlist?list=PLPWAmmKW5vRo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4707,
+      "attempts": 7437
+    }
   },
   {
     "rank": 75,
@@ -1860,7 +2156,11 @@
         "attempts": 5807,
         "video": "https://youtu.be/4yP34KJWgqE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2017,
+      "attempts": 5807
+    }
   },
   {
     "rank": 76,
@@ -1883,7 +2183,11 @@
         "video": "https://youtu.be/1t0W5RvZTGY"
       }
     ],
-    "tier": "Master"
+    "tier": "Master",
+    "scoringBaseline": {
+      "timeSeconds": 3823,
+      "attempts": 6284
+    }
   },
   {
     "rank": 77,
@@ -1933,7 +2237,11 @@
         "attempts": 10102,
         "video": "https://youtu.be/loZIerpaRYg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2658,
+      "attempts": 4364
+    }
   },
   {
     "rank": 78,
@@ -1962,7 +2270,11 @@
         "attempts": 10687,
         "video": "https://www.youtube.com/watch?v=WEMVbppgHd8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2854,
+      "attempts": 3712
+    }
   },
   {
     "rank": 79,
@@ -1984,7 +2296,11 @@
         "attempts": 27692,
         "video": "https://www.youtube.com/watch?v=w8Bu6AovbnA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": null,
+      "attempts": 27692
+    }
   },
   {
     "rank": 80,
@@ -2006,7 +2322,11 @@
         "attempts": 19173,
         "video": "https://youtu.be/t-MzXs2QRW0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5652,
+      "attempts": 19173
+    }
   },
   {
     "rank": 81,
@@ -2028,7 +2348,11 @@
         "attempts": 10719,
         "video": "https://youtu.be/dcMEfs44Mmc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4699,
+      "attempts": 10719
+    }
   },
   {
     "rank": 82,
@@ -2050,7 +2374,11 @@
         "attempts": 4837,
         "video": "https://www.youtube.com/playlist?list=PLKJRXNMcDgDA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4305,
+      "attempts": 4837
+    }
   },
   {
     "rank": 83,
@@ -2072,32 +2400,14 @@
         "attempts": 24259,
         "video": "https://youtu.be/6xl-Go0MFkY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2576,
+      "attempts": 24259
+    }
   },
   {
     "rank": 84,
-    "name": "See You in 2030!",
-    "creators": "Emerald777GD",
-    "id": "143963938",
-    "length": "3m 3s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C47.4(21) SH17.6(14) W15.8(5) B9(7) U6.2(4) R2.2(1) SP1.9(1) D23.4(7) S76.6(7) IM4.0(1) NM96.0(1) 0.5X54.8(7) 4X17.1(1) 2X14.9(4) 3X11.1(2) 1X2.1(3)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=RrSJoF0qrro",
-    "image": "",
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-09-30",
-        "time": "1h 7m 47s",
-        "attempts": 5408,
-        "video": "https://youtu.be/Bbqp-5iXAAo"
-      }
-    ]
-  },
-  {
-    "rank": 85,
     "name": "Goldenous (Unnerfed)",
     "creators": "xristpro & more",
     "id": "125861426",
@@ -2116,10 +2426,14 @@
         "attempts": 4783,
         "video": "https://www.youtube.com/playlist?list=PLQn5vZV7DQ_Y"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3762,
+      "attempts": 4783
+    }
   },
   {
-    "rank": 86,
+    "rank": 85,
     "name": "Infernoplex",
     "creators": "cheapyyyyy",
     "id": "141735424",
@@ -2166,10 +2480,14 @@
         "attempts": 5644,
         "video": "https://youtu.be/1vmP3w6qEKE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4332,
+      "attempts": 3829
+    }
   },
   {
-    "rank": 87,
+    "rank": 86,
     "name": "PARALLEL UNIVERSE (Old)",
     "creators": "SilenceDTM",
     "id": "148108528",
@@ -2195,10 +2513,14 @@
         "attempts": 5299,
         "video": "https://youtu.be/NOVZmZ-RkKw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3798,
+      "attempts": 5272
+    }
   },
   {
-    "rank": 88,
+    "rank": 87,
     "name": "Green World",
     "creators": "thegqc, saRy & more",
     "id": "101089817",
@@ -2231,10 +2553,14 @@
         "attempts": 6489,
         "video": "https://www.youtube.com/live/SBGSGqNwb94"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2574,
+      "attempts": 3911
+    }
   },
   {
-    "rank": 89,
+    "rank": 88,
     "name": "Challenge Circles 2p (Unintended)",
     "creators": "RMGD",
     "id": "135819992",
@@ -2253,10 +2579,14 @@
         "attempts": 77326,
         "video": "https://www.youtube.com/watch?v=wsw_WjFowUE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": null,
+      "attempts": null
+    }
   },
   {
-    "rank": 90,
+    "rank": 89,
     "name": "Realm of 2010 (1P)",
     "creators": "BunnyClowmy",
     "id": "148304188",
@@ -2275,10 +2605,14 @@
         "attempts": 53223,
         "video": "https://www.youtube.com/live/AGqm2PbF2Fc?is=cc5XErAMZNxc3jHq"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5453,
+      "attempts": 53223
+    }
   },
   {
-    "rank": 91,
+    "rank": 90,
     "name": "Realm Of Bloodshadow (Unnerfed)",
     "creators": "gdmiracle",
     "id": "78706057",
@@ -2318,10 +2652,14 @@
         "attempts": 12089,
         "video": "https://www.youtube.com/playlist?list=PLLEgQuw0C6vY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4422,
+      "attempts": 6908
+    }
   },
   {
-    "rank": 92,
+    "rank": 91,
     "name": "Eddies Castle",
     "creators": "EddiesEpic",
     "id": "129113296",
@@ -2347,10 +2685,14 @@
         "attempts": 5467,
         "video": "https://youtu.be/zTG51PrClkQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2791,
+      "attempts": 2876
+    }
   },
   {
-    "rank": 93,
+    "rank": 92,
     "name": "Pricey Circles",
     "creators": "Bukkk",
     "id": "79833207",
@@ -2376,10 +2718,14 @@
         "attempts": 23944,
         "video": "https://youtu.be/SMqmTGIK_4M"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3272,
+      "attempts": 23944
+    }
   },
   {
-    "rank": 94,
+    "rank": 93,
     "name": "Hated Demise",
     "creators": "IAmGone, SrGuillester",
     "id": "106603205",
@@ -2398,10 +2744,14 @@
         "attempts": 4134,
         "video": "https://www.youtube.com/playlist?list=PLC1eSYFeyiCU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2928,
+      "attempts": 4134
+    }
   },
   {
-    "rank": 95,
+    "rank": 94,
     "name": "The Disturbance",
     "creators": "cheapyyyyy",
     "id": "142171106",
@@ -2462,10 +2812,14 @@
         "attempts": 3350,
         "video": "https://youtu.be/4SBBv0jmIxY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1339,
+      "attempts": 2169
+    }
   },
   {
-    "rank": 96,
+    "rank": 95,
     "name": "Deadly Supersonic",
     "creators": "YoshiSDK",
     "id": "78799853",
@@ -2491,32 +2845,14 @@
         "attempts": 5424,
         "video": "https://youtu.be/mm92bOanVOY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2489,
+      "attempts": 5424
+    }
   },
   {
-    "rank": 97,
-    "name": "Rotveil",
-    "creators": "Darksive",
-    "id": "145338372",
-    "length": "1m 20s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C53.6(16) W27.5(5) SH11.8(14) B4.3(13) SP2.7(3) D5.3(7) S94.7(7) IM0.0(0) NM100.0(0) 0.5X49.6(8) 4X37.7(13) 1X10(9) 2X2.4(2) 3X0.3(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=y9WCdQL4SKQ",
-    "image": "",
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-09-30",
-        "time": "42m 45s",
-        "attempts": 6700,
-        "video": "https://youtu.be/1h8kC0gkvds"
-      }
-    ]
-  },
-  {
-    "rank": 98,
+    "rank": 96,
     "name": "Ton 618 PML",
     "creators": "Arctic, Pooooooooooooch",
     "id": "https://discord.com/channels/1436100643830890508/1436216217235886140/threads/1507837866871357671",
@@ -2535,10 +2871,14 @@
         "attempts": 8800,
         "video": "https://youtu.be/4YLCLwCSvSk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 18861,
+      "attempts": 8800
+    }
   },
   {
-    "rank": 99,
+    "rank": 97,
     "name": "Slaughterhouse II",
     "creators": "IcEDCave",
     "id": "27690219",
@@ -2564,10 +2904,14 @@
         "attempts": 45384,
         "video": "https://youtu.be/playlist?list=PLO5lTxAoPq4Y"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3282,
+      "attempts": 9948
+    }
   },
   {
-    "rank": 100,
+    "rank": 98,
     "name": "Bad Times G",
     "creators": "Danyko & more",
     "id": "63711033",
@@ -2586,10 +2930,14 @@
         "attempts": 4147,
         "video": "https://youtu.be/KK5NDmy9DsA?si=tXstQCdslaM-riEO"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3516,
+      "attempts": 4147
+    }
   },
   {
-    "rank": 101,
+    "rank": 99,
     "name": "Jdjdjdjsjdjsjsk Unleashed",
     "creators": "yoats",
     "id": "144918109",
@@ -2608,10 +2956,14 @@
         "attempts": 20626,
         "video": "https://youtu.be/1FonvTxSqJ4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6131,
+      "attempts": 20626
+    }
   },
   {
-    "rank": 102,
+    "rank": 100,
     "name": "Rampant Circles (1P, Unnerfed)",
     "creators": "NXISE",
     "id": "https://cdn.discordapp.com/attachments/1533548909090177105/1553914146339295353/Rampant_Circles_1P.gmd?ex=6abafad2&is=6ab9a952&hm=6422afe677d68d0383b7e262ea8debb5eba9fbbb2904a238fb572feb560adc2a&",
@@ -2630,10 +2982,14 @@
         "attempts": 102044,
         "video": "https://youtu.be/7JhhBSzsXxk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": null,
+      "attempts": null
+    }
   },
   {
-    "rank": 103,
+    "rank": 101,
     "name": "XANE GETS SEQUELL",
     "creators": "ProgNostico",
     "id": "138689383",
@@ -2652,10 +3008,14 @@
         "attempts": 4423,
         "video": "https://youtu.be/tFCo5Pl-F2Q"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3518,
+      "attempts": 4423
+    }
   },
   {
-    "rank": 104,
+    "rank": 102,
     "name": "BtSk Legend (RMGD)",
     "creators": "BtSiK",
     "id": "144178276",
@@ -2674,10 +3034,14 @@
         "attempts": 6097,
         "video": "https://youtu.be/6uHxSqAA52g"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3812,
+      "attempts": 6097
+    }
   },
   {
-    "rank": 105,
+    "rank": 103,
     "name": "Io",
     "creators": "HIROST",
     "id": "141700670",
@@ -2696,10 +3060,14 @@
         "attempts": 6083,
         "video": "https://www.youtube.com/live/iM4x4i_jfaY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3959,
+      "attempts": 6083
+    }
   },
   {
-    "rank": 106,
+    "rank": 104,
     "name": "Porq Legend IV",
     "creators": "Porqkyp",
     "id": "73866070",
@@ -2725,10 +3093,14 @@
         "attempts": 5992,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4413,
+      "attempts": 15859
+    }
   },
   {
-    "rank": 107,
+    "rank": 105,
     "name": "Marble Caverns",
     "creators": "VoidedArchive",
     "id": "126401253",
@@ -2747,10 +3119,14 @@
         "attempts": 6403,
         "video": "https://youtu.be/Y0cFsOsqagw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4885,
+      "attempts": 6403
+    }
   },
   {
-    "rank": 108,
+    "rank": 106,
     "name": "Madness",
     "creators": "MateussDev, Sequoya",
     "id": "81730725",
@@ -2769,10 +3145,14 @@
         "attempts": 17229,
         "video": "https://www.youtube.com/playlist?list=PLdNV001w7lWsbkF3Q99h4ZEUpb7hWrtTW"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3212,
+      "attempts": 17229
+    }
   },
   {
-    "rank": 109,
+    "rank": 107,
     "name": "Satans Circles Redux (1P)",
     "creators": "ItzCheesy",
     "id": "145491516",
@@ -2798,10 +3178,14 @@
         "attempts": 13171,
         "video": "https://youtu.be/62JjeRh6qqs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1295,
+      "attempts": 13171
+    }
   },
   {
-    "rank": 110,
+    "rank": 108,
     "name": "World Render",
     "creators": "AngelEffect",
     "id": "118059486",
@@ -2848,10 +3232,14 @@
         "attempts": 2165,
         "video": "https://www.youtube.com/watch?v=L6uxDfjxEzk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2309,
+      "attempts": 2165
+    }
   },
   {
-    "rank": 111,
+    "rank": 109,
     "name": "Rikkachet Love",
     "creators": "AngelEffect",
     "id": "120306904",
@@ -2884,10 +3272,14 @@
         "attempts": 3860,
         "video": "https://youtu.be/5uCySxfYQg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3229,
+      "attempts": 3440
+    }
   },
   {
-    "rank": 112,
+    "rank": 110,
     "name": "chordjack famr",
     "creators": "Redacted Player #1",
     "id": "144615435",
@@ -2920,10 +3312,14 @@
         "attempts": 29293,
         "video": "https://youtu.be/NaB4RJ7GXzs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2119,
+      "attempts": 29293
+    }
   },
   {
-    "rank": 113,
+    "rank": 111,
     "name": "1450",
     "creators": "1450",
     "id": "141611055",
@@ -2942,10 +3338,14 @@
         "attempts": 7005,
         "video": "https://youtu.be/_JkKBDbErus"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4174,
+      "attempts": 7005
+    }
   },
   {
-    "rank": 114,
+    "rank": 112,
     "name": "Slaughterhouse II (RMGD)",
     "creators": "icedcave, RMGD",
     "id": "146193959",
@@ -2964,10 +3364,14 @@
         "attempts": 9603,
         "video": "https://youtu.be/GrpJACe9jyM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2550,
+      "attempts": 9603
+    }
   },
   {
-    "rank": 115,
+    "rank": 113,
     "name": "Incommodiousness",
     "creators": "Thycket & more",
     "id": "79449270",
@@ -3000,10 +3404,14 @@
         "attempts": 5481,
         "video": "https://youtu.be/GpzMg1gWTXU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2610,
+      "attempts": 1892
+    }
   },
   {
-    "rank": 116,
+    "rank": 114,
     "name": "John Wave Trials",
     "creators": "Mr. Happy Junior, OddMod",
     "id": "144285423",
@@ -3035,11 +3443,22 @@
         "time": "1h 17m 54s",
         "attempts": 57847,
         "video": "https://www.youtube.com/live/xiVY1ygO4zk"
+      },
+      {
+        "name": "MrT1",
+        "date": "2026-10-03",
+        "time": "32m 37s",
+        "attempts": 40883,
+        "video": "https://www.youtube.com/watch?v=72dAu-R8s9w"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4674,
+      "attempts": 18743
+    }
   },
   {
-    "rank": 117,
+    "rank": 115,
     "name": "Singularity (Redacted Player #1)",
     "creators": "070, Redacted Player #1",
     "id": "139503221",
@@ -3058,10 +3477,14 @@
         "attempts": 12081,
         "video": "https://www.youtube.com/watch?v=Rf-cc6P3L3o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": null,
+      "attempts": null
+    }
   },
   {
-    "rank": 118,
+    "rank": 116,
     "name": "silent lucifer",
     "creators": "msdyc",
     "id": "145400984",
@@ -3080,10 +3503,14 @@
         "attempts": 7023,
         "video": "https://www.youtube.com/playlist?list=PLTvXTqCD57Xc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3038,
+      "attempts": 7023
+    }
   },
   {
-    "rank": 119,
+    "rank": 117,
     "name": "Ouranophobia",
     "creators": "V420PER",
     "id": "137533659",
@@ -3102,10 +3529,14 @@
         "attempts": 4859,
         "video": "https://youtu.be/liJOLBwtw4w"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2521,
+      "attempts": 4859
+    }
   },
   {
-    "rank": 120,
+    "rank": 118,
     "name": "Deadly Knock",
     "creators": "danmaster007",
     "id": "63708222",
@@ -3124,10 +3555,14 @@
         "attempts": 11149,
         "video": "https://youtu.be/Yx019FOD2ek"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3620,
+      "attempts": 11149
+    }
   },
   {
-    "rank": 121,
+    "rank": 119,
     "name": "Formosa (Debuff)",
     "creators": "eightos, Statera",
     "id": "147445175",
@@ -3174,10 +3609,14 @@
         "attempts": 3794,
         "video": "https://youtu.be/wnPeRt_YD2g"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2745,
+      "attempts": 3794
+    }
   },
   {
-    "rank": 122,
+    "rank": 120,
     "name": "liquid shuffles",
     "creators": "eightos",
     "id": "69472407",
@@ -3203,10 +3642,14 @@
         "attempts": 6179,
         "video": "https://youtu.be/23E_mbDOunU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2469,
+      "attempts": 5125
+    }
   },
   {
-    "rank": 123,
+    "rank": 121,
     "name": "a message to rainn",
     "creators": "DubbyBall",
     "id": "79406868",
@@ -3225,10 +3668,14 @@
         "attempts": 6855,
         "video": "https://www.youtube.com/watch?v=NRluHzbke5c"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5124,
+      "attempts": 6855
+    }
   },
   {
-    "rank": 124,
+    "rank": 122,
     "name": "Cyber Raptor (Unnerfed)",
     "creators": "Robotition & more",
     "id": "86038554",
@@ -3288,11 +3735,22 @@
         "time": "1h 3m 31s",
         "attempts": 12089,
         "video": "https://youtube.com/live/iRjm5JUV6t0"
+      },
+      {
+        "name": "Aiden2644",
+        "date": "2026-10-03",
+        "time": "1h 6m 28s",
+        "attempts": 3896,
+        "video": "https://youtu.be/t944sNCWHCo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1711,
+      "attempts": 706
+    }
   },
   {
-    "rank": 125,
+    "rank": 123,
     "name": "Deadtone Symphony",
     "creators": "cheapyyyyy, kyle1saurus",
     "id": "147176256",
@@ -3311,10 +3769,14 @@
         "attempts": 5007,
         "video": "https://youtu.be/iqdIM3S5RuA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4679,
+      "attempts": 5007
+    }
   },
   {
-    "rank": 126,
+    "rank": 124,
     "name": "Ultra Coffee",
     "creators": "chronosify2",
     "id": "126427346",
@@ -3333,10 +3795,14 @@
         "attempts": 6333,
         "video": "https://youtu.be/_wSlz5o-IBM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4278,
+      "attempts": 6333
+    }
   },
   {
-    "rank": 127,
+    "rank": 125,
     "name": "Silent Skrillex v2",
     "creators": "youomoples",
     "id": "66626147",
@@ -3355,10 +3821,14 @@
         "attempts": 22475,
         "video": "https://www.youtube.com/playlist?list=PLAp-BEbs_DsI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3550,
+      "attempts": 22475
+    }
   },
   {
-    "rank": 128,
+    "rank": 126,
     "name": "supremesdb tob odin X",
     "creators": "RMGD",
     "id": "149204805",
@@ -3377,10 +3847,14 @@
         "attempts": 85422,
         "video": "https://youtube.com/live/or7AmR_yhs0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3888,
+      "attempts": 85422
+    }
   },
   {
-    "rank": 129,
+    "rank": 127,
     "name": "Redemption",
     "creators": "AnonIIExt",
     "id": "84209251",
@@ -3399,10 +3873,14 @@
         "attempts": 5643,
         "video": "https://youtu.be/Kl_JGi1NFAI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4543,
+      "attempts": 5643
+    }
   },
   {
-    "rank": 130,
+    "rank": 128,
     "name": "water world IN HELL",
     "creators": "cheapyyyyy, kyle1saurus",
     "id": "147351183",
@@ -3421,10 +3899,14 @@
         "attempts": 5536,
         "video": "https://youtu.be/kCg1CQveZ_U"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6773,
+      "attempts": 5536
+    }
   },
   {
-    "rank": 131,
+    "rank": 129,
     "name": "Lucidia (Unnerfed)",
     "creators": "2A0L0I3, AuraXalaiv",
     "id": "80523469",
@@ -3478,10 +3960,14 @@
         "attempts": 7328,
         "video": "https://youtu.be/hLjxZXFZwl4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1650,
+      "attempts": 4626
+    }
   },
   {
-    "rank": 132,
+    "rank": 130,
     "name": "The Descended (Unnerfed)",
     "creators": "BoomBlox555",
     "id": "77338939",
@@ -3500,10 +3986,14 @@
         "attempts": 25840,
         "video": "https://youtu.be/IbzuoRgvQUE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2463,
+      "attempts": 25840
+    }
   },
   {
-    "rank": 133,
+    "rank": 131,
     "name": "The Descended (1P)",
     "creators": "BoomBlox555",
     "id": "148895291",
@@ -3522,10 +4012,14 @@
         "attempts": 6952,
         "video": "https://youtu.be/Y6nkqLHa2mY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1218,
+      "attempts": 6952
+    }
   },
   {
-    "rank": 134,
+    "rank": 132,
     "name": "Silent Time Machine",
     "creators": "jojo989",
     "id": "87030038",
@@ -3551,10 +4045,14 @@
         "attempts": 8255,
         "video": "https://youtu.be/xwwwCcHh5Tw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1991,
+      "attempts": 4816
+    }
   },
   {
-    "rank": 135,
+    "rank": 133,
     "name": "NU Silent Skrillex",
     "creators": "DiosselMusic",
     "id": "73753976",
@@ -3573,10 +4071,14 @@
         "attempts": 23144,
         "video": "https://youtu.be/Mz_xqmQ9yM8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3062,
+      "attempts": 23144
+    }
   },
   {
-    "rank": 136,
+    "rank": 134,
     "name": "Silent Skrillex",
     "creators": "DiosselMusic",
     "id": "73836744",
@@ -3602,10 +4104,14 @@
         "attempts": 22486,
         "video": "https://www.youtube.com/watch?v=fEIP3u_D5tQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 935,
+      "attempts": 16766
+    }
   },
   {
-    "rank": 137,
+    "rank": 135,
     "name": "Silent Circles",
     "creators": "Cyrillic, TheRealSailent",
     "id": "12169905",
@@ -3659,10 +4165,14 @@
         "attempts": 31038,
         "video": "https://youtu.be/s0Q4zlv3gQ0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1628,
+      "attempts": 10122
+    }
   },
   {
-    "rank": 138,
+    "rank": 136,
     "name": "Deadly Silent Club",
     "creators": "gw roadmc2",
     "id": "126241846",
@@ -3695,10 +4205,14 @@
         "attempts": 30147,
         "video": "https://youtu.be/490EtYxmA04"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4642,
+      "attempts": 30147
+    }
   },
   {
-    "rank": 139,
+    "rank": 137,
     "name": "Element 111 Rg Full",
     "creators": "Morta1l & more",
     "id": "104558472",
@@ -3717,10 +4231,14 @@
         "attempts": 4392,
         "video": "https://youtu.be/PG3qfqScsb8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2592,
+      "attempts": 4392
+    }
   },
   {
-    "rank": 140,
+    "rank": 138,
     "name": "Sad Santa",
     "creators": "070",
     "id": "66424814",
@@ -3774,10 +4292,14 @@
         "attempts": 8885,
         "video": "https://youtu.be/MxeNgxqjBQo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1490,
+      "attempts": 8716
+    }
   },
   {
-    "rank": 141,
+    "rank": 139,
     "name": "ephemeral geometry",
     "creators": "sharpiesmell",
     "id": "147765421",
@@ -3796,10 +4318,14 @@
         "attempts": 13623,
         "video": "https://youtu.be/b2JK6jMAgZY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2145,
+      "attempts": 13623
+    }
   },
   {
-    "rank": 142,
+    "rank": 140,
     "name": "Bye Level",
     "creators": "jongaminggd",
     "id": "71160956",
@@ -3826,10 +4352,14 @@
         "video": "https://youtu.be/SKMFh8iRxaw"
       }
     ],
-    "tier": "Legendary"
+    "tier": "Legendary",
+    "scoringBaseline": {
+      "timeSeconds": 1215,
+      "attempts": 12471
+    }
   },
   {
-    "rank": 143,
+    "rank": 141,
     "name": "Under The Sea",
     "creators": "AnonIIExt",
     "id": "77373777",
@@ -3848,10 +4378,14 @@
         "attempts": 7180,
         "video": "https://youtu.be/w5J_tG576qU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 7105,
+      "attempts": 7180
+    }
   },
   {
-    "rank": 144,
+    "rank": 142,
     "name": "Rampant Circles (1p, Nerf, Old ILL)",
     "creators": "NXISE",
     "id": "132997477",
@@ -3877,10 +4411,14 @@
         "attempts": 7803,
         "video": "https://youtu.be/5GMD2wuLDe8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3895,
+      "attempts": 5796
+    }
   },
   {
-    "rank": 145,
+    "rank": 143,
     "name": "Six Paths of Pain (Old Redeco)",
     "creators": "GionniBlood, knali2001",
     "id": "69314937",
@@ -3906,10 +4444,14 @@
         "attempts": 18009,
         "video": "https://youtube.com/live/cxmH6jUbF7A"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2009,
+      "attempts": 4378
+    }
   },
   {
-    "rank": 146,
+    "rank": 144,
     "name": "Six Paths of Pain (Old)",
     "creators": "GionniBlood",
     "id": "63117908",
@@ -3963,10 +4505,14 @@
         "attempts": 25866,
         "video": "https://www.youtube.com/live/xBQY-cTq3iM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2304,
+      "attempts": 4504
+    }
   },
   {
-    "rank": 147,
+    "rank": 145,
     "name": "Relife 2020",
     "creators": "AuraXalaiv",
     "id": "144792056",
@@ -4027,10 +4573,14 @@
         "attempts": 19516,
         "video": "https://www.youtube.com/watch?v=MwUNGc0Ph0E"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 11604,
+      "attempts": 9641
+    }
   },
   {
-    "rank": 148,
+    "rank": 146,
     "name": "Scatmans worlD",
     "creators": "le0iumgmd",
     "id": "132758245",
@@ -4049,10 +4599,14 @@
         "attempts": 8095,
         "video": "https://youtu.be/VaxnJvnIads"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2696,
+      "attempts": 8095
+    }
   },
   {
-    "rank": 149,
+    "rank": 147,
     "name": "Perdition",
     "creators": "SylenPaws",
     "id": "145109287",
@@ -4071,10 +4625,14 @@
         "attempts": 7671,
         "video": "https://youtu.be/TmA4-l0eSRU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2846,
+      "attempts": 7671
+    }
   },
   {
-    "rank": 150,
+    "rank": 148,
     "name": "Silent Out Circles D",
     "creators": "7300",
     "id": "148524799",
@@ -4093,10 +4651,14 @@
         "attempts": 4938,
         "video": "https://youtu.be/v09esUnE-aE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3403,
+      "attempts": 4938
+    }
   },
   {
-    "rank": 151,
+    "rank": 149,
     "name": "Satanic Palm Mutes (ILL, No Dual)",
     "creators": "lilOpTiCaLlil",
     "id": "148178761",
@@ -4115,10 +4677,14 @@
         "attempts": 54216,
         "video": "https://youtube.com/live/Y3Ejwmtna2c"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3342,
+      "attempts": 54216
+    }
   },
   {
-    "rank": 152,
+    "rank": 150,
     "name": "Haunted Corridor (Old)",
     "creators": "KaotikJumper & more",
     "id": "124228891",
@@ -4144,10 +4710,14 @@
         "attempts": 4459,
         "video": "https://youtu.be/4au_mflXY2I"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2048,
+      "attempts": 4459
+    }
   },
   {
-    "rank": 153,
+    "rank": 151,
     "name": "riot demise but good",
     "creators": "Vamze",
     "id": "95020808",
@@ -4166,10 +4736,14 @@
         "attempts": 5791,
         "video": "https://www.youtube.com/playlist?list=PLVvtNVBBV2MI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3599,
+      "attempts": 5791
+    }
   },
   {
-    "rank": 154,
+    "rank": 152,
     "name": "A Question Of Fate",
     "creators": "cheapyyyyy",
     "id": "141735402",
@@ -4195,10 +4769,14 @@
         "attempts": 939,
         "video": "https://youtu.be/OXnpBbwWq00"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1075,
+      "attempts": 939
+    }
   },
   {
-    "rank": 155,
+    "rank": 153,
     "name": "M0NOCHROM3",
     "creators": "averybman, bukitt",
     "id": "126630142",
@@ -4217,10 +4795,14 @@
         "attempts": 10899,
         "video": "https://youtu.be/THqDwuALgXY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1840,
+      "attempts": 10899
+    }
   },
   {
-    "rank": 156,
+    "rank": 154,
     "name": "Thermal Radiation",
     "creators": "Windogs",
     "id": "74208521",
@@ -4253,10 +4835,14 @@
         "attempts": 8603,
         "video": "https://youtu.be/ZVtv2T0thfE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2181,
+      "attempts": 4016
+    }
   },
   {
-    "rank": 157,
+    "rank": 155,
     "name": "Calcium Hydroxide",
     "creators": "shirasuQK",
     "id": "92269608",
@@ -4282,10 +4868,14 @@
         "attempts": 16148,
         "video": "https://youtu.be/RvkkbY0xGGk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2002,
+      "attempts": 16148
+    }
   },
   {
-    "rank": 158,
+    "rank": 156,
     "name": "Galaxy Reactor",
     "creators": "AnonIIExt",
     "id": "78862019",
@@ -4304,10 +4894,14 @@
         "attempts": 2941,
         "video": "https://youtu.be/10rId2tkvYE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2290,
+      "attempts": 2941
+    }
   },
   {
-    "rank": 159,
+    "rank": 157,
     "name": "trekking",
     "creators": "DiaCreeper, kangerlussuaq",
     "id": "145636839",
@@ -4326,10 +4920,14 @@
         "attempts": 6530,
         "video": "https://www.youtube.com/watch?v=7SHhSAxN0Yg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5675,
+      "attempts": 6530
+    }
   },
   {
-    "rank": 160,
+    "rank": 158,
     "name": "Mid Life Crisis",
     "creators": "Uwuniper",
     "id": "114813427",
@@ -4348,10 +4946,14 @@
         "attempts": 50381,
         "video": "https://youtu.be/WHFrnLpdSc8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4858,
+      "attempts": 50381
+    }
   },
   {
-    "rank": 161,
+    "rank": 159,
     "name": "Fredrick Survive (Unnerfed)",
     "creators": "ZoliReal",
     "id": "133258360",
@@ -4384,10 +4986,14 @@
         "attempts": 33951,
         "video": "https://youtu.be/Mlv5hMyiIq4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1379,
+      "attempts": 15309
+    }
   },
   {
-    "rank": 162,
+    "rank": 160,
     "name": "gakkou gurashi (Old)",
     "creators": "fortpat",
     "id": "127057886",
@@ -4406,10 +5012,14 @@
         "attempts": 10853,
         "video": "https://www.youtube.com/playlist?list=PLUbKgXaaKiZ8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1847,
+      "attempts": 10853
+    }
   },
   {
-    "rank": 163,
+    "rank": 161,
     "name": "Silent Nightfall",
     "creators": "RMGD",
     "id": "129974620",
@@ -4435,10 +5045,14 @@
         "attempts": 6236,
         "video": "https://youtu.be/UYpORl5GXJc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2398,
+      "attempts": 5545
+    }
   },
   {
-    "rank": 164,
+    "rank": 162,
     "name": "Medusa",
     "creators": "cheapyyyyy",
     "id": "142025716",
@@ -4464,10 +5078,14 @@
         "attempts": 4593,
         "video": "https://youtu.be/Zrc6Lx3IxKI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2898,
+      "attempts": 2813
+    }
   },
   {
-    "rank": 165,
+    "rank": 163,
     "name": "Phone Call",
     "creators": "TheHardyGoD",
     "id": "132952525",
@@ -4486,10 +5104,14 @@
         "attempts": 2942,
         "video": "https://www.youtube.com/playlist?list=PLUCJXExcJVxM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2262,
+      "attempts": 2942
+    }
   },
   {
-    "rank": 166,
+    "rank": 164,
     "name": "ꙮ̷⣎⡇◌̴ꉺლ༽இ̷̸༎ຶৣ؞O̴O̷O̸⸸◌͟ꉺ⣎⡇༽இ",
     "creators": "iIZeroGMDIi",
     "id": "147188752",
@@ -4508,10 +5130,14 @@
         "attempts": 3694,
         "video": "https://youtu.be/X49YTODiTTs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2186,
+      "attempts": 3694
+    }
   },
   {
-    "rank": 167,
+    "rank": 165,
     "name": "Slaughters Hell",
     "creators": "IIZebII",
     "id": "136006378",
@@ -4530,10 +5156,14 @@
         "attempts": 3919,
         "video": "https://youtu.be/M3tHEKUQCgo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2465,
+      "attempts": 3919
+    }
   },
   {
-    "rank": 168,
+    "rank": 166,
     "name": "Plasma Down Machina",
     "creators": "BaChjPhonLu2738",
     "id": "133617928",
@@ -4559,10 +5189,14 @@
         "attempts": 36778,
         "video": "https://youtube.com/live/QQILAU5Fflc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2027,
+      "attempts": 2922
+    }
   },
   {
-    "rank": 169,
+    "rank": 167,
     "name": "Chaotic Circles XII",
     "creators": "Nox Eternis",
     "id": "115930714",
@@ -4595,10 +5229,14 @@
         "attempts": 10191,
         "video": "https://youtu.be/b_EMcIAy0NE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1120,
+      "attempts": 3512
+    }
   },
   {
-    "rank": 170,
+    "rank": 168,
     "name": "The Climax",
     "creators": "rainf0rest",
     "id": "107793172",
@@ -4617,10 +5255,14 @@
         "attempts": 2568,
         "video": "https://youtu.be/27BfH_FkK4E"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2093,
+      "attempts": 2568
+    }
   },
   {
-    "rank": 171,
+    "rank": 169,
     "name": "sailent clubstar",
     "creators": "Nautilus2K",
     "id": "10031383",
@@ -4667,10 +5309,14 @@
         "attempts": 4572,
         "video": "https://youtu.be/WoBcst6wmeI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1149,
+      "attempts": 1404
+    }
   },
   {
-    "rank": 172,
+    "rank": 170,
     "name": "Sailent Clubstar (HaloZombies)",
     "creators": "HaloZombies, waterlilly, Nautilus2k",
     "id": "89054024",
@@ -4689,10 +5335,47 @@
         "attempts": 6678,
         "video": "https://youtu.be/qmLI1w_u2Ew"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3691,
+      "attempts": 6678
+    }
   },
   {
-    "rank": 173,
+    "rank": 171,
+    "name": "Rotveil",
+    "creators": "Darksive",
+    "id": "145338372",
+    "length": "1m 20s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C53.6(16) W27.5(5) SH11.8(14) B4.3(13) SP2.7(3) D5.3(7) S94.7(7) IM0.0(0) NM100.0(0) 0.5X49.6(8) 4X37.7(13) 1X10(9) 2X2.4(2) 3X0.3(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=y9WCdQL4SKQ",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-09-30",
+        "time": "42m 45s",
+        "attempts": 6700,
+        "video": "https://youtu.be/1h8kC0gkvds"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-10-03",
+        "time": "47m 57s",
+        "attempts": 7931,
+        "video": "https://youtu.be/K4qUfgiiXpI"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2565,
+      "attempts": 6700
+    }
+  },
+  {
+    "rank": 172,
     "name": "Silent Cataclysm (crmsn)",
     "creators": "crmsn, Ggb0y",
     "id": "147806058",
@@ -4718,10 +5401,14 @@
         "attempts": 3969,
         "video": "https://youtu.be/_BtIY0RYRFc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2789,
+      "attempts": 3969
+    }
   },
   {
-    "rank": 174,
+    "rank": 173,
     "name": "Swing Nightmare",
     "creators": "TheHardyGoD",
     "id": "135264499",
@@ -4747,10 +5434,14 @@
         "attempts": 2606,
         "video": "https://youtu.be/wPReVvfVVT0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2035,
+      "attempts": 2606
+    }
   },
   {
-    "rank": 175,
+    "rank": 174,
     "name": "Golden True (ILL)",
     "creators": "Nikoshi",
     "id": "117388462",
@@ -4776,10 +5467,14 @@
         "attempts": 5987,
         "video": "https://youtu.be/QLpPyxKDO8s"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1231,
+      "attempts": 4259
+    }
   },
   {
-    "rank": 176,
+    "rank": 175,
     "name": "kataTARTARUS",
     "creators": "ultraharos",
     "id": "79864749",
@@ -4826,10 +5521,14 @@
         "attempts": 8725,
         "video": "https://www.youtube.com/playlist?list=PLMnUPakwsPHg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1240,
+      "attempts": 5987
+    }
   },
   {
-    "rank": 177,
+    "rank": 176,
     "name": "Silent Circles XII",
     "creators": "Nox Eternis",
     "id": "80910910",
@@ -4855,61 +5554,14 @@
         "attempts": 9766,
         "video": "https://youtu.be/HeQbiDqWmEI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2265,
+      "attempts": 3177
+    }
   },
   {
-    "rank": 178,
-    "name": "Silent Classical VIP",
-    "creators": "gdnucleax, chilliusvgm",
-    "id": "115597288",
-    "length": "1m 52s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C48.8(4) W22.9(5) B13.1(3) SH9.5(3) U5.7(2) D7.0(2) S93.0(2) IM0.0(0) NM100.0(0) 0.5X54.4(12) 1X31.5(7) 3X13.4(7) 2X0.7(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=oP3s3_zlgpk",
-    "image": "",
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-09-23",
-        "time": "35m 8s",
-        "attempts": 6636,
-        "video": "https://youtu.be/n06NmIvxCPc"
-      }
-    ]
-  },
-  {
-    "rank": 179,
-    "name": "Silent Future Funk",
-    "creators": "JonathanGD, Delta",
-    "id": "95722079",
-    "length": "4m 41s",
-    "tps": 240,
-    "precision": 573.087,
-    "ratio": "C50.5(17) SH13.7(8) U9.5(7) R8.5(6) W7.2(10) SP5.3(2) B5.2(5) D13.8(2) S86.2(2) IM0.0(0) NM100.0(0) 1X46(5) 0.5X28.8(13) 2X18.8(5) 3X6.4(11)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/uYI6qPOiLcA?si=fG6GaPxWmxIk5Uay",
-    "image": "",
-    "victors": [
-      {
-        "name": "Aiden2644",
-        "date": "2026-08-13",
-        "time": "56m 32s",
-        "attempts": 3911,
-        "video": "https://youtu.be/JWqXak3IFpM"
-      },
-      {
-        "name": "RMGD",
-        "date": "2026-10-01",
-        "time": "50m 19s",
-        "attempts": 4568,
-        "video": "https://www.youtube.com/playlist?list=PLNz0sufzMCrQ"
-      }
-    ]
-  },
-  {
-    "rank": 180,
+    "rank": 177,
     "name": "Disorders",
     "creators": "Mufferasu",
     "id": "72005089",
@@ -4928,10 +5580,14 @@
         "attempts": 2594,
         "video": "https://youtu.be/Fhxc8VAoatY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2476,
+      "attempts": 2594
+    }
   },
   {
-    "rank": 181,
+    "rank": 178,
     "name": "LiGHtmArE",
     "creators": "eightos",
     "id": "77233362",
@@ -5006,76 +5662,47 @@
         "attempts": 5188,
         "video": "https://youtu.be/18r7xvVUSSc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1926,
+      "attempts": 2902
+    }
   },
   {
-    "rank": 182,
-    "name": "Silent Theory X",
-    "creators": "SkyDubstep, Cygnus",
-    "id": "82797130",
-    "length": "1m 2s",
+    "rank": 179,
+    "name": "Silent Future Funk",
+    "creators": "JonathanGD, Delta",
+    "id": "95722079",
+    "length": "4m 41s",
     "tps": 240,
-    "precision": "",
-    "ratio": "U28.3(5) C28(6) W24.7(5) SH12.4(4) R3.4(1) B3.1(1) D3.6(2) S96.4(2) IM5.1(3) NM94.9(3) 0.5X75.1(12) 3X13(7) 2X8.2(6) 1X3.6(2)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=ckegGM7RTsQ",
-    "image": "",
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-08-28",
-        "time": "31m 10s",
-        "attempts": 5336,
-        "video": "https://www.youtube.com/playlist?list=PLLYPIOyZCs6s"
-      }
-    ]
-  },
-  {
-    "rank": 183,
-    "name": "Anaya Challenge",
-    "creators": "RMGD, kyle1saurus",
-    "id": "147182584",
-    "length": "1m 32s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C38.8(6) U24.6(3) W19.2(3) SH17.5(3) D12.1(3) S87.9(3) IM0.0(0) NM100.0(0) 0.5X71.2(7) 2X15.1(12) 1X9.6(6) 3X4.1(9)",
+    "precision": 573.087,
+    "ratio": "C50.5(17) SH13.7(8) U9.5(7) R8.5(6) W7.2(10) SP5.3(2) B5.2(5) D13.8(2) S86.2(2) IM0.0(0) NM100.0(0) 1X46(5) 0.5X28.8(13) 2X18.8(5) 3X6.4(11)",
     "twoPlayer": "",
-    "showcaseVideo": "",
+    "showcaseVideo": "https://youtu.be/uYI6qPOiLcA?si=fG6GaPxWmxIk5Uay",
     "image": "",
     "victors": [
       {
-        "name": "kyle1saurus",
-        "date": "2026-08-17",
-        "time": "46m 42s",
-        "attempts": 11300,
-        "video": "https://youtu.be/4kN791v6AZU"
-      }
-    ]
-  },
-  {
-    "rank": 184,
-    "name": "PURPOSE",
-    "creators": "scarlllet, Nagatoro",
-    "id": "124304533",
-    "length": "32s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "SH60.4(9) W26.1(11) C8.9(2) B3.6(5) U1(1) D14.6(9) S85.4(8) IM0.0(0) NM100.0(0) 0.5X65.1(2) 3X34.9(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/G-cHkPVdRxc?si=zAxrONz3xOyD-uqU",
-    "image": "",
-    "victors": [
+        "name": "Aiden2644",
+        "date": "2026-08-13",
+        "time": "56m 32s",
+        "attempts": 3911,
+        "video": "https://youtu.be/JWqXak3IFpM"
+      },
       {
-        "name": "Name",
-        "date": "2026-07-25",
-        "time": "1h 20m 22s",
-        "attempts": 7534,
-        "video": "https://youtu.be/_XC40e34Tus"
+        "name": "RMGD",
+        "date": "2026-10-01",
+        "time": "50m 19s",
+        "attempts": 4568,
+        "video": "https://www.youtube.com/playlist?list=PLNz0sufzMCrQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3019,
+      "attempts": 3911
+    }
   },
   {
-    "rank": 185,
+    "rank": 180,
     "name": "Isolation",
     "creators": "WatchPiggy",
     "id": "117933191",
@@ -5107,11 +5734,100 @@
         "time": "45m 12s",
         "attempts": 4012,
         "video": "https://youtu.be/_MibwjTcD-E"
+      },
+      {
+        "name": "Aiden2644",
+        "date": "2026-10-04",
+        "time": "58m 16s",
+        "attempts": 4449,
+        "video": "https://youtu.be/2ql5UmH6skg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2712,
+      "attempts": 3056
+    }
   },
   {
-    "rank": 186,
+    "rank": 181,
+    "name": "Silent Theory X",
+    "creators": "SkyDubstep, Cygnus",
+    "id": "82797130",
+    "length": "1m 2s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "U28.3(5) C28(6) W24.7(5) SH12.4(4) R3.4(1) B3.1(1) D3.6(2) S96.4(2) IM5.1(3) NM94.9(3) 0.5X75.1(12) 3X13(7) 2X8.2(6) 1X3.6(2)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=ckegGM7RTsQ",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-08-28",
+        "time": "31m 10s",
+        "attempts": 5336,
+        "video": "https://www.youtube.com/playlist?list=PLLYPIOyZCs6s"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1870,
+      "attempts": 5336
+    }
+  },
+  {
+    "rank": 182,
+    "name": "Anaya Challenge",
+    "creators": "RMGD, kyle1saurus",
+    "id": "147182584",
+    "length": "1m 32s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C38.8(6) U24.6(3) W19.2(3) SH17.5(3) D12.1(3) S87.9(3) IM0.0(0) NM100.0(0) 0.5X71.2(7) 2X15.1(12) 1X9.6(6) 3X4.1(9)",
+    "twoPlayer": "",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-08-17",
+        "time": "46m 42s",
+        "attempts": 11300,
+        "video": "https://youtu.be/4kN791v6AZU"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2802,
+      "attempts": 11300
+    }
+  },
+  {
+    "rank": 183,
+    "name": "PURPOSE",
+    "creators": "scarlllet, Nagatoro",
+    "id": "124304533",
+    "length": "32s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "SH60.4(9) W26.1(11) C8.9(2) B3.6(5) U1(1) D14.6(9) S85.4(8) IM0.0(0) NM100.0(0) 0.5X65.1(2) 3X34.9(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/G-cHkPVdRxc?si=zAxrONz3xOyD-uqU",
+    "image": "",
+    "victors": [
+      {
+        "name": "Name",
+        "date": "2026-07-25",
+        "time": "1h 20m 22s",
+        "attempts": 7534,
+        "video": "https://youtu.be/_XC40e34Tus"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4822,
+      "attempts": 7534
+    }
+  },
+  {
+    "rank": 184,
     "name": "Firework 2",
     "creators": "Mittens, kyle1saurus",
     "id": "147468072",
@@ -5130,10 +5846,47 @@
         "attempts": 2278,
         "video": "https://youtu.be/GSuQxXlYPSU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2618,
+      "attempts": 2278
+    }
   },
   {
-    "rank": 187,
+    "rank": 185,
+    "name": "See You in 2030!",
+    "creators": "Emerald777GD",
+    "id": "143963938",
+    "length": "3m 3s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C47.4(21) SH17.6(14) W15.8(5) B9(7) U6.2(4) R2.2(1) SP1.9(1) D23.4(7) S76.6(7) IM4.0(1) NM96.0(1) 0.5X54.8(7) 4X17.1(1) 2X14.9(4) 3X11.1(2) 1X2.1(3)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=RrSJoF0qrro",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-09-30",
+        "time": "1h 7m 47s",
+        "attempts": 5408,
+        "video": "https://youtu.be/Bbqp-5iXAAo"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-10-03",
+        "time": "34m 29s",
+        "attempts": 4955,
+        "video": "https://youtu.be/rmnmE7T8n4A"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4067,
+      "attempts": 5408
+    }
+  },
+  {
+    "rank": 186,
     "name": "howconfusingisthelvl",
     "creators": "akun akun",
     "id": "92922586",
@@ -5152,10 +5905,14 @@
         "attempts": 3588,
         "video": "https://www.youtube.com/watch?v=QCSP9zJ7lx8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3666,
+      "attempts": 3588
+    }
   },
   {
-    "rank": 188,
+    "rank": 187,
     "name": "wane",
     "creators": "TurboPacks",
     "id": "74641212",
@@ -5188,10 +5945,14 @@
         "attempts": 4811,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1767,
+      "attempts": 2467
+    }
   },
   {
-    "rank": 189,
+    "rank": 188,
     "name": "IfThanksLevelWasLevel1",
     "creators": "fancydoesgd, Statera",
     "id": "145494521",
@@ -5210,10 +5971,14 @@
         "attempts": 19385,
         "video": "https://youtu.be/Wof8MtYas0o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1851,
+      "attempts": 19385
+    }
   },
   {
-    "rank": 190,
+    "rank": 189,
     "name": "brokenworld",
     "creators": "lexycat",
     "id": "128871018",
@@ -5232,10 +5997,14 @@
         "attempts": 3759,
         "video": "https://youtu.be/40oQokjXKrQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1860,
+      "attempts": 3759
+    }
   },
   {
-    "rank": 191,
+    "rank": 190,
     "name": "Unnenamed 11",
     "creators": "seels & more",
     "id": "141766486",
@@ -5254,10 +6023,14 @@
         "attempts": 2340,
         "video": "https://youtu.be/vGTFRQ9gv2M"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2063,
+      "attempts": 2340
+    }
   },
   {
-    "rank": 192,
+    "rank": 191,
     "name": "Deadly Silent Nek",
     "creators": "qneksoch",
     "id": "141472840",
@@ -5283,10 +6056,14 @@
         "attempts": 6191,
         "video": "https://youtu.be/d1sQwtgZrzQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1910,
+      "attempts": 2309
+    }
   },
   {
-    "rank": 193,
+    "rank": 192,
     "name": "Disquietude",
     "creators": "Thycket",
     "id": "140724097",
@@ -5347,10 +6124,14 @@
         "attempts": 7195,
         "video": "https://www.youtube.com/watch?v=LIIZoDywscQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2226,
+      "attempts": 1539
+    }
   },
   {
-    "rank": 194,
+    "rank": 193,
     "name": "QC Failing Map",
     "creators": "Ko4kuma",
     "id": "129143231",
@@ -5369,10 +6150,14 @@
         "attempts": 5280,
         "video": "https://youtu.be/n9Q3eR3gZPg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3606,
+      "attempts": 5280
+    }
   },
   {
-    "rank": 195,
+    "rank": 194,
     "name": "Checkmate",
     "creators": "izofdoors",
     "id": "66586224",
@@ -5447,10 +6232,14 @@
         "attempts": 3416,
         "video": "https://www.youtube.com/watch?v=vkYarOrxrmM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1171,
+      "attempts": 2112
+    }
   },
   {
-    "rank": 196,
+    "rank": 195,
     "name": "PEUBEAllegianceV211",
     "creators": "nikroplays, EndLevel, K3Cy, kyle1saurus",
     "id": "146818105",
@@ -5469,10 +6258,14 @@
         "attempts": 3314,
         "video": "https://youtu.be/hUm-9GiFaos"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3123,
+      "attempts": 3314
+    }
   },
   {
-    "rank": 197,
+    "rank": 196,
     "name": "H4unt3d C0rr1d0r",
     "creators": "KaotikJumper, kyle1saurus",
     "id": "146692643",
@@ -5491,10 +6284,14 @@
         "attempts": 5422,
         "video": "https://youtu.be/_vcomkPbZe0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4492,
+      "attempts": 5422
+    }
   },
   {
-    "rank": 198,
+    "rank": 197,
     "name": "REISHIKI is dead",
     "creators": "sincos, kyle1saurus",
     "id": "146887827",
@@ -5513,10 +6310,14 @@
         "attempts": 4289,
         "video": "https://youtu.be/ARY2f20_0tY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3094,
+      "attempts": 4289
+    }
   },
   {
-    "rank": 199,
+    "rank": 198,
     "name": "Society (True Unnerfed)",
     "creators": "Neomarbilan, Tusol, & more",
     "id": "144835866",
@@ -5535,10 +6336,14 @@
         "attempts": 4526,
         "video": "https://youtu.be/qicBCVIfNek?si=mUD3D3pFwbp02A4o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3571,
+      "attempts": 4526
+    }
   },
   {
-    "rank": 200,
+    "rank": 199,
     "name": "Heliopolis is dead",
     "creators": "MindCap, kyle1saurus, & more",
     "id": "146968555",
@@ -5557,10 +6362,14 @@
         "attempts": 4314,
         "video": "https://youtu.be/Yl1VTRDfrBA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4389,
+      "attempts": 4314
+    }
   },
   {
-    "rank": 201,
+    "rank": 200,
     "name": "SWI mega hard",
     "creators": "Cyclic & more",
     "id": "129859038",
@@ -5586,10 +6395,14 @@
         "attempts": 3993,
         "video": "https://youtu.be/BXg4tFqyAy8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1674,
+      "attempts": 2174
+    }
   },
   {
-    "rank": 202,
+    "rank": 201,
     "name": "Parinoid Android",
     "creators": "CallingSai",
     "id": "96413075",
@@ -5615,10 +6428,14 @@
         "attempts": 3008,
         "video": "https://youtu.be/-8rSA_PKc6E"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2673,
+      "attempts": 2744
+    }
   },
   {
-    "rank": 203,
+    "rank": 202,
     "name": "Sad Santa (Dual Skip)",
     "creators": "070",
     "id": "66424812",
@@ -5636,10 +6453,14 @@
         "attempts": 11837,
         "video": "https://youtu.be/Ya7js3LYMoI?is=ukOHlMofmGnN69_W"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 7604,
+      "attempts": 11837
+    }
   },
   {
-    "rank": 204,
+    "rank": 203,
     "name": "Silent Circles (Dual Skip)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "12169905",
@@ -5735,10 +6556,14 @@
         "attempts": 7830,
         "video": "https://www.youtube.com/live/WqYfhRdmaSc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 884,
+      "attempts": 5600
+    }
   },
   {
-    "rank": 205,
+    "rank": 204,
     "name": "Silent Circles (No Dual)",
     "creators": "Cyrillic, TheRealSailent",
     "id": "127906018",
@@ -5820,10 +6645,14 @@
         "attempts": 8489,
         "video": "https://www.youtube.com/watch?v=zmvmPcJ25_E"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 764,
+      "attempts": 6103
+    }
   },
   {
-    "rank": 206,
+    "rank": 205,
     "name": "The Descended (RMGD)",
     "creators": "Boomblox555",
     "id": "128794273",
@@ -5849,10 +6678,14 @@
         "attempts": 3042,
         "video": "https://youtu.be/5GMD2wuLDe8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1360,
+      "attempts": 3042
+    }
   },
   {
-    "rank": 207,
+    "rank": 206,
     "name": "Evolution is dead",
     "creators": "cheapyyyyy, kyle1saurus",
     "id": "147156243",
@@ -5871,10 +6704,14 @@
         "attempts": 4039,
         "video": "https://youtu.be/gMxzWFNuroo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3939,
+      "attempts": 4039
+    }
   },
   {
-    "rank": 208,
+    "rank": 207,
     "name": "realm of bloodshadow (Oldest)",
     "creators": "gdmiracle",
     "id": "119141644",
@@ -5900,10 +6737,14 @@
         "attempts": 9646,
         "video": "https://www.youtube.com/watch?v=qBiwVCnQO30"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4701,
+      "attempts": 2841
+    }
   },
   {
-    "rank": 209,
+    "rank": 208,
     "name": "Silent Skrillex (Dual Skip)",
     "creators": "DiosselMusic",
     "id": "73836744",
@@ -5936,10 +6777,14 @@
         "attempts": 6918,
         "video": "https://youtu.be/V801rFAfu9c"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 935,
+      "attempts": 6918
+    }
   },
   {
-    "rank": 210,
+    "rank": 209,
     "name": "Silent Skrillex (1P)",
     "creators": "DiosselMusic",
     "id": "148305801",
@@ -5965,10 +6810,14 @@
         "attempts": 13917,
         "video": "https://youtu.be/lMDF-qVlszI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2141,
+      "attempts": 13917
+    }
   },
   {
-    "rank": 211,
+    "rank": 210,
     "name": "01ILLg21 Night",
     "creators": "Nxaelevend",
     "id": "78319371",
@@ -5994,10 +6843,14 @@
         "attempts": 1522,
         "video": "https://youtu.be/OlEaZNX0ymA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 921,
+      "attempts": 1438
+    }
   },
   {
-    "rank": 212,
+    "rank": 211,
     "name": "D34d C0rr1d0r",
     "creators": "KaotikJumper, kyle1saurus",
     "id": "146713859",
@@ -6016,10 +6869,14 @@
         "attempts": 4931,
         "video": "https://youtu.be/hd_VOo_cDaY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3397,
+      "attempts": 4931
+    }
   },
   {
-    "rank": 213,
+    "rank": 212,
     "name": "silent silhouette (Unnerfed)",
     "creators": "hhuuko, cairillic",
     "id": "84145309",
@@ -6052,10 +6909,14 @@
         "attempts": 10923,
         "video": "https://youtu.be/cTSEM2q9Ou4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 917,
+      "attempts": 4165
+    }
   },
   {
-    "rank": 214,
+    "rank": 213,
     "name": "Monodia",
     "creators": "Armadeus",
     "id": "57262123",
@@ -6088,10 +6949,14 @@
         "attempts": 3072,
         "video": "https://youtu.be/tXfAEha3mag"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 613,
+      "attempts": 1269
+    }
   },
   {
-    "rank": 215,
+    "rank": 214,
     "name": "Ripple",
     "creators": "eightos",
     "id": "74601642",
@@ -6117,10 +6982,14 @@
         "attempts": 5208,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2771,
+      "attempts": 3462
+    }
   },
   {
-    "rank": 216,
+    "rank": 215,
     "name": "Sakupen End",
     "creators": "Nick24",
     "id": "100856004",
@@ -6261,9 +7130,9 @@
       {
         "name": "Aiden2644",
         "date": "2026-07-28",
-        "time": "1h 26m 7s",
-        "attempts": 5210,
-        "video": "https://youtu.be/_WGwC8w4xe0"
+        "time": "58m 10s",
+        "attempts": 4386,
+        "video": "https://youtu.be/j2tqCuz-ERI"
       },
       {
         "name": "denn907",
@@ -6280,17 +7149,21 @@
         "video": "https://www.youtube.com/watch?v=JrcrkOGmmWI"
       },
       {
-        "name": "Aiden2644",
-        "date": "2026-09-26",
-        "time": "58m 10s",
-        "attempts": 4386,
-        "video": "https://youtu.be/j2tqCuz-ERI"
+        "name": "Stereogamer992",
+        "date": "2026-10-03",
+        "time": "34m 16s",
+        "attempts": 13311,
+        "video": "https://youtube.com/live/MYT5A1ZNLP4"
       }
     ],
-    "tier": "Advanced"
+    "tier": "Advanced",
+    "scoringBaseline": {
+      "timeSeconds": 1018,
+      "attempts": 1410
+    }
   },
   {
-    "rank": 217,
+    "rank": 216,
     "name": "Comet Observatory",
     "creators": "AnonIIExt",
     "id": "77110935",
@@ -6323,10 +7196,14 @@
         "attempts": 2715,
         "video": "https://youtu.be/uhQqL-bQk34"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1767,
+      "attempts": 2111
+    }
   },
   {
-    "rank": 218,
+    "rank": 217,
     "name": "Empyrean is dead",
     "creators": "070, kyle1saurus",
     "id": "147097702",
@@ -6345,10 +7222,14 @@
         "attempts": 4486,
         "video": "https://youtu.be/HuxLrj_UZE4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2345,
+      "attempts": 4486
+    }
   },
   {
-    "rank": 219,
+    "rank": 218,
     "name": "LILAC STOP LURKING AND BEAT A LEVEL ALREADY!",
     "creators": "RobTop, RMGD",
     "id": "147156817",
@@ -6366,11 +7247,22 @@
         "time": "23m 55s",
         "attempts": 9964,
         "video": "https://youtu.be/dZbJLlzUL_M"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-10-03",
+        "time": "13m 23s",
+        "attempts": 15890,
+        "video": "https://youtu.be/giJgrVvHY2I"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1435,
+      "attempts": 9964
+    }
   },
   {
-    "rank": 220,
+    "rank": 219,
     "name": "Eruption",
     "creators": "hurmichael",
     "id": "144744379",
@@ -6389,10 +7281,14 @@
         "attempts": 1772,
         "video": "https://youtu.be/y9uVavnjggs?si=if-zJzFZ-Je7oXo-"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1412,
+      "attempts": 1772
+    }
   },
   {
-    "rank": 221,
+    "rank": 220,
     "name": "IcosihenaNeverClear",
     "creators": "HaydenDom, tipsx, & more",
     "id": "146755611",
@@ -6411,10 +7307,14 @@
         "attempts": 2364,
         "video": "https://youtu.be/gTENI3zqzqE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2307,
+      "attempts": 2364
+    }
   },
   {
-    "rank": 222,
+    "rank": 221,
     "name": "The Falling Mysts",
     "creators": "cheapyyyyy",
     "id": "141735413",
@@ -6454,10 +7354,14 @@
         "attempts": 2226,
         "video": "https://youtu.be/gojzLli5YUA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1938,
+      "attempts": 2226
+    }
   },
   {
-    "rank": 223,
+    "rank": 222,
     "name": "Silent Acropolis",
     "creators": "1cicl3",
     "id": "83061483",
@@ -6476,10 +7380,14 @@
         "attempts": 2813,
         "video": "https://youtu.be/q21h65hunV8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3077,
+      "attempts": 2813
+    }
   },
   {
-    "rank": 224,
+    "rank": 223,
     "name": "Silent Jawbreaker (Unnerfed)",
     "creators": "TheCyberr, jcob, evileyegalaxy",
     "id": "136063350",
@@ -6512,10 +7420,14 @@
         "attempts": 2871,
         "video": "https://youtu.be/Z20fooXWNrY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 707,
+      "attempts": 1962
+    }
   },
   {
-    "rank": 225,
+    "rank": 224,
     "name": "Silent Voorhees",
     "creators": "strhck",
     "id": "108653117",
@@ -6534,10 +7446,14 @@
         "attempts": 1647,
         "video": "https://youtu.be/TnLLCbgVJcE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1349,
+      "attempts": 1647
+    }
   },
   {
-    "rank": 226,
+    "rank": 225,
     "name": "VERY SAD HUTOEW",
     "creators": "realhutoew",
     "id": "76946004",
@@ -6563,10 +7479,14 @@
         "attempts": 6701,
         "video": "https://www.youtube.com/playlist?list=PLVC8k9jc7siE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1686,
+      "attempts": 6701
+    }
   },
   {
-    "rank": 227,
+    "rank": 226,
     "name": "Unnamed 666 (Unnerfed)",
     "creators": "TMco & more",
     "id": "106513794",
@@ -6599,7 +7519,51 @@
         "attempts": 4269,
         "video": "https://youtu.be/s8oGVko6fig"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1705,
+      "attempts": 1865
+    }
+  },
+  {
+    "rank": 227,
+    "name": "Silent Classical VIP",
+    "creators": "gdnucleax, chilliusvgm",
+    "id": "115597288",
+    "length": "1m 52s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C48.8(4) W22.9(5) B13.1(3) SH9.5(3) U5.7(2) D7.0(2) S93.0(2) IM0.0(0) NM100.0(0) 0.5X54.4(12) 1X31.5(7) 3X13.4(7) 2X0.7(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=oP3s3_zlgpk",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-09-23",
+        "time": "35m 8s",
+        "attempts": 6636,
+        "video": "https://youtu.be/n06NmIvxCPc"
+      },
+      {
+        "name": "Aiden2644",
+        "date": "2026-10-03",
+        "time": "45m 21s",
+        "attempts": 5373,
+        "video": "https://youtu.be/9-pj3NxauMc"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-10-03",
+        "time": "27m 43s",
+        "attempts": 6750,
+        "video": "https://youtu.be/OUpSqEX8dTY"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2108,
+      "attempts": 6636
+    }
   },
   {
     "rank": 228,
@@ -6621,7 +7585,11 @@
         "attempts": 3227,
         "video": "https://youtu.be/rOzIu6JseYM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2353,
+      "attempts": 3227
+    }
   },
   {
     "rank": 229,
@@ -6643,7 +7611,11 @@
         "attempts": 3058,
         "video": "https://www.youtube.com/playlist?list=PLTzl92X6UDSM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3179,
+      "attempts": 3058
+    }
   },
   {
     "rank": 230,
@@ -6672,7 +7644,11 @@
         "attempts": 2385,
         "video": "https://youtu.be/0uR9T8BygrM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1491,
+      "attempts": 1875
+    }
   },
   {
     "rank": 231,
@@ -6694,7 +7670,11 @@
         "attempts": 2880,
         "video": "https://youtu.be/Vc_9S0H7Vh0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3016,
+      "attempts": 2880
+    }
   },
   {
     "rank": 232,
@@ -6730,7 +7710,11 @@
         "attempts": 4092,
         "video": "https://youtu.be/XItM8SyoE4E"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1407,
+      "attempts": 4089
+    }
   },
   {
     "rank": 233,
@@ -6752,7 +7736,11 @@
         "attempts": 5799,
         "video": "https://www.youtube.com/playlist?list=PLCsoGl38t7vg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1676,
+      "attempts": 5799
+    }
   },
   {
     "rank": 234,
@@ -6774,7 +7762,11 @@
         "attempts": 1258,
         "video": "https://youtu.be/t44Jw00-oiQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1629,
+      "attempts": 1258
+    }
   },
   {
     "rank": 235,
@@ -6803,7 +7795,11 @@
         "attempts": 0,
         "video": "https://youtu.be/BEeFdSJStjg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1474,
+      "attempts": 1480
+    }
   },
   {
     "rank": 236,
@@ -6825,7 +7821,11 @@
         "attempts": 1676,
         "video": "https://youtube.com/playlist?list=PLZVSsRvnXQ4s&si=u4AQU9dr5sjPL9qr"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1204,
+      "attempts": 1676
+    }
   },
   {
     "rank": 237,
@@ -6861,7 +7861,11 @@
         "attempts": 2482,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1180,
+      "attempts": 1328
+    }
   },
   {
     "rank": 238,
@@ -6890,7 +7894,11 @@
         "attempts": 3089,
         "video": "https://youtu.be/7QdxKaU4DTA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1496,
+      "attempts": 2419
+    }
   },
   {
     "rank": 239,
@@ -6912,7 +7920,11 @@
         "attempts": 2336,
         "video": "https://www.youtube.com/watch?v=9eN4oFw0hd8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2372,
+      "attempts": 2336
+    }
   },
   {
     "rank": 240,
@@ -6948,7 +7960,11 @@
         "attempts": 6350,
         "video": "https://www.youtube.com/watch?v=kX31zoYVQ4Y"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2651,
+      "attempts": 3307
+    }
   },
   {
     "rank": 241,
@@ -6970,7 +7986,11 @@
         "attempts": 3189,
         "video": "https://youtu.be/nX3H8-uOeME"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2579,
+      "attempts": 3189
+    }
   },
   {
     "rank": 242,
@@ -7006,7 +8026,11 @@
         "attempts": 3148,
         "video": "https://youtu.be/9xoiexjZnB4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1398,
+      "attempts": 1390
+    }
   },
   {
     "rank": 243,
@@ -7035,7 +8059,11 @@
         "attempts": 4916,
         "video": "https://docs.google.com/spreadsheets/d/1UjOiJANf19leeu3cjniQ2Ihc6_wZh-YxwS_pyNLgDYc/edit"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1907,
+      "attempts": 10219
+    }
   },
   {
     "rank": 244,
@@ -7057,7 +8085,11 @@
         "attempts": 1967,
         "video": "https://youtu.be/NOJdELrdm6s"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1712,
+      "attempts": 1967
+    }
   },
   {
     "rank": 245,
@@ -7079,7 +8111,11 @@
         "attempts": 2258,
         "video": "https://www.youtube.com/playlist?list=PLUQBDv3sBlps"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1661,
+      "attempts": 2258
+    }
   },
   {
     "rank": 246,
@@ -7108,7 +8144,11 @@
         "attempts": 2089,
         "video": "https://youtu.be/UYpORl5GXJc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1875,
+      "attempts": 1986
+    }
   },
   {
     "rank": 247,
@@ -7144,7 +8184,11 @@
         "attempts": 1606,
         "video": "https://youtu.be/t1BB9L8IXhQ?si=rtNZGw5fdikZd1hK"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1280,
+      "attempts": 1606
+    }
   },
   {
     "rank": 248,
@@ -7166,7 +8210,11 @@
         "attempts": 1477,
         "video": "https://youtu.be/WfJxPsJZBmk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1705,
+      "attempts": 1477
+    }
   },
   {
     "rank": 249,
@@ -7188,7 +8236,11 @@
         "attempts": 2041,
         "video": "https://youtu.be/6qCll877cwY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1448,
+      "attempts": 2041
+    }
   },
   {
     "rank": 250,
@@ -7210,7 +8262,11 @@
         "attempts": 1709,
         "video": "https://youtu.be/N0d4A3m-PgM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1416,
+      "attempts": 1709
+    }
   },
   {
     "rank": 251,
@@ -7232,7 +8288,11 @@
         "attempts": 5037,
         "video": "https://youtu.be/rCTlsBFA4-g"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5033,
+      "attempts": 5037
+    }
   },
   {
     "rank": 252,
@@ -7254,7 +8314,11 @@
         "attempts": 1714,
         "video": "https://youtu.be/C7x8_XPxaVU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1861,
+      "attempts": 1714
+    }
   },
   {
     "rank": 253,
@@ -7283,7 +8347,11 @@
         "attempts": 2452,
         "video": "https://youtu.be/jVng1Yy53PY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1107,
+      "attempts": 2433
+    }
   },
   {
     "rank": 254,
@@ -7305,7 +8373,11 @@
         "attempts": 16970,
         "video": "https://youtu.be/7Nns3Pcqs5Q"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1966,
+      "attempts": 16970
+    }
   },
   {
     "rank": 255,
@@ -7341,7 +8413,11 @@
         "attempts": 3020,
         "video": "https://youtu.be/WlaIQBh-T9I"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2381,
+      "attempts": 3020
+    }
   },
   {
     "rank": 256,
@@ -7370,7 +8446,11 @@
         "attempts": 1315,
         "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1208,
+      "attempts": 1315
+    }
   },
   {
     "rank": 257,
@@ -7399,7 +8479,11 @@
         "attempts": 3019,
         "video": "https://youtu.be/46VCZP0DNF0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2361,
+      "attempts": 3019
+    }
   },
   {
     "rank": 258,
@@ -7428,7 +8512,11 @@
         "attempts": 7038,
         "video": "https://youtu.be/jxF2AHbomIQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1731,
+      "attempts": 7038
+    }
   },
   {
     "rank": 259,
@@ -7457,7 +8545,11 @@
         "attempts": 1862,
         "video": "https://youtu.be/ijxKMLBYvyA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1405,
+      "attempts": 1448
+    }
   },
   {
     "rank": 260,
@@ -7493,7 +8585,11 @@
         "attempts": 3189,
         "video": "https://youtu.be/gdt4kM4FYrU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1190,
+      "attempts": 1505
+    }
   },
   {
     "rank": 261,
@@ -7515,7 +8611,11 @@
         "attempts": 3575,
         "video": "https://youtu.be/hJv0Wv9e7i8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1625,
+      "attempts": 3575
+    }
   },
   {
     "rank": 262,
@@ -7544,7 +8644,11 @@
         "attempts": 2193,
         "video": "https://youtu.be/jVng1Yy53PY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1598,
+      "attempts": 1732
+    }
   },
   {
     "rank": 263,
@@ -7580,7 +8684,11 @@
         "attempts": 5239,
         "video": "https://youtu.be/3exdtGcfzHM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1214,
+      "attempts": 2162
+    }
   },
   {
     "rank": 264,
@@ -7609,7 +8717,11 @@
         "attempts": 8855,
         "video": "https://youtu.be/RxwiRkCkC2M"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1555,
+      "attempts": 5413
+    }
   },
   {
     "rank": 265,
@@ -7638,7 +8750,11 @@
         "attempts": 3615,
         "video": "https://youtu.be/NSFL-Uk7ZLg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1088,
+      "attempts": 3615
+    }
   },
   {
     "rank": 266,
@@ -7667,7 +8783,11 @@
         "attempts": 2125,
         "video": "https://youtu.be/cqNJa27IUNI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1284,
+      "attempts": 2125
+    }
   },
   {
     "rank": 267,
@@ -7696,7 +8816,11 @@
         "attempts": 2883,
         "video": "https://youtu.be/CQY7mz4zvu0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1335,
+      "attempts": 1778
+    }
   },
   {
     "rank": 268,
@@ -7718,7 +8842,11 @@
         "attempts": 4817,
         "video": "https://youtu.be/Gy65I9nFGgc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2677,
+      "attempts": 4817
+    }
   },
   {
     "rank": 269,
@@ -7747,7 +8875,11 @@
         "attempts": 8861,
         "video": "https://youtu.be/EEIDSfXZ3YY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1043,
+      "attempts": 8861
+    }
   },
   {
     "rank": 270,
@@ -7797,7 +8929,11 @@
         "attempts": 3115,
         "video": "https://youtu.be/HhIn1EdnpCs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 419,
+      "attempts": 1477
+    }
   },
   {
     "rank": 271,
@@ -7819,7 +8955,11 @@
         "attempts": 13984,
         "video": "https://youtube.com/live/c7d9rTphPXY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1525,
+      "attempts": 13984
+    }
   },
   {
     "rank": 272,
@@ -7848,7 +8988,11 @@
         "attempts": 3711,
         "video": "https://youtu.be/0x7leOiUj3A"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1428,
+      "attempts": 3711
+    }
   },
   {
     "rank": 273,
@@ -7870,7 +9014,11 @@
         "attempts": 2353,
         "video": "https://youtu.be/cDAIhDChyPI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2183,
+      "attempts": 2353
+    }
   },
   {
     "rank": 274,
@@ -7892,7 +9040,11 @@
         "attempts": 2728,
         "video": "https://youtu.be/KhHlDt8vBFc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2074,
+      "attempts": 2728
+    }
   },
   {
     "rank": 275,
@@ -7921,7 +9073,11 @@
         "attempts": 2433,
         "video": "https://youtu.be/8m-KOO-nkbU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1353,
+      "attempts": 2433
+    }
   },
   {
     "rank": 276,
@@ -7943,7 +9099,11 @@
         "attempts": 6727,
         "video": "https://youtu.be/UPUMM3_6cZA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1581,
+      "attempts": 6727
+    }
   },
   {
     "rank": 277,
@@ -7986,7 +9146,11 @@
         "attempts": 2970,
         "video": "https://youtu.be/myx6y-WQAnw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1668,
+      "attempts": 2031
+    }
   },
   {
     "rank": 278,
@@ -8008,7 +9172,11 @@
         "attempts": 3416,
         "video": "https://youtu.be/u4afYgHjsPU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2169,
+      "attempts": 3416
+    }
   },
   {
     "rank": 279,
@@ -8044,7 +9212,11 @@
         "attempts": 1764,
         "video": "https://www.youtube.com/playlist?list=PLELF4jVT-e8c"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1605,
+      "attempts": 1672
+    }
   },
   {
     "rank": 280,
@@ -8080,7 +9252,11 @@
         "attempts": 3180,
         "video": "https://youtu.be/yKsNe4W5FzE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1422,
+      "attempts": 1776
+    }
   },
   {
     "rank": 281,
@@ -8109,7 +9285,11 @@
         "attempts": 3121,
         "video": "https://youtu.be/OHlCLZmtcbE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1144,
+      "attempts": 1369
+    }
   },
   {
     "rank": 282,
@@ -8145,7 +9325,11 @@
         "attempts": 2591,
         "video": "https://youtu.be/WamW0GQI2F0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1716,
+      "attempts": 2309
+    }
   },
   {
     "rank": 283,
@@ -8167,7 +9351,11 @@
         "attempts": 4376,
         "video": "https://youtu.be/FFuqZouGlOE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 821,
+      "attempts": 4376
+    }
   },
   {
     "rank": 284,
@@ -8189,7 +9377,11 @@
         "attempts": 39335,
         "video": "https://www.youtube.com/watch?v=2mvqhiBsOsc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4105,
+      "attempts": 39335
+    }
   },
   {
     "rank": 285,
@@ -8214,11 +9406,15 @@
       {
         "name": "Aiden2644",
         "date": "2026-09-12",
-        "time": "28m 12s",
-        "attempts": 1825,
-        "video": "https://youtu.be/7l4ywXg3jnU"
+        "time": "19m 9s",
+        "attempts": 1245,
+        "video": "https://youtu.be/lO06Lb7usGw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1537,
+      "attempts": 1717
+    }
   },
   {
     "rank": 286,
@@ -8254,7 +9450,11 @@
         "attempts": 1048,
         "video": "https://youtu.be/8YU-DRfli6o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 736,
+      "attempts": 1048
+    }
   },
   {
     "rank": 287,
@@ -8276,7 +9476,11 @@
         "attempts": 10397,
         "video": "https://www.youtube.com/watch?v=4GrwxTMLogk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 6601,
+      "attempts": 10397
+    }
   },
   {
     "rank": 288,
@@ -8298,7 +9502,11 @@
         "attempts": 4331,
         "video": "https://youtu.be/qa1km_x0tXQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1965,
+      "attempts": 4331
+    }
   },
   {
     "rank": 289,
@@ -8328,7 +9536,11 @@
         "video": "https://youtu.be/jvzCkXbZ5sw"
       }
     ],
-    "tier": "Intermediate"
+    "tier": "Intermediate",
+    "scoringBaseline": {
+      "timeSeconds": 1179,
+      "attempts": 1488
+    }
   },
   {
     "rank": 290,
@@ -8364,7 +9576,11 @@
         "attempts": 1833,
         "video": "https://youtu.be/K26qjqlhI9o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 935,
+      "attempts": 1472
+    }
   },
   {
     "rank": 291,
@@ -8393,7 +9609,11 @@
         "attempts": 2863,
         "video": "https://youtu.be/leSsKLa6sWU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 922,
+      "attempts": 1318
+    }
   },
   {
     "rank": 292,
@@ -8422,7 +9642,11 @@
         "attempts": 2590,
         "video": "https://youtu.be/UYpORl5GXJc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 964,
+      "attempts": 1400
+    }
   },
   {
     "rank": 293,
@@ -8472,7 +9696,11 @@
         "attempts": 3138,
         "video": "https://youtu.be/w1znTaGlsY4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1067,
+      "attempts": 1129
+    }
   },
   {
     "rank": 294,
@@ -8501,7 +9729,11 @@
         "attempts": 1538,
         "video": "https://youtu.be/hiW3ElfDN3w"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1205,
+      "attempts": 1538
+    }
   },
   {
     "rank": 295,
@@ -8523,7 +9755,11 @@
         "attempts": 2918,
         "video": "https://youtu.be/5elTpg3mBXY?si=0PFmIBmlW8_0iKs2"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3043,
+      "attempts": 2918
+    }
   },
   {
     "rank": 296,
@@ -8566,7 +9802,11 @@
         "attempts": 1254,
         "video": "https://youtu.be/31V0ENYapRk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 982,
+      "attempts": 1254
+    }
   },
   {
     "rank": 297,
@@ -8588,7 +9828,11 @@
         "attempts": 45503,
         "video": "https://www.youtube.com/playlist?list=PLExkjrC62Cng"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1864,
+      "attempts": 45503
+    }
   },
   {
     "rank": 298,
@@ -8652,7 +9896,11 @@
         "attempts": 4625,
         "video": "https://youtu.be/tsdKE2fEA30"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 631,
+      "attempts": 4625
+    }
   },
   {
     "rank": 299,
@@ -8674,7 +9922,11 @@
         "attempts": 1462,
         "video": "https://youtu.be/kVpkxsMtP9"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 970,
+      "attempts": 1462
+    }
   },
   {
     "rank": 300,
@@ -8696,7 +9948,11 @@
         "attempts": 23772,
         "video": "https://youtube.com/live/0HT-M11097A"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1225,
+      "attempts": 23772
+    }
   },
   {
     "rank": 301,
@@ -8718,7 +9974,11 @@
         "attempts": 2486,
         "video": "https://youtu.be/Sddjz6KqcDs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1984,
+      "attempts": 2486
+    }
   },
   {
     "rank": 302,
@@ -8754,7 +10014,11 @@
         "attempts": 13699,
         "video": "https://youtube.com/live/4yMgyPuVIME"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1190,
+      "attempts": 2066
+    }
   },
   {
     "rank": 303,
@@ -8776,7 +10040,11 @@
         "attempts": 2572,
         "video": "https://youtu.be/SqMfZSn7PmY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1997,
+      "attempts": 2572
+    }
   },
   {
     "rank": 304,
@@ -8805,7 +10073,11 @@
         "attempts": 6305,
         "video": "https://youtu.be/OatbU3OGxPw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1384,
+      "attempts": 6051
+    }
   },
   {
     "rank": 305,
@@ -8834,7 +10106,11 @@
         "attempts": 19323,
         "video": "https://youtu.be/W5JLHH3cAYU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2067,
+      "attempts": 19323
+    }
   },
   {
     "rank": 306,
@@ -8856,7 +10132,11 @@
         "attempts": 2111,
         "video": "https://youtu.be/-ZiAksKwBX8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1144,
+      "attempts": 2111
+    }
   },
   {
     "rank": 307,
@@ -8878,7 +10158,11 @@
         "attempts": 1635,
         "video": "https://youtu.be/Y1GBg2iMV3M"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1882,
+      "attempts": 1635
+    }
   },
   {
     "rank": 308,
@@ -8900,7 +10184,11 @@
         "attempts": 6444,
         "video": "https://youtu.be/SR0yOjJDl_E"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2195,
+      "attempts": 6444
+    }
   },
   {
     "rank": 309,
@@ -8922,7 +10210,11 @@
         "attempts": 6741,
         "video": "https://youtu.be/Ct97NP3kY0o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1102,
+      "attempts": 6741
+    }
   },
   {
     "rank": 310,
@@ -8951,7 +10243,11 @@
         "attempts": 3373,
         "video": "https://youtu.be/Tj_wFKrPikg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1057,
+      "attempts": 1438
+    }
   },
   {
     "rank": 311,
@@ -8973,7 +10269,11 @@
         "attempts": 2462,
         "video": "https://youtu.be/K3eh6_536DI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1781,
+      "attempts": 2462
+    }
   },
   {
     "rank": 312,
@@ -8995,7 +10295,11 @@
         "attempts": 1425,
         "video": "https://youtu.be/mjKMlcWXIzA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1092,
+      "attempts": 1425
+    }
   },
   {
     "rank": 313,
@@ -9017,7 +10321,11 @@
         "attempts": 1335,
         "video": "https://youtu.be/5o7tNHWdkFI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1061,
+      "attempts": 1335
+    }
   },
   {
     "rank": 314,
@@ -9039,7 +10347,11 @@
         "attempts": 8950,
         "video": "https://youtu.be/-Emc3IFups8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2393,
+      "attempts": 8950
+    }
   },
   {
     "rank": 315,
@@ -9061,7 +10373,11 @@
         "attempts": 1319,
         "video": "https://youtu.be/hZxRCUagfbM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1301,
+      "attempts": 1319
+    }
   },
   {
     "rank": 316,
@@ -9083,7 +10399,11 @@
         "attempts": 3002,
         "video": "https://www.youtube.com/playlist?list=PLKPhV4zmYM6o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2036,
+      "attempts": 3002
+    }
   },
   {
     "rank": 317,
@@ -9112,7 +10432,11 @@
         "attempts": 1804,
         "video": "https://www.youtube.com/playlist?list=PLFzUlk4vh338"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1409,
+      "attempts": 1804
+    }
   },
   {
     "rank": 318,
@@ -9141,7 +10465,11 @@
         "attempts": 776,
         "video": "https://youtu.be/uhHX5iV8r88?si=iCvooj8_6nozgDvt"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 654,
+      "attempts": 776
+    }
   },
   {
     "rank": 319,
@@ -9163,7 +10491,11 @@
         "attempts": 3267,
         "video": "https://youtu.be/8OPdUdBviOs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2267,
+      "attempts": 3267
+    }
   },
   {
     "rank": 320,
@@ -9185,7 +10517,11 @@
         "attempts": 1802,
         "video": "https://youtu.be/8kIEIIKX6E8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1439,
+      "attempts": 1802
+    }
   },
   {
     "rank": 321,
@@ -9207,7 +10543,11 @@
         "attempts": 5118,
         "video": "https://youtu.be/AIbE8-WTEi8"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 964,
+      "attempts": 5118
+    }
   },
   {
     "rank": 322,
@@ -9236,7 +10576,11 @@
         "attempts": 1067,
         "video": "https://youtu.be/HbAAGceterU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 705,
+      "attempts": 1067
+    }
   },
   {
     "rank": 323,
@@ -9272,7 +10616,11 @@
         "attempts": 920,
         "video": "https://youtu.be/e5fEYSEfGoE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 785,
+      "attempts": 920
+    }
   },
   {
     "rank": 324,
@@ -9301,7 +10649,11 @@
         "attempts": 2220,
         "video": "https://youtu.be/nORp22JJ6Yk?t=21"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 892,
+      "attempts": 1483
+    }
   },
   {
     "rank": 325,
@@ -9337,7 +10689,11 @@
         "attempts": 1481,
         "video": "https://youtu.be/4j_uXzg3MFI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 698,
+      "attempts": 1481
+    }
   },
   {
     "rank": 326,
@@ -9359,7 +10715,11 @@
         "attempts": 6280,
         "video": "https://youtu.be/cY1K9BYfUVQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 482,
+      "attempts": 6280
+    }
   },
   {
     "rank": 327,
@@ -9395,7 +10755,11 @@
         "attempts": 3184,
         "video": "https://youtu.be/sWCKYt0U7iY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1207,
+      "attempts": 1432
+    }
   },
   {
     "rank": 328,
@@ -9417,7 +10781,11 @@
         "attempts": 6408,
         "video": "https://youtu.be/qsJgs6iaBsM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2626,
+      "attempts": 6408
+    }
   },
   {
     "rank": 329,
@@ -9439,7 +10807,11 @@
         "attempts": 3044,
         "video": "https://youtu.be/lV-IWfN3MdA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1919,
+      "attempts": 3044
+    }
   },
   {
     "rank": 330,
@@ -9461,7 +10833,11 @@
         "attempts": 1253,
         "video": "https://youtu.be/WUxSzPWCXlE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1037,
+      "attempts": 1253
+    }
   },
   {
     "rank": 331,
@@ -9490,10 +10866,106 @@
         "attempts": 840,
         "video": "https://youtu.be/AVDCyqt6eOI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 730,
+      "attempts": 840
+    }
   },
   {
     "rank": 332,
+    "name": "Eternal",
+    "creators": "Calegar, tueml, equinoxis",
+    "id": "143295058",
+    "length": "1m 58s",
+    "tps": "",
+    "precision": "",
+    "ratio": "C45.4(23) SH22(15) W15.1(12) U13.4(9) B4.1(5) D2.2(1) S97.8(1) IM0.0(0) NM100.0(0) 1X36.3(5) 3X22.3(9) 2X20.8(8) 0.5X20.6(4)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/MqNyEuw7li4",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-05",
+        "time": "19m 39s",
+        "attempts": 1472,
+        "video": "https://youtu.be/_oc0D4BQpJs"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1179,
+      "attempts": 1472
+    }
+  },
+  {
+    "rank": 333,
+    "name": "White Abyss",
+    "creators": "lights2419, noyogd",
+    "id": "126535682",
+    "length": "1m 14s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C27.5(6) R21.1(4) B14.7(2) SH13.4(7) W11.2(4) U5.2(2) SP4.3(1) SW2.5(2) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X56.2(1) 2X34.8(2) 0.5X7(1) 4X1.4(1) 3X0.6(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=RL0xaMgaxTI",
+    "image": "",
+    "victors": [
+      {
+        "name": "Anceps",
+        "date": "2026-04-06",
+        "time": "27m 19s",
+        "attempts": 3822,
+        "video": "https://youtu.be/X0xVISMlfhQ"
+      },
+      {
+        "name": "Sashozz",
+        "date": "2026-04-20",
+        "time": "20m 7s",
+        "attempts": 1537,
+        "video": "https://youtu.be/uhQqL-bQk34"
+      },
+      {
+        "name": "Stereogamer992",
+        "date": "2026-10-03",
+        "time": "19m 24s",
+        "attempts": 8418,
+        "video": "https://youtube.com/live/vBhY2X2lVpQ"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1207,
+      "attempts": 1537
+    }
+  },
+  {
+    "rank": 334,
+    "name": "nyctophilia",
+    "creators": "maxfs",
+    "id": "66477534",
+    "length": "42s",
+    "tps": 244,
+    "precision": "",
+    "ratio": "C74.7(2) W9.9(1) B7.8(1) SH7.6(1) D9.2(1) S90.8(1) IM0.0(0) NM100.0(0) 2X36.7(6) 0.5X33(2) 1X23(4) 3X5.4(3) 4X1.9(3)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://youtu.be/leE6mRDzhcI",
+    "image": "",
+    "victors": [
+      {
+        "name": "Sashozz",
+        "date": "2026-04-27",
+        "time": "21m 28s",
+        "attempts": 1790,
+        "video": "https://youtu.be/7lJML1vyWSw"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1288,
+      "attempts": 1790
+    }
+  },
+  {
+    "rank": 335,
     "name": "XSaTan (Unnerfed)",
     "creators": "IiIOpTiCaLiIi",
     "id": "146564209",
@@ -9519,10 +10991,14 @@
         "attempts": 5074,
         "video": "https://youtu.be/MsjfGI7UtFw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 775,
+      "attempts": 5074
+    }
   },
   {
-    "rank": 333,
+    "rank": 336,
     "name": "XSaTan (ILL)",
     "creators": "IiIOpTiCaLIiI",
     "id": "121511843",
@@ -9548,80 +11024,11 @@
         "attempts": 12613,
         "video": "https://youtube.com/live/qpyCT1G4bqc"
       }
-    ]
-  },
-  {
-    "rank": 334,
-    "name": "Eternal",
-    "creators": "Calegar, tueml, equinoxis",
-    "id": "143295058",
-    "length": "1m 58s",
-    "tps": "",
-    "precision": "",
-    "ratio": "C45.4(23) SH22(15) W15.1(12) U13.4(9) B4.1(5) D2.2(1) S97.8(1) IM0.0(0) NM100.0(0) 1X36.3(5) 3X22.3(9) 2X20.8(8) 0.5X20.6(4)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/MqNyEuw7li4",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-07-05",
-        "time": "19m 39s",
-        "attempts": 1472,
-        "video": "https://youtu.be/_oc0D4BQpJs"
-      }
-    ]
-  },
-  {
-    "rank": 335,
-    "name": "White Abyss",
-    "creators": "lights2419, noyogd",
-    "id": "126535682",
-    "length": "1m 14s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C27.5(6) R21.1(4) B14.7(2) SH13.4(7) W11.2(4) U5.2(2) SP4.3(1) SW2.5(2) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X56.2(1) 2X34.8(2) 0.5X7(1) 4X1.4(1) 3X0.6(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=RL0xaMgaxTI",
-    "image": "",
-    "victors": [
-      {
-        "name": "Anceps",
-        "date": "2026-04-06",
-        "time": "27m 19s",
-        "attempts": 3822,
-        "video": "https://youtu.be/X0xVISMlfhQ"
-      },
-      {
-        "name": "Sashozz",
-        "date": "2026-04-20",
-        "time": "20m 7s",
-        "attempts": 1537,
-        "video": "https://youtu.be/uhQqL-bQk34"
-      }
-    ]
-  },
-  {
-    "rank": 336,
-    "name": "nyctophilia",
-    "creators": "maxfs",
-    "id": "66477534",
-    "length": "42s",
-    "tps": 244,
-    "precision": "",
-    "ratio": "C74.7(2) W9.9(1) B7.8(1) SH7.6(1) D9.2(1) S90.8(1) IM0.0(0) NM100.0(0) 2X36.7(6) 0.5X33(2) 1X23(4) 3X5.4(3) 4X1.9(3)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://youtu.be/leE6mRDzhcI",
-    "image": "",
-    "victors": [
-      {
-        "name": "Sashozz",
-        "date": "2026-04-27",
-        "time": "21m 28s",
-        "attempts": 1790,
-        "video": "https://youtu.be/7lJML1vyWSw"
-      }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 897,
+      "attempts": 2243
+    }
   },
   {
     "rank": 337,
@@ -9643,7 +11050,11 @@
         "attempts": 2462,
         "video": "https://youtu.be/1p7w3jpzuoA"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1706,
+      "attempts": 2462
+    }
   },
   {
     "rank": 338,
@@ -9673,7 +11084,11 @@
         "video": "https://youtu.be/-YSPj0J2sWA"
       }
     ],
-    "tier": "Novice"
+    "tier": "Novice",
+    "scoringBaseline": {
+      "timeSeconds": 960,
+      "attempts": 3930
+    }
   },
   {
     "rank": 339,
@@ -9709,7 +11124,11 @@
         "attempts": 1305,
         "video": "https://youtu.be/RLupUFtUF_4?si=4CRCzChcQ1xnj4uz"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1115,
+      "attempts": 1305
+    }
   },
   {
     "rank": 340,
@@ -9752,7 +11171,11 @@
         "attempts": 3487,
         "video": "https://youtu.be/CF1tZ9w3iyw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1046,
+      "attempts": 1298
+    }
   },
   {
     "rank": 341,
@@ -9788,7 +11211,11 @@
         "attempts": 2121,
         "video": "https://youtu.be/PTFsm4_-0wI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1036,
+      "attempts": 1236
+    }
   },
   {
     "rank": 342,
@@ -9831,7 +11258,11 @@
         "attempts": 1119,
         "video": "https://youtu.be/1MNeY4AikRg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 886,
+      "attempts": 916
+    }
   },
   {
     "rank": 343,
@@ -9853,7 +11284,11 @@
         "attempts": 1666,
         "video": "https://youtu.be/i7IZv7vH698"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1688,
+      "attempts": 1666
+    }
   },
   {
     "rank": 344,
@@ -9875,7 +11310,11 @@
         "attempts": 1629,
         "video": "https://youtu.be/ckDMhHr7kgg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2046,
+      "attempts": 1629
+    }
   },
   {
     "rank": 345,
@@ -9897,7 +11336,11 @@
         "attempts": 2010,
         "video": "https://youtu.be/BkxRDCCV8tM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 927,
+      "attempts": 2010
+    }
   },
   {
     "rank": 346,
@@ -9926,7 +11369,11 @@
         "attempts": 1994,
         "video": "https://youtu.be/E3CgWBCf7b0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 685,
+      "attempts": 1994
+    }
   },
   {
     "rank": 347,
@@ -9969,7 +11416,11 @@
         "attempts": 2444,
         "video": "https://youtu.be/soTzacLKngo"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 588,
+      "attempts": 977
+    }
   },
   {
     "rank": 348,
@@ -9998,7 +11449,11 @@
         "attempts": 793,
         "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 485,
+      "attempts": 793
+    }
   },
   {
     "rank": 349,
@@ -10027,7 +11482,11 @@
         "attempts": 1412,
         "video": "https://youtu.be/KPbqoLjLkwg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1032,
+      "attempts": 1412
+    }
   },
   {
     "rank": 350,
@@ -10056,7 +11515,11 @@
         "attempts": 1418,
         "video": "https://www.youtube.com/live/_3bpv8pPp6Q"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 882,
+      "attempts": 1418
+    }
   },
   {
     "rank": 351,
@@ -10120,7 +11583,11 @@
         "attempts": 5992,
         "video": "https://youtu.be/KlxKlw-vgfc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 882,
+      "attempts": 1197
+    }
   },
   {
     "rank": 352,
@@ -10149,7 +11616,11 @@
         "attempts": 1759,
         "video": "https://youtu.be/RfoAnYTVhIQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 857,
+      "attempts": 906
+    }
   },
   {
     "rank": 353,
@@ -10213,7 +11684,11 @@
         "attempts": 2930,
         "video": "https://youtu.be/s662TCUmxrQ"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 934,
+      "attempts": 1071
+    }
   },
   {
     "rank": 354,
@@ -10256,7 +11731,11 @@
         "attempts": 978,
         "video": "https://youtu.be/kuKoDHHgSVU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 237,
+      "attempts": 249
+    }
   },
   {
     "rank": 355,
@@ -10327,7 +11806,11 @@
         "attempts": 4015,
         "video": "https://youtube.com/live/QFLx92sTf70?feature=share"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 444,
+      "attempts": 824
+    }
   },
   {
     "rank": 356,
@@ -10349,7 +11832,11 @@
         "attempts": 895,
         "video": "https://youtu.be/73tipQUOgKc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 632,
+      "attempts": 895
+    }
   },
   {
     "rank": 357,
@@ -10378,7 +11865,11 @@
         "attempts": 1620,
         "video": "https://youtu.be/qg3byk_5VBU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 925,
+      "attempts": 1327
+    }
   },
   {
     "rank": 358,
@@ -10407,7 +11898,11 @@
         "attempts": 1711,
         "video": "https://youtu.be/TOUKGdZYcJ4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 928,
+      "attempts": 1711
+    }
   },
   {
     "rank": 359,
@@ -10443,7 +11938,11 @@
         "attempts": 1317,
         "video": "https://youtu.be/qg3byk_5VBU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1009,
+      "attempts": 1145
+    }
   },
   {
     "rank": 360,
@@ -10472,7 +11971,11 @@
         "attempts": 1217,
         "video": "https://youtu.be/cXtWlAmNIJk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 980,
+      "attempts": 1217
+    }
   },
   {
     "rank": 361,
@@ -10536,7 +12039,11 @@
         "attempts": 2910,
         "video": "https://youtu.be/O4mKaKLZd5A"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 447,
+      "attempts": 2910
+    }
   },
   {
     "rank": 362,
@@ -10565,7 +12072,11 @@
         "attempts": 2869,
         "video": "https://www.youtube.com/live/tBc60e_NiOQ?si=Y7EFfnRgDrEKh_Sr"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 958,
+      "attempts": 1432
+    }
   },
   {
     "rank": 363,
@@ -10594,7 +12105,11 @@
         "attempts": 32580,
         "video": "https://www.youtube.com/live/5nVsqaHHzao"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 585,
+      "attempts": 27029
+    }
   },
   {
     "rank": 364,
@@ -10616,7 +12131,11 @@
         "attempts": 1382,
         "video": "https://youtu.be/ArGVlBV97Cc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 912,
+      "attempts": 1382
+    }
   },
   {
     "rank": 365,
@@ -10638,7 +12157,11 @@
         "attempts": 1096,
         "video": "https://youtu.be/gEjyAJQ_uyw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 909,
+      "attempts": 1096
+    }
   },
   {
     "rank": 366,
@@ -10660,7 +12183,11 @@
         "attempts": 7679,
         "video": "https://www.youtube.com/watch?v=3iO7h9NYyG0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 5281,
+      "attempts": 7679
+    }
   },
   {
     "rank": 367,
@@ -10717,60 +12244,14 @@
         "attempts": 3164,
         "video": "https://youtu.be/5EfQBe_P37Y"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 875,
+      "attempts": 1126
+    }
   },
   {
     "rank": 368,
-    "name": "Wrath of the Faraon",
-    "creators": "KidJolly",
-    "id": "66683722",
-    "length": "1m 7s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C63.8(5) W22.2(5) SH9.3(3) B4.7(1) D1.6(1) S98.4(1) IM5.3(4) NM94.7(4) 3X39(1) 0.5X35.9(4) 1X14.5(2) 2X10.5(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=sOr0J2p-zkw",
-    "image": "",
-    "victors": [
-      {
-        "name": "Sashozz",
-        "date": "2026-04-20",
-        "time": "16m 14s",
-        "attempts": 2016,
-        "video": ""
-      },
-      {
-        "name": "SupremeSDB",
-        "date": "2026-05-16",
-        "time": "27m 5s",
-        "attempts": 2378,
-        "video": "https://studio.youtube.com/playlist/PL4WOzxn2rE7fhw7Ygtozb19Xyap5x8Raw/edit"
-      },
-      {
-        "name": "Flyingfish9",
-        "date": "2026-05-06",
-        "time": "35m 31s",
-        "attempts": 2937,
-        "video": "https://youtu.be/I4-lsCBK7yo"
-      },
-      {
-        "name": "Anceps",
-        "date": "2026-05-17",
-        "time": "14m 24s",
-        "attempts": 2327,
-        "video": "https://youtu.be/8QyMqdM8IVI"
-      },
-      {
-        "name": "RMGD",
-        "date": "2026-07-18",
-        "time": "9m 57s",
-        "attempts": 756,
-        "video": "https://youtu.be/B-gYto1PJ6w"
-      }
-    ]
-  },
-  {
-    "rank": 369,
     "name": "WOODKID 2018",
     "creators": "Jakerz & more",
     "id": "90312250",
@@ -10838,10 +12319,14 @@
         "attempts": 1542,
         "video": "https://youtu.be/cV0-BjPmyzc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 913,
+      "attempts": 978
+    }
   },
   {
-    "rank": 370,
+    "rank": 369,
     "name": "Silent poltergeist v666",
     "creators": "TheRealSailent, RMGD",
     "id": "143298563",
@@ -10874,10 +12359,14 @@
         "attempts": 11735,
         "video": "https://www.youtube.com/watch?v=twgs3qj_4tk"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 868,
+      "attempts": 1164
+    }
   },
   {
-    "rank": 371,
+    "rank": 370,
     "name": "Hi GDArchives Extra",
     "creators": "kyle1saurus",
     "id": "144103311",
@@ -10903,10 +12392,14 @@
         "attempts": 6530,
         "video": "https://youtu.be/mRhpEoI39WI"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 737,
+      "attempts": 6530
+    }
   },
   {
-    "rank": 372,
+    "rank": 371,
     "name": "Hush (Unnerfed)",
     "creators": "Ariwl",
     "id": "126079844",
@@ -10932,10 +12425,14 @@
         "attempts": 4876,
         "video": "https://www.youtube.com/watch?v=CcxbNDEjHs0"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 934,
+      "attempts": 1154
+    }
   },
   {
-    "rank": 373,
+    "rank": 372,
     "name": "Colorful Twilight (Dual Skip)",
     "creators": "RMGD",
     "id": "121449919",
@@ -10954,10 +12451,14 @@
         "attempts": 4101,
         "video": "https://youtube.com/live/QFLx92sTf70?feature=share"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 508,
+      "attempts": 4101
+    }
   },
   {
-    "rank": 374,
+    "rank": 373,
     "name": "Old Thinking Blood",
     "creators": "Vyzenix, JBKris, Stereogamer992, Rebornnn, pa1ne",
     "id": "146316976",
@@ -10983,10 +12484,14 @@
         "attempts": 2995,
         "video": "https://youtu.be/0eSpG3kIUUM"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1485,
+      "attempts": 2995
+    }
   },
   {
-    "rank": 375,
+    "rank": 374,
     "name": "Bakemonogatari dead",
     "creators": "hhuko, kyle1saurus",
     "id": "147093222",
@@ -11005,10 +12510,14 @@
         "attempts": 4604,
         "video": "https://youtu.be/jUWEZdmby9k"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2100,
+      "attempts": 4604
+    }
   },
   {
-    "rank": 376,
+    "rank": 375,
     "name": "Immortal Legacy",
     "creators": "ScarletDash",
     "id": "82565949",
@@ -11027,10 +12536,14 @@
         "attempts": 2053,
         "video": "https://www.youtube.com/playlist?list=PLWDeY5ukkKYg"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1958,
+      "attempts": 2053
+    }
   },
   {
-    "rank": 377,
+    "rank": 376,
     "name": "Copyable Chamber",
     "creators": "Bukkk",
     "id": "74246961",
@@ -11056,10 +12569,14 @@
         "attempts": 3793,
         "video": "https://youtu.be/v4ysKKOLoDs"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 878,
+      "attempts": 1170
+    }
   },
   {
-    "rank": 378,
+    "rank": 377,
     "name": "Shatter Synapse",
     "creators": "AngelEffect",
     "id": "111005000",
@@ -11085,10 +12602,14 @@
         "attempts": 2800,
         "video": "https://www.youtube.com/watch?v=zKmaMBpshjc"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 976,
+      "attempts": 1065
+    }
   },
   {
-    "rank": 379,
+    "rank": 378,
     "name": "rare (Old)",
     "creators": "greafer",
     "id": "95647061",
@@ -11114,10 +12635,14 @@
         "attempts": 2737,
         "video": "https://www.youtube.com/watch?v=3dpoq-VflAU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 945,
+      "attempts": 993
+    }
   },
   {
-    "rank": 380,
+    "rank": 379,
     "name": "New Listworthy Level",
     "creators": "mewj13",
     "id": "147633529",
@@ -11143,10 +12668,14 @@
         "attempts": 23513,
         "video": "https://youtu.be/xOlbhunnWC4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 908,
+      "attempts": 6950
+    }
   },
   {
-    "rank": 381,
+    "rank": 380,
     "name": "Arrakis",
     "creators": "MisterRock",
     "id": "141276112",
@@ -11165,10 +12694,14 @@
         "attempts": 2663,
         "video": "https://www.youtube.com/watch?v=6TZM-RgLHrE"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2181,
+      "attempts": 2663
+    }
   },
   {
-    "rank": 382,
+    "rank": 381,
     "name": "haunted corridor v3",
     "creators": "KaotikJumper & more, Arcadie",
     "id": "148748065",
@@ -11187,10 +12720,14 @@
         "attempts": 5893,
         "video": "https://youtu.be/sTXF--Z-2d4"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1392,
+      "attempts": 5893
+    }
   },
   {
-    "rank": 383,
+    "rank": 382,
     "name": "Silent Theory",
     "creators": "HaloZombies",
     "id": "102607395",
@@ -11216,10 +12753,14 @@
         "attempts": 1998,
         "video": "https://youtu.be/ngZQ1F-vA6c"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 862,
+      "attempts": 1332
+    }
   },
   {
-    "rank": 384,
+    "rank": 383,
     "name": "AQUAHEART (Old)",
     "creators": "Dessepoir",
     "id": "125039721",
@@ -11259,32 +12800,14 @@
         "attempts": 2902,
         "video": "https://www.youtube.com/watch?v=AeurWolRl-o"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 880,
+      "attempts": 1063
+    }
   },
   {
-    "rank": 385,
-    "name": "denouement hard 2",
-    "creators": "kyle1saurus",
-    "id": "148860723",
-    "length": "1m",
-    "tps": 240,
-    "precision": "",
-    "ratio": "W21.7(1) C19.9(1) B19.7(1) SP19.5(1) SH9.6(1) U9.5(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X98.3(1) 4X1.7(2)",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-09-14",
-        "time": "22m 7s",
-        "attempts": 1956,
-        "video": "https://youtu.be/zu_OtO6uGCM"
-      }
-    ]
-  },
-  {
-    "rank": 386,
+    "rank": 384,
     "name": "Checkmate (san andreas)",
     "creators": "san andreas",
     "id": "127140356",
@@ -11310,10 +12833,14 @@
         "attempts": 1972,
         "video": "https://youtu.be/dimMkt9ly6A"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1613,
+      "attempts": 1972
+    }
   },
   {
-    "rank": 387,
+    "rank": 385,
     "name": "Mata Never Clear (Legacy)",
     "creators": "uMilow, MatBlizz",
     "id": "144794883",
@@ -11332,10 +12859,14 @@
         "attempts": 2509,
         "video": "https://youtu.be/N_PNc7S6nlw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1368,
+      "attempts": 2509
+    }
   },
   {
-    "rank": 388,
+    "rank": 386,
     "name": "T E M P L E",
     "creators": "FHippo‬",
     "id": "126901517",
@@ -11354,10 +12885,14 @@
         "attempts": 2232,
         "video": "https://youtu.be/ZRqAIJTQBWU"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1620,
+      "attempts": 2232
+    }
   },
   {
-    "rank": 389,
+    "rank": 387,
     "name": "Adventure Silentium",
     "creators": "Achlys & more",
     "id": "118430641",
@@ -11376,10 +12911,14 @@
         "attempts": 1871,
         "video": "https://youtu.be/9WHNPt11R8c"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1487,
+      "attempts": 1871
+    }
   },
   {
-    "rank": 390,
+    "rank": 388,
     "name": "Nowon Yung Jae Won",
     "creators": "DiaCreeper, sharpiesmell",
     "id": "145529918",
@@ -11405,10 +12944,14 @@
         "attempts": 2500,
         "video": "https://youtu.be/fb_Nx4MKgLw"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2128,
+      "attempts": 2500
+    }
   },
   {
-    "rank": 391,
+    "rank": 389,
     "name": "Omega Circles II",
     "creators": "HackedHardest",
     "id": "83717092",
@@ -11434,10 +12977,14 @@
         "attempts": 4286,
         "video": "https://youtu.be/YZOmnJRbizY"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 1053,
+      "attempts": 2828
+    }
   },
   {
-    "rank": 392,
+    "rank": 390,
     "name": "Aeternus",
     "creators": "Riot, ryamu & more",
     "id": "102646926",
@@ -11624,6 +13171,10 @@
         "attempts": 2569,
         "video": "https://www.youtube.com/watch?v=kLtu86rHR0c"
       }
-    ]
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 690,
+      "attempts": 969
+    }
   }
 ]

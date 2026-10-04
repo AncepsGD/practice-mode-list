@@ -590,6 +590,7 @@ function processRawData(data, options = {}) {
         _hasEstimatedRank: Number.isFinite(Number(item._difficultyRank)) && Number(item._difficultyRank) > 0,
         name: item.name,
         id: item.id,
+        scoringBaseline: item.scoringBaseline,
         tps: parseLevelMetric(item.tps ?? item.TPS, LEVEL_METRIC_SCHEMA.tps),
         precision: parseLevelMetric(item.precision ?? item.Precision, LEVEL_METRIC_SCHEMA.precision),
         length: parseLevelMetric(item.length ?? item.levelLength, LEVEL_METRIC_SCHEMA.length),
@@ -1993,19 +1994,6 @@ function estimateLevelOutcome(level, components, avgTimePerPoint, avgAttemptsPer
   return { expectedSeconds, expectedAttempts };
 }
 
-function recordMultiplier(recordCount) {
-  if (!Number.isFinite(recordCount) || recordCount <= 0) return 1;
-
-  const multipliers = {
-    0: 1,
-    1: 1.15,
-    2: 1.35,
-    3: 1.6
-  };
-
-  return multipliers[Math.min(recordCount, 3)] || 1;
-}
-
 function getTimeScore(playerSeconds, bestSeconds) {
   if (!Number.isFinite(playerSeconds)) return 0;
   if (!Number.isFinite(bestSeconds) || bestSeconds < 0) return 0;
@@ -2014,20 +2002,7 @@ function getTimeScore(playerSeconds, bestSeconds) {
   return Math.min(bestSeconds / playerSeconds, 1);
 }
 
-function getTierCompletionMultiplier(completions) {
-  if (!Number.isFinite(completions) || completions <= 0) return 1;
-  const tierCompletionDecay = typeof TIER_COMPLETION_DECAY !== "undefined"
-    ? TIER_COMPLETION_DECAY
-    : 0.95;
-  return Math.pow(tierCompletionDecay, completions);
-}
-
-function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, playerName, completions) {
-  const completionMultiplier = getTierCompletionMultiplier(completions);
-  const firstVictorBonus = typeof FIRST_VICTOR_BONUS !== "undefined" ? FIRST_VICTOR_BONUS : 0.1;
-  const fastestCompletionBonus = typeof FASTEST_COMPLETION_BONUS !== "undefined" ? FASTEST_COMPLETION_BONUS : 0.1;
-  const lowestAttemptsBonus = typeof LOWEST_ATTEMPTS_BONUS !== "undefined" ? LOWEST_ATTEMPTS_BONUS : 0.1;
-
+function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, playerName) {
   const syntheticPlayer = {
     name: String(playerName || "projected-player").trim() || "projected-player",
     seconds: Number.isFinite(expectedSeconds) && expectedSeconds > 0 ? expectedSeconds : null,
@@ -2043,15 +2018,15 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
       seconds: Number.isFinite(victor.seconds) ? victor.seconds : null,
       attempts: Number.isFinite(victor.attempts) && victor.attempts > 0 ? victor.attempts : null,
     }));
+  const candidateName = syntheticPlayer.name.toLowerCase();
+  const hasOtherVictor = validEntries.some(victor => victor.name.toLowerCase() !== candidateName);
+  const firstVictorBonus = validEntries.length === 0
+    ? (typeof FIRST_VICTOR_BONUS !== "undefined" ? FIRST_VICTOR_BONUS : 0.1)
+    : 0;
 
   const sortedValidEntries = sortVictorsByDate(validEntries);
   const players = [...sortedValidEntries, syntheticPlayer];
   const sortedPlayers = sortVictorsByDate(players);
-  const existingVictorCount = sortedValidEntries.length;
-  const victorOrderBonus = typeof getVictorOrderBonus === "function"
-    ? getVictorOrderBonus(existingVictorCount)
-    : (existingVictorCount === 0 ? firstVictorBonus : 0);
-  const canHoldRecord = existingVictorCount > 0;
 
   const timeRankings = sortedPlayers
     .filter(victor => Number.isFinite(victor.seconds))
@@ -2070,42 +2045,43 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
     .sort((a, b) => a.attempts - b.attempts);
 
   const bestTimeSeconds = timeRankings.length ? Number(timeRankings[0].seconds) : null;
-  const timeScore = bestTimeSeconds !== null && Number.isFinite(expectedSeconds) && expectedSeconds > 0
-    ? getTimeScore(expectedSeconds, bestTimeSeconds)
+  const lowestAttempts = attemptRankings.length ? Number(attemptRankings[0].attempts) : null;
+  const baseline = getScoringBaseline(level, validEntries);
+  const performanceScores = [];
+  if (baseline.timeSeconds !== null && Number.isFinite(expectedSeconds) && expectedSeconds > 0) {
+    performanceScores.push({
+      score: getTimeScore(expectedSeconds, baseline.timeSeconds),
+      weight: typeof TIME_PERFORMANCE_WEIGHT !== "undefined" ? TIME_PERFORMANCE_WEIGHT : 0.7,
+    });
+  }
+  if (baseline.attempts !== null && Number.isFinite(expectedAttempts) && expectedAttempts > 0) {
+    performanceScores.push({
+      score: getTimeScore(expectedAttempts, baseline.attempts),
+      weight: typeof ATTEMPTS_PERFORMANCE_WEIGHT !== "undefined" ? ATTEMPTS_PERFORMANCE_WEIGHT : 0.3,
+    });
+  }
+  const availableMetricWeight = performanceScores.reduce((total, item) => total + item.weight, 0);
+  const performanceScore = availableMetricWeight
+    ? performanceScores.reduce((total, item) => total + item.score * item.weight, 0) / availableMetricWeight
+    : 0;
+  const fastestCompletionBonus = typeof FASTEST_COMPLETION_BONUS !== "undefined" ? FASTEST_COMPLETION_BONUS : 0.2;
+  const lowestAttemptsBonus = typeof LOWEST_ATTEMPTS_BONUS !== "undefined" ? LOWEST_ATTEMPTS_BONUS : 0.2;
+  const timeRecordBonus = hasOtherVictor
+    && Number.isFinite(expectedSeconds)
+    && expectedSeconds > 0
+    && Number.isFinite(bestTimeSeconds)
+    && bestTimeSeconds > 0
+    ? fastestCompletionBonus * Math.min(bestTimeSeconds / expectedSeconds, 1)
+    : 0;
+  const attemptsRecordBonus = hasOtherVictor
+    && Number.isFinite(expectedAttempts)
+    && expectedAttempts > 0
+    && Number.isFinite(lowestAttempts)
+    && lowestAttempts > 0
+    ? lowestAttemptsBonus * Math.min(lowestAttempts / expectedAttempts, 1)
     : 0;
 
-  const timeRank = timeRankings.findIndex(victor => String(victor.name || "").trim() === syntheticPlayer.name) + 1;
-  const attemptRank = attemptRankings.findIndex(victor => String(victor.name || "").trim() === syntheticPlayer.name) + 1;
-
-  const bonusMultiplier = 1 +
-    victorOrderBonus +
-    (canHoldRecord && timeRank === 1 ? fastestCompletionBonus : 0) +
-    (canHoldRecord && attemptRank === 1 ? lowestAttemptsBonus : 0);
-
-  const leaderboardStyleMultiplier = timeScore * bonusMultiplier * completionMultiplier;
-  if (Number.isFinite(leaderboardStyleMultiplier) && leaderboardStyleMultiplier > 0) {
-    return leaderboardStyleMultiplier;
-  }
-
-  const wrTimeSeconds = level.wrTime ? parseTimeToSeconds(level.wrTime.time) : null;
-  const alreadyOwnsTimeWr = String(level?.wrTime?.name || "").trim() === String(playerName || "").trim();
-  const timePossible = canHoldRecord
-    && (
-      alreadyOwnsTimeWr
-      || (wrTimeSeconds !== null && expectedSeconds !== null && expectedSeconds < wrTimeSeconds)
-    );
-
-  const wrAttempts = level.wrAttempts ? Number(level.wrAttempts.attempts) : null;
-  const alreadyOwnsAttemptWr = String(level?.wrAttempts?.name || "").trim() === String(playerName || "").trim();
-  const attemptsPossible = canHoldRecord
-    && (
-      alreadyOwnsAttemptWr
-      || (wrAttempts !== null && Number.isFinite(wrAttempts) && expectedAttempts !== null && expectedAttempts < wrAttempts)
-    );
-
-  const firstVictoryPossible = existingVictorCount === 0 ? 1 : 0;
-  const recordCount = firstVictoryPossible + (timePossible ? 1 : 0) + (attemptsPossible ? 1 : 0);
-  return recordMultiplier(recordCount);
+  return performanceScore + timeRecordBonus + attemptsRecordBonus + firstVictorBonus;
 }
 
 function getSkillAdjustedWrPotential(playerSkill, wrHolderName, levels, rawPotential) {
@@ -2179,18 +2155,6 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
     return (b.points || 0) - (a.points || 0);
   });
 
-  const playerTierCompletions = new Map();
-  const completionCountsByLevel = new Map();
-
-  allOrderedLevels.forEach((lvl) => {
-    const tierKey = `${(lvl.tier || "unknown").toLowerCase()}|${player.name}`;
-    const currentCompletions = playerTierCompletions.get(tierKey) || 0;
-    completionCountsByLevel.set(lvl.name, currentCompletions);
-    if (beaten.has(lvl.name)) {
-      playerTierCompletions.set(tierKey, currentCompletions + 1);
-    }
-  });
-
   const recommendations = allOrderedLevels
     .filter(lvl => !beaten.has(lvl.name) || (allowRebeats && !player.isFullList))
     .map(lvl => {
@@ -2227,9 +2191,8 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
         return null;
       }
 
-      const completions = (completionCountsByLevel.get(lvl.name) || 0) + (isRebeat ? 1 : 0);
       const expectedHours = expectedSeconds / 3600;
-      const projectedMult = projectedMultiplierFor(lvl, expectedSeconds, expectedAttempts, player.name, completions);
+      const projectedMult = projectedMultiplierFor(lvl, expectedSeconds, expectedAttempts, player.name);
       const currentPoints = isRebeat ? currentCompletion.points : 0;
       const projectedPoints = isRebeat
         ? Math.max(0, basePoints * projectedMult - (currentPoints || 0))
@@ -2282,6 +2245,10 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
         completionAgeYears,
         is2Player: lvl.is2Player === true,
         isUnverified: lvl.isUnverified === true,
+        isPending: lvl.isUnverified === true && (
+          String(lvl.tier || "").trim().toLowerCase() === "pending"
+          || (Array.isArray(lvl.victors) && lvl.victors.length > 0)
+        ),
         rank: lvl.rank || null,
         estimatedMainListRank: getEstimatedMainListRank(lvl, calibrationLevels),
         estimatedMainListRankRange: lvl.tierEstimatedRankRange || null,

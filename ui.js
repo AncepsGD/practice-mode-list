@@ -895,7 +895,7 @@ function renderLevels(data) {
           <tbody>
           ${lvl._sortedVictors.map((v,i)=>{
             const award = getVictorPointAward(victorPointAwards, lvl, v);
-            const pointsDisplay = `${award.points.toFixed(1)} (${award.multiplier.toFixed(2)}×)`;
+            const pointsDisplay = `<span class="award-total" tabindex="0" aria-label="${award.points.toFixed(1)} points; focus or hover for score breakdown" title="${escapeHTML(getScoreBreakdownTooltip(award))}">${award.points.toFixed(1)}</span>`;
             return `
             <tr>
               <td>${i+1}</td>
@@ -903,7 +903,7 @@ function renderLevels(data) {
               <td>${v.date}</td>
               <td>${v.wrTime ? v.wrTime : '—'}</td>
               <td>${v.wrAttempts == null ? '—' : v.wrAttempts.toLocaleString()}</td>
-              <td class="stat-cell">${escapeHTML(pointsDisplay)}</td>
+              <td class="stat-cell">${pointsDisplay}</td>
               <td>
                 ${
                   v.victorVideoUrl
@@ -1012,6 +1012,16 @@ function toggleExpand(id) {
   }
 }
 
+function getScoreBreakdownTooltip(entry) {
+  return [
+    `Base level points: ${Number(entry.basePoints ?? entry.points ?? 0).toFixed(1)}`,
+    `Performance — time: +${Number(entry.timePerformancePoints || 0).toFixed(1)}, attempts: +${Number(entry.attemptsPerformancePoints || 0).toFixed(1)}`,
+    `First victor bonus: +${Number(entry.firstVictorBonus || 0).toFixed(1)}`,
+    `Record bonuses — fastest time: +${Number(entry.timeRecordBonus || 0).toFixed(1)}, fewest attempts: +${Number(entry.attemptsRecordBonus || 0).toFixed(1)}`,
+    `Total: ${Number(entry.earnedPoints ?? entry.points ?? 0).toFixed(1)}`,
+  ].join('\n');
+}
+
 function renderLeaderboard(data) {
   const body = document.getElementById('lb-body');
   const sortedData = getSortedLeaderboardData(data);
@@ -1043,7 +1053,12 @@ function renderLeaderboard(data) {
       const orderedLevelsMarkup = completionDetails.map((entry) => `
         <li class="completion-order-item">
           <span class="completion-order-name">${escapeHTML(truncateDisplayText(entry.name, 32))}</span>
-          <span class="completion-order-meta">${escapeHTML(entry.tier || 'unknown')} · ${Number(entry.points || 0).toFixed(0)} pts</span>
+          <span class="completion-order-meta">
+            ${escapeHTML(entry.tier || 'unknown')} ·
+            <span${Number.isFinite(entry.earnedPoints) ? ` tabindex="0" aria-label="${Number(entry.earnedPoints).toFixed(1)} points; focus or hover for score breakdown" title="${escapeHTML(getScoreBreakdownTooltip(entry))}"` : ''}>
+              ${Number(entry.earnedPoints ?? entry.points ?? 0).toFixed(1)} pts
+            </span>
+          </span>
         </li>
       `).join('');
       return `

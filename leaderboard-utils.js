@@ -75,94 +75,139 @@ function sortVictorsByDate(victors) {
     });
 }
 
-const FIRST_VICTOR_BONUS = 0.12;
-const VICTOR_ORDER_DECAY = 0.65;
-const FASTEST_COMPLETION_BONUS = 0.1;
-const LOWEST_ATTEMPTS_BONUS = 0.1;
-const TIER_COMPLETION_DECAY = 0.95;
-
-function getVictorOrderBonus(orderIndex) {
-    if (!Number.isFinite(orderIndex) || orderIndex < 0) return 0;
-    return FIRST_VICTOR_BONUS * Math.pow(VICTOR_ORDER_DECAY, orderIndex);
-}
+const FASTEST_COMPLETION_BONUS = 0.2;
+const LOWEST_ATTEMPTS_BONUS = 0.2;
+const FIRST_VICTOR_BONUS = 0.1;
+const TIME_PERFORMANCE_WEIGHT = 0.7;
+const ATTEMPTS_PERFORMANCE_WEIGHT = 0.3;
 
 function getTimeScore(playerSeconds, bestSeconds) {
-    if (!Number.isFinite(playerSeconds)) return 0;
-    if (!Number.isFinite(bestSeconds) || bestSeconds < 0) return 0;
-    if (playerSeconds === 0) return bestSeconds >= 0 ? 1 : 0;
-    if (bestSeconds <= 0) return 0;
+    if (!Number.isFinite(playerSeconds) || playerSeconds <= 0) return 0;
+    if (!Number.isFinite(bestSeconds) || bestSeconds <= 0) return 0;
     return Math.min(bestSeconds / playerSeconds, 1);
 }
 
-function getTierCompletionMultiplier(completions) {
-    if (!Number.isFinite(completions) || completions <= 0) return 1;
-    return Math.pow(TIER_COMPLETION_DECAY, completions);
+function getScoringBaseline(level, players) {
+    const savedBaseline = level.scoringBaseline || {};
+    const recordedTimes = players
+        .map((victor) => Number(victor.seconds))
+        .filter((seconds) => Number.isFinite(seconds) && seconds > 0);
+    const recordedAttempts = players
+        .map((victor) => Number(victor.attempts))
+        .filter((attempts) => Number.isFinite(attempts) && attempts > 0);
+    const savedTime = Number(savedBaseline.timeSeconds);
+    const savedAttempts = Number(savedBaseline.attempts);
+
+    return {
+        timeSeconds: Number.isFinite(savedTime) && savedTime > 0
+            ? savedTime
+            : (recordedTimes.length ? Math.min(...recordedTimes) : null),
+        attempts: Number.isFinite(savedAttempts) && savedAttempts > 0
+            ? savedAttempts
+            : (recordedAttempts.length ? Math.min(...recordedAttempts) : null),
+    };
+}
+
+function buildLevelVictorAwards(level) {
+    const players = (level.victors || []).filter(isEligibleVictor);
+    const hasMultipleVictors = new Set(
+        players.map((victor) => String(victor.name || "").trim().toLowerCase())
+    ).size > 1;
+    const firstVictor = sortVictorsByDate(players)[0] || null;
+    const baseline = getScoringBaseline(level, players);
+    const recordedTimes = players
+        .map((victor) => Number(victor.seconds))
+        .filter((seconds) => Number.isFinite(seconds) && seconds > 0);
+    const recordedAttempts = players
+        .map((victor) => Number(victor.attempts))
+        .filter((attempts) => Number.isFinite(attempts) && attempts > 0);
+    const bestTimeSeconds = recordedTimes.length ? Math.min(...recordedTimes) : null;
+    const lowestAttempts = recordedAttempts.length ? Math.min(...recordedAttempts) : null;
+    const levelPoints = Number(level.points) || 0;
+    const levelAwards = new WeakMap();
+
+    players.forEach((victor) => {
+        const seconds = Number(victor.seconds);
+        const attempts = Number(victor.attempts);
+        const performanceContributions = [];
+        if (Number.isFinite(seconds) && seconds > 0 && baseline.timeSeconds !== null) {
+            performanceContributions.push({
+                key: "time",
+                score: getTimeScore(seconds, baseline.timeSeconds),
+                weight: TIME_PERFORMANCE_WEIGHT,
+            });
+        }
+        if (Number.isFinite(attempts) && attempts > 0 && baseline.attempts !== null) {
+            performanceContributions.push({
+                key: "attempts",
+                score: getTimeScore(attempts, baseline.attempts),
+                weight: ATTEMPTS_PERFORMANCE_WEIGHT,
+            });
+        }
+        const availableMetricWeight = performanceContributions.reduce((total, item) => total + item.weight, 0);
+        const timePerformancePoints = performanceContributions.find(item => item.key === "time")?.score
+            * (levelPoints * TIME_PERFORMANCE_WEIGHT / (availableMetricWeight || 1)) || 0;
+        const attemptsPerformancePoints = performanceContributions.find(item => item.key === "attempts")?.score
+            * (levelPoints * ATTEMPTS_PERFORMANCE_WEIGHT / (availableMetricWeight || 1)) || 0;
+        const performancePoints = timePerformancePoints + attemptsPerformancePoints;
+        const timeRecordBonus = hasMultipleVictors
+            && bestTimeSeconds !== null
+            && Number.isFinite(seconds)
+            && seconds > 0
+            ? levelPoints * FASTEST_COMPLETION_BONUS * Math.min(bestTimeSeconds / seconds, 1)
+            : 0;
+        const attemptsRecordBonus = hasMultipleVictors
+            && lowestAttempts !== null
+            && Number.isFinite(attempts)
+            && attempts > 0
+            ? levelPoints * LOWEST_ATTEMPTS_BONUS * Math.min(lowestAttempts / attempts, 1)
+            : 0;
+        const firstVictorBonus = victor === firstVictor
+            ? levelPoints * FIRST_VICTOR_BONUS
+            : 0;
+        const recordBonusPoints = timeRecordBonus + attemptsRecordBonus;
+        const points = performancePoints + recordBonusPoints + firstVictorBonus;
+
+        levelAwards.set(victor, {
+            points,
+            multiplier: levelPoints > 0 ? points / levelPoints : 0,
+            basePoints: levelPoints,
+            performancePoints,
+            timePerformancePoints,
+            attemptsPerformancePoints,
+            recordBonusPoints,
+            firstVictorBonus,
+            timeRecordBonus,
+            attemptsRecordBonus,
+        });
+    });
+
+    return levelAwards;
 }
 
 function buildVictorPointAwards(lvls) {
     const awards = new WeakMap();
-    const playerTierCompletions = new Map();
-    const orderedLevels = [...lvls].sort((a, b) => {
-        const tierA = (a.tier || "unknown").toLowerCase();
-        const tierB = (b.tier || "unknown").toLowerCase();
-        if (tierA !== tierB) return tierA.localeCompare(tierB);
-        return (b.points || 0) - (a.points || 0);
-    });
-
-    orderedLevels.forEach((lvl) => {
-        const sortedVictors = sortVictorsByDate(lvl.victors);
-        const players = sortedVictors.filter(isEligibleVictor);
-        const timeRankings = players
-            .filter((victor) => Number.isFinite(victor.seconds))
-            .sort((a, b) => {
-                if (a.seconds !== b.seconds) return a.seconds - b.seconds;
-                const aDate = getVictorSortValue(a);
-                const bDate = getVictorSortValue(b);
-                if (aDate == null && bDate == null) return 0;
-                if (aDate == null) return 1;
-                if (bDate == null) return -1;
-                return aDate - bDate;
-            });
-        const attemptRankings = players
-            .filter((victor) => Number.isFinite(victor.attempts) && victor.attempts > 0)
-            .sort((a, b) => a.attempts - b.attempts);
-        const timeRanks = new Map(timeRankings.map((victor, index) => [String(victor.name || "").trim(), index + 1]));
-        const attemptRanks = new Map(attemptRankings.map((victor, index) => [String(victor.name || "").trim(), index + 1]));
-        const bestTimeSeconds = timeRankings.length ? Number(timeRankings[0].seconds) : null;
-        const levelAwards = new WeakMap();
-
-        players.forEach((victor, index) => {
-            const playerName = String(victor.name || "").trim();
-            const tierKey = `${(lvl.tier || "unknown").toLowerCase()}|${playerName}`;
-            const completions = playerTierCompletions.get(tierKey) || 0;
-            const bonusMultiplier = 1 +
-                getVictorOrderBonus(index) +
-                (players.length > 1 && timeRanks.get(playerName) === 1 ? FASTEST_COMPLETION_BONUS : 0) +
-                (players.length > 1 && attemptRanks.get(playerName) === 1 ? LOWEST_ATTEMPTS_BONUS : 0);
-            const multiplier = getTimeScore(Number(victor.seconds), bestTimeSeconds)
-                * bonusMultiplier
-                * getTierCompletionMultiplier(completions);
-
-            levelAwards.set(victor, {
-                points: (lvl.points || 0) * multiplier,
-                multiplier,
-            });
-            playerTierCompletions.set(tierKey, completions + 1);
-        });
-
-        awards.set(lvl, levelAwards);
-    });
-
+    lvls.forEach((level) => awards.set(level, buildLevelVictorAwards(level)));
     return awards;
 }
 
 function getVictorPointAward(awards, level, victor) {
-    return awards.get(level)?.get(victor) || { points: 0, multiplier: 0 };
+    return awards.get(level)?.get(victor) || {
+        points: 0,
+        multiplier: 0,
+        basePoints: 0,
+        performancePoints: 0,
+        timePerformancePoints: 0,
+        attemptsPerformancePoints: 0,
+        recordBonusPoints: 0,
+        firstVictorBonus: 0,
+        timeRecordBonus: 0,
+        attemptsRecordBonus: 0,
+    };
 }
 
 function buildLeaderboard(lvls) {
     const map = {};
-    const playerTierCompletions = new Map();
     const levelOrder = new Map(
         [...lvls].map((lvl, index) => [String(lvl.name || "").trim().toLowerCase(), index])
     );
@@ -176,52 +221,12 @@ function buildLeaderboard(lvls) {
     orderedLevels.forEach((lvl) => {
         const sortedVictors = sortVictorsByDate(lvl.victors);
         const players = sortedVictors.filter(isEligibleVictor);
+        const levelAwards = buildLevelVictorAwards(lvl);
 
-        const timeRankings = players
-            .filter((victor) => Number.isFinite(victor.seconds))
-            .sort((a, b) => {
-                if (a.seconds !== b.seconds) return a.seconds - b.seconds;
-                const aDate = getVictorSortValue(a);
-                const bDate = getVictorSortValue(b);
-                if (aDate == null && bDate == null) return 0;
-                if (aDate == null) return 1;
-                if (bDate == null) return -1;
-                return aDate - bDate;
-            });
-
-        const attemptRankings = players
-            .filter((victor) => Number.isFinite(victor.attempts) && victor.attempts > 0)
-            .sort((a, b) => a.attempts - b.attempts);
-
-        const timeRanks = new Map();
-        timeRankings.forEach((victor, index) => {
-            timeRanks.set(String(victor.name || "").trim(), index + 1);
-        });
-
-        const attemptRanks = new Map();
-        attemptRankings.forEach((victor, index) => {
-            attemptRanks.set(String(victor.name || "").trim(), index + 1);
-        });
-
-        const bestTimeSeconds = timeRankings.length ? Number(timeRankings[0].seconds) : null;
-
-        players.forEach((victor, index) => {
+        players.forEach((victor) => {
             const playerName = String(victor.name || "").trim();
             if (!playerName) return;
-            const hasOtherVictor = players.length > 1;
-            const canHoldRecord = hasOtherVictor;
-
-            const tierKey = `${(lvl.tier || "unknown").toLowerCase()}|${playerName}`;
-            const completions = playerTierCompletions.get(tierKey) || 0;
-            const completionMultiplier = getTierCompletionMultiplier(completions);
-
-            const timeScore = getTimeScore(Number(victor.seconds), bestTimeSeconds);
-            const timeRank = timeRanks.get(playerName) || Number.POSITIVE_INFINITY;
-            const attemptRank = attemptRanks.get(playerName) || Number.POSITIVE_INFINITY;
-            const bonusMultiplier = 1 +
-                getVictorOrderBonus(index) +
-                (canHoldRecord && timeRank === 1 ? FASTEST_COMPLETION_BONUS : 0) +
-                (canHoldRecord && attemptRank === 1 ? LOWEST_ATTEMPTS_BONUS : 0);
+            const award = levelAwards.get(victor) || { points: 0, multiplier: 0 };
 
             if (!map[playerName]) {
                 map[playerName] = {
@@ -244,20 +249,26 @@ function buildLeaderboard(lvls) {
                 map[playerName].totalAttempts += playerAttempts;
             }
 
-            map[playerName].points += lvl.points * timeScore * bonusMultiplier * completionMultiplier;
+            map[playerName].points += award.points;
             map[playerName].levels.push(levelName);
             map[playerName].completionDetails.push({
                 name: levelName,
                 points: Number(lvl.points) || 0,
-                earnedPoints: lvl.points * timeScore * bonusMultiplier * completionMultiplier,
+                basePoints: award.basePoints,
+                earnedPoints: award.points,
+                performancePoints: award.performancePoints,
+                timePerformancePoints: award.timePerformancePoints,
+                attemptsPerformancePoints: award.attemptsPerformancePoints,
+                recordBonusPoints: award.recordBonusPoints,
+                firstVictorBonus: award.firstVictorBonus,
+                timeRecordBonus: award.timeRecordBonus,
+                attemptsRecordBonus: award.attemptsRecordBonus,
                 date: victor.date || "",
                 seconds: Number.isFinite(victor.seconds) ? victor.seconds : null,
                 attempts: Number.isFinite(victor.attempts) ? victor.attempts : null,
                 tier: String(lvl.tier || "unknown").trim() || "unknown",
                 listIndex: levelOrder.get(levelName.toLowerCase()) ?? Number.MAX_SAFE_INTEGER,
             });
-
-            playerTierCompletions.set(tierKey, completions + 1);
         });
     });
 

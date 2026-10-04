@@ -1,4 +1,4 @@
-﻿const { useMemo, useState, useEffect } = React;
+const { useMemo, useState, useEffect } = React;
 const MIN_UNVERIFIED_ROUTE_HOURS = 8 / 60;
 const UNVERIFIED_BASELINE_LEVEL = "Aeternus";
 const LADDER_STATE_STORAGE_KEY = "pml_ladder_state";
@@ -654,7 +654,6 @@ function App() {
                       {!isFullList && <span className="optimizer-rank">#{playerRank}</span>}
                       {isFullList && <span className="optimizer-full-list-icon" aria-hidden="true">▦</span>}
                       {isFullList ? "The Practice Mode List" : player.name}
-                      {isFullList && <span className="optimizer-full-list-badge">ALL LEVELS</span>}
                     </div>
                     <div className="optimizer-player-meta">
                       {player.levels.length} • {player.points.toFixed(1)} pts
@@ -922,13 +921,15 @@ function App() {
                             <strong className="optimizer-level-name" title={rec.level}>
                               {truncateLadderLevelName(rec.level)}
                             </strong>
-                            {rec.isUnverified && <span style={{marginLeft: "6px", color: "#b7791f", fontSize: "0.8em"}}>(unverified)</span>}
+                            {rec.isPending
+                              ? <span className="optimizer-level-status optimizer-level-status-pending">(Pending)</span>
+                              : rec.isUnverified && <span style={{marginLeft: "6px", color: "#b7791f", fontSize: "0.8em"}}>(Unverified)</span>}
                             {rec.isRebeat && (
                               <span
                                 style={{marginLeft: "6px", color: "var(--mint)", fontSize: "0.8em"}}
                                 title={rec.completionAgeYears > 0 ? `Completion age: ${rec.completionAgeYears.toFixed(1)} years` : "Completion age unavailable"}
                               >
-                                (rebeat)
+                                (Rebeat)
                               </span>
                             )}
                           </td>
