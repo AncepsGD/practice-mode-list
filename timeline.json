@@ -1,18 +1,27 @@
 [
   {
+    "name": "Eternal Twilight",
+    "creators": "IiIOpTiCaLIiI, RMGD",
+    "date": "2026-09-25",
+    "id": "149146500",
+    "twoPlayer": null,
+    "showcaseVideo": "https://youtu.be/HqqdOi4VS9s",
+    "image": null
+  },
+  {
     "name": "Minus World (Old)",
     "creators": "icedcave, InVisible",
     "date": "2026-08-27",
     "id": "111168619",
-    "twoPlayer": "",
+    "twoPlayer": null,
     "showcaseVideo": "https://www.youtube.com/watch?v=mhnrwsFPkEs"
   },
-    {
+  {
     "name": "The Twilight Zone (Unnerfed)",
     "creators": "IiIOpTiCaLIiI",
     "date": "2026-07-26",
     "id": "137338835",
-    "twoPlayer": "",
+    "twoPlayer": null,
     "showcaseVideo": "https://youtu.be/Qmt-Dn_nsC8",
     "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/137338835.png"
   },
@@ -21,25 +30,25 @@
     "creators": "gdmiracle",
     "id": "74840910",
     "date": "2026-07-11",
-    "twoPlayer": "",
+    "twoPlayer": null,
     "showcaseVideo": "https://www.youtube.com/playlist?list=PLG-Xdz7n06u0",
-    "image": ""
+    "image": null
   },
   {
     "name": "Sashozz Geometry",
     "creators": "Cyrillic, Sashozz",
     "id": "138842938",
-    "twoPlayer": "",
+    "twoPlayer": null,
     "showcaseVideo": "https://youtu.be/5sjPEN8GgeI",
-    "image": "",
+    "image": null,
     "date": "2026-04-25"
   },
   {
     "name": "Minus World (Old, 1P, Skip)",
     "creators": "icedcave",
     "id": "139501388",
-    "twoPlayer": "",
-    "showcaseVideo": "",
+    "twoPlayer": null,
+    "showcaseVideo": null,
     "image": "https://raw.githubusercontent.com/AncepsGD/practice-mode-list/refs/heads/main/thumbnails/minusworld.webp",
     "date": "2026-04-02"
   },
@@ -47,7 +56,7 @@
     "name": "Six Paths of Pain (Unnerfed)",
     "creators": "GionniBlood",
     "id": "139504391",
-    "twoPlayer": "",
+    "twoPlayer": null,
     "showcaseVideo": "https://www.youtube.com/watch?v=4yOfjBfZMJc",
     "image": "https://github.com/AncepsGD/practice-mode-list/blob/main/thumbnails/Six Paths of Pain (Unnerfed).webp?raw=true",
     "date": "2025-11-21"
@@ -56,17 +65,17 @@
     "name": "Divine Geometry",
     "creators": "Cyrillic",
     "id": "13973215",
-    "twoPlayer": "",
+    "twoPlayer": null,
     "showcaseVideo": "https://youtu.be/v02Xxxze7Xc",
-    "image": "",
+    "image": null,
     "date": "2025-11-06"
   },
   {
     "name": "Infernoplex (MegaHack Layout)",
     "creators": "cheapyyyyy",
     "id": "141735424",
-    "twoPlayer": "",
-    "showcaseVideo": "",
+    "twoPlayer": null,
+    "showcaseVideo": null,
     "image": "https://youtu.be/FLeS4LOky5A?si=oQ_elDbHAWM6wvuo",
     "date": "2023-??-??"
   },
@@ -74,36 +83,36 @@
     "name": "The Disturbance (MegaHack Layout)",
     "creators": "cheapyyyyy",
     "id": "142171106",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
+    "twoPlayer": null,
+    "showcaseVideo": null,
+    "image": null,
     "date": "2023-??-??"
   },
   {
     "name": "Kingdom of Miracalis (2022 15 CPS Fix)",
     "creators": "gdmiracle",
     "id": "127839106",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
+    "twoPlayer": null,
+    "showcaseVideo": null,
+    "image": null,
     "date": "2022-04-11"
   },
   {
     "name": "Lucidia (Unnerfed)",
     "creators": "2A0L0I3, AuraXalaiv",
     "id": "80523469",
-    "twoPlayer": "",
-    "showcaseVideo": "",
-    "image": "",
+    "twoPlayer": null,
+    "showcaseVideo": null,
+    "image": null,
     "date": "2021-??-??"
   },
   {
     "name": "Six Paths of Pain (Old)",
     "creators": "GionniBlood",
     "id": "63117908",
-    "twoPlayer": "",
+    "twoPlayer": null,
     "showcaseVideo": "https://discord.com/channels/1436100643830890508/1436100644648783936/1526274392198479933",
-    "image": "",
+    "image": null,
     "date": "2020-08-03"
   },
   {
@@ -136,9 +145,22 @@
     "date": "2014-01-12"
   },
   {
-    "name": "To the Grave",
-    "creators": "Unknown",
-    "date": "2013-10-19"
+    "name": "cave adventure",
+    "creators": "gomchi",
+    "date": "2013-10-25",
+    "id": "19617",
+    "twoPlayer": null,
+    "showcaseVideo": "https://www.youtube.com/watch?v=BaKpr4_NPUo",
+    "image": null
+  },
+  {
+    "name": "1 (Player)",
+    "creators": "Player",
+    "date": "2013-10-22",
+    "id": "15010",
+    "twoPlayer": null,
+    "showcaseVideo": "https://youtu.be/X7IoEu5VbfY",
+    "image": null
   },
   {
     "name": "Q",
@@ -146,32 +168,16 @@
     "date": "2013-09-19"
   },
   {
-    "name": "F",
-    "creators": "Unknown",
-    "date": "2013-09-15"
-  },
-  {
-    "name": "Level 5",
-    "creators": "Unknown",
-    "date": "2013-09-13"
-  },
-  {
-    "name": "xy",
-    "creators": "Unknown",
-    "date": "2013-09-04"
-  },
-  {
-    "name": "hard1",
-    "creators": "Unknown",
-    "date": "2013-08-25"
+    "name": "still star",
+    "creators": "-",
+    "date": "2013-09-10",
+    "id": "1834",
+    "twoPlayer": null,
+    "showcaseVideo": "https://www.youtube.com/watch?v=kAkuNj4uA00",
+    "image": null
   },
   {
     "name": "help",
-    "creators": "Unknown",
-    "date": "2013-08-20"
-  },
-  {
-    "name": "The first 3 Trials",
     "creators": "Unknown",
     "date": "2013-08-20"
   },
@@ -186,13 +192,12 @@
     "date": "2013-08-15"
   },
   {
-    "name": "The First",
-    "creators": "Unknown",
-    "date": "2013-08-14"
-  },
-  {
-    "name": "Cant Let Go (Old)",
-    "creators": "Unknown",
-    "date": "2013-06-03"
+    "name": "Jump Man",
+    "creators": "alienware",
+    "date": "2013-08-14",
+    "id": "174",
+    "twoPlayer": null,
+    "showcaseVideo": "https://www.youtube.com/watch?v=ijqtKb7H_as",
+    "image": null
   }
 ]
