@@ -574,7 +574,7 @@
   {
     "rank": 27,
     "name": "system",
-    "creators": "soulshalcyon",
+    "creators": "xdhalcyon",
     "id": "123110852",
     "length": "40s",
     "tps": 480,
@@ -588,7 +588,7 @@
     "thumbnail": "",
     "points": 0,
     "firstVictor": null,
-    "creator": "soulshalcyon",
+    "creator": "xdhalcyon",
     "is2Player": true,
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=Bz13bdek65U",
     "rankRange": null
@@ -705,28 +705,6 @@
   },
   {
     "rank": 33,
-    "name": "Darkened Despair II",
-    "creators": "RMGD",
-    "id": "148315691",
-    "length": "37s",
-    "tps": null,
-    "precision": "",
-    "ratio": "W84.1(1) C15.9(1) D0.0(0) S100.0(0) IM11.9(1) NM88.1(1) 1X86.4(1) 0.5X13.6(2)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [],
-    "tier": "Transcendent",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "RMGD",
-    "is2Player": true,
-    "showcaseVideoUrl": "",
-    "rankRange": null
-  },
-  {
-    "rank": 34,
     "name": "Rampant Circles 2",
     "creators": "NXISE",
     "id": "90175790",
@@ -748,7 +726,7 @@
     "rankRange": null
   },
   {
-    "rank": 35,
+    "rank": 34,
     "name": "Ream of 2010",
     "creators": "BunnyClowmy",
     "id": "137662821",
@@ -770,7 +748,7 @@
     "rankRange": null
   },
   {
-    "rank": 36,
+    "rank": 35,
     "name": "regularity",
     "creators": "Starz879",
     "id": "134439124",
@@ -792,7 +770,7 @@
     "rankRange": null
   },
   {
-    "rank": 37,
+    "rank": 36,
     "name": "Unnerfed Lone (Ultranerf)",
     "creators": "Xewoiy, RMGD, Slopes",
     "id": "148102457",
@@ -814,7 +792,7 @@
     "rankRange": null
   },
   {
-    "rank": 38,
+    "rank": 37,
     "name": "6p5 nights pollapo (Swiftless)",
     "creators": "sharpiesmell, NotSoExotic",
     "id": "148183164",
@@ -836,7 +814,7 @@
     "rankRange": null
   },
   {
-    "rank": 39,
+    "rank": 38,
     "name": "Gamma Radiation",
     "creators": "RMGD, Windogs",
     "id": "145099738",
@@ -858,7 +836,7 @@
     "rankRange": null
   },
   {
-    "rank": 40,
+    "rank": 39,
     "name": "Oxygen Shotgun",
     "creators": "SureFir3, dvy0107",
     "id": "116942815",
@@ -880,7 +858,7 @@
     "rankRange": null
   },
   {
-    "rank": 41,
+    "rank": 40,
     "name": "Satanic Heaven",
     "creators": "sickmod3",
     "id": "126075805",
@@ -899,6 +877,28 @@
     "creator": "sickmod3",
     "is2Player": true,
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=dhn_HBfy07Y",
+    "rankRange": null
+  },
+  {
+    "rank": 41,
+    "name": "Darkened Despair II",
+    "creators": "RMGD",
+    "id": "148315691",
+    "length": "37s",
+    "tps": null,
+    "precision": "",
+    "ratio": "W84.1(1) C15.9(1) D0.0(0) S100.0(0) IM11.9(1) NM88.1(1) 1X86.4(1) 0.5X13.6(2)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [],
+    "tier": "Divine",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "RMGD",
+    "is2Player": true,
+    "showcaseVideoUrl": "",
     "rankRange": null
   },
   {
@@ -925,6 +925,29 @@
   },
   {
     "rank": 43,
+    "name": "Project Clubstep",
+    "creators": "JedGMD",
+    "id": "140479903",
+    "length": "2m 14s",
+    "tps": 480,
+    "precision": "",
+    "ratio": "C56.2(24) B14.9(19) U14.8(12) SH14(19) D8.4(8) S91.6(7) IM0.0(0) NM100.0(0) 1X44.9(10) 3X16.6(13) 2X16.2(10) 4X13.2(9) 0.5X9.1(2)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=lXtL0SMElq8",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-08",
+        "time": "1h 9m 32s",
+        "attempts": 6270,
+        "video": "https://www.youtube.com/playlist?list=PLGED8JWvIp2Q"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 44,
     "name": "IceBLOOD WORLD",
     "creators": "OddMod",
     "id": "144723836",
@@ -946,7 +969,7 @@
     "rankRange": null
   },
   {
-    "rank": 44,
+    "rank": 45,
     "name": "Ballistic Machine",
     "creators": "Crimson2005, BallisticLeaf66, Apocalipse, Argxment",
     "id": "145068038",
@@ -968,7 +991,7 @@
     "rankRange": null
   },
   {
-    "rank": 45,
+    "rank": 46,
     "name": "Artemis 13 Circles",
     "creators": "RMGD",
     "id": "148789389",
@@ -990,7 +1013,7 @@
     "rankRange": null
   },
   {
-    "rank": 46,
+    "rank": 47,
     "name": "Satans Circles Redux",
     "creators": "ItzCheesy",
     "id": "75151567",
@@ -1012,7 +1035,7 @@
     "rankRange": null
   },
   {
-    "rank": 47,
+    "rank": 48,
     "name": "Xane gets trippy",
     "creators": "eightos",
     "id": "78245982",
@@ -1031,28 +1054,6 @@
     "creator": "eightos",
     "is2Player": false,
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=7A6hw4v-YtQ",
-    "rankRange": null
-  },
-  {
-    "rank": 48,
-    "name": "Deadly Acropolis",
-    "creators": "Apocalipse",
-    "id": "147604477",
-    "length": "1m 13s",
-    "tps": 720,
-    "precision": "",
-    "ratio": "C44(13) B19.6(4) SH17.4(6) W9.9(12) U8.2(2) R0.9(1) D8.2(6) S91.8(6) IM0.0(0) NM100.0(0) 0.5X53.7(17) 1X42.7(25) 2X2.7(20) 3X0.9(4)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=l8zkQL0qPaA",
-    "image": "",
-    "victors": [],
-    "tier": "Master",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "Apocalipse",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=l8zkQL0qPaA",
     "rankRange": null
   },
   {
@@ -1116,6 +1117,28 @@
   },
   {
     "rank": 51,
+    "name": "Deadly Acropolis",
+    "creators": "Apocalipse",
+    "id": "147604477",
+    "length": "1m 13s",
+    "tps": 720,
+    "precision": "",
+    "ratio": "C44(13) B19.6(4) SH17.4(6) W9.9(12) U8.2(2) R0.9(1) D8.2(6) S91.8(6) IM0.0(0) NM100.0(0) 0.5X53.7(17) 1X42.7(25) 2X2.7(20) 3X0.9(4)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=l8zkQL0qPaA",
+    "image": "",
+    "victors": [],
+    "tier": "Master",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "Apocalipse",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=l8zkQL0qPaA",
+    "rankRange": null
+  },
+  {
+    "rank": 52,
     "name": "Melt Level",
     "creators": "9raq, kartofel666",
     "id": "127636729",
@@ -1137,7 +1160,7 @@
     "rankRange": null
   },
   {
-    "rank": 52,
+    "rank": 53,
     "name": "MINUStheory",
     "creators": "HaydenDom, Knali2001, IceMush, nanayuisei",
     "id": "119680110",
@@ -1159,7 +1182,7 @@
     "rankRange": null
   },
   {
-    "rank": 53,
+    "rank": 54,
     "name": "Insomnium",
     "creators": "RAWRKYRE",
     "id": "136064542",
@@ -1181,7 +1204,7 @@
     "rankRange": null
   },
   {
-    "rank": 54,
+    "rank": 55,
     "name": "lobster pizza",
     "creators": "kalculus19, dudodo, arlyivy, thegqc",
     "id": "95493876",
@@ -1203,7 +1226,7 @@
     "rankRange": null
   },
   {
-    "rank": 55,
+    "rank": 56,
     "name": "Plushie Legend",
     "creators": "realplushieee",
     "id": "148765252",
@@ -1225,7 +1248,7 @@
     "rankRange": null
   },
   {
-    "rank": 56,
+    "rank": 57,
     "name": "Cyberphobia",
     "creators": "2A0L0I3",
     "id": "81062161",
@@ -1247,7 +1270,7 @@
     "rankRange": null
   },
   {
-    "rank": 57,
+    "rank": 58,
     "name": "Vitrification",
     "creators": "erzor",
     "id": "https://drive.google.com/file/d/1bENSGOvWUde9620NB8W309va8DLi-5Ce/view?usp=sharing",
@@ -1266,28 +1289,6 @@
     "creator": "erzor",
     "is2Player": false,
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=x_EmGCjOCZU",
-    "rankRange": null
-  },
-  {
-    "rank": 58,
-    "name": "SatanicMegaMinusDeadlySilentSarlentCrimsonClubbedKatartaclysworldAfterlustStepReduxXv66Part6 (SMMD)",
-    "creators": "KariWinter, loligd",
-    "id": "137273814",
-    "length": "52s",
-    "tps": 666,
-    "precision": "",
-    "ratio": "C37.8(1) SH33.6(5) U17.4(2) W11.3(4) D66.6(3) S33.4(2) IM54.6(27) NM45.4(27) 0.5X79.7(7) 3X15.9(5) 1X3.7(4) 2X0.6(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=WWp1XwmUrqE",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "creator": "KariWinter, loligd",
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=WWp1XwmUrqE",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "is2Player": true,
     "rankRange": null
   },
   {
@@ -1314,6 +1315,50 @@
   },
   {
     "rank": 60,
+    "name": "Immortal Legacy",
+    "creators": "ScarletDash",
+    "id": "82565949",
+    "length": "3m 56s",
+    "tps": 360,
+    "precision": "",
+    "ratio": "C39.8(26) W19.3(17) SH16.8(20) B12.5(14) U11.7(12) D7.4(4) S92.6(4) IM0.0(0) NM100.0(0) 0.5X50.6(16) 3X25.9(17) 1X14.7(9) 2X8.8(9)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=T1k_Gt02iDY",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "ScarletDash",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=T1k_Gt02iDY",
+    "rankRange": null
+  },
+  {
+    "rank": 61,
+    "name": "SatanicMegaMinusDeadlySilentSarlentCrimsonClubbedKatartaclysworldAfterlustStepReduxXv66Part6 (SMMD)",
+    "creators": "KariWinter, loligd",
+    "id": "137273814",
+    "length": "52s",
+    "tps": 666,
+    "precision": "",
+    "ratio": "C37.8(1) SH33.6(5) U17.4(2) W11.3(4) D66.6(3) S33.4(2) IM54.6(27) NM45.4(27) 0.5X79.7(7) 3X15.9(5) 1X3.7(4) 2X0.6(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=WWp1XwmUrqE",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "creator": "KariWinter, loligd",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=WWp1XwmUrqE",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "is2Player": true,
+    "rankRange": null
+  },
+  {
+    "rank": 62,
     "name": "the poison tree",
     "creators": "khacs",
     "id": "122058587",
@@ -1335,29 +1380,7 @@
     "rankRange": null
   },
   {
-    "rank": 61,
-    "name": "{ Irukandji }",
-    "creators": "mrclnne",
-    "id": "140918950",
-    "length": "49s",
-    "tps": 513,
-    "precision": "",
-    "ratio": "R47.1(1) SH23.5(1) C16.1(0) U9(1) SW4.3(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X51.4(1) 1X30.9(2) 2X17.7(2)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=ysArSzrtBFY",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "mrclnne",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=ysArSzrtBFY",
-    "rankRange": null
-  },
-  {
-    "rank": 62,
+    "rank": 63,
     "name": "THE LIMIT",
     "creators": "realhutoew",
     "id": "125605766",
@@ -1379,7 +1402,29 @@
     "rankRange": null
   },
   {
-    "rank": 63,
+    "rank": 64,
+    "name": "{ Irukandji }",
+    "creators": "mrclnne",
+    "id": "140918950",
+    "length": "49s",
+    "tps": 513,
+    "precision": "",
+    "ratio": "R47.1(1) SH23.5(1) C16.1(0) U9(1) SW4.3(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X51.4(1) 1X30.9(2) 2X17.7(2)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=ysArSzrtBFY",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "mrclnne",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=ysArSzrtBFY",
+    "rankRange": null
+  },
+  {
+    "rank": 65,
     "name": "pizdec",
     "creators": "Evnos",
     "id": "59374041",
@@ -1401,7 +1446,7 @@
     "rankRange": null
   },
   {
-    "rank": 64,
+    "rank": 66,
     "name": "Slaughterhouse (True Old)",
     "creators": "icedcave",
     "id": "146775991",
@@ -1423,7 +1468,7 @@
     "rankRange": null
   },
   {
-    "rank": 65,
+    "rank": 67,
     "name": "DeadlySailentPlanetLXIXv2",
     "creators": "KariWinter",
     "id": "120016614",
@@ -1445,29 +1490,7 @@
     "rankRange": null
   },
   {
-    "rank": 66,
-    "name": "Nodependence",
-    "creators": "TCTeam, dudodo",
-    "id": "108789987",
-    "length": "2m 5s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C34.9(49) SH16.1(29) B16(24) U13.5(20) R11.1(27) W5.3(18) SP3.1(8) D85.7(3) S14.3(3) IM0.0(0) NM100.0(0) 0.5X34.2(12) 3X31.1(19) 1X14.4(11) 4X14.1(11) 2X6.2(10)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=IkMZqLUAVXk",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "TCTeam, dudodo",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=IkMZqLUAVXk",
-    "rankRange": null
-  },
-  {
-    "rank": 67,
+    "rank": 68,
     "name": "Phone Destroyer",
     "creators": "annoegd & more",
     "id": "136790994",
@@ -1489,7 +1512,7 @@
     "rankRange": null
   },
   {
-    "rank": 68,
+    "rank": 69,
     "name": "Fury of 1",
     "creators": "nexists",
     "id": "128465663",
@@ -1511,7 +1534,52 @@
     "rankRange": null
   },
   {
-    "rank": 69,
+    "rank": 70,
+    "name": "Realistik",
+    "creators": "guilherme2602",
+    "id": "127874215",
+    "length": "34s",
+    "tps": 4185,
+    "precision": "",
+    "ratio": "W31.3(1) C29.9(1) SH26.5(2) R12.4(1) D68.5(1) S31.5(0) IM0.0(0) NM100.0(0) 0.5X71.3(4) 1X12.9(1) 3X11.6(3) 4X4.2(2)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=x3KcqUblhjk",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "guilherme2602",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=x3KcqUblhjk",
+    "rankRange": null
+  },
+  {
+    "rank": 71,
+    "name": "Nodependence",
+    "creators": "TCTeam, dudodo",
+    "id": "108789987",
+    "length": "2m 5s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C34.9(49) SH16.1(29) B16(24) U13.5(20) R11.1(27) W5.3(18) SP3.1(8) D85.7(3) S14.3(3) IM0.0(0) NM100.0(0) 0.5X34.2(12) 3X31.1(19) 1X14.4(11) 4X14.1(11) 2X6.2(10)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=IkMZqLUAVXk",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-06",
+        "time": "1h 14m 54s",
+        "attempts": 5263,
+        "video": "https://youtu.be/jspjwvfF8o8"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 72,
     "name": "the got zamn uhh",
     "creators": "TurboPacks, mvngo",
     "id": "75732465",
@@ -1548,7 +1616,7 @@
     "rankRange": null
   },
   {
-    "rank": 70,
+    "rank": 73,
     "name": "PML Never Clear",
     "creators": "Anceps",
     "id": "139024004",
@@ -1585,29 +1653,7 @@
     "rankRange": null
   },
   {
-    "rank": 71,
-    "name": "Realistik",
-    "creators": "guilherme2602",
-    "id": "127874215",
-    "length": "34s",
-    "tps": 4185,
-    "precision": "",
-    "ratio": "W31.3(1) C29.9(1) SH26.5(2) R12.4(1) D68.5(1) S31.5(0) IM0.0(0) NM100.0(0) 0.5X71.3(4) 1X12.9(1) 3X11.6(3) 4X4.2(2)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=x3KcqUblhjk",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "guilherme2602",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=x3KcqUblhjk",
-    "rankRange": null
-  },
-  {
-    "rank": 72,
+    "rank": 74,
     "name": "Six Paths of Pain",
     "creators": "GionniBlood",
     "id": "17777889",
@@ -1629,29 +1675,7 @@
     "rankRange": null
   },
   {
-    "rank": 73,
-    "name": "Silent Peaks",
-    "creators": "Jakalope",
-    "id": "93359599",
-    "length": "1m 3s",
-    "tps": 360,
-    "precision": "",
-    "ratio": "C45.1(3) SH38.8(3) W16(3) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X67.8(11) 0.5X22.1(8) 3X6.7(3) 2X3.4(4)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=Cx4XXRUuhGU",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "creator": "Jakalope",
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Cx4XXRUuhGU",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "is2Player": false,
-    "rankRange": null
-  },
-  {
-    "rank": 74,
+    "rank": 75,
     "name": "Galatic Blood",
     "creators": "edictz, GoldNation, iHinataUzumaki, Chipuha, Axii",
     "id": "106603172",
@@ -1673,7 +1697,29 @@
     "rankRange": null
   },
   {
-    "rank": 75,
+    "rank": 76,
+    "name": "Silent Peaks",
+    "creators": "Jakalope",
+    "id": "93359599",
+    "length": "1m 3s",
+    "tps": 360,
+    "precision": "",
+    "ratio": "C45.1(3) SH38.8(3) W16(3) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X67.8(11) 0.5X22.1(8) 3X6.7(3) 2X3.4(4)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=Cx4XXRUuhGU",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "creator": "Jakalope",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Cx4XXRUuhGU",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "is2Player": false,
+    "rankRange": null
+  },
+  {
+    "rank": 77,
     "name": "psychoCLUB (Old)",
     "creators": "larkeyfactorial",
     "id": "125495409",
@@ -1695,29 +1741,7 @@
     "rankRange": null
   },
   {
-    "rank": 76,
-    "name": "Ak Narem",
-    "creators": "ShiN3",
-    "id": "130039817",
-    "length": "5m 11s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C29.5(30) W24.2(21) SH15.6(15) U11.4(19) R8(10) B7.1(7) SP4.2(4) D23.9(11) S76.1(11) IM2.8(8) NM97.2(8) 4X57.3(7) 1X27.4(5) 0.5X8.5(3) 2X5.2(4) 3X1.6(3)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=ZE2Q2BmtO14",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "ShiN3",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=ZE2Q2BmtO14",
-    "rankRange": null
-  },
-  {
-    "rank": 77,
+    "rank": 78,
     "name": "WHOLESOMEschafs",
     "creators": "rithium, mVnci",
     "id": "77716772",
@@ -1736,28 +1760,6 @@
     "creator": "rithium, mVnci",
     "is2Player": true,
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=7KdD_DCRRV0",
-    "rankRange": null
-  },
-  {
-    "rank": 78,
-    "name": "DIElent EnCode",
-    "creators": "Anomaly556",
-    "id": "110245282",
-    "length": "1m 26s",
-    "tps": null,
-    "precision": 677.7,
-    "ratio": "C41.5(4) W30.7(3) SH15.8(2) B7.1(1) U4.8(2) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X54.2(1) 2X22.8(1) 1X11.8(1) 3X11.2(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=f_h29FAR1zw",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "Anomaly556",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=f_h29FAR1zw",
     "rankRange": null
   },
   {
@@ -1784,43 +1786,6 @@
   },
   {
     "rank": 80,
-    "name": "The Factory (Skip)",
-    "creators": "Bascher14, Chinnychinn",
-    "id": "146818694",
-    "length": "",
-    "tps": 240,
-    "precision": "",
-    "ratio": "R45.9(1) C18(1) B14.4(1) U12.6(1) SH7.2(1) SP1.9(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X100(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=GsZvd8sw8II",
-    "image": "",
-    "victors": [
-      {
-        "name": "MrT1",
-        "date": "2026-09-29",
-        "time": "17m 47s",
-        "seconds": 1067,
-        "attempts": 2186,
-        "videoUrl": "https://www.youtube.com/watch?v=hr96y0OHpEo",
-        "wrTime": "17m 47s",
-        "wrAttempts": 2186,
-        "victorVideoUrl": "https://www.youtube.com/watch?v=hr96y0OHpEo"
-      }
-    ],
-    "tier": "Pending",
-    "creator": "Bascher14, Chinnychinn",
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=GsZvd8sw8II",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": {
-      "name": "MrT1",
-      "date": "2026-09-29"
-    },
-    "is2Player": false,
-    "rankRange": null
-  },
-  {
-    "rank": 81,
     "name": "Chime",
     "creators": "TheCrazydud",
     "id": "93920921",
@@ -1839,6 +1804,28 @@
     "creator": "TheCrazydud",
     "is2Player": true,
     "showcaseVideoUrl": "https://youtu.be/uulGusiEDVY",
+    "rankRange": null
+  },
+  {
+    "rank": 81,
+    "name": "DIElent EnCode",
+    "creators": "Anomaly556",
+    "id": "110245282",
+    "length": "1m 26s",
+    "tps": null,
+    "precision": 677.7,
+    "ratio": "C41.5(4) W30.7(3) SH15.8(2) B7.1(1) U4.8(2) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X54.2(1) 2X22.8(1) 1X11.8(1) 3X11.2(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=f_h29FAR1zw",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "Anomaly556",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=f_h29FAR1zw",
     "rankRange": null
   },
   {
@@ -1887,37 +1874,37 @@
   },
   {
     "rank": 84,
-    "name": "Relife 2019",
-    "creators": "AuraXalaiv, Migueword",
-    "id": "87021155",
-    "length": "3m 18s",
+    "name": "The Factory (Skip)",
+    "creators": "Bascher14, Chinnychinn",
+    "id": "146818694",
+    "length": "",
     "tps": 240,
-    "precision": 680,
-    "ratio": "SH32(15) C24.6(11) W17.7(11) B9.3(5) R9.2(4) U7.1(4) D3.9(37) S96.1(37) IM0.0(0) NM100.0(0) 0.5X70.9(16) 2X13.9(9) 1X9.5(4) 3X5.8(9)",
+    "precision": "",
+    "ratio": "R45.9(1) C18(1) B14.4(1) U12.6(1) SH7.2(1) SP1.9(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X100(1)",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=i7wPy4H9hYA",
+    "showcaseVideo": "https://www.youtube.com/watch?v=GsZvd8sw8II",
     "image": "",
     "victors": [
       {
-        "name": "SparklyJolt",
-        "date": "2021-08-06",
-        "time": "",
-        "seconds": null,
-        "attempts": null,
-        "videoUrl": "https://x.com/SparklyJolt/status/1423685874718490627",
-        "wrTime": "",
-        "wrAttempts": null,
-        "victorVideoUrl": "https://x.com/SparklyJolt/status/1423685874718490627"
+        "name": "MrT1",
+        "date": "2026-09-29",
+        "time": "17m 47s",
+        "seconds": 1067,
+        "attempts": 2186,
+        "videoUrl": "https://www.youtube.com/watch?v=hr96y0OHpEo",
+        "wrTime": "17m 47s",
+        "wrAttempts": 2186,
+        "victorVideoUrl": "https://www.youtube.com/watch?v=hr96y0OHpEo"
       }
     ],
     "tier": "Pending",
-    "creator": "AuraXalaiv, Migueword",
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=i7wPy4H9hYA",
+    "creator": "Bascher14, Chinnychinn",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=GsZvd8sw8II",
     "thumbnail": "",
     "points": 0,
     "firstVictor": {
-      "name": "SparklyJolt",
-      "date": "2021-08-06"
+      "name": "MrT1",
+      "date": "2026-09-29"
     },
     "is2Player": false,
     "rankRange": null
@@ -1968,6 +1955,28 @@
   },
   {
     "rank": 87,
+    "name": "Relife 2019",
+    "creators": "AuraXalaiv, Migueword",
+    "id": "87021155",
+    "length": "3m 18s",
+    "tps": 240,
+    "precision": 680,
+    "ratio": "SH32(15) C24.6(11) W17.7(11) B9.3(5) R9.2(4) U7.1(4) D3.9(37) S96.1(37) IM0.0(0) NM100.0(0) 0.5X70.9(16) 2X13.9(9) 1X9.5(4) 3X5.8(9)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=i7wPy4H9hYA",
+    "image": "",
+    "victors": [],
+    "tier": "Pending",
+    "creator": "AuraXalaiv, Migueword",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=i7wPy4H9hYA",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "is2Player": false,
+    "rankRange": null
+  },
+  {
+    "rank": 88,
     "name": "Silent Haunting",
     "creators": "RMGD",
     "id": "146754865",
@@ -1989,7 +1998,7 @@
     "rankRange": null
   },
   {
-    "rank": 88,
+    "rank": 89,
     "name": "Moonlit Sky (Old)",
     "creators": "TheHardyGoD",
     "id": "134264754",
@@ -2011,8 +2020,53 @@
     "rankRange": null
   },
   {
-    "rank": 89,
-    "name": "Fastet Crash",
+    "rank": 90,
+    "name": "deadly processing",
+    "creators": "Caner",
+    "id": "144196527",
+    "length": "1m 40s",
+    "tps": 360,
+    "precision": "",
+    "ratio": "W24.5(9) C22.4(12) SH21.6(12) U14.2(6) B10.3(7) R4.6(4) SP2.4(6) D39.6(2) S60.4(1) IM0.5(6) NM99.5(6) 1X94.5(3) 0.5X4.3(2) 2X1(1) 4X0.2(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=6j1f20EC7As",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-07",
+        "time": "1h 22m 44s",
+        "attempts": 14970,
+        "video": "https://www.youtube.com/playlist?list=PLDG5ZHdY6geo"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 91,
+    "name": "Ak Narem",
+    "creators": "ShiN3",
+    "id": "130039817",
+    "length": "2m 59s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C29.5(30) W24.2(21) SH15.6(15) U11.4(19) R8(10) B7.1(7) SP4.2(4) D23.9(11) S76.1(11) IM2.8(8) NM97.2(8) 4X57.3(7) 1X27.4(5) 0.5X8.5(3) 2X5.2(4) 3X1.6(3)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=ZE2Q2BmtO14",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "ShiN3",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=ZE2Q2BmtO14",
+    "rankRange": null
+  },
+  {
+    "rank": 92,
+    "name": "Fastest Crash",
     "creators": "AngelEffect",
     "id": "143966555",
     "length": "1m 52s",
@@ -2033,7 +2087,7 @@
     "rankRange": null
   },
   {
-    "rank": 90,
+    "rank": 93,
     "name": "Nivel De Silencio",
     "creators": "2A0L0I3, str",
     "id": "140475229",
@@ -2055,7 +2109,7 @@
     "rankRange": null
   },
   {
-    "rank": 91,
+    "rank": 94,
     "name": "Haunted",
     "creators": "TenDart",
     "id": "87262632",
@@ -2077,7 +2131,7 @@
     "rankRange": null
   },
   {
-    "rank": 92,
+    "rank": 95,
     "name": "Venom Legend",
     "creators": "IUltraVenomI",
     "id": "141218787",
@@ -2099,7 +2153,7 @@
     "rankRange": null
   },
   {
-    "rank": 93,
+    "rank": 96,
     "name": "problemy sinusini",
     "creators": "entity1111112",
     "id": "129141105",
@@ -2121,7 +2175,7 @@
     "rankRange": null
   },
   {
-    "rank": 94,
+    "rank": 97,
     "name": "Public ServiceA",
     "creators": "notesxd",
     "id": "117072865",
@@ -2143,7 +2197,7 @@
     "rankRange": null
   },
   {
-    "rank": 95,
+    "rank": 98,
     "name": "plague extended",
     "creators": "thegqc",
     "id": "92348945",
@@ -2180,7 +2234,7 @@
     "rankRange": null
   },
   {
-    "rank": 96,
+    "rank": 99,
     "name": "Crags of Lament",
     "creators": "AuraXalaiv & more",
     "id": "91272911",
@@ -2202,29 +2256,7 @@
     "rankRange": null
   },
   {
-    "rank": 97,
-    "name": "beast circles 2",
-    "creators": "yali540",
-    "id": "146987903",
-    "length": "32s",
-    "tps": 1440,
-    "precision": "",
-    "ratio": "C29.9(2) W29.8(2) SH23.4(2) B16.9(1) D65.9(2) S34.1(2) IM4.8(18) NM95.2(18) 0.5X62(2) 4X27.1(2) 1X10.9(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/w7njgnXNY38",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "yali540",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://youtu.be/w7njgnXNY38",
-    "rankRange": null
-  },
-  {
-    "rank": 98,
+    "rank": 100,
     "name": "Mirum In Modum Incommoditas",
     "creators": "C4mlX & more",
     "id": "85238302",
@@ -2246,7 +2278,29 @@
     "rankRange": null
   },
   {
-    "rank": 99,
+    "rank": 101,
+    "name": "beast circles 2",
+    "creators": "yali540",
+    "id": "146987903",
+    "length": "32s",
+    "tps": 1440,
+    "precision": "",
+    "ratio": "C29.9(2) W29.8(2) SH23.4(2) B16.9(1) D65.9(2) S34.1(2) IM4.8(18) NM95.2(18) 0.5X62(2) 4X27.1(2) 1X10.9(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/w7njgnXNY38",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "yali540",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://youtu.be/w7njgnXNY38",
+    "rankRange": null
+  },
+  {
+    "rank": 102,
     "name": "Rainbow Bridge",
     "creators": "hanyoung0224",
     "id": "71833434",
@@ -2268,7 +2322,7 @@
     "rankRange": null
   },
   {
-    "rank": 100,
+    "rank": 103,
     "name": "Ascension",
     "creators": "nanayuisei",
     "id": "67946908",
@@ -2290,7 +2344,29 @@
     "rankRange": null
   },
   {
-    "rank": 101,
+    "rank": 104,
+    "name": "Silent Forest",
+    "creators": "Mattsstuff",
+    "id": "93103211",
+    "length": "1m 37s",
+    "tps": 360,
+    "precision": "",
+    "ratio": "C25.9(14) SH23.5(17) B21.9(12) U11.5(14) W9.5(8) SP6.7(3) R0.9(2) D4.7(1) S95.3(1) IM0.0(0) NM100.0(0) 0.5X78.3(17) 4X9.2(8) 3X7.1(7) 2X2.9(3) 1X2.5(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=sWHMuQPpTQw",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "Mattsstuff",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=sWHMuQPpTQw",
+    "rankRange": null
+  },
+  {
+    "rank": 105,
     "name": "Art is Dead",
     "creators": "Dayrt, zarios",
     "id": "124241631",
@@ -2312,7 +2388,7 @@
     "rankRange": null
   },
   {
-    "rank": 102,
+    "rank": 106,
     "name": "MINUSdash",
     "creators": "SylenPaws",
     "id": "119017600",
@@ -2334,7 +2410,7 @@
     "rankRange": null
   },
   {
-    "rank": 103,
+    "rank": 107,
     "name": "Cold Slaughterhouse",
     "creators": "KariWinter",
     "id": "148588944",
@@ -2356,7 +2432,7 @@
     "rankRange": null
   },
   {
-    "rank": 104,
+    "rank": 108,
     "name": "Silent Step",
     "creators": "z3rix",
     "id": "80271550",
@@ -2378,7 +2454,30 @@
     "rankRange": null
   },
   {
-    "rank": 105,
+    "rank": 109,
+    "name": "River Alpheus",
+    "creators": "MakiaYT & more",
+    "id": "127360022",
+    "length": "1m 27s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "SH40.7(29) C29.7(22) B29.6(26) D0.0(0) S100.0(0) IM24.4(2) NM75.6(1) 1X100(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=_jC6G302mvg",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-04",
+        "time": "1h 29m 46s",
+        "attempts": 11326,
+        "video": "https://www.youtube.com/playlist?list=PLZZgY7tP-fHw"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 110,
     "name": "ParalympicTriathlon",
     "creators": "Zygisdij, kyle1saurus",
     "id": "144986791",
@@ -2400,7 +2499,52 @@
     "rankRange": null
   },
   {
-    "rank": 106,
+    "rank": 111,
+    "name": "silent processing (swiftsneak)",
+    "creators": "swiftsneak",
+    "id": "130480063",
+    "length": "1m 45s",
+    "tps": 240,
+    "precision": 927.2,
+    "ratio": "C43.1(5) W22.2(7) SH12.9(6) B11(6) U9.1(4) SP1.7(1) D18.4(10) S81.6(10) IM6.3(2) NM93.7(2) 1X41.8(10) 0.5X27.1(9) 3X12.1(7) 2X9.8(5) 4X9.2(4)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=gtD6cHRqjAY",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-07",
+        "time": "46m 52s",
+        "attempts": 7292,
+        "video": "https://www.youtube.com/playlist?list=PLauaQoe7tD_E"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 112,
+    "name": "Cave themed level",
+    "creators": "Arsenjeex",
+    "id": "143214810",
+    "length": "3m 24s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C37.6(8) R35.6(7) U9.2(2) W7.3(2) B5.6(2) SP2.9(2) SH1.8(2) D6.8(3) S93.2(3) IM0.0(0) NM100.0(0) 1X82.2(3) 0.5X17.8(2)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=knjLQdc4ZZ0",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "Arsenjeex",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=knjLQdc4ZZ0",
+    "rankRange": null
+  },
+  {
+    "rank": 113,
     "name": "Satanic Jesus",
     "creators": "frickothy",
     "id": "127465826",
@@ -2437,51 +2581,7 @@
     "rankRange": null
   },
   {
-    "rank": 107,
-    "name": "silent processing (swiftsneak)",
-    "creators": "swiftsneak",
-    "id": "130480063",
-    "length": "1m 45s",
-    "tps": 240,
-    "precision": 927.2,
-    "ratio": "C43.1(5) W22.2(7) SH12.9(6) B11(6) U9.1(4) SP1.7(1) D18.4(10) S81.6(10) IM6.3(2) NM93.7(2) 1X41.8(10) 0.5X27.1(9) 3X12.1(7) 2X9.8(5) 4X9.2(4)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=gtD6cHRqjAY",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "swiftsneak",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=gtD6cHRqjAY",
-    "rankRange": null
-  },
-  {
-    "rank": 108,
-    "name": "Cave themed level",
-    "creators": "Arsenjeex",
-    "id": "143214810",
-    "length": "3m 24s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C37.6(8) R35.6(7) U9.2(2) W7.3(2) B5.6(2) SP2.9(2) SH1.8(2) D6.8(3) S93.2(3) IM0.0(0) NM100.0(0) 1X82.2(3) 0.5X17.8(2)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=knjLQdc4ZZ0",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "Arsenjeex",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=knjLQdc4ZZ0",
-    "rankRange": null
-  },
-  {
-    "rank": 109,
+    "rank": 114,
     "name": "Mystic Chaoz",
     "creators": "LuLoX07",
     "id": "130065696",
@@ -2503,7 +2603,7 @@
     "rankRange": null
   },
   {
-    "rank": 110,
+    "rank": 115,
     "name": "HELLRAISER",
     "creators": "taggis",
     "id": "137703430",
@@ -2525,7 +2625,30 @@
     "rankRange": null
   },
   {
-    "rank": 111,
+    "rank": 116,
+    "name": "Waru",
+    "creators": "Exen",
+    "id": "76661330",
+    "length": "3m 3s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C61.3(67) R11.7(32) U10(37) W6(31) B5.6(12) SP3.9(14) SH1.4(7) D25.4(17) S74.6(17) IM0.6(2) NM99.4(2) 0.5X50.7(9) 4X21.4(14) 3X20.1(9) 2X7.8(5)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=iZwU6rQzTG8",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-08",
+        "time": "42m 1s",
+        "attempts": 3976,
+        "video": "https://www.youtube.com/playlist?list=PLd7vPvq_Cjao"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 117,
     "name": "Chiangmai",
     "creators": "swansong & more",
     "id": "122897343",
@@ -2547,7 +2670,7 @@
     "rankRange": null
   },
   {
-    "rank": 112,
+    "rank": 118,
     "name": "RED MAZE",
     "creators": "Desoxyn",
     "id": "111698571",
@@ -2569,44 +2692,7 @@
     "rankRange": null
   },
   {
-    "rank": 113,
-    "name": "claustrophobia",
-    "creators": "nanayuisei",
-    "id": "116662162",
-    "length": "56s",
-    "tps": 480,
-    "precision": "",
-    "ratio": "SH55.4(5) W23.7(3) C17.2(1) U3.7(1) D10.1(1) S89.9(0) IM0.0(0) NM100.0(0) 0.5X100(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=iHSPXZNy_LU",
-    "image": "",
-    "victors": [
-      {
-        "name": "Fixedone",
-        "date": "2026-10-03",
-        "time": "36m 26s",
-        "seconds": 2186,
-        "attempts": 23226,
-        "videoUrl": "https://www.youtube.com/live/0VqWUOVVoA8",
-        "wrTime": "36m 26s",
-        "wrAttempts": 23226,
-        "victorVideoUrl": "https://www.youtube.com/live/0VqWUOVVoA8"
-      }
-    ],
-    "tier": "Pending",
-    "creator": "nanayuisei",
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=iHSPXZNy_LU",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": {
-      "name": "Fixedone",
-      "date": "2026-10-03"
-    },
-    "is2Player": false,
-    "rankRange": null
-  },
-  {
-    "rank": 114,
+    "rank": 119,
     "name": "Powerdrive",
     "creators": "MakiaYT",
     "id": "148517688",
@@ -2643,29 +2729,7 @@
     "rankRange": null
   },
   {
-    "rank": 115,
-    "name": "statera challenge ii",
-    "creators": "RMGD",
-    "id": "147080117",
-    "length": "37s",
-    "tps": 480,
-    "precision": "",
-    "ratio": "W71.5(2) U27.8(0) C0.6(1) D82.0(2) S18.0(1) IM0.0(0) NM100.0(0) 0.5X54.9(3) 1X19.5(1) 4X13.3(2) 3X12.3(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "RMGD",
-    "is2Player": true,
-    "showcaseVideoUrl": "",
-    "rankRange": null
-  },
-  {
-    "rank": 116,
+    "rank": 120,
     "name": "Devils myths (Unnerfed)",
     "creators": "wesselgd",
     "id": "121452959",
@@ -2687,7 +2751,7 @@
     "rankRange": null
   },
   {
-    "rank": 117,
+    "rank": 121,
     "name": "infinite sequence",
     "creators": "Imqginary",
     "id": "133132537",
@@ -2709,7 +2773,29 @@
     "rankRange": null
   },
   {
-    "rank": 118,
+    "rank": 122,
+    "name": "statera challenge ii",
+    "creators": "RMGD",
+    "id": "147080117",
+    "length": "37s",
+    "tps": 480,
+    "precision": "",
+    "ratio": "W71.5(2) U27.8(0) C0.6(1) D82.0(2) S18.0(1) IM0.0(0) NM100.0(0) 0.5X54.9(3) 1X19.5(1) 4X13.3(2) 3X12.3(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "RMGD",
+    "is2Player": true,
+    "showcaseVideoUrl": "",
+    "rankRange": null
+  },
+  {
+    "rank": 123,
     "name": "minusprocessing",
     "creators": "Royaltek, andro",
     "id": "125364537",
@@ -2720,40 +2806,19 @@
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=fbbzVFr4jA4",
     "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "Royaltek, andro",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=fbbzVFr4jA4",
-    "rankRange": null
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-07",
+        "time": "2h 13m 20s",
+        "attempts": 7653,
+        "video": "https://www.youtube.com/playlist?list=PLUcvBV-rSyEM"
+      }
+    ],
+    "tier": ""
   },
   {
-    "rank": 119,
-    "name": "Silent Antique",
-    "creators": "EANDSPPLC, skeletonlol",
-    "id": "73150185",
-    "length": "1m 1s",
-    "tps": 300,
-    "precision": "",
-    "ratio": "C41.8(2) W18.5(2) SH17(2) U16.1(2) B6.7(1) D10.8(1) S89.2(0) IM0.0(0) NM100.0(0) 0.5X42.5(3) 1X35.2(3) 3X18.5(2) 2X3.9(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=nA9aduuBPmk",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "EANDSPPLC, skeletonlol",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=nA9aduuBPmk",
-    "rankRange": null
-  },
-  {
-    "rank": 120,
+    "rank": 124,
     "name": "Battle of the Shades (Phase 5)",
     "creators": "GD virus",
     "id": "138729631",
@@ -2775,7 +2840,7 @@
     "rankRange": null
   },
   {
-    "rank": 121,
+    "rank": 125,
     "name": "Borderless Glacier",
     "creators": "Aubergine111, skeletonlol",
     "id": "95198323",
@@ -2797,29 +2862,29 @@
     "rankRange": null
   },
   {
-    "rank": 122,
-    "name": "ping level",
-    "creators": "thevadd",
-    "id": "92871450",
-    "length": "1m 3s",
-    "tps": 240,
+    "rank": 126,
+    "name": "Silent Antique",
+    "creators": "EANDSPPLC, skeletonlol",
+    "id": "73150185",
+    "length": "1m 1s",
+    "tps": 300,
     "precision": "",
-    "ratio": "C66.2(11) SH16.7(5) B6.2(4) U5.7(4) W5.3(6) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X47.1(13) 2X24.1(13) 0.5X15.1(4) 3X13.6(12)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=RWta-N9ROLY",
+    "ratio": "C41.8(2) W18.5(2) SH17(2) U16.1(2) B6.7(1) D10.8(1) S89.2(0) IM0.0(0) NM100.0(0) 0.5X42.5(3) 1X35.2(3) 3X18.5(2) 2X3.9(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=nA9aduuBPmk",
     "image": "",
     "victors": [],
     "tier": "",
-    "creator": "thevadd",
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=RWta-N9ROLY",
     "thumbnail": "",
     "points": 0,
     "firstVictor": null,
-    "is2Player": false,
+    "creator": "EANDSPPLC, skeletonlol",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=nA9aduuBPmk",
     "rankRange": null
   },
   {
-    "rank": 123,
+    "rank": 127,
     "name": "thdantmulcs",
     "creators": "",
     "id": "128797735",
@@ -2841,7 +2906,29 @@
     "rankRange": null
   },
   {
-    "rank": 124,
+    "rank": 128,
+    "name": "ping level",
+    "creators": "thevadd",
+    "id": "92871450",
+    "length": "1m 3s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C66.2(11) SH16.7(5) B6.2(4) U5.7(4) W5.3(6) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X47.1(13) 2X24.1(13) 0.5X15.1(4) 3X13.6(12)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=RWta-N9ROLY",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "creator": "thevadd",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=RWta-N9ROLY",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "is2Player": false,
+    "rankRange": null
+  },
+  {
+    "rank": 129,
     "name": "Silent Blizzard",
     "creators": "KrmaL",
     "id": "135977390",
@@ -2863,7 +2950,29 @@
     "rankRange": null
   },
   {
-    "rank": 125,
+    "rank": 130,
+    "name": "Lunam Noctem",
+    "creators": "Sapphuby",
+    "id": "90398982",
+    "length": "1m 25s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C46.1(9) SH33.2(11) B20.7(9) D0.0(0) S100.0(0) IM1.1(2) NM98.9(2) 1X100(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=XqvsVIidJOU",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "Sapphuby",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=XqvsVIidJOU",
+    "rankRange": null
+  },
+  {
+    "rank": 131,
     "name": "clockwork two",
     "creators": "glorbygd",
     "id": "130033545",
@@ -2885,29 +2994,7 @@
     "rankRange": null
   },
   {
-    "rank": 126,
-    "name": "The Mighty Phase",
-    "creators": "MightyVektor & more",
-    "id": "129066277",
-    "length": "5m 52s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C41.2(38) SH25.1(33) W15.8(25) B8.7(11) U8.4(13) R0.9(3) D5.3(8) S94.7(8) IM0.2(1) NM99.8(1) 0.5X48.5(16) 1X21.9(18) 3X17.3(19) 2X10.6(21) 4X1.7(2)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=e8g80cMcxyo",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "MightyVektor & more",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=e8g80cMcxyo",
-    "rankRange": null
-  },
-  {
-    "rank": 127,
+    "rank": 132,
     "name": "lastheory (Unnerfed)",
     "creators": "maxfs",
     "id": "69840070",
@@ -2929,7 +3016,29 @@
     "rankRange": null
   },
   {
-    "rank": 128,
+    "rank": 133,
+    "name": "The Mighty Phase",
+    "creators": "MightyVektor & more",
+    "id": "129066277",
+    "length": "5m 52s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C41.2(38) SH25.1(33) W15.8(25) B8.7(11) U8.4(13) R0.9(3) D5.3(8) S94.7(8) IM0.2(1) NM99.8(1) 0.5X48.5(16) 1X21.9(18) 3X17.3(19) 2X10.6(21) 4X1.7(2)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=e8g80cMcxyo",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "MightyVektor & more",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=e8g80cMcxyo",
+    "rankRange": null
+  },
+  {
+    "rank": 134,
     "name": "eves alter ego",
     "creators": "onepiecefan1982",
     "id": "144737004",
@@ -2966,29 +3075,7 @@
     "rankRange": null
   },
   {
-    "rank": 129,
-    "name": "FNM04 fail comp",
-    "creators": "kalculus19, Azertite",
-    "id": "84779444",
-    "length": "1m 6s",
-    "tps": 240,
-    "precision": 587.1,
-    "ratio": "C42.4(19) SH18.6(12) W17.6(17) R8.9(4) B5.3(5) SP3.7(4) U3.6(4) D3.7(2) S96.3(2) IM0.0(0) NM100.0(0) 0.5X39.1(8) 1X23.5(6) 3X18(6) 2X11.8(6) 4X7.6(7)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=smCXD6UDLYU",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "kalculus19, Azertite",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=smCXD6UDLYU",
-    "rankRange": null
-  },
-  {
-    "rank": 130,
+    "rank": 135,
     "name": "mea culpa",
     "creators": "flsey",
     "id": "120884362",
@@ -3010,7 +3097,29 @@
     "rankRange": null
   },
   {
-    "rank": 131,
+    "rank": 136,
+    "name": "FNM04 fail comp",
+    "creators": "kalculus19, Azertite",
+    "id": "84779444",
+    "length": "1m 6s",
+    "tps": 240,
+    "precision": 587.1,
+    "ratio": "C42.4(19) SH18.6(12) W17.6(17) R8.9(4) B5.3(5) SP3.7(4) U3.6(4) D3.7(2) S96.3(2) IM0.0(0) NM100.0(0) 0.5X39.1(8) 1X23.5(6) 3X18(6) 2X11.8(6) 4X7.6(7)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=smCXD6UDLYU",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "kalculus19, Azertite",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=smCXD6UDLYU",
+    "rankRange": null
+  },
+  {
+    "rank": 137,
     "name": "Small Time",
     "creators": "Skyyee",
     "id": "108097946",
@@ -3047,7 +3156,7 @@
     "rankRange": null
   },
   {
-    "rank": 132,
+    "rank": 138,
     "name": "EXPONENTclub (Old)",
     "creators": "Convindix, KrX",
     "id": "64995410",
@@ -3069,7 +3178,7 @@
     "rankRange": null
   },
   {
-    "rank": 133,
+    "rank": 139,
     "name": "silent burzum club",
     "creators": "Lutetium",
     "id": "71301905",
@@ -3091,7 +3200,7 @@
     "rankRange": null
   },
   {
-    "rank": 134,
+    "rank": 140,
     "name": "Yeux Geles",
     "creators": "Valentlne",
     "id": "75615617",
@@ -3128,7 +3237,7 @@
     "rankRange": null
   },
   {
-    "rank": 135,
+    "rank": 141,
     "name": "bp EXILED MODE",
     "creators": "RMGD, Exiledshade12, ewe23, Terralith",
     "id": "144161571",
@@ -3150,51 +3259,7 @@
     "rankRange": null
   },
   {
-    "rank": 136,
-    "name": "With The Beginning",
-    "creators": "egorpro0606",
-    "id": "75483229",
-    "length": "44s",
-    "tps": 720,
-    "precision": "",
-    "ratio": "W43.6(5) C37.6(2) SH14(3) U4.3(1) B0.4(1) D7.7(2) S92.3(2) IM0.0(0) NM100.0(0) 3X45.4(3) 0.5X40.2(2) 2X12.1(3) 1X2.3(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=6MA85pGx4m4",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "creator": "egorpro0606",
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=6MA85pGx4m4",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "is2Player": true,
-    "rankRange": null
-  },
-  {
-    "rank": 137,
-    "name": "Silentium Excelsus",
-    "creators": "AuraXalaiv",
-    "id": "66381110",
-    "length": "1m 10s",
-    "tps": 241,
-    "precision": "",
-    "ratio": "W48.1(4) C44.3(4) SH6.9(2) B0.6(1) D50.1(5) S49.9(5) IM47.3(2) NM52.7(1) 0.5X68.6(8) 3X13(6) 2X10.2(4) 4X8.2(5)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=2gyu-Ka-a8c",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "AuraXalaiv",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=2gyu-Ka-a8c",
-    "rankRange": null
-  },
-  {
-    "rank": 138,
+    "rank": 142,
     "name": "Silent House",
     "creators": "SailentClub",
     "id": "146803019",
@@ -3216,7 +3281,74 @@
     "rankRange": null
   },
   {
-    "rank": 139,
+    "rank": 143,
+    "name": "With The Beginning",
+    "creators": "egorpro0606",
+    "id": "75483229",
+    "length": "44s",
+    "tps": 720,
+    "precision": "",
+    "ratio": "W43.6(5) C37.6(2) SH14(3) U4.3(1) B0.4(1) D7.7(2) S92.3(2) IM0.0(0) NM100.0(0) 3X45.4(3) 0.5X40.2(2) 2X12.1(3) 1X2.3(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=6MA85pGx4m4",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "creator": "egorpro0606",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=6MA85pGx4m4",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "is2Player": true,
+    "rankRange": null
+  },
+  {
+    "rank": 144,
+    "name": "Silentium Excelsus",
+    "creators": "AuraXalaiv",
+    "id": "66381110",
+    "length": "1m 10s",
+    "tps": 241,
+    "precision": "",
+    "ratio": "W48.1(4) C44.3(4) SH6.9(2) B0.6(1) D50.1(5) S49.9(5) IM47.3(2) NM52.7(1) 0.5X68.6(8) 3X13(6) 2X10.2(4) 4X8.2(5)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=2gyu-Ka-a8c",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "AuraXalaiv",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=2gyu-Ka-a8c",
+    "rankRange": null
+  },
+  {
+    "rank": 145,
+    "name": "Sonic Processing",
+    "creators": "",
+    "id": "126401161",
+    "length": "1m 38s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C32.7(2) W30.8(2) SH14.6(3) U11.1(2) B10.9(2) D30.8(2) S69.2(2) IM0.0(0) NM100.0(0) 1X100(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=E29OgEQAGSs",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-07",
+        "time": "53m 34s",
+        "attempts": 15262,
+        "video": "https://www.youtube.com/playlist?list=PLE7P_GfdK1w4"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 146,
     "name": "Work In Progress",
     "creators": "TiO2",
     "id": "130376111",
@@ -3238,29 +3370,7 @@
     "rankRange": null
   },
   {
-    "rank": 140,
-    "name": "Shadows Torture",
-    "creators": "Yoknow, xXPerson111, 1CicL3",
-    "id": "149490997",
-    "length": "18s",
-    "tps": null,
-    "precision": "",
-    "ratio": "C47.3(2) W37.7(5) SH12.5(3) U2.6(1) D51.6(2) S48.4(2) IM0.0(0) NM100.0(0) 3X67(2) 0.5X29.5(2) 2X3.5(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "Yoknow, xXPerson111, 1CicL3",
-    "is2Player": true,
-    "showcaseVideoUrl": "",
-    "rankRange": null
-  },
-  {
-    "rank": 141,
+    "rank": 147,
     "name": "Lost Avalon",
     "creators": "Sapphuby",
     "id": "76170575",
@@ -3282,7 +3392,29 @@
     "rankRange": null
   },
   {
-    "rank": 142,
+    "rank": 148,
+    "name": "Shadows Torture",
+    "creators": "Yoknow, xXPerson111, 1CicL3",
+    "id": "149490997",
+    "length": "18s",
+    "tps": null,
+    "precision": "",
+    "ratio": "C47.3(2) W37.7(5) SH12.5(3) U2.6(1) D51.6(2) S48.4(2) IM0.0(0) NM100.0(0) 3X67(2) 0.5X29.5(2) 2X3.5(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "Yoknow, xXPerson111, 1CicL3",
+    "is2Player": true,
+    "showcaseVideoUrl": "",
+    "rankRange": null
+  },
+  {
+    "rank": 149,
     "name": "Wrath",
     "creators": "Crimsons2",
     "id": "128476527",
@@ -3304,7 +3436,7 @@
     "rankRange": null
   },
   {
-    "rank": 143,
+    "rank": 150,
     "name": "WHATTHEHELLBRO",
     "creators": "theluin",
     "id": "149242708",
@@ -3341,7 +3473,7 @@
     "rankRange": null
   },
   {
-    "rank": 144,
+    "rank": 151,
     "name": "Chaotic Circles (RMGD)",
     "creators": "RMGD, Kylra",
     "id": "148562055",
@@ -3378,7 +3510,7 @@
     "rankRange": null
   },
   {
-    "rank": 145,
+    "rank": 152,
     "name": "Fatal Corridor Z",
     "creators": "arlyivy & more",
     "id": "95266385",
@@ -3400,7 +3532,7 @@
     "rankRange": null
   },
   {
-    "rank": 146,
+    "rank": 153,
     "name": "Silent Nightfall DX",
     "creators": "RMGD",
     "id": "144257309",
@@ -3422,7 +3554,30 @@
     "rankRange": null
   },
   {
-    "rank": 147,
+    "rank": 154,
+    "name": "All I Need (Xirmo)",
+    "creators": "Xirmo",
+    "id": "95892929",
+    "length": "52s",
+    "tps": "",
+    "precision": "",
+    "ratio": "C67.5(2) W24.4(3) SH8.1(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X56.5(1) 4X32.9(1) 1X10.6(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=EqM8X9nBM_g",
+    "image": "",
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-10-08",
+        "time": "22m 50s",
+        "attempts": 5348,
+        "video": "https://www.youtube.com/playlist?list=PLBF_AOMxLLUk"
+      }
+    ],
+    "tier": ""
+  },
+  {
+    "rank": 155,
     "name": "Devilicide",
     "creators": "Yumemalware",
     "id": "139394939",
@@ -3444,29 +3599,7 @@
     "rankRange": null
   },
   {
-    "rank": 148,
-    "name": "Silent Forest",
-    "creators": "Mattsstuff",
-    "id": "93103211",
-    "length": "1m 37s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C25.9(14) SH23.5(17) B21.9(12) U11.5(14) W9.5(8) SP6.7(3) R0.9(2) D4.7(1) S95.3(1) IM0.0(0) NM100.0(0) 0.5X78.3(17) 4X9.2(8) 3X7.1(7) 2X2.9(3) 1X2.5(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=sWHMuQPpTQw",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "Mattsstuff",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=sWHMuQPpTQw",
-    "rankRange": null
-  },
-  {
-    "rank": 149,
+    "rank": 156,
     "name": "xKore",
     "creators": "spikespikesmm",
     "id": "131284760",
@@ -3488,7 +3621,7 @@
     "rankRange": null
   },
   {
-    "rank": 150,
+    "rank": 157,
     "name": "KEROSENE",
     "creators": "wahrheitxvi",
     "id": "125624656",
@@ -3525,7 +3658,7 @@
     "rankRange": null
   },
   {
-    "rank": 151,
+    "rank": 158,
     "name": "SaTans Circles X",
     "creators": "IIZebII",
     "id": "133421543",
@@ -3547,7 +3680,7 @@
     "rankRange": null
   },
   {
-    "rank": 152,
+    "rank": 159,
     "name": "Hard Cube 2",
     "creators": "Yousseff01",
     "id": "144567706",
@@ -3569,7 +3702,7 @@
     "rankRange": null
   },
   {
-    "rank": 153,
+    "rank": 160,
     "name": "grandpa demon",
     "creators": "Skyyee",
     "id": "76692836",
@@ -3591,7 +3724,7 @@
     "rankRange": null
   },
   {
-    "rank": 154,
+    "rank": 161,
     "name": "The Hell Phase",
     "creators": "EdictZ, Axii",
     "id": "72684496",
@@ -3613,7 +3746,7 @@
     "rankRange": null
   },
   {
-    "rank": 155,
+    "rank": 162,
     "name": "Calls of the Abyss",
     "creators": "Skyyee",
     "id": "65526825",
@@ -3635,7 +3768,7 @@
     "rankRange": null
   },
   {
-    "rank": 156,
+    "rank": 163,
     "name": "Silent Antique (Unnerfed)",
     "creators": "EANDSPPLC, skeletonlol",
     "id": "75010957",
@@ -3657,7 +3790,7 @@
     "rankRange": null
   },
   {
-    "rank": 157,
+    "rank": 164,
     "name": "Omega Circles",
     "creators": "HackedHardest",
     "id": "30915305",
@@ -3679,29 +3812,7 @@
     "rankRange": null
   },
   {
-    "rank": 158,
-    "name": "Dark Nightmares",
-    "creators": "Blazek & more",
-    "id": "144851821",
-    "length": "2m 43s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "W32.5(16) C22.6(8) U15.8(10) SH15.6(12) B12.6(5) R0.9(3) D11.5(5) S88.5(5) IM10.4(4) NM89.6(4) 0.5X57.5(20) 1X22.9(16) 3X15.1(9) 2X4.6(18)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=Xah7O0b1Hzc",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "Blazek & more",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Xah7O0b1Hzc",
-    "rankRange": null
-  },
-  {
-    "rank": 159,
+    "rank": 165,
     "name": "CHAINSMOKER",
     "creators": "wabug",
     "id": "140349344",
@@ -3723,7 +3834,29 @@
     "rankRange": null
   },
   {
-    "rank": 160,
+    "rank": 166,
+    "name": "Dark Nightmares",
+    "creators": "Blazek & more",
+    "id": "144851821",
+    "length": "2m 43s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "W32.5(16) C22.6(8) U15.8(10) SH15.6(12) B12.6(5) R0.9(3) D11.5(5) S88.5(5) IM10.4(4) NM89.6(4) 0.5X57.5(20) 1X22.9(16) 3X15.1(9) 2X4.6(18)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=Xah7O0b1Hzc",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "Blazek & more",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=Xah7O0b1Hzc",
+    "rankRange": null
+  },
+  {
+    "rank": 167,
     "name": "Darkness",
     "creators": "Relayne & more",
     "id": "71885146",
@@ -3745,7 +3878,7 @@
     "rankRange": null
   },
   {
-    "rank": 161,
+    "rank": 168,
     "name": "Lament",
     "creators": "NeltharioN",
     "id": "148884468",
@@ -3767,7 +3900,7 @@
     "rankRange": null
   },
   {
-    "rank": 162,
+    "rank": 169,
     "name": "SlaughterHouse (MrMooDyH)",
     "creators": "MrMooDyH",
     "id": "127283683",
@@ -3789,31 +3922,31 @@
     "rankRange": null
   },
   {
-    "rank": 163,
-    "name": "Lunam Noctem",
-    "creators": "Sapphuby",
-    "id": "90398982",
-    "length": "1m 25s",
-    "tps": 54,
+    "rank": 170,
+    "name": "claustrophobia",
+    "creators": "nanayuisei",
+    "id": "116662162",
+    "length": "56s",
+    "tps": 240,
     "precision": "",
-    "ratio": "C46.1(9) SH33.2(11) B20.7(9) D0.0(0) S100.0(0) IM1.1(2) NM98.9(2) 1X100(1)",
+    "ratio": "SH55.4(5) W23.7(3) C17.2(1) U3.7(1) D10.1(1) S89.9(0) IM0.0(0) NM100.0(0) 0.5X100(1)",
     "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=XqvsVIidJOU",
+    "showcaseVideo": "https://www.youtube.com/watch?v=iHSPXZNy_LU",
     "image": "",
     "victors": [],
-    "tier": "",
+    "tier": "Pending",
+    "creator": "nanayuisei",
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=iHSPXZNy_LU",
     "thumbnail": "",
     "points": 0,
     "firstVictor": null,
-    "creator": "Sapphuby",
     "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=XqvsVIidJOU",
     "rankRange": null
   },
   {
-    "rank": 164,
+    "rank": 171,
     "name": "LOST RESOLVE",
-    "creators": "arlyivy, Nautilus2K, kalculus19",
+    "creators": "7300, Nautilus2K, kalculus19",
     "id": "91963297",
     "length": "30s",
     "tps": 360,
@@ -3827,13 +3960,13 @@
     "thumbnail": "",
     "points": 0,
     "firstVictor": null,
-    "creator": "arlyivy, Nautilus2K, kalculus19",
+    "creator": "7300, Nautilus2K, kalculus19",
     "is2Player": false,
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=ewet2wBBOGc",
     "rankRange": null
   },
   {
-    "rank": 165,
+    "rank": 172,
     "name": "Arterial Embolism",
     "creators": "AnonllExt",
     "id": "114679689",
@@ -3855,7 +3988,7 @@
     "rankRange": null
   },
   {
-    "rank": 166,
+    "rank": 173,
     "name": "Sorry",
     "creators": "Skyyee",
     "id": "70505891",
@@ -3877,7 +4010,7 @@
     "rankRange": null
   },
   {
-    "rank": 167,
+    "rank": 174,
     "name": "silent landscape",
     "creators": "1CicL3",
     "id": "116337387",
@@ -3899,7 +4032,7 @@
     "rankRange": null
   },
   {
-    "rank": 168,
+    "rank": 175,
     "name": "Slaughterhouse II X",
     "creators": "icedcave, RMGD",
     "id": "141877395",
@@ -3921,7 +4054,7 @@
     "rankRange": null
   },
   {
-    "rank": 169,
+    "rank": 176,
     "name": "Lunatic Theory",
     "creators": "hazelszl",
     "id": "138228646",
@@ -3943,9 +4076,9 @@
     "rankRange": null
   },
   {
-    "rank": 170,
+    "rank": 177,
     "name": "haunted corridor v2",
-    "creators": "1CicL3",
+    "creators": "1Cicl3",
     "id": "85858184",
     "length": "2m 12s",
     "tps": 240,
@@ -3959,35 +4092,13 @@
     "thumbnail": "",
     "points": 0,
     "firstVictor": null,
-    "creator": "1CicL3",
+    "creator": "1Cicl3",
     "is2Player": false,
     "showcaseVideoUrl": "https://www.youtube.com/watch?v=yfFu4x0dVAk",
     "rankRange": null
   },
   {
-    "rank": 171,
-    "name": "Deadfully",
-    "creators": "nanayuisei",
-    "id": "69819768",
-    "length": "42s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C70.2(3) B13.4(1) SH11.6(3) W4.8(1) D21.8(1) S78.2(1) IM0.0(0) NM100.0(0) 0.5X59(5) 1X34.8(3) 4X4.8(1) 3X1.3(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=BykeVE97gUM",
-    "image": "",
-    "victors": [],
-    "tier": "Advanced",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "nanayuisei",
-    "is2Player": true,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=BykeVE97gUM",
-    "rankRange": null
-  },
-  {
-    "rank": 172,
+    "rank": 178,
     "name": "Down Bass Revolution",
     "creators": "Spectruh, RMGD",
     "id": "149957571",
@@ -4024,7 +4135,29 @@
     "rankRange": null
   },
   {
-    "rank": 173,
+    "rank": 179,
+    "name": "Deadfully",
+    "creators": "nanayuisei",
+    "id": "69819768",
+    "length": "42s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C70.2(3) B13.4(1) SH11.6(3) W4.8(1) D21.8(1) S78.2(1) IM0.0(0) NM100.0(0) 0.5X59(5) 1X34.8(3) 4X4.8(1) 3X1.3(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=BykeVE97gUM",
+    "image": "",
+    "victors": [],
+    "tier": "Advanced",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "nanayuisei",
+    "is2Player": true,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=BykeVE97gUM",
+    "rankRange": null
+  },
+  {
+    "rank": 180,
     "name": "Odium (Amneziak)",
     "creators": "Amneziak",
     "id": "146941597",
@@ -4046,7 +4179,7 @@
     "rankRange": null
   },
   {
-    "rank": 174,
+    "rank": 181,
     "name": "ancient ruins",
     "creators": "Leoneo3000",
     "id": "117067512",
@@ -4068,7 +4201,7 @@
     "rankRange": null
   },
   {
-    "rank": 175,
+    "rank": 182,
     "name": "Geometry beastmode",
     "creators": "kalculus19, jambott, hexitine, arlyivy, Azertite",
     "id": "122242310",
@@ -4090,7 +4223,7 @@
     "rankRange": null
   },
   {
-    "rank": 176,
+    "rank": 183,
     "name": "Shiver",
     "creators": "Nicolays",
     "id": "147075905",
@@ -4112,7 +4245,7 @@
     "rankRange": null
   },
   {
-    "rank": 177,
+    "rank": 184,
     "name": "SHUTTHEHELLUPDUDE",
     "creators": "theluin",
     "id": "149242717",
@@ -4149,29 +4282,7 @@
     "rankRange": null
   },
   {
-    "rank": 178,
-    "name": "Silenced Acropolis",
-    "creators": "anxev, Zobros",
-    "id": "140250065",
-    "length": "1m 14s",
-    "tps": 240,
-    "precision": "",
-    "ratio": "C33.7(3) W21.2(2) SH18.1(2) B18(2) U9(1) D0.0(0) S100.0(0) IM3.3(1) NM96.7(1) 0.5X100(1)",
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=CQnBwge0w2k",
-    "image": "",
-    "victors": [],
-    "tier": "",
-    "thumbnail": "",
-    "points": 0,
-    "firstVictor": null,
-    "creator": "anxev, Zobros",
-    "is2Player": false,
-    "showcaseVideoUrl": "https://www.youtube.com/watch?v=CQnBwge0w2k",
-    "rankRange": null
-  },
-  {
-    "rank": 179,
+    "rank": 185,
     "name": "Ballistic Crimson World",
     "creators": "Cyrillic, Convindix",
     "id": "56260387",
@@ -4193,7 +4304,29 @@
     "rankRange": null
   },
   {
-    "rank": 180,
+    "rank": 186,
+    "name": "Silenced Acropolis",
+    "creators": "anxev, Zobros",
+    "id": "140250065",
+    "length": "1m 14s",
+    "tps": 240,
+    "precision": "",
+    "ratio": "C33.7(3) W21.2(2) SH18.1(2) B18(2) U9(1) D0.0(0) S100.0(0) IM3.3(1) NM96.7(1) 0.5X100(1)",
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=CQnBwge0w2k",
+    "image": "",
+    "victors": [],
+    "tier": "",
+    "thumbnail": "",
+    "points": 0,
+    "firstVictor": null,
+    "creator": "anxev, Zobros",
+    "is2Player": false,
+    "showcaseVideoUrl": "https://www.youtube.com/watch?v=CQnBwge0w2k",
+    "rankRange": null
+  },
+  {
+    "rank": 187,
     "name": "Glass Moon",
     "creators": "alzha",
     "id": "147797479",
@@ -4230,7 +4363,7 @@
     "rankRange": null
   },
   {
-    "rank": 181,
+    "rank": 188,
     "name": "Challenger Circles",
     "creators": "RMGD",
     "id": "146308612",
@@ -4252,7 +4385,7 @@
     "rankRange": null
   },
   {
-    "rank": 182,
+    "rank": 189,
     "name": "STALEMATE 15",
     "creators": "arlyivy",
     "id": "91889965",
@@ -4289,7 +4422,7 @@
     "rankRange": null
   },
   {
-    "rank": 183,
+    "rank": 190,
     "name": "Zillion never clear",
     "creators": "adaptivetax114, LoliGD",
     "id": "130393455",
@@ -4311,7 +4444,7 @@
     "rankRange": null
   },
   {
-    "rank": 184,
+    "rank": 191,
     "name": "ultra silent circles",
     "creators": "1CicL3",
     "id": "15846790",
@@ -4333,7 +4466,7 @@
     "rankRange": null
   },
   {
-    "rank": 185,
+    "rank": 192,
     "name": "Deadly Silent Fred",
     "creators": "ZoliReal, mewj13",
     "id": "143999876",
@@ -4355,7 +4488,7 @@
     "rankRange": null
   },
   {
-    "rank": 186,
+    "rank": 193,
     "name": "Fredrick Survive II",
     "creators": "ZoliReal",
     "id": "133738923",
@@ -4377,7 +4510,7 @@
     "rankRange": null
   },
   {
-    "rank": 187,
+    "rank": 194,
     "name": "Hope",
     "creators": "RMGD",
     "id": "144679535",
@@ -4399,7 +4532,7 @@
     "rankRange": null
   },
   {
-    "rank": 188,
+    "rank": 195,
     "name": "The Island Chamber",
     "creators": "UFokinWotM8, mewj13",
     "id": "139623217",
