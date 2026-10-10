@@ -51,6 +51,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
+      packs: [],
       victors: [],
     };
   }
@@ -105,6 +106,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
     twoPlayer,
     showcaseVideo,
     image,
+    packs: Array.isArray(item.packs) ? item.packs : [],
     victors,
     tier,
     rankRange,
@@ -675,6 +677,7 @@ function openLevelForm(index) {
   document.getElementById("f-twoplayer").value = normalizedItem.twoPlayer || "";
   document.getElementById("f-showcase").value = normalizedItem.showcaseVideo || "";
   document.getElementById("f-image").value = normalizedItem.image || "";
+  document.getElementById("f-packs").value = (normalizedItem.packs || []).join(", ");
   if (editingSource === "verifications") {
     document.getElementById("f-tier").value = normalizedItem.tier || "";
   } else {
@@ -819,6 +822,7 @@ function saveLevelForm() {
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),
+    packs: [...new Set(document.getElementById("f-packs").value.split(",").map((pack) => pack.trim()).filter(Boolean))],
     victors,
   };
 

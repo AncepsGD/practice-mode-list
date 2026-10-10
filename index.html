@@ -29,17 +29,20 @@
         <button class="nav-btn" onclick="showPage('leaderboard', this)">
           <span class="nav-icon"><i class="fa-solid fa-trophy"></i></span><span class="nav-label">Leaderboard</span>
         </button>
+        <button class="nav-btn" onclick="showPage('optimizer', this)">
+          <span class="nav-icon"><i class="fa-solid fa-route"></i></span><span class="nav-label">Ladder</span>
+        </button>
         <button class="nav-btn" onclick="showPage('verifications', this)">
-          <span class="nav-icon"><i class="fa-solid fa-circle-check"></i></span><span class="nav-label">Unverified List</span>
+          <span class="nav-icon"><i class="fa-solid fa-circle-check"></i></span><span class="nav-label">Unverified</span>
         </button>
         <button class="nav-btn" onclick="showPage('todo', this)">
           <span class="nav-icon"><i class="fa-solid fa-list-check"></i></span><span class="nav-label">To-Do</span>
         </button>
+        <button class="nav-btn" onclick="showPage('packs', this)">
+          <span class="nav-icon"><i class="fa-solid fa-boxes-stacked"></i></span><span class="nav-label">Packs</span>
+        </button>
         <button class="nav-btn" onclick="showPage('timeline', this)">
           <span class="nav-icon"><i class="fa-solid fa-clock"></i></span><span class="nav-label">Timeline</span>
-        </button>
-        <button class="nav-btn" onclick="showPage('optimizer', this)">
-          <span class="nav-icon"><i class="fa-solid fa-route"></i></span><span class="nav-label">Ladder</span>
         </button>
         <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank">
           <span class="nav-icon"><i class="fa-brands fa-discord"></i></span><span class="nav-label">Discord</span>
@@ -54,14 +57,36 @@
           <label class="leaderboard-label" for="list-sort-key">Sort by</label>
           <div class="sort-controls">
             <select id="list-sort-key" onchange="handleListSortChange()">
-              <option value="rank">Rank</option>
-              <option value="name">Name</option>
-              <option value="creators">Creators</option>
-              <option value="victors">Victors</option>
-              <option value="averageTime">Average Time</option>
-              <option value="averageAttempts">Average Attempts</option>
-              <option value="earliestDate">Earliest Date</option>
-              <option value="id">ID</option>
+              <optgroup label="General">
+                <option value="rank">Rank</option>
+                <option value="name">Name</option>
+                <option value="creators">Creators</option>
+                <option value="victors">Victors</option>
+                <option value="averageTime">Average Time</option>
+                <option value="averageAttempts">Average Attempts</option>
+                <option value="earliestDate">Earliest Date</option>
+                <option value="id">ID</option>
+              </optgroup>
+              <optgroup label="Length">
+                <option value="length">Level Length</option>
+              </optgroup>
+              <optgroup label="Gamemode Coverage">
+              <option value="coverageShip">Ship Coverage</option>
+              <option value="coverageUfo">UFO Coverage</option>
+              <option value="coverageRobot">Robot Coverage</option>
+              <option value="coverageSwing">Swing Coverage</option>
+              <option value="coverageCube">Cube Coverage</option>
+              <option value="coverageBall">Ball Coverage</option>
+              <option value="coverageSpider">Spider Coverage</option>
+              <option value="coverageWave">Wave Coverage</option>
+              </optgroup>
+              <optgroup label="Gameplay Coverage">
+              <option value="coverageDual">Dual Coverage</option>
+              <option value="mirrorChanges">Mirror Portal Changes</option>
+              </optgroup>
+              <optgroup label="Speed Coverage">
+                <option value="speed">Average Speed</option>
+              </optgroup>
             </select>
             <button id="list-sort-direction-btn" class="sort-direction-btn" type="button" onclick="toggleListSortDirection()" aria-label="Toggle list sort direction">▲</button>
           </div>
@@ -108,10 +133,31 @@
             <th>Player</th>
             <th>Points</th>
             <th>Completed Levels</th>
+            <th aria-label="Completion details"></th>
           </tr>
         </thead>
         <tbody id="lb-body"></tbody>
       </table>
+    </div>
+
+    <div id="page-packs" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="packs-header">
+        <div>
+          <h2>Packs</h2>
+          <p class="packs-subtitle">Earn 10 bonus points for every completed level in a pack, plus 50 more for completing the entire pack.</p>
+        </div>
+        <div class="packs-player-control">
+          <label class="leaderboard-label" for="packs-player-select">View progress for</label>
+          <select id="packs-player-select" onchange="handlePackPlayerChange()">
+            <option value="">Select a player</option>
+          </select>
+        </div>
+      </div>
+      <div id="packs-summary" class="packs-summary" aria-live="polite"></div>
+      <div id="packs-container" class="packs-grid"></div>
     </div>
 
     <div id="page-verifications" class="page">
@@ -123,6 +169,51 @@
         <p class="verifications-subtitle">Levels with no verified completions yet, ordered by estimated difficulty.</p>
         <button class="btn-refresh-verifications" onclick="shuffleVerifications()"><i
             class="fa-solid fa-shuffle"></i> Randomize List</button>
+      </div>
+      <div class="list-toolbar">
+        <div class="list-sort-controls">
+          <label class="leaderboard-label" for="verification-sort-key">Sort by</label>
+          <div class="sort-controls">
+            <select id="verification-sort-key" onchange="handleVerificationSortChange()">
+              <optgroup label="General">
+                <option value="estimatedRank">Estimated Difficulty</option>
+                <option value="rank">Rank</option>
+                <option value="name">Name</option>
+                <option value="creators">Creators</option>
+                <option value="victors">Victors</option>
+                <option value="averageTime">Average Time</option>
+                <option value="averageAttempts">Average Attempts</option>
+                <option value="earliestDate">Earliest Date</option>
+                <option value="id">ID</option>
+              </optgroup>
+              <optgroup label="Length">
+                <option value="length">Level Length</option>
+              </optgroup>
+              <optgroup label="Gamemode Coverage">
+                <option value="coverageShip">Ship Coverage</option>
+                <option value="coverageUfo">UFO Coverage</option>
+                <option value="coverageRobot">Robot Coverage</option>
+                <option value="coverageSwing">Swing Coverage</option>
+                <option value="coverageCube">Cube Coverage</option>
+                <option value="coverageBall">Ball Coverage</option>
+                <option value="coverageSpider">Spider Coverage</option>
+                <option value="coverageWave">Wave Coverage</option>
+              </optgroup>
+              <optgroup label="Gameplay Coverage">
+                <option value="coverageDual">Dual Coverage</option>
+                <option value="mirrorChanges">Mirror Portal Changes</option>
+              </optgroup>
+              <optgroup label="Speed Coverage">
+                <option value="speed">Average Speed</option>
+              </optgroup>
+            </select>
+            <button id="verification-sort-direction-btn" class="sort-direction-btn" type="button" onclick="toggleVerificationSortDirection()" aria-label="Toggle unverified list sort direction">▲</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input class="search-input" type="text" placeholder="Search levels or creators..." id="verification-search"
+            oninput="handleVerificationSearch()" />
+        </div>
       </div>
       <div id="verifications-container"></div>
     </div>
@@ -291,6 +382,10 @@
             <label class="form-label">Custom Thumbnail URL (leave blank for auto)</label>
             <input class="form-input" id="f-image" type="text" placeholder="https://... or leave blank" />
           </div>
+          <div class="form-group full">
+            <label class="form-label">Packs (comma-separated)</label>
+            <input class="form-input" id="f-packs" type="text" placeholder="e.g. Geometry Pack, XL Pack" />
+          </div>
         </div>
 
         <div class="victors-section">
@@ -333,6 +428,8 @@
   <script src="format.js"></script>
   <script src="leaderboard-utils.js"></script>
   <script src="ladder-rank-utils.js"></script>
+  <script src="packs.js"></script>
+  <script src="pack-utils.js"></script>
   <script src="data.js"></script>
   <script src="editor-state-utils.js"></script>
   <script src="video-player.js"></script>

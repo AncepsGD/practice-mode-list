@@ -61,15 +61,25 @@ function applyFullListPointValues(recommendations, targetPlayer) {
   });
 }
 
-function getFullListRouteTarget(targetPlayer, currentPlayer, levels) {
+function getFullListRouteTarget(targetPlayer, currentPlayer, levels, scoringLevels, packCatalog) {
   if (!targetPlayer?.isFullList || !currentPlayer) return targetPlayer;
   const completedLevels = new Set(currentPlayer.levels);
-  const remainingPoints = (Array.isArray(levels) ? levels : [])
-    .filter(level => !completedLevels.has(level.name))
+  const remainingLevels = (Array.isArray(levels) ? levels : [])
+    .filter(level => !completedLevels.has(level.name));
+  const remainingPoints = remainingLevels
     .reduce((total, level) => total + (Number(level.points) || 0), 0);
+  const packBonusScorer = PackUtils.createRouteBonusScorer(
+    currentPlayer,
+    packCatalog,
+    scoringLevels,
+  );
+  const remainingPackBonus = remainingLevels.reduce(
+    (total, level) => total + packBonusScorer.addLevel(level.name),
+    0,
+  );
   return {
     ...targetPlayer,
-    points: currentPlayer.points + remainingPoints - 0.01,
+    points: currentPlayer.points + remainingPoints + remainingPackBonus - 0.01,
   };
 }
 
@@ -170,6 +180,17 @@ function App() {
     );
   }, [ladderSources, useFullSecretList, processedVerified, unverifiedCalibrationModel]);
 
+  const packCatalog = useMemo(() => {
+    const packs = Object.keys(PACK_COLORS)
+      .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }))
+      .map(name => ({ name, levels: [] }));
+    PackUtils.populatePacks(packs, [
+      ...processedVerified,
+      ...processedUnverified,
+    ]);
+    return packs;
+  }, [processedVerified, processedUnverified]);
+
   useEffect(() => {
     if (!ladderSources) return;
     const baselineRank = getUnverifiedBaselineRank(ladderSources.estimatedNames);
@@ -188,9 +209,12 @@ function App() {
 
   const leaderboard = useMemo(() => {
     const fullList = buildFullListLeaderboardEntry(levels);
-    const players = buildLeaderboard(verifiedLevels);
-    return fullList ? [fullList, ...players] : players;
-  }, [levels, verifiedLevels]);
+    const players = PackUtils.applyBonuses(buildLeaderboard(verifiedLevels), packCatalog, verifiedLevels);
+    const scoredFullList = fullList
+      ? PackUtils.applyBonuses([fullList], packCatalog, levels)[0]
+      : null;
+    return scoredFullList ? [scoredFullList, ...players] : players;
+  }, [levels, verifiedLevels, packCatalog]);
 
   const filteredLevelsWithout2P = useMemo(
     () => levels.filter(level => !level.is2Player),
@@ -472,8 +496,8 @@ function App() {
   );
 
   const routeTargetPlayer = useMemo(
-    () => getFullListRouteTarget(targetPlayer, currentPlayer, levels),
-    [targetPlayer, currentPlayer, levels]
+    () => getFullListRouteTarget(targetPlayer, currentPlayer, levels, verifiedLevels, packCatalog),
+    [targetPlayer, currentPlayer, levels, verifiedLevels, packCatalog]
   );
 
   const recommendationsWith2P = useMemo(
@@ -537,7 +561,8 @@ function App() {
           avgTimePerPoint,
           avgAttemptsPerPoint,
           maxPoints,
-          verifiedLevels
+          verifiedLevels,
+          packCatalog
         )
       : optimizeRouteWithProjectedTarget(
           recommendationsWith2P,
@@ -550,9 +575,10 @@ function App() {
           avgTimePerPoint,
           avgAttemptsPerPoint,
           maxPoints,
-          verifiedLevels
+          verifiedLevels,
+          packCatalog
         ),
-    [recommendationsWith2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
+    [recommendationsWith2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, packCatalog, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimizedWithout2P = useMemo(
@@ -568,7 +594,8 @@ function App() {
           avgTimePerPoint,
           avgAttemptsPerPoint,
           maxPoints,
-          verifiedLevels
+          verifiedLevels,
+          packCatalog
         )
       : optimizeRouteWithProjectedTarget(
           recommendationsWithout2P,
@@ -581,9 +608,10 @@ function App() {
           avgTimePerPoint,
           avgAttemptsPerPoint,
           maxPoints,
-          verifiedLevels
+          verifiedLevels,
+          packCatalog
         ),
-    [recommendationsWithout2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, hasModifications, lockedLevelIds, removedLevelIds]
+    [recommendationsWithout2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, packCatalog, hasModifications, lockedLevelIds, removedLevelIds]
   );
 
   const optimized = excludeTwoPlayer ? optimizedWithout2P : optimizedWith2P;
@@ -775,6 +803,7 @@ function App() {
                 : "Estimated difficulty order is used for levels without verified completions."}
             </div>
           )}
+          <div className="optimizer-note">Pack level and completion bonuses are included in leaderboard scores and route estimates.</div>
           {excludeTwoPlayer && (
             <div className="optimizer-note">2-player levels are excluded from route generation.</div>
           )}
@@ -787,7 +816,9 @@ function App() {
           <div className="optimizer-stats-grid">
             <div className="optimizer-stat-box">
               <span className="optimizer-stat-label">Your Points</span>
-              <span className="optimizer-stat-value">{currentPlayer.points.toFixed(1)}</span>
+              <span className="optimizer-stat-value">
+                {currentPlayer.points.toFixed(1)}
+              </span>
             </div>
             <div className="optimizer-stat-box">
               <span className="optimizer-stat-label">Points Needed</span>
@@ -935,7 +966,10 @@ function App() {
                           </td>
                           <td>{rec.victorCount}</td>
                           <td>{rec.basePoints.toFixed(1)}</td>
-                          <td title={rec.isRebeat ? `Current award: ${(rec.currentPoints || 0).toFixed(1)} pts` : undefined}>
+                          <td title={[
+                            rec.isRebeat ? `Current award: ${(rec.currentPoints || 0).toFixed(1)} pts` : "",
+                            rec.packBonusPoints > 0 ? `Includes +${rec.packBonusPoints.toFixed(1)} pack bonus points` : "",
+                          ].filter(Boolean).join("; ") || undefined}>
                             <strong>{rec.isRebeat ? "+" : ""}{rec.projectedPoints.toFixed(1)}</strong>
                             <span style={{fontSize: "0.9em", color: "#999"}}>({rec.projectedMult.toFixed(2)}×)</span>
                           </td>

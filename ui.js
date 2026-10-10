@@ -172,7 +172,7 @@ function toggleTargetLevel(level) {
   saveStoredTargetedLevels(next);
   renderTargetedLevels();
   renderLevels(getSortedLevelData(levels));
-  renderVerifications(getVerificationsList());
+  filterVerifications();
 }
 
 function getTargetedLevelsFromData(sourceLevels) {
@@ -309,20 +309,42 @@ function initializeLeaderboardSortState() {
 
 const LIST_SORT_STORAGE_KEY = 'pml_list_sort_state';
 const LIST_SORT_DEFAULT_STATE = { key: 'rank', direction: 'asc' };
+const LIST_SORT_RATIO_KEYS = [
+  'coverageShip', 'coverageUfo', 'coverageRobot', 'coverageSwing', 'coverageCube',
+  'coverageBall', 'coverageSpider', 'coverageWave', 'coverageDual', 'mirrorChanges',
+];
+const LIST_SORT_SPEED_MULTIPLIERS = new Map([['0.5X', 0.5], ['1X', 1], ['2X', 2], ['3X', 3], ['4X', 4]]);
+const LIST_SORT_SPEED_PATTERN = /(?:^|\s)(0\.5X|1X|2X|3X|4X)(\d+(?:\.\d+)?)\(\d+\)/gi;
+const LIST_SORT_KEYS = [
+  'rank', 'name', 'creators', 'victors', 'averageTime', 'averageAttempts',
+  'earliestDate', 'length', ...LIST_SORT_RATIO_KEYS, 'speed', 'id',
+];
 let listSortState = { ...LIST_SORT_DEFAULT_STATE };
+const VERIFICATION_SORT_STORAGE_KEY = 'pml_verification_sort_state';
+const VERIFICATION_SORT_DEFAULT_STATE = { key: 'estimatedRank', direction: 'asc' };
+let verificationSortState = { ...VERIFICATION_SORT_DEFAULT_STATE };
+
+function migrateListSortState(parsed) {
+  if (!parsed || typeof parsed !== 'object' || !['asc', 'desc'].includes(parsed.direction)) return null;
+  const state = { ...parsed };
+  if (state.key === 'longestLength' || state.key === 'shortestLength') {
+    state.key = 'length';
+  } else if (state.key === 'fastestSpeed' || state.key === 'slowestSpeed') {
+    state.key = 'speed';
+  }
+  return LIST_SORT_KEYS.includes(state.key) ? state : null;
+}
 
 function loadListSortState() {
   try {
     const stored = localStorage.getItem(LIST_SORT_STORAGE_KEY);
-    if (!stored) return LIST_SORT_DEFAULT_STATE;
-    const parsed = JSON.parse(stored);
-    if (parsed && typeof parsed === 'object' && ['rank', 'name', 'creators', 'victors', 'averageTime', 'averageAttempts', 'earliestDate', 'id'].includes(parsed.key) && ['asc', 'desc'].includes(parsed.direction)) {
-      return parsed;
-    }
+    if (!stored) return { ...LIST_SORT_DEFAULT_STATE };
+    const parsed = migrateListSortState(JSON.parse(stored));
+    if (parsed) return parsed;
   } catch (e) {
     // ignore invalid stored state
   }
-  return LIST_SORT_DEFAULT_STATE;
+  return { ...LIST_SORT_DEFAULT_STATE };
 }
 
 function saveListSortState() {
@@ -354,6 +376,8 @@ function handleListSortChange() {
   const sortSelect = document.getElementById('list-sort-key');
   if (!sortSelect) return;
   listSortState.key = sortSelect.value;
+  if (listSortState.key === 'length' || listSortState.key === 'speed'
+    || LIST_SORT_RATIO_KEYS.includes(listSortState.key)) listSortState.direction = 'desc';
   saveListSortState();
   updateListSortControls();
   filterList(document.getElementById('list-search').value || '');
@@ -364,6 +388,30 @@ function toggleListSortDirection() {
   saveListSortState();
   updateListSortControls();
   filterList(document.getElementById('list-search').value || '');
+}
+
+function getRatioSortValue(ratio, key, metric) {
+  const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = String(ratio || '').match(new RegExp(`(?:^|\\s)${escapedKey}(\\d+(?:\\.\\d+)?)\\((\\d+)\\)`, 'i'));
+  if (!match) return 0;
+  return Number(match[metric === 'count' ? 2 : 1]);
+}
+
+function getAverageSpeedMultiplier(ratio, direction = 1) {
+  let weightedSpeed = 0;
+  let totalPercent = 0;
+
+  for (const match of String(ratio || '').matchAll(LIST_SORT_SPEED_PATTERN)) {
+    const percent = Number(match[2]);
+    const multiplier = LIST_SORT_SPEED_MULTIPLIERS.get(match[1].toUpperCase());
+    if (!Number.isFinite(percent) || !Number.isFinite(multiplier)) continue;
+    weightedSpeed += multiplier * percent;
+    totalPercent += percent;
+  }
+
+  return totalPercent > 0
+    ? weightedSpeed / totalPercent
+    : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
 }
 
 function getListSortValue(item, key, direction = 1) {
@@ -408,6 +456,34 @@ function getListSortValue(item, key, direction = 1) {
       }
       return earliest;
     }
+    case 'length': {
+      const seconds = parseDurationToSeconds(item.length) ?? parseDurationToSeconds(item.levelLength);
+      return seconds !== null && seconds > 0
+        ? seconds
+        : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
+    }
+    case 'coverageShip':
+      return getRatioSortValue(item.ratio, 'SH', 'percent');
+    case 'coverageUfo':
+      return getRatioSortValue(item.ratio, 'U', 'percent');
+    case 'coverageRobot':
+      return getRatioSortValue(item.ratio, 'R', 'percent');
+    case 'coverageSwing':
+      return getRatioSortValue(item.ratio, 'SW', 'percent');
+    case 'coverageCube':
+      return getRatioSortValue(item.ratio, 'C', 'percent');
+    case 'coverageBall':
+      return getRatioSortValue(item.ratio, 'B', 'percent');
+    case 'coverageSpider':
+      return getRatioSortValue(item.ratio, 'SP', 'percent');
+    case 'coverageWave':
+      return getRatioSortValue(item.ratio, 'W', 'percent');
+    case 'coverageDual':
+      return getRatioSortValue(item.ratio, 'D', 'percent');
+    case 'mirrorChanges':
+      return getRatioSortValue(item.ratio, 'IM', 'count') + getRatioSortValue(item.ratio, 'NM', 'count');
+    case 'speed':
+      return getAverageSpeedMultiplier(item.ratio, direction);
     case 'id': {
       const idValue = String(item.id || '').trim();
       const numeric = Number(idValue);
@@ -999,6 +1075,25 @@ function tryThumbnailFallback(img) {
   next();
 }
 
+function tryPackThumbnailFallback(img) {
+  let candidates = [];
+
+  try {
+    candidates = JSON.parse(decodeURIComponent(img.dataset.fallbacks || '[]'));
+  } catch (error) {
+    console.warn('Failed to read pack thumbnail fallbacks', error);
+  }
+
+  const nextIndex = Number(img.dataset.fallbackIndex || 0);
+  if (nextIndex >= candidates.length) {
+    img.remove();
+    return;
+  }
+
+  img.dataset.fallbackIndex = String(nextIndex + 1);
+  img.src = candidates[nextIndex];
+}
+
 function toggleExpand(id) {
   const panel = document.getElementById(`expand-${id}`);
   const button = document.querySelector(`#card-${id} .btn-expand`);
@@ -1026,7 +1121,7 @@ function renderLeaderboard(data) {
   const body = document.getElementById('lb-body');
   const sortedData = getSortedLeaderboardData(data);
   if (!sortedData.length) {
-    body.innerHTML = '<tr><td colspan="4" class="empty-state">// NO PLAYERS FOUND //</td></tr>';
+    body.innerHTML = '<tr><td colspan="5" class="empty-state">// NO PLAYERS FOUND //</td></tr>';
     return;
   }
 
@@ -1084,23 +1179,209 @@ function renderLeaderboard(data) {
                 <span class="completion-stat-label">Hardest</span>
                 <strong>${hardestLabel}</strong>
               </div>
-              <details class="completion-dropdown completion-dropdown--inline">
-                <summary>
-                  <span class="completion-summary">
-                    <span class="completion-count">View completions</span>
-                    <span class="completion-pill">▾</span>
-                  </span>
-                </summary>
-                <div class="completion-dropdown-body">
-                  <ol class="completion-order-list">${orderedLevelsMarkup}</ol>
-                </div>
-              </details>
+            </div>
+          </td>
+          <td class="completion-toggle-cell">
+            <button class="completion-toggle" type="button" aria-expanded="false" aria-label="Show completions for ${escapeHTML(p.name)}" title="Show completions">
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        <tr class="completion-details-row">
+          <td colspan="5">
+            <div class="completion-expand-inner">
+              <ol class="completion-order-list">${orderedLevelsMarkup}</ol>
             </div>
           </td>
         </tr>
       `;
     })
     .join('');
+
+  body.onclick = (event) => {
+    const button = event.target.closest('.completion-toggle');
+    if (!button) return;
+
+    const playerRow = button.closest('.leaderboard-row');
+    const detailsRow = playerRow?.nextElementSibling;
+    if (!detailsRow?.classList.contains('completion-details-row')) return;
+
+    const isOpen = detailsRow.classList.toggle('open');
+    button.setAttribute('aria-expanded', String(isOpen));
+    button.setAttribute('aria-label', `${isOpen ? 'Hide' : 'Show'} completions for ${button.closest('tr').querySelector('.player-name').textContent.trim()}`);
+    button.title = `${isOpen ? 'Hide' : 'Show'} completions`;
+    const icon = button.querySelector('i');
+    icon?.classList.toggle('fa-chevron-up', isOpen);
+    icon?.classList.toggle('fa-chevron-down', !isOpen);
+  };
+}
+
+function getBrighterPackColor(colors) {
+  const luminance = (color) => {
+    const channels = color.match(/[a-f\d]{2}/gi);
+    if (!channels || channels.length < 3) throw new Error(`Invalid pack color: ${color}`);
+    const [red, green, blue] = channels.slice(0, 3).map((channel) => {
+      const value = parseInt(channel, 16) / 255;
+      return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+  };
+
+  return luminance(colors[0]) >= luminance(colors[1]) ? colors[0] : colors[1];
+}
+
+function getPackLevelLookupKey(name) {
+  return String(name || "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/\s*\(layout\)$/i, "")
+    .toLowerCase();
+}
+
+function renderPacks(packs, players) {
+  const playerSelect = document.getElementById('packs-player-select');
+  const summary = document.getElementById('packs-summary');
+  const container = document.getElementById('packs-container');
+  if (!playerSelect || !summary || !container) return;
+
+  const selectedPlayerName = playerSelect.value || loadSelectedPackPlayer();
+  const sortedPlayers = [...players].sort((a, b) => b.points - a.points);
+  playerSelect.innerHTML = `<option value="">Select a player</option>${sortedPlayers
+    .map((player) => `<option value="${escapeHTML(player.name)}">${escapeHTML(player.name)}</option>`)
+    .join('')}`;
+  playerSelect.value = sortedPlayers.some((player) => player.name === selectedPlayerName)
+    ? selectedPlayerName
+    : '';
+  saveSelectedPackPlayer(playerSelect.value);
+
+  const packLevelRanks = new Map();
+  levels.forEach((level) => {
+    const key = getPackLevelLookupKey(level.name);
+    if (key) packLevelRanks.set(key, Number(level.rank) || Number.POSITIVE_INFINITY);
+  });
+  (Array.isArray(window.verifications) ? window.verifications : []).forEach((level) => {
+    const key = getPackLevelLookupKey(level.name);
+    if (!key || packLevelRanks.has(key)) return;
+    packLevelRanks.set(key, getUnverifiedEstimatedRank(level) ?? Number.POSITIVE_INFINITY);
+  });
+
+  const selectedPlayer = players.find((player) => player.name === playerSelect.value);
+  if (!selectedPlayer) {
+    summary.innerHTML = '<span>Select a player to see their pack progress and bonus points.</span>';
+  } else {
+    const completedPacks = selectedPlayer.packProgress.filter((progress) => progress.isComplete).length;
+    summary.innerHTML = `
+      <span class="packs-summary-stat"><strong>${selectedPlayer.packBonusPoints.toFixed(1)}</strong> pack bonus points</span>
+      <span class="packs-summary-stat"><strong>${completedPacks}</strong> / ${packs.length} packs completed</span>
+    `;
+  }
+
+  const getPackThumbnails = (pack) => {
+    const packLevels = pack.levels
+      .map((levelName) => {
+        const normalizedName = String(levelName || '').trim().toLowerCase();
+        return levels.find((item) => String(item.name || '').trim().toLowerCase() === normalizedName);
+      })
+      .filter(Boolean);
+    const explicitThumbnails = packLevels
+      .map((level) => String(level.thumbnail || '').trim())
+      .filter(Boolean);
+    const levelThumbnails = packLevels
+      .filter((level) => level.id)
+      .map((level) => `https://levelthumbs.prevter.me/thumbnail/${encodeURIComponent(level.id)}`);
+    const showcaseThumbnails = packLevels.flatMap((level) => {
+      const videoThumbnails = window.getThumbnailUrlSequence
+        ? window.getThumbnailUrlSequence('', level.showcaseVideoUrl || '', '', '', [])
+        : [];
+      return videoThumbnails.filter(Boolean);
+    });
+    const playerThumbnails = packLevels.flatMap((level) => (
+      window.getThumbnailUrlSequence
+        ? window.getThumbnailUrlSequence(
+          '',
+          '',
+          '',
+          '',
+          (level.victors || []).map((victor) => victor.victorVideoUrl).filter(Boolean)
+        )
+        : []
+    ));
+
+    return [...new Set([...explicitThumbnails, ...levelThumbnails, ...showcaseThumbnails, ...playerThumbnails])];
+  };
+
+  container.innerHTML = packs.map((pack, packIndex) => {
+    const orderedLevelNames = [...pack.levels].sort((a, b) => (
+      (packLevelRanks.get(getPackLevelLookupKey(a)) ?? Number.POSITIVE_INFINITY)
+      - (packLevelRanks.get(getPackLevelLookupKey(b)) ?? Number.POSITIVE_INFINITY)
+    ));
+    const progress = selectedPlayer
+      ? selectedPlayer.packProgress[packIndex]
+      : { completedLevels: [], completedCount: 0, isComplete: false, bonusPoints: 0, maxBonusPoints: PackUtils.getMaxBonusPoints(pack, levels), levelBonuses: [] };
+    const percentage = (progress.completedCount / pack.levels.length) * 100;
+    const colors = PACK_COLORS[pack.name];
+    if (!colors) throw new Error(`Missing color pair for pack: ${pack.name}`);
+    const brighterColor = getBrighterPackColor(colors);
+    const thumbnails = getPackThumbnails(pack);
+    const thumbnail = thumbnails.shift();
+
+    return `
+      <article class="pack-card${progress.isComplete ? ' is-complete' : ''}" style="--pack-primary: ${colors[0]}; --pack-secondary: ${colors[1]}; --pack-brightest: ${brighterColor}">
+        ${thumbnail ? `<img class="pack-card-thumbnail" src="${escapeHTML(thumbnail)}" data-fallbacks="${encodeURIComponent(JSON.stringify(thumbnails))}" alt="" aria-hidden="true" loading="lazy" onerror="tryPackThumbnailFallback(this)">` : ''}
+        <div class="pack-card-header">
+          <div>
+            <h3>${escapeHTML(pack.name)}</h3>
+            <p>${progress.completedCount} / ${pack.levels.length} levels</p>
+          </div>
+          <span class="pack-points" title="Each level awards 1–10 points based on its list points; completing the pack adds 50 points.">${progress.bonusPoints.toFixed(1)} / ${progress.maxBonusPoints.toFixed(1)} pts</span>
+        </div>
+        <div class="pack-progress-track" role="progressbar" aria-label="${escapeHTML(pack.name)} progress" aria-valuemin="0" aria-valuemax="${pack.levels.length}" aria-valuenow="${progress.completedCount}">
+          <span style="width: ${percentage}%"></span>
+        </div>
+        <ul class="pack-level-list">
+          ${orderedLevelNames.map((levelName) => {
+            const isCompleted = progress.completedLevels.includes(levelName);
+            const levelBonus = progress.levelBonuses.find((level) => level.name === levelName);
+            return `
+              <li class="${isCompleted ? 'is-completed' : ''}">
+                <span class="pack-level-status" aria-label="${isCompleted ? 'Completed' : 'Not completed'}">${isCompleted ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-regular fa-circle"></i>'}</span>
+                <span>${escapeHTML(levelName)}</span>
+                ${isCompleted && levelBonus ? `<span class="pack-level-points">+${levelBonus.points.toFixed(1)} pts</span>` : ''}
+              </li>
+            `;
+          }).join('')}
+        </ul>
+        ${progress.isComplete ? `<p class="pack-complete-label"><i class="fa-solid fa-star"></i> Pack completed: +${progress.completionBonus.toFixed(1)} bonus points</p>` : ''}
+      </article>
+    `;
+  }).join('');
+}
+
+const PACKS_PLAYER_STORAGE_KEY = 'pml_packs_selected_player';
+
+function loadSelectedPackPlayer() {
+  try {
+    return localStorage.getItem(PACKS_PLAYER_STORAGE_KEY) || '';
+  } catch (error) {
+    return '';
+  }
+}
+
+function saveSelectedPackPlayer(playerName) {
+  try {
+    if (playerName) {
+      localStorage.setItem(PACKS_PLAYER_STORAGE_KEY, playerName);
+    } else {
+      localStorage.removeItem(PACKS_PLAYER_STORAGE_KEY);
+    }
+  } catch (error) {
+    // localStorage may be unavailable.
+  }
+}
+
+function handlePackPlayerChange() {
+  saveSelectedPackPlayer(document.getElementById('packs-player-select')?.value || '');
+  renderPacks(PACKS, leaderboard);
 }
 
 function showPage(name, btn) {
@@ -1135,6 +1416,7 @@ function filterLeaderboard() {
       const haystack = [
         p.name,
         String(p.points),
+        String(p.packBonusPoints),
         p.levels.join(' '),
       ]
         .join(' ')
@@ -1200,10 +1482,12 @@ function sortUnverifiedByEstimatedDifficulty(unverifiedLevels) {
 }
 
 function initializeVerifications() {
+  refreshPackCatalog();
+  initializeVerificationSortState();
   const unverifiedLevels = getUnverifiedLevels();
   const sortedLevels = sortUnverifiedByEstimatedDifficulty(unverifiedLevels);
   sessionStorage.setItem('verifications-list', JSON.stringify(sortedLevels));
-  renderVerifications(sortedLevels);
+  filterVerifications();
   renderTargetedLevels();
 }
 
@@ -1211,7 +1495,10 @@ function shuffleVerifications() {
   const unverifiedLevels = getUnverifiedLevels();
   const shuffledLevels = shuffleArray(unverifiedLevels);
   sessionStorage.setItem('verifications-list', JSON.stringify(shuffledLevels));
-  renderVerifications(shuffledLevels);
+  verificationSortState.key = 'randomOrder';
+  verificationSortState.direction = 'asc';
+  updateVerificationSortControls();
+  filterVerifications();
   renderTargetedLevels();
 }
 
@@ -1219,10 +1506,102 @@ function getVerificationsList() {
   return JSON.parse(sessionStorage.getItem('verifications-list')) || getUnverifiedLevels();
 }
 
-function renderVerifications(data) {
+function loadVerificationSortState() {
+  try {
+    const stored = localStorage.getItem(VERIFICATION_SORT_STORAGE_KEY);
+    if (!stored) return { ...VERIFICATION_SORT_DEFAULT_STATE };
+    const parsed = JSON.parse(stored);
+    if ((parsed?.key === 'estimatedRank' || parsed?.key === 'randomOrder')
+      && ['asc', 'desc'].includes(parsed.direction)) return parsed;
+    const migrated = migrateListSortState(parsed);
+    if (migrated) return migrated;
+  } catch (error) {
+    // Ignore invalid stored state.
+  }
+  return { ...VERIFICATION_SORT_DEFAULT_STATE };
+}
+
+function saveVerificationSortState() {
+  try {
+    localStorage.setItem(VERIFICATION_SORT_STORAGE_KEY, JSON.stringify(verificationSortState));
+  } catch (error) {
+    // localStorage may be unavailable.
+  }
+}
+
+function updateVerificationSortControls() {
+  const sortSelect = document.getElementById('verification-sort-key');
+  const directionButton = document.getElementById('verification-sort-direction-btn');
+  if (sortSelect) sortSelect.value = verificationSortState.key;
+  if (directionButton) {
+    directionButton.textContent = verificationSortState.direction === 'asc' ? '▲' : '▼';
+    directionButton.title = verificationSortState.direction === 'asc' ? 'Ascending order' : 'Descending order';
+  }
+}
+
+function initializeVerificationSortState() {
+  verificationSortState = loadVerificationSortState();
+  updateVerificationSortControls();
+}
+
+function handleVerificationSortChange() {
+  const sortSelect = document.getElementById('verification-sort-key');
+  if (!sortSelect) return;
+  verificationSortState.key = sortSelect.value;
+  if (verificationSortState.key === 'estimatedRank' || verificationSortState.key === 'randomOrder') {
+    verificationSortState.direction = 'asc';
+  } else {
+    verificationSortState.direction = 'desc';
+  }
+  saveVerificationSortState();
+  updateVerificationSortControls();
+  filterVerifications();
+}
+
+function toggleVerificationSortDirection() {
+  verificationSortState.direction = verificationSortState.direction === 'asc' ? 'desc' : 'asc';
+  saveVerificationSortState();
+  updateVerificationSortControls();
+  filterVerifications();
+}
+
+function getSortedVerifications(data) {
+  if (verificationSortState.key === 'randomOrder') return [...data];
+  const direction = verificationSortState.direction === 'asc' ? 1 : -1;
+  return [...data].sort((a, b) => {
+    const getValue = (level) => verificationSortState.key === 'estimatedRank'
+      ? (getUnverifiedEstimatedRank(level) ?? (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY))
+      : getListSortValue(level, verificationSortState.key, direction);
+    const aValue = getValue(a);
+    const bValue = getValue(b);
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return aValue.localeCompare(bValue) * direction;
+    }
+    if (aValue < bValue) return -1 * direction;
+    if (aValue > bValue) return 1 * direction;
+    return 0;
+  });
+}
+
+function handleVerificationSearch() {
+  filterVerifications();
+}
+
+function filterVerifications() {
+  const query = normalizeLevelSearchText(document.getElementById('verification-search')?.value || '');
+  const sourceLevels = getVerificationsList();
+  const matches = query
+    ? getRankedLevelMatches(query, sourceLevels)
+    : sourceLevels;
+  renderVerifications(getSortedVerifications(matches), query && !matches.length
+    ? '// NO MATCHING LEVELS FOUND //'
+    : '// ALL LEVELS VERIFIED! //');
+}
+
+function renderVerifications(data, emptyMessage = '// ALL LEVELS VERIFIED! //') {
   const container = document.getElementById('verifications-container');
   if (!data.length) {
-    container.innerHTML = '<div class="empty-state">// ALL LEVELS VERIFIED! //</div>';
+    container.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
     return;
   }
 

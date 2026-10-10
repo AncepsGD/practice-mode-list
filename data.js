@@ -144,6 +144,9 @@ function normalizeLevelEntry(item) {
     showcaseVideo: showcaseVideoUrl,
     image: autoThumbnail(imageValue),
     tier: item.tier || item.tierName || "",
+    packs: Array.isArray(item.packs)
+      ? [...new Set(item.packs.map((pack) => String(pack || "").trim()).filter(Boolean))]
+      : [],
     length: normalizedLength,
     tps: parsedTps,
     precision: normalizedPrecision,
@@ -311,7 +314,8 @@ function processRawData(data) {
     level.wrAttempts = wrAttemptsObj;
   });
 
-  leaderboard = buildLeaderboard(levels);
+  PackUtils.populatePacks(PACKS, [...levels, ...window.verifications]);
+  leaderboard = PackUtils.applyBonuses(buildLeaderboard(levels), PACKS, levels);
   initializeLeaderboardSortState();
   initializeListSortState();
   maxScore = Math.max(...leaderboard.map((p) => p.points), 1);
@@ -319,12 +323,14 @@ function processRawData(data) {
   renderLevels(getSortedLevelData(levels));
   renderTargetedLevels();
   renderLeaderboard(leaderboard);
+  renderPacks(PACKS, leaderboard);
   initializeTimeline();
 
   if (!localStorage.getItem(VERIFICATION_TIER_RESET_KEY)) {
     localStorage.removeItem("pml_verifications_data");
     localStorage.setItem(VERIFICATION_TIER_RESET_KEY, "1");
   }
+
   const savedVerifications = localStorage.getItem("pml_verifications_data");
   if (savedVerifications) {
     try {
@@ -377,6 +383,15 @@ function processRawData(data) {
       initializeVerifications();
       syncDemonSystemFromRawData();
     });
+}
+
+function refreshPackCatalog() {
+  PackUtils.populatePacks(PACKS, [...levels, ...window.verifications]);
+  leaderboard = PackUtils.applyBonuses(buildLeaderboard(levels), PACKS, levels);
+  maxScore = Math.max(...leaderboard.map((player) => player.points), 1);
+  renderStats();
+  renderLeaderboard(leaderboard);
+  renderPacks(PACKS, leaderboard);
 }
 
 function getDatasetSignature() {

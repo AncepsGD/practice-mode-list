@@ -153,13 +153,46 @@ function getLengthDifficultyMultiplier(level, calibrationLevels = []) {
 }
 
 const nearestCalibrationCache = new WeakMap();
+const calibrationProfileCache = new WeakMap();
+const calibrationTimeProfileCache = new WeakMap();
 const estimatedDifficultyAnchorCache = new WeakMap();
+const CALIBRATION_NUMERIC_FIELDS = Object.freeze(["length", "precision", "tps"]);
+
+function getCalibrationProfile(calibrationLevels) {
+  let profile = calibrationProfileCache.get(calibrationLevels);
+  if (profile) return profile;
+
+  let maxRank = 1;
+  const candidates = calibrationLevels.map(level => {
+    const rank = Number(level?.modelRank || level?._difficultyRank || level?.rank) || 0;
+    maxRank = Math.max(maxRank, rank);
+    return {
+      level,
+      rank,
+      length: Number(level?.length),
+      precision: Number(level?.precision),
+      tps: Number(level?.tps),
+      tier: String(level?.tier || "").trim().toLowerCase(),
+      victorCount: Array.isArray(level?.victors)
+        ? level.victors.length
+        : Number(level?.victorCount),
+    };
+  });
+  const rankScale = Math.max(maxRank - 1, 1);
+  candidates.forEach(candidate => {
+    candidate.rankFraction = Number.isFinite(candidate.rank) && candidate.rank > 0
+      ? clamp((candidate.rank - 1) / rankScale, 0, 1)
+      : null;
+  });
+  profile = { candidates, rankScale };
+  calibrationProfileCache.set(calibrationLevels, profile);
+  return profile;
+}
 
 function getCalibrationRankFraction(level, calibrationLevels) {
   const rank = Number(level?.modelRank || level?._difficultyRank || level?.rank);
   if (!Number.isFinite(rank) || rank <= 0) return null;
-  const maxRank = Math.max(...calibrationLevels.map(candidate => Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank) || 0), 1);
-  return clamp((rank - 1) / Math.max(maxRank - 1, 1), 0, 1);
+  return clamp((rank - 1) / getCalibrationProfile(calibrationLevels).rankScale, 0, 1);
 }
 
 function getNearestCalibrationNeighbors(level, calibrationLevels, excludedField = null) {
@@ -176,52 +209,59 @@ function getNearestCalibrationNeighbors(level, calibrationLevels, excludedField 
   }
   if (byField.has(excludedField)) return byField.get(excludedField);
 
-  const rankValues = calibrationLevels.map(candidate => Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank) || 0);
-  const maxRank = Math.max(...rankValues, 1);
-  const rankFraction = rank => Number.isFinite(rank) && rank > 0
-    ? clamp((rank - 1) / Math.max(maxRank - 1, 1), 0, 1)
+  const profile = getCalibrationProfile(calibrationLevels);
+  const targetRankValue = Number(level?.modelRank || level?._difficultyRank || level?.rank);
+  const targetRank = Number.isFinite(targetRankValue) && targetRankValue > 0
+    ? clamp((targetRankValue - 1) / profile.rankScale, 0, 1)
     : null;
-  const targetRank = rankFraction(Number(level?.modelRank || level?._difficultyRank || level?.rank));
-  const numericFields = ["length", "precision", "tps"];
-  const neighbors = calibrationLevels
-    .filter(candidate => candidate && candidate !== level)
-    .filter(candidate => excludedField === null || Number(candidate[excludedField]) > 0)
-    .map(candidate => {
-      const candidateRank = rankFraction(Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank));
-      let distance = targetRank === null ? 0.5 : Math.abs(targetRank - (candidateRank ?? 0.5)) * 2;
-      let comparableSignals = targetRank === null ? 0 : 1;
+  const targetValues = {
+    length: Number(level?.length),
+    precision: Number(level?.precision),
+    tps: Number(level?.tps),
+  };
+  const targetTier = String(level?.tier || "").trim().toLowerCase();
+  const targetVictorCount = Array.isArray(level?.victors)
+    ? level.victors.length
+    : Number(level?.victorCount);
+  const neighbors = [];
 
-      numericFields.forEach(field => {
-        if (field === excludedField) return;
-        const targetValue = Number(level?.[field]);
-        const candidateValue = Number(candidate?.[field]);
-        if (Number.isFinite(targetValue) && targetValue > 0 && Number.isFinite(candidateValue) && candidateValue > 0) {
-          distance += Math.abs(Math.log(targetValue / candidateValue)) * 0.35;
-          comparableSignals++;
-        }
-      });
+  for (const candidate of profile.candidates) {
+    if (!candidate.level || candidate.level === level
+      || (excludedField !== null && !(Number(candidate.level[excludedField]) > 0))) continue;
 
-      if (candidate.is2Player !== level.is2Player) distance += 0.45;
-      if (String(candidate.tier || "").trim().toLowerCase() !== String(level.tier || "").trim().toLowerCase()) distance += 0.08;
+    let distance = targetRank === null
+      ? 0.5
+      : Math.abs(targetRank - (candidate.rankFraction ?? 0.5)) * 2;
+    let comparableSignals = targetRank === null ? 0 : 1;
 
-      const targetVictorCount = Array.isArray(level.victors) ? level.victors.length : Number(level.victorCount);
-      const candidateVictorCount = Array.isArray(candidate.victors) ? candidate.victors.length : Number(candidate.victorCount);
-      if (Number.isFinite(targetVictorCount) && Number.isFinite(candidateVictorCount)) {
-        distance += Math.abs(Math.log((1 + targetVictorCount) / (1 + candidateVictorCount))) * 0.2;
+    for (const field of CALIBRATION_NUMERIC_FIELDS) {
+      if (field === excludedField) continue;
+      const targetValue = targetValues[field];
+      const candidateValue = candidate[field];
+      if (Number.isFinite(targetValue) && targetValue > 0
+        && Number.isFinite(candidateValue) && candidateValue > 0) {
+        distance += Math.abs(Math.log(targetValue / candidateValue)) * 0.35;
         comparableSignals++;
       }
+    }
 
-      return {
-        level: candidate,
-        weight: 1 / Math.pow(0.2 + distance, 2),
-        comparableSignals,
-        distance,
-      };
-    })
-    .sort((a, b) => a.distance - b.distance)
-    .slice(0, 12);
+    if (candidate.level.is2Player !== level.is2Player) distance += 0.45;
+    if (candidate.tier !== targetTier) distance += 0.08;
+    if (Number.isFinite(targetVictorCount) && Number.isFinite(candidate.victorCount)) {
+      distance += Math.abs(Math.log((1 + targetVictorCount) / (1 + candidate.victorCount))) * 0.2;
+      comparableSignals++;
+    }
 
-  const result = neighbors.filter(neighbor => neighbor.comparableSignals > 0);
+    neighbors.push({
+      level: candidate.level,
+      weight: 1 / Math.pow(0.2 + distance, 2),
+      comparableSignals,
+      distance,
+    });
+  }
+
+  neighbors.sort((a, b) => a.distance - b.distance);
+  const result = neighbors.slice(0, 12).filter(neighbor => neighbor.comparableSignals > 0);
   byField.set(excludedField, result);
   return result;
 }
@@ -590,6 +630,7 @@ function processRawData(data, options = {}) {
         _hasEstimatedRank: Number.isFinite(Number(item._difficultyRank)) && Number(item._difficultyRank) > 0,
         name: item.name,
         id: item.id,
+        packs: Array.isArray(item.packs) ? [...item.packs] : [],
         scoringBaseline: item.scoringBaseline,
         tps: parseLevelMetric(item.tps ?? item.TPS, LEVEL_METRIC_SCHEMA.tps),
         precision: parseLevelMetric(item.precision ?? item.Precision, LEVEL_METRIC_SCHEMA.precision),
@@ -1792,24 +1833,39 @@ function getUnverifiedCoordinationDifficultyMultiplier(level) {
 
 function getVerifiedTimeCalibration(level, calibrationLevels) {
   if (!level.isUnverified || !Array.isArray(calibrationLevels)) return 1;
+  let timeProfile = calibrationTimeProfileCache.get(calibrationLevels);
+  if (!timeProfile) {
+    const ratiosByLevel = new Map();
+    const allTimes = [];
+    const points = [];
+    calibrationLevels.forEach(candidate => {
+      const times = candidate.victors.map(v => v.seconds).filter(seconds => seconds > 0);
+      times.forEach(time => allTimes.push(time));
+      if (candidate.points > 0) points.push(candidate.points);
+      if (times.length && candidate.points > 0) {
+        ratiosByLevel.set(candidate, trimmedMean(times) / candidate.points);
+      }
+    });
+    const overallRatio = allTimes.length
+      ? trimmedMean(allTimes) / Math.max(trimmedMean(points), 1)
+      : null;
+    timeProfile = { ratiosByLevel, overallRatio };
+    calibrationTimeProfileCache.set(calibrationLevels, timeProfile);
+  }
+
   const ratios = getNearestCalibrationNeighbors(level, calibrationLevels, null)
     .map(neighbor => {
-      const candidate = neighbor.level;
-      const times = candidate.victors.map(v => v.seconds).filter(seconds => seconds > 0);
-      return times.length && candidate.points > 0
-        ? { value: trimmedMean(times) / candidate.points, weight: neighbor.weight }
+      const value = timeProfile.ratiosByLevel.get(neighbor.level);
+      return Number.isFinite(value) && value > 0
+        ? { value, weight: neighbor.weight }
         : null;
     })
     .filter(ratio => ratio && Number.isFinite(ratio.value) && ratio.value > 0);
   if (!ratios.length) return 1;
-  const overall = calibrationLevels
-    .flatMap(candidate => candidate.victors.map(v => v.seconds).filter(seconds => seconds > 0))
-    .filter(seconds => seconds > 0);
-  const overallRatio = overall.length
-    ? trimmedMean(overall) / Math.max(trimmedMean(calibrationLevels.map(candidate => candidate.points).filter(points => points > 0)), 1)
-    : null;
   const nearbyRatio = weightedMedian(ratios);
-  return overallRatio && nearbyRatio ? clamp(nearbyRatio / overallRatio, 0.7, 1.5) : 1;
+  return timeProfile.overallRatio && nearbyRatio
+    ? clamp(nearbyRatio / timeProfile.overallRatio, 0.7, 1.5)
+    : 1;
 }
 
 function getUnverifiedMinimumSeconds(level, avgTimePerPoint) {
@@ -2770,7 +2826,8 @@ function optimizeSequentialRoute(
   maxPoints,
   lockedLevelIds,
   removedLevelIds,
-  calibrationLevels = []
+  calibrationLevels = [],
+  packCatalog = []
 ) {
   const candidateIds = new Set(
     recommendations.map(rec => String(rec.id || rec.level).trim().toLowerCase())
@@ -2778,8 +2835,8 @@ function optimizeSequentialRoute(
   const lockedSet = new Set(lockedLevelIds.map(id => String(id).trim().toLowerCase()));
   const removedSet = new Set(removedLevelIds.map(id => String(id).trim().toLowerCase()));
   const strategies = [
-    rec => (rec.projectedPoints || 0) / Math.max(rec.expectedHours || 1, 0.001),
-    rec => rec.projectedPoints || 0,
+    (rec, packBonusPoints) => ((rec.baseProjectedPoints ?? rec.projectedPoints) + packBonusPoints) / Math.max(rec.expectedHours || 1, 0.001),
+    (rec, packBonusPoints) => (rec.baseProjectedPoints ?? rec.projectedPoints) + packBonusPoints,
     rec => -(rec.expectedHours || 0),
   ];
   const routes = [];
@@ -2792,13 +2849,26 @@ function optimizeSequentialRoute(
     let workingRecommendations = recommendations;
     let incrementalValid = true;
 
+    const packPointLevels = calibrationLevels.length ? calibrationLevels : levels;
+    const packBonusScorer = currentPlayer && packCatalog.length && typeof PackUtils !== "undefined"
+      ? PackUtils.createRouteBonusScorer(currentPlayer, packCatalog, packPointLevels)
+      : null;
+
     const select = (pick) => {
       const pickId = String(pick.id || pick.level).trim().toLowerCase();
       if (selectedIds.has(pickId)) return;
-      selected.push(pick);
+      const packBonusPoints = packBonusScorer?.addLevel(pick.level) || 0;
+      const scoredPick = {
+        ...pick,
+        baseProjectedPoints: pick.baseProjectedPoints ?? pick.projectedPoints ?? 0,
+        packBonusPoints,
+        projectedPoints: (pick.baseProjectedPoints ?? pick.projectedPoints ?? 0) + packBonusPoints,
+      };
+      scoredPick.expectedValue = scoredPick.projectedPoints / Math.max(scoredPick.expectedHours || 1, 0.001);
+      selected.push(scoredPick);
       selectedIds.add(pickId);
-      routePoints += pick.projectedPoints || 0;
-      routeTime += pick.expectedHours || 0;
+      routePoints += scoredPick.projectedPoints;
+      routeTime += scoredPick.expectedHours || 0;
     };
 
     recommendations
@@ -2811,7 +2881,11 @@ function optimizeSequentialRoute(
           const recId = String(rec.id || rec.level).trim().toLowerCase();
           return candidateIds.has(recId) && !selectedIds.has(recId) && !removedSet.has(recId);
         })
-        .sort((a, b) => score(b) - score(a))[0];
+        .sort((a, b) => {
+          const bonusA = packBonusScorer?.getLevelAward(a.level) || 0;
+          const bonusB = packBonusScorer?.getLevelAward(b.level) || 0;
+          return score(b, bonusB) - score(a, bonusA);
+        })[0];
       if (!next) break;
 
       select(next);
@@ -2863,7 +2937,8 @@ function optimizeRouteWithProjectedTarget(
   avgTimePerPoint = 0,
   avgAttemptsPerPoint = 0,
   maxPoints = 1,
-  calibrationLevels = []
+  calibrationLevels = [],
+  packCatalog = []
 ) {
   let targetPoints = (targetPlayer?.points || 0) + SURPASS_MARGIN;
   const pointsNeeded = Math.max(0, targetPoints - currentPoints);
@@ -2878,7 +2953,8 @@ function optimizeRouteWithProjectedTarget(
         maxPoints,
         lockedLevelIds,
         removedLevelIds,
-        calibrationLevels
+        calibrationLevels,
+        packCatalog
       )
     : lockedLevelIds.length > 0 || removedLevelIds.length > 0
       ? reoptimizeRouteWithModifications(recommendations, pointsNeeded, [], lockedLevelIds, removedLevelIds)

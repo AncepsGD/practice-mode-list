@@ -24,7 +24,8 @@
     "scoringBaseline": {
       "timeSeconds": 67198,
       "attempts": 454968
-    }
+    },
+    "packs": []
   },
   {
     "rank": 2,
@@ -50,7 +51,10 @@
     "scoringBaseline": {
       "timeSeconds": 37281,
       "attempts": 695759
-    }
+    },
+    "packs": [
+      "icedcave Pack"
+    ]
   },
   {
     "rank": 3,
@@ -84,7 +88,11 @@
     "scoringBaseline": {
       "timeSeconds": 34187,
       "attempts": 242157
-    }
+    },
+    "packs": [
+      "IiIOpTiCaLIiI Pack",
+      "KOM Trilogy Pack"
+    ]
   },
   {
     "rank": 4,
@@ -98,6 +106,9 @@
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://www.youtube.com/watch?v=7qIyVZfXBD4",
     "image": "",
+    "packs": [
+      "Swift Pack"
+    ],
     "victors": [
       {
         "name": "Natan13",
@@ -136,7 +147,8 @@
     "scoringBaseline": {
       "timeSeconds": 53032,
       "attempts": 57259
-    }
+    },
+    "packs": []
   },
   {
     "rank": 6,
@@ -176,7 +188,10 @@
     "scoringBaseline": {
       "timeSeconds": 15345,
       "attempts": 89121
-    }
+    },
+    "packs": [
+      "KOM Trilogy Pack"
+    ]
   },
   {
     "rank": 7,
@@ -209,7 +224,10 @@
     "scoringBaseline": {
       "timeSeconds": 15703,
       "attempts": 93601
-    }
+    },
+    "packs": [
+      "Geometry Pack"
+    ]
   },
   {
     "rank": 8,
@@ -235,7 +253,8 @@
     "scoringBaseline": {
       "timeSeconds": 6457,
       "attempts": 68268
-    }
+    },
+    "packs": []
   },
   {
     "rank": 9,
@@ -261,7 +280,8 @@
     "scoringBaseline": {
       "timeSeconds": 10566,
       "attempts": 76157
-    }
+    },
+    "packs": []
   },
   {
     "rank": 10,
@@ -287,7 +307,8 @@
     "scoringBaseline": {
       "timeSeconds": 11549,
       "attempts": 31852
-    }
+    },
+    "packs": []
   },
   {
     "rank": 11,
@@ -320,7 +341,8 @@
     "scoringBaseline": {
       "timeSeconds": 7651,
       "attempts": 15598
-    }
+    },
+    "packs": []
   },
   {
     "rank": 12,
@@ -346,7 +368,11 @@
     "scoringBaseline": {
       "timeSeconds": 9452,
       "attempts": 181370
-    }
+    },
+    "packs": [
+      "IiIOpTiCaLIiI Pack",
+      "Satanic Pack"
+    ]
   },
   {
     "rank": 13,
@@ -372,7 +398,8 @@
     "scoringBaseline": {
       "timeSeconds": 9583,
       "attempts": 133429
-    }
+    },
+    "packs": []
   },
   {
     "rank": 14,
@@ -398,7 +425,10 @@
     "scoringBaseline": {
       "timeSeconds": 8219,
       "attempts": 106958
-    }
+    },
+    "packs": [
+      "Legend Pack"
+    ]
   },
   {
     "rank": 15,
@@ -412,6 +442,9 @@
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=Rl2IALks5_E",
     "image": "",
+    "packs": [
+      "Swift Pack"
+    ],
     "victors": [
       {
         "name": "Natan13",
@@ -450,7 +483,10 @@
     "scoringBaseline": {
       "timeSeconds": 13318,
       "attempts": 56818
-    }
+    },
+    "packs": [
+      "Grandson Pack"
+    ]
   },
   {
     "rank": 17,
@@ -476,7 +512,10 @@
     "scoringBaseline": {
       "timeSeconds": 7177,
       "attempts": 38479
-    }
+    },
+    "packs": [
+      "ILL Top 1 Pack"
+    ]
   },
   {
     "rank": 18,
@@ -509,7 +548,8 @@
     "scoringBaseline": {
       "timeSeconds": 8092,
       "attempts": 60105
-    }
+    },
+    "packs": []
   },
   {
     "rank": 19,
@@ -535,7 +575,11 @@
     "scoringBaseline": {
       "timeSeconds": 10030,
       "attempts": 28821
-    }
+    },
+    "packs": [
+      "Mirror Portal Pack",
+      "Silent Clubstep Pack"
+    ]
   },
   {
     "rank": 20,
@@ -561,7 +605,8 @@
     "scoringBaseline": {
       "timeSeconds": 7437,
       "attempts": 16249
-    }
+    },
+    "packs": []
   },
   {
     "rank": 21,
@@ -587,7 +632,10 @@
     "scoringBaseline": {
       "timeSeconds": 5324,
       "attempts": 10957
-    }
+    },
+    "packs": [
+      "ILL Top 1 Pack"
+    ]
   },
   {
     "rank": 22,
@@ -613,7 +661,10 @@
     "scoringBaseline": {
       "timeSeconds": 10522,
       "attempts": 82527
-    }
+    },
+    "packs": [
+      "Rampant Pack"
+    ]
   },
   {
     "rank": 23,
@@ -639,7 +690,8 @@
     "scoringBaseline": {
       "timeSeconds": 4915,
       "attempts": 53117
-    }
+    },
+    "packs": []
   },
   {
     "rank": 24,
@@ -665,7 +717,8 @@
     "scoringBaseline": {
       "timeSeconds": 21653,
       "attempts": 23039
-    }
+    },
+    "packs": []
   },
   {
     "rank": 25,
@@ -699,7 +752,8 @@
     "scoringBaseline": {
       "timeSeconds": 6679,
       "attempts": 14081
-    }
+    },
+    "packs": []
   },
   {
     "rank": 26,
@@ -725,7 +779,10 @@
     "scoringBaseline": {
       "timeSeconds": 4861,
       "attempts": 14675
-    }
+    },
+    "packs": [
+      "Silent Clubstep Pack II"
+    ]
   },
   {
     "rank": 27,
@@ -751,7 +808,8 @@
     "scoringBaseline": {
       "timeSeconds": 5989,
       "attempts": 28685
-    }
+    },
+    "packs": []
   },
   {
     "rank": 28,
@@ -777,7 +835,11 @@
     "scoringBaseline": {
       "timeSeconds": 7612,
       "attempts": 29817
-    }
+    },
+    "packs": [
+      "IiIOpTiCaLIiI Pack",
+      "Supreme Pack"
+    ]
   },
   {
     "rank": 29,
@@ -803,7 +865,8 @@
     "scoringBaseline": {
       "timeSeconds": 6668,
       "attempts": 17355
-    }
+    },
+    "packs": []
   },
   {
     "rank": 30,
@@ -829,7 +892,8 @@
     "scoringBaseline": {
       "timeSeconds": 3554,
       "attempts": 37408
-    }
+    },
+    "packs": []
   },
   {
     "rank": 31,
@@ -855,7 +919,8 @@
     "scoringBaseline": {
       "timeSeconds": 10273,
       "attempts": 79941
-    }
+    },
+    "packs": []
   },
   {
     "rank": 32,
@@ -881,7 +946,8 @@
     "scoringBaseline": {
       "timeSeconds": 10900,
       "attempts": 46847
-    }
+    },
+    "packs": []
   },
   {
     "rank": 33,
@@ -907,7 +973,11 @@
     "scoringBaseline": {
       "timeSeconds": 5704,
       "attempts": 4001
-    }
+    },
+    "packs": [
+      "Never Clear Pack",
+      "Unnerfed Pack II"
+    ]
   },
   {
     "rank": 34,
@@ -933,7 +1003,8 @@
     "scoringBaseline": {
       "timeSeconds": 9168,
       "attempts": 11358
-    }
+    },
+    "packs": []
   },
   {
     "rank": 35,
@@ -959,7 +1030,10 @@
     "scoringBaseline": {
       "timeSeconds": 9197,
       "attempts": 9459
-    }
+    },
+    "packs": [
+      "XL Pack"
+    ]
   },
   {
     "rank": 36,
@@ -992,7 +1066,11 @@
     "scoringBaseline": {
       "timeSeconds": 8603,
       "attempts": 44920
-    }
+    },
+    "packs": [
+      "Mirror Portal Pack",
+      "Old Impossible Pack III"
+    ]
   },
   {
     "rank": 37,
@@ -1018,7 +1096,10 @@
     "scoringBaseline": {
       "timeSeconds": 8518,
       "attempts": 8833
-    }
+    },
+    "packs": [
+      "XL Pack II"
+    ]
   },
   {
     "rank": 38,
@@ -1044,7 +1125,8 @@
     "scoringBaseline": {
       "timeSeconds": 15874,
       "attempts": 21790
-    }
+    },
+    "packs": []
   },
   {
     "rank": 39,
@@ -1070,7 +1152,8 @@
     "scoringBaseline": {
       "timeSeconds": 13979,
       "attempts": 86009
-    }
+    },
+    "packs": []
   },
   {
     "rank": 40,
@@ -1159,7 +1242,11 @@
     "scoringBaseline": {
       "timeSeconds": 7064,
       "attempts": 55930
-    }
+    },
+    "packs": [
+      "Geometry Pack",
+      "PML Day One Pack"
+    ]
   },
   {
     "rank": 41,
@@ -1192,7 +1279,8 @@
     "scoringBaseline": {
       "timeSeconds": 8418,
       "attempts": 28343
-    }
+    },
+    "packs": []
   },
   {
     "rank": 42,
@@ -1218,7 +1306,8 @@
     "scoringBaseline": {
       "timeSeconds": 6320,
       "attempts": 24775
-    }
+    },
+    "packs": []
   },
   {
     "rank": 43,
@@ -1244,7 +1333,8 @@
     "scoringBaseline": {
       "timeSeconds": 6893,
       "attempts": 8855
-    }
+    },
+    "packs": []
   },
   {
     "rank": 44,
@@ -1270,7 +1360,8 @@
     "scoringBaseline": {
       "timeSeconds": 4101,
       "attempts": 129253
-    }
+    },
+    "packs": []
   },
   {
     "rank": 45,
@@ -1296,7 +1387,10 @@
     "scoringBaseline": {
       "timeSeconds": 5633,
       "attempts": 8711
-    }
+    },
+    "packs": [
+      "Polis Pack"
+    ]
   },
   {
     "rank": 46,
@@ -1322,7 +1416,8 @@
     "scoringBaseline": {
       "timeSeconds": 6262,
       "attempts": 9696
-    }
+    },
+    "packs": []
   },
   {
     "rank": 47,
@@ -1348,7 +1443,8 @@
     "scoringBaseline": {
       "timeSeconds": 4620,
       "attempts": 7542
-    }
+    },
+    "packs": []
   },
   {
     "rank": 48,
@@ -1374,7 +1470,8 @@
     "scoringBaseline": {
       "timeSeconds": 4543,
       "attempts": 5666
-    }
+    },
+    "packs": []
   },
   {
     "rank": 49,
@@ -1407,7 +1504,10 @@
     "scoringBaseline": {
       "timeSeconds": 4385,
       "attempts": 6218
-    }
+    },
+    "packs": [
+      "Fanmade Exasperation Pack"
+    ]
   },
   {
     "rank": 50,
@@ -1433,7 +1533,8 @@
     "scoringBaseline": {
       "timeSeconds": 4410,
       "attempts": 5638
-    }
+    },
+    "packs": []
   },
   {
     "rank": 51,
@@ -1466,7 +1567,10 @@
     "scoringBaseline": {
       "timeSeconds": 4598,
       "attempts": 30796
-    }
+    },
+    "packs": [
+      "PML Day One Pack"
+    ]
   },
   {
     "rank": 52,
@@ -1499,7 +1603,8 @@
     "scoringBaseline": {
       "timeSeconds": 5203,
       "attempts": 8783
-    }
+    },
+    "packs": []
   },
   {
     "rank": 53,
@@ -1525,7 +1630,8 @@
     "scoringBaseline": {
       "timeSeconds": 3234,
       "attempts": 19847
-    }
+    },
+    "packs": []
   },
   {
     "rank": 54,
@@ -1558,7 +1664,8 @@
     "scoringBaseline": {
       "timeSeconds": 5138,
       "attempts": 25181
-    }
+    },
+    "packs": []
   },
   {
     "rank": 55,
@@ -1584,7 +1691,8 @@
     "scoringBaseline": {
       "timeSeconds": 2498,
       "attempts": 28362
-    }
+    },
+    "packs": []
   },
   {
     "rank": 56,
@@ -1617,7 +1725,8 @@
     "scoringBaseline": {
       "timeSeconds": 4726,
       "attempts": 68117
-    }
+    },
+    "packs": []
   },
   {
     "rank": 57,
@@ -1643,7 +1752,8 @@
     "scoringBaseline": {
       "timeSeconds": 4619,
       "attempts": 7130
-    }
+    },
+    "packs": []
   },
   {
     "rank": 58,
@@ -1657,6 +1767,9 @@
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://www.youtube.com/watch?v=kbU3-LqYvLQ",
     "image": "",
+    "packs": [
+      "Swift Pack"
+    ],
     "victors": [
       {
         "name": "RMGD",
@@ -1702,7 +1815,10 @@
     "scoringBaseline": {
       "timeSeconds": 3054,
       "attempts": 3295
-    }
+    },
+    "packs": [
+      "greafer Pack"
+    ]
   },
   {
     "rank": 60,
@@ -1728,7 +1844,8 @@
     "scoringBaseline": {
       "timeSeconds": 3582,
       "attempts": 4449
-    }
+    },
+    "packs": []
   },
   {
     "rank": 61,
@@ -1754,7 +1871,8 @@
     "scoringBaseline": {
       "timeSeconds": 4085,
       "attempts": 82295
-    }
+    },
+    "packs": []
   },
   {
     "rank": 62,
@@ -1787,7 +1905,8 @@
     "scoringBaseline": {
       "timeSeconds": 3650,
       "attempts": 82525
-    }
+    },
+    "packs": []
   },
   {
     "rank": 63,
@@ -1820,7 +1939,8 @@
     "scoringBaseline": {
       "timeSeconds": 3341,
       "attempts": 4765
-    }
+    },
+    "packs": []
   },
   {
     "rank": 64,
@@ -1846,7 +1966,8 @@
     "scoringBaseline": {
       "timeSeconds": 3793,
       "attempts": 20525
-    }
+    },
+    "packs": []
   },
   {
     "rank": 65,
@@ -1872,7 +1993,8 @@
     "scoringBaseline": {
       "timeSeconds": 3243,
       "attempts": 40842
-    }
+    },
+    "packs": []
   },
   {
     "rank": 66,
@@ -1905,7 +2027,10 @@
     "scoringBaseline": {
       "timeSeconds": 3254,
       "attempts": 4214
-    }
+    },
+    "packs": [
+      "One Gamemode Pack"
+    ]
   },
   {
     "rank": 67,
@@ -1931,7 +2056,8 @@
     "scoringBaseline": {
       "timeSeconds": 3482,
       "attempts": 25086
-    }
+    },
+    "packs": []
   },
   {
     "rank": 68,
@@ -1957,7 +2083,10 @@
     "scoringBaseline": {
       "timeSeconds": 6956,
       "attempts": 42460
-    }
+    },
+    "packs": [
+      "Geometry Pack"
+    ]
   },
   {
     "rank": 69,
@@ -1990,7 +2119,10 @@
     "scoringBaseline": {
       "timeSeconds": 3159,
       "attempts": 4633
-    }
+    },
+    "packs": [
+      "Fanmade Exasperation Pack"
+    ]
   },
   {
     "rank": 70,
@@ -2016,7 +2148,10 @@
     "scoringBaseline": {
       "timeSeconds": 4281,
       "attempts": 5428
-    }
+    },
+    "packs": [
+      "Fanmade Exasperation Pack"
+    ]
   },
   {
     "rank": 71,
@@ -2042,7 +2177,8 @@
     "scoringBaseline": {
       "timeSeconds": 3646,
       "attempts": 8596
-    }
+    },
+    "packs": []
   },
   {
     "rank": 72,
@@ -2082,7 +2218,10 @@
     "scoringBaseline": {
       "timeSeconds": 3890,
       "attempts": 6046
-    }
+    },
+    "packs": [
+      "Ship Carried Pack"
+    ]
   },
   {
     "rank": 73,
@@ -2108,7 +2247,8 @@
     "scoringBaseline": {
       "timeSeconds": 4188,
       "attempts": 34244
-    }
+    },
+    "packs": []
   },
   {
     "rank": 74,
@@ -2134,7 +2274,10 @@
     "scoringBaseline": {
       "timeSeconds": 4707,
       "attempts": 7437
-    }
+    },
+    "packs": [
+      "Ship Carried Pack"
+    ]
   },
   {
     "rank": 75,
@@ -2167,7 +2310,8 @@
     "scoringBaseline": {
       "timeSeconds": 2017,
       "attempts": 5807
-    }
+    },
+    "packs": []
   },
   {
     "rank": 76,
@@ -2194,7 +2338,8 @@
     "scoringBaseline": {
       "timeSeconds": 3823,
       "attempts": 6284
-    }
+    },
+    "packs": []
   },
   {
     "rank": 77,
@@ -2255,7 +2400,10 @@
     "scoringBaseline": {
       "timeSeconds": 2658,
       "attempts": 4364
-    }
+    },
+    "packs": [
+      "Grandson Pack"
+    ]
   },
   {
     "rank": 78,
@@ -2288,7 +2436,8 @@
     "scoringBaseline": {
       "timeSeconds": 2854,
       "attempts": 3712
-    }
+    },
+    "packs": []
   },
   {
     "rank": 79,
@@ -2314,7 +2463,8 @@
     "scoringBaseline": {
       "timeSeconds": null,
       "attempts": 27692
-    }
+    },
+    "packs": []
   },
   {
     "rank": 80,
@@ -2340,7 +2490,11 @@
     "scoringBaseline": {
       "timeSeconds": 5652,
       "attempts": 19173
-    }
+    },
+    "packs": [
+      "Anceps Pack",
+      "Challenge Pack"
+    ]
   },
   {
     "rank": 81,
@@ -2373,7 +2527,8 @@
     "scoringBaseline": {
       "timeSeconds": 4699,
       "attempts": 10719
-    }
+    },
+    "packs": []
   },
   {
     "rank": 82,
@@ -2399,7 +2554,8 @@
     "scoringBaseline": {
       "timeSeconds": 4305,
       "attempts": 4837
-    }
+    },
+    "packs": []
   },
   {
     "rank": 83,
@@ -2413,6 +2569,9 @@
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=Hip-msSnBGU",
     "image": "",
+    "packs": [
+      "Swift Pack"
+    ],
     "victors": [
       {
         "name": "RMGD",
@@ -2451,7 +2610,8 @@
     "scoringBaseline": {
       "timeSeconds": 3762,
       "attempts": 4783
-    }
+    },
+    "packs": []
   },
   {
     "rank": 85,
@@ -2505,7 +2665,10 @@
     "scoringBaseline": {
       "timeSeconds": 4332,
       "attempts": 3829
-    }
+    },
+    "packs": [
+      "Main Level Pack"
+    ]
   },
   {
     "rank": 86,
@@ -2538,7 +2701,10 @@
     "scoringBaseline": {
       "timeSeconds": 3798,
       "attempts": 5272
-    }
+    },
+    "packs": [
+      "XL Pack II"
+    ]
   },
   {
     "rank": 87,
@@ -2578,7 +2744,10 @@
     "scoringBaseline": {
       "timeSeconds": 2574,
       "attempts": 3911
-    }
+    },
+    "packs": [
+      "Ship Carried Pack"
+    ]
   },
   {
     "rank": 88,
@@ -2604,7 +2773,8 @@
     "scoringBaseline": {
       "timeSeconds": null,
       "attempts": null
-    }
+    },
+    "packs": []
   },
   {
     "rank": 89,
@@ -2630,7 +2800,8 @@
     "scoringBaseline": {
       "timeSeconds": 5453,
       "attempts": 53223
-    }
+    },
+    "packs": []
   },
   {
     "rank": 90,
@@ -2677,7 +2848,11 @@
     "scoringBaseline": {
       "timeSeconds": 4422,
       "attempts": 6908
-    }
+    },
+    "packs": [
+      "Bloodshadow Pack",
+      "KOM Trilogy Pack"
+    ]
   },
   {
     "rank": 91,
@@ -2710,7 +2885,8 @@
     "scoringBaseline": {
       "timeSeconds": 2791,
       "attempts": 2876
-    }
+    },
+    "packs": []
   },
   {
     "rank": 92,
@@ -2743,7 +2919,8 @@
     "scoringBaseline": {
       "timeSeconds": 3272,
       "attempts": 23944
-    }
+    },
+    "packs": []
   },
   {
     "rank": 93,
@@ -2769,7 +2946,8 @@
     "scoringBaseline": {
       "timeSeconds": 2928,
       "attempts": 4134
-    }
+    },
+    "packs": []
   },
   {
     "rank": 94,
@@ -2837,7 +3015,10 @@
     "scoringBaseline": {
       "timeSeconds": 1339,
       "attempts": 2169
-    }
+    },
+    "packs": [
+      "Main Level Pack"
+    ]
   },
   {
     "rank": 95,
@@ -2870,7 +3051,8 @@
     "scoringBaseline": {
       "timeSeconds": 2489,
       "attempts": 5424
-    }
+    },
+    "packs": []
   },
   {
     "rank": 96,
@@ -2896,7 +3078,11 @@
     "scoringBaseline": {
       "timeSeconds": 18861,
       "attempts": 8800
-    }
+    },
+    "packs": [
+      "Brainrotted Pack",
+      "SupremeSDB's Favorite Picks"
+    ]
   },
   {
     "rank": 97,
@@ -2929,7 +3115,11 @@
     "scoringBaseline": {
       "timeSeconds": 3282,
       "attempts": 9948
-    }
+    },
+    "packs": [
+      "icedcave Pack",
+      "Old Impossible Pack III"
+    ]
   },
   {
     "rank": 98,
@@ -2955,7 +3145,8 @@
     "scoringBaseline": {
       "timeSeconds": 3516,
       "attempts": 4147
-    }
+    },
+    "packs": []
   },
   {
     "rank": 99,
@@ -2981,7 +3172,10 @@
     "scoringBaseline": {
       "timeSeconds": 6131,
       "attempts": 20626
-    }
+    },
+    "packs": [
+      "Brainrotted Pack"
+    ]
   },
   {
     "rank": 100,
@@ -3007,7 +3201,8 @@
     "scoringBaseline": {
       "timeSeconds": null,
       "attempts": null
-    }
+    },
+    "packs": []
   },
   {
     "rank": 101,
@@ -3033,7 +3228,8 @@
     "scoringBaseline": {
       "timeSeconds": 3518,
       "attempts": 4423
-    }
+    },
+    "packs": []
   },
   {
     "rank": 102,
@@ -3059,7 +3255,8 @@
     "scoringBaseline": {
       "timeSeconds": 3812,
       "attempts": 6097
-    }
+    },
+    "packs": []
   },
   {
     "rank": 103,
@@ -3085,7 +3282,8 @@
     "scoringBaseline": {
       "timeSeconds": 3959,
       "attempts": 6083
-    }
+    },
+    "packs": []
   },
   {
     "rank": 104,
@@ -3118,7 +3316,10 @@
     "scoringBaseline": {
       "timeSeconds": 4413,
       "attempts": 15859
-    }
+    },
+    "packs": [
+      "Legend Pack"
+    ]
   },
   {
     "rank": 105,
@@ -3144,7 +3345,8 @@
     "scoringBaseline": {
       "timeSeconds": 4885,
       "attempts": 6403
-    }
+    },
+    "packs": []
   },
   {
     "rank": 106,
@@ -3170,7 +3372,8 @@
     "scoringBaseline": {
       "timeSeconds": 3212,
       "attempts": 17229
-    }
+    },
+    "packs": []
   },
   {
     "rank": 107,
@@ -3203,7 +3406,8 @@
     "scoringBaseline": {
       "timeSeconds": 1295,
       "attempts": 13171
-    }
+    },
+    "packs": []
   },
   {
     "rank": 108,
@@ -3257,7 +3461,10 @@
     "scoringBaseline": {
       "timeSeconds": 2309,
       "attempts": 2165
-    }
+    },
+    "packs": [
+      "XL Pack"
+    ]
   },
   {
     "rank": 109,
@@ -3297,7 +3504,8 @@
     "scoringBaseline": {
       "timeSeconds": 3229,
       "attempts": 3440
-    }
+    },
+    "packs": []
   },
   {
     "rank": 110,
@@ -3337,7 +3545,8 @@
     "scoringBaseline": {
       "timeSeconds": 2119,
       "attempts": 29293
-    }
+    },
+    "packs": []
   },
   {
     "rank": 111,
@@ -3363,7 +3572,8 @@
     "scoringBaseline": {
       "timeSeconds": 4174,
       "attempts": 7005
-    }
+    },
+    "packs": []
   },
   {
     "rank": 112,
@@ -3389,7 +3599,8 @@
     "scoringBaseline": {
       "timeSeconds": 2550,
       "attempts": 9603
-    }
+    },
+    "packs": []
   },
   {
     "rank": 113,
@@ -3429,7 +3640,10 @@
     "scoringBaseline": {
       "timeSeconds": 2610,
       "attempts": 1892
-    }
+    },
+    "packs": [
+      "Exasperation Pack"
+    ]
   },
   {
     "rank": 114,
@@ -3476,7 +3690,11 @@
     "scoringBaseline": {
       "timeSeconds": 4674,
       "attempts": 18743
-    }
+    },
+    "packs": [
+      "Brainrotted Pack",
+      "SupremeSDB's Favorite Picks"
+    ]
   },
   {
     "rank": 115,
@@ -3502,7 +3720,8 @@
     "scoringBaseline": {
       "timeSeconds": null,
       "attempts": null
-    }
+    },
+    "packs": []
   },
   {
     "rank": 116,
@@ -3528,7 +3747,10 @@
     "scoringBaseline": {
       "timeSeconds": 3038,
       "attempts": 7023
-    }
+    },
+    "packs": [
+      "Silent Clubstep Pack II"
+    ]
   },
   {
     "rank": 117,
@@ -3554,7 +3776,8 @@
     "scoringBaseline": {
       "timeSeconds": 2521,
       "attempts": 4859
-    }
+    },
+    "packs": []
   },
   {
     "rank": 118,
@@ -3580,7 +3803,8 @@
     "scoringBaseline": {
       "timeSeconds": 4453,
       "attempts": 6855
-    }
+    },
+    "packs": []
   },
   {
     "rank": 119,
@@ -3606,7 +3830,8 @@
     "scoringBaseline": {
       "timeSeconds": 3620,
       "attempts": 11149
-    }
+    },
+    "packs": []
   },
   {
     "rank": 120,
@@ -3660,7 +3885,8 @@
     "scoringBaseline": {
       "timeSeconds": 2745,
       "attempts": 3794
-    }
+    },
+    "packs": []
   },
   {
     "rank": 121,
@@ -3693,7 +3919,8 @@
     "scoringBaseline": {
       "timeSeconds": 2469,
       "attempts": 5125
-    }
+    },
+    "packs": []
   },
   {
     "rank": 122,
@@ -3719,7 +3946,8 @@
     "scoringBaseline": {
       "timeSeconds": 5124,
       "attempts": 6855
-    }
+    },
+    "packs": []
   },
   {
     "rank": 123,
@@ -3794,7 +4022,11 @@
     "scoringBaseline": {
       "timeSeconds": 1711,
       "attempts": 706
-    }
+    },
+    "packs": [
+      "Unnerfed Pack",
+      "XL Pack"
+    ]
   },
   {
     "rank": 124,
@@ -3820,7 +4052,10 @@
     "scoringBaseline": {
       "timeSeconds": 4679,
       "attempts": 5007
-    }
+    },
+    "packs": [
+      "XL Pack II"
+    ]
   },
   {
     "rank": 125,
@@ -3846,7 +4081,8 @@
     "scoringBaseline": {
       "timeSeconds": 4278,
       "attempts": 6333
-    }
+    },
+    "packs": []
   },
   {
     "rank": 126,
@@ -3872,7 +4108,8 @@
     "scoringBaseline": {
       "timeSeconds": 3550,
       "attempts": 22475
-    }
+    },
+    "packs": []
   },
   {
     "rank": 127,
@@ -3898,7 +4135,11 @@
     "scoringBaseline": {
       "timeSeconds": 3888,
       "attempts": 85422
-    }
+    },
+    "packs": [
+      "Brainrotted Pack",
+      "Supreme Pack"
+    ]
   },
   {
     "rank": 128,
@@ -3924,7 +4165,8 @@
     "scoringBaseline": {
       "timeSeconds": 4543,
       "attempts": 5643
-    }
+    },
+    "packs": []
   },
   {
     "rank": 129,
@@ -3950,7 +4192,8 @@
     "scoringBaseline": {
       "timeSeconds": 6773,
       "attempts": 5536
-    }
+    },
+    "packs": []
   },
   {
     "rank": 130,
@@ -4011,7 +4254,11 @@
     "scoringBaseline": {
       "timeSeconds": 1650,
       "attempts": 4626
-    }
+    },
+    "packs": [
+      "Ship Carried Pack",
+      "Unnerfed Pack II"
+    ]
   },
   {
     "rank": 131,
@@ -4037,7 +4284,8 @@
     "scoringBaseline": {
       "timeSeconds": 2463,
       "attempts": 25840
-    }
+    },
+    "packs": []
   },
   {
     "rank": 132,
@@ -4063,7 +4311,8 @@
     "scoringBaseline": {
       "timeSeconds": 1218,
       "attempts": 6952
-    }
+    },
+    "packs": []
   },
   {
     "rank": 133,
@@ -4096,7 +4345,8 @@
     "scoringBaseline": {
       "timeSeconds": 1991,
       "attempts": 4816
-    }
+    },
+    "packs": []
   },
   {
     "rank": 134,
@@ -4122,7 +4372,8 @@
     "scoringBaseline": {
       "timeSeconds": 3062,
       "attempts": 23144
-    }
+    },
+    "packs": []
   },
   {
     "rank": 135,
@@ -4155,7 +4406,11 @@
     "scoringBaseline": {
       "timeSeconds": 935,
       "attempts": 16766
-    }
+    },
+    "packs": [
+      "Old Impossible Nine Circles Pack",
+      "PML Day One Pack"
+    ]
   },
   {
     "rank": 136,
@@ -4216,7 +4471,12 @@
     "scoringBaseline": {
       "timeSeconds": 1628,
       "attempts": 10122
-    }
+    },
+    "packs": [
+      "Old Impossible Nine Circles Pack",
+      "Old Impossible Pack",
+      "PML Day One Pack"
+    ]
   },
   {
     "rank": 137,
@@ -4256,7 +4516,10 @@
     "scoringBaseline": {
       "timeSeconds": 4642,
       "attempts": 30147
-    }
+    },
+    "packs": [
+      "Old Impossible Pack"
+    ]
   },
   {
     "rank": 138,
@@ -4282,7 +4545,8 @@
     "scoringBaseline": {
       "timeSeconds": 2592,
       "attempts": 4392
-    }
+    },
+    "packs": []
   },
   {
     "rank": 139,
@@ -4343,7 +4607,10 @@
     "scoringBaseline": {
       "timeSeconds": 1490,
       "attempts": 8716
-    }
+    },
+    "packs": [
+      "Christmas Pack"
+    ]
   },
   {
     "rank": 140,
@@ -4369,7 +4636,10 @@
     "scoringBaseline": {
       "timeSeconds": 2145,
       "attempts": 13623
-    }
+    },
+    "packs": [
+      "Geometry Pack"
+    ]
   },
   {
     "rank": 141,
@@ -4403,7 +4673,8 @@
     "scoringBaseline": {
       "timeSeconds": 1215,
       "attempts": 12471
-    }
+    },
+    "packs": []
   },
   {
     "rank": 142,
@@ -4429,7 +4700,8 @@
     "scoringBaseline": {
       "timeSeconds": 7105,
       "attempts": 7180
-    }
+    },
+    "packs": []
   },
   {
     "rank": 143,
@@ -4462,7 +4734,8 @@
     "scoringBaseline": {
       "timeSeconds": 3895,
       "attempts": 5796
-    }
+    },
+    "packs": []
   },
   {
     "rank": 144,
@@ -4495,7 +4768,8 @@
     "scoringBaseline": {
       "timeSeconds": 2009,
       "attempts": 4378
-    }
+    },
+    "packs": []
   },
   {
     "rank": 145,
@@ -4556,7 +4830,8 @@
     "scoringBaseline": {
       "timeSeconds": 2304,
       "attempts": 4504
-    }
+    },
+    "packs": []
   },
   {
     "rank": 146,
@@ -4624,7 +4899,8 @@
     "scoringBaseline": {
       "timeSeconds": 11604,
       "attempts": 9641
-    }
+    },
+    "packs": []
   },
   {
     "rank": 147,
@@ -4650,7 +4926,8 @@
     "scoringBaseline": {
       "timeSeconds": 2696,
       "attempts": 8095
-    }
+    },
+    "packs": []
   },
   {
     "rank": 148,
@@ -4676,7 +4953,8 @@
     "scoringBaseline": {
       "timeSeconds": 2846,
       "attempts": 7671
-    }
+    },
+    "packs": []
   },
   {
     "rank": 149,
@@ -4702,7 +4980,8 @@
     "scoringBaseline": {
       "timeSeconds": 3403,
       "attempts": 4938
-    }
+    },
+    "packs": []
   },
   {
     "rank": 150,
@@ -4728,7 +5007,8 @@
     "scoringBaseline": {
       "timeSeconds": 3342,
       "attempts": 54216
-    }
+    },
+    "packs": []
   },
   {
     "rank": 151,
@@ -4761,7 +5041,11 @@
     "scoringBaseline": {
       "timeSeconds": 2048,
       "attempts": 4459
-    }
+    },
+    "packs": [
+      "Full Runs by 1 Player Pack",
+      "Old Impossible Pack II"
+    ]
   },
   {
     "rank": 152,
@@ -4787,7 +5071,8 @@
     "scoringBaseline": {
       "timeSeconds": 3599,
       "attempts": 5791
-    }
+    },
+    "packs": []
   },
   {
     "rank": 153,
@@ -4820,7 +5105,10 @@
     "scoringBaseline": {
       "timeSeconds": 1075,
       "attempts": 939
-    }
+    },
+    "packs": [
+      "Main Level Pack"
+    ]
   },
   {
     "rank": 154,
@@ -4846,7 +5134,8 @@
     "scoringBaseline": {
       "timeSeconds": 1840,
       "attempts": 10899
-    }
+    },
+    "packs": []
   },
   {
     "rank": 155,
@@ -4886,7 +5175,8 @@
     "scoringBaseline": {
       "timeSeconds": 2181,
       "attempts": 4016
-    }
+    },
+    "packs": []
   },
   {
     "rank": 156,
@@ -4919,7 +5209,8 @@
     "scoringBaseline": {
       "timeSeconds": 2002,
       "attempts": 16148
-    }
+    },
+    "packs": []
   },
   {
     "rank": 157,
@@ -4945,7 +5236,8 @@
     "scoringBaseline": {
       "timeSeconds": 2290,
       "attempts": 2941
-    }
+    },
+    "packs": []
   },
   {
     "rank": 158,
@@ -4971,7 +5263,10 @@
     "scoringBaseline": {
       "timeSeconds": 5675,
       "attempts": 6530
-    }
+    },
+    "packs": [
+      "Mirror Portal Pack"
+    ]
   },
   {
     "rank": 159,
@@ -4997,7 +5292,8 @@
     "scoringBaseline": {
       "timeSeconds": 4858,
       "attempts": 50381
-    }
+    },
+    "packs": []
   },
   {
     "rank": 160,
@@ -5037,7 +5333,11 @@
     "scoringBaseline": {
       "timeSeconds": 1379,
       "attempts": 15309
-    }
+    },
+    "packs": [
+      "Brainrotted Pack",
+      "Fredrick Pack"
+    ]
   },
   {
     "rank": 161,
@@ -5063,7 +5363,8 @@
     "scoringBaseline": {
       "timeSeconds": 1847,
       "attempts": 10853
-    }
+    },
+    "packs": []
   },
   {
     "rank": 162,
@@ -5096,7 +5397,8 @@
     "scoringBaseline": {
       "timeSeconds": 2398,
       "attempts": 5545
-    }
+    },
+    "packs": []
   },
   {
     "rank": 163,
@@ -5129,7 +5431,8 @@
     "scoringBaseline": {
       "timeSeconds": 2898,
       "attempts": 2813
-    }
+    },
+    "packs": []
   },
   {
     "rank": 164,
@@ -5155,7 +5458,8 @@
     "scoringBaseline": {
       "timeSeconds": 2262,
       "attempts": 2942
-    }
+    },
+    "packs": []
   },
   {
     "rank": 165,
@@ -5181,7 +5485,8 @@
     "scoringBaseline": {
       "timeSeconds": 2186,
       "attempts": 3694
-    }
+    },
+    "packs": []
   },
   {
     "rank": 166,
@@ -5207,7 +5512,8 @@
     "scoringBaseline": {
       "timeSeconds": 2465,
       "attempts": 3919
-    }
+    },
+    "packs": []
   },
   {
     "rank": 167,
@@ -5240,7 +5546,8 @@
     "scoringBaseline": {
       "timeSeconds": 2027,
       "attempts": 2922
-    }
+    },
+    "packs": []
   },
   {
     "rank": 168,
@@ -5280,7 +5587,10 @@
     "scoringBaseline": {
       "timeSeconds": 1120,
       "attempts": 3512
-    }
+    },
+    "packs": [
+      "Old Impossible Nine Circles Pack"
+    ]
   },
   {
     "rank": 169,
@@ -5306,7 +5616,8 @@
     "scoringBaseline": {
       "timeSeconds": 2093,
       "attempts": 2568
-    }
+    },
+    "packs": []
   },
   {
     "rank": 170,
@@ -5360,7 +5671,13 @@
     "scoringBaseline": {
       "timeSeconds": 1149,
       "attempts": 1404
-    }
+    },
+    "packs": [
+      "Full Runs by 1 Player Pack",
+      "Mirror Portal Pack",
+      "Old Impossible Pack",
+      "Silent Clubstep Pack"
+    ]
   },
   {
     "rank": 171,
@@ -5386,7 +5703,10 @@
     "scoringBaseline": {
       "timeSeconds": 3691,
       "attempts": 6678
-    }
+    },
+    "packs": [
+      "Silent Clubstep Pack II"
+    ]
   },
   {
     "rank": 172,
@@ -5419,7 +5739,8 @@
     "scoringBaseline": {
       "timeSeconds": 2565,
       "attempts": 6700
-    }
+    },
+    "packs": []
   },
   {
     "rank": 173,
@@ -5452,7 +5773,8 @@
     "scoringBaseline": {
       "timeSeconds": 2789,
       "attempts": 3969
-    }
+    },
+    "packs": []
   },
   {
     "rank": 174,
@@ -5485,7 +5807,8 @@
     "scoringBaseline": {
       "timeSeconds": 2035,
       "attempts": 2606
-    }
+    },
+    "packs": []
   },
   {
     "rank": 175,
@@ -5518,7 +5841,8 @@
     "scoringBaseline": {
       "timeSeconds": 1231,
       "attempts": 4259
-    }
+    },
+    "packs": []
   },
   {
     "rank": 176,
@@ -5572,7 +5896,8 @@
     "scoringBaseline": {
       "timeSeconds": 1240,
       "attempts": 5987
-    }
+    },
+    "packs": []
   },
   {
     "rank": 177,
@@ -5605,7 +5930,8 @@
     "scoringBaseline": {
       "timeSeconds": 2265,
       "attempts": 3177
-    }
+    },
+    "packs": []
   },
   {
     "rank": 178,
@@ -5631,7 +5957,10 @@
     "scoringBaseline": {
       "timeSeconds": 2476,
       "attempts": 2594
-    }
+    },
+    "packs": [
+      "XL Pack II"
+    ]
   },
   {
     "rank": 179,
@@ -5713,7 +6042,10 @@
     "scoringBaseline": {
       "timeSeconds": 1926,
       "attempts": 2902
-    }
+    },
+    "packs": [
+      "Group Beats Pack"
+    ]
   },
   {
     "rank": 180,
@@ -5746,7 +6078,8 @@
     "scoringBaseline": {
       "timeSeconds": 3019,
       "attempts": 3911
-    }
+    },
+    "packs": []
   },
   {
     "rank": 181,
@@ -5793,7 +6126,8 @@
     "scoringBaseline": {
       "timeSeconds": 2712,
       "attempts": 3056
-    }
+    },
+    "packs": []
   },
   {
     "rank": 182,
@@ -5819,7 +6153,8 @@
     "scoringBaseline": {
       "timeSeconds": 1870,
       "attempts": 5336
-    }
+    },
+    "packs": []
   },
   {
     "rank": 183,
@@ -5845,7 +6180,8 @@
     "scoringBaseline": {
       "timeSeconds": 2802,
       "attempts": 11300
-    }
+    },
+    "packs": []
   },
   {
     "rank": 184,
@@ -5871,7 +6207,8 @@
     "scoringBaseline": {
       "timeSeconds": 4822,
       "attempts": 7534
-    }
+    },
+    "packs": []
   },
   {
     "rank": 185,
@@ -5897,7 +6234,8 @@
     "scoringBaseline": {
       "timeSeconds": 2618,
       "attempts": 2278
-    }
+    },
+    "packs": []
   },
   {
     "rank": 186,
@@ -5930,7 +6268,8 @@
     "scoringBaseline": {
       "timeSeconds": 4067,
       "attempts": 5408
-    }
+    },
+    "packs": []
   },
   {
     "rank": 187,
@@ -5956,7 +6295,10 @@
     "scoringBaseline": {
       "timeSeconds": 3666,
       "attempts": 3588
-    }
+    },
+    "packs": [
+      "Memory Pack"
+    ]
   },
   {
     "rank": 188,
@@ -5982,7 +6324,8 @@
     "scoringBaseline": {
       "timeSeconds": 3175,
       "attempts": 3467
-    }
+    },
+    "packs": []
   },
   {
     "rank": 189,
@@ -6022,7 +6365,8 @@
     "scoringBaseline": {
       "timeSeconds": 1767,
       "attempts": 2467
-    }
+    },
+    "packs": []
   },
   {
     "rank": 190,
@@ -6048,7 +6392,8 @@
     "scoringBaseline": {
       "timeSeconds": 1851,
       "attempts": 19385
-    }
+    },
+    "packs": []
   },
   {
     "rank": 191,
@@ -6074,7 +6419,8 @@
     "scoringBaseline": {
       "timeSeconds": 1860,
       "attempts": 3759
-    }
+    },
+    "packs": []
   },
   {
     "rank": 192,
@@ -6100,7 +6446,8 @@
     "scoringBaseline": {
       "timeSeconds": 2063,
       "attempts": 2340
-    }
+    },
+    "packs": []
   },
   {
     "rank": 193,
@@ -6133,7 +6480,8 @@
     "scoringBaseline": {
       "timeSeconds": 1910,
       "attempts": 2309
-    }
+    },
+    "packs": []
   },
   {
     "rank": 194,
@@ -6201,7 +6549,11 @@
     "scoringBaseline": {
       "timeSeconds": 2226,
       "attempts": 1539
-    }
+    },
+    "packs": [
+      "Exasperation Pack",
+      "XL Pack"
+    ]
   },
   {
     "rank": 195,
@@ -6227,7 +6579,8 @@
     "scoringBaseline": {
       "timeSeconds": 3606,
       "attempts": 5280
-    }
+    },
+    "packs": []
   },
   {
     "rank": 196,
@@ -6309,7 +6662,8 @@
     "scoringBaseline": {
       "timeSeconds": 1171,
       "attempts": 2112
-    }
+    },
+    "packs": []
   },
   {
     "rank": 197,
@@ -6335,7 +6689,8 @@
     "scoringBaseline": {
       "timeSeconds": 3123,
       "attempts": 3314
-    }
+    },
+    "packs": []
   },
   {
     "rank": 198,
@@ -6361,7 +6716,8 @@
     "scoringBaseline": {
       "timeSeconds": 4492,
       "attempts": 5422
-    }
+    },
+    "packs": []
   },
   {
     "rank": 199,
@@ -6387,7 +6743,8 @@
     "scoringBaseline": {
       "timeSeconds": 3094,
       "attempts": 4289
-    }
+    },
+    "packs": []
   },
   {
     "rank": 200,
@@ -6413,7 +6770,10 @@
     "scoringBaseline": {
       "timeSeconds": 3571,
       "attempts": 4526
-    }
+    },
+    "packs": [
+      "Unnerfed Pack II"
+    ]
   },
   {
     "rank": 201,
@@ -6439,7 +6799,8 @@
     "scoringBaseline": {
       "timeSeconds": 4389,
       "attempts": 4314
-    }
+    },
+    "packs": []
   },
   {
     "rank": 202,
@@ -6472,7 +6833,10 @@
     "scoringBaseline": {
       "timeSeconds": 1674,
       "attempts": 2174
-    }
+    },
+    "packs": [
+      "Sonic Wave Pack"
+    ]
   },
   {
     "rank": 203,
@@ -6505,7 +6869,10 @@
     "scoringBaseline": {
       "timeSeconds": 2673,
       "attempts": 2744
-    }
+    },
+    "packs": [
+      "XL Pack II"
+    ]
   },
   {
     "rank": 204,
@@ -6530,7 +6897,8 @@
     "scoringBaseline": {
       "timeSeconds": 7604,
       "attempts": 11837
-    }
+    },
+    "packs": []
   },
   {
     "rank": 205,
@@ -6633,7 +7001,10 @@
     "scoringBaseline": {
       "timeSeconds": 884,
       "attempts": 5600
-    }
+    },
+    "packs": [
+      "PML Day One Pack"
+    ]
   },
   {
     "rank": 206,
@@ -6722,7 +7093,8 @@
     "scoringBaseline": {
       "timeSeconds": 764,
       "attempts": 6103
-    }
+    },
+    "packs": []
   },
   {
     "rank": 207,
@@ -6755,7 +7127,8 @@
     "scoringBaseline": {
       "timeSeconds": 1360,
       "attempts": 3042
-    }
+    },
+    "packs": []
   },
   {
     "rank": 208,
@@ -6781,7 +7154,8 @@
     "scoringBaseline": {
       "timeSeconds": 3939,
       "attempts": 4039
-    }
+    },
+    "packs": []
   },
   {
     "rank": 209,
@@ -6814,7 +7188,10 @@
     "scoringBaseline": {
       "timeSeconds": 4701,
       "attempts": 2841
-    }
+    },
+    "packs": [
+      "Bloodshadow Pack"
+    ]
   },
   {
     "rank": 210,
@@ -6854,7 +7231,8 @@
     "scoringBaseline": {
       "timeSeconds": 935,
       "attempts": 6918
-    }
+    },
+    "packs": []
   },
   {
     "rank": 211,
@@ -6887,7 +7265,8 @@
     "scoringBaseline": {
       "timeSeconds": 2141,
       "attempts": 13917
-    }
+    },
+    "packs": []
   },
   {
     "rank": 212,
@@ -6920,7 +7299,8 @@
     "scoringBaseline": {
       "timeSeconds": 921,
       "attempts": 1438
-    }
+    },
+    "packs": []
   },
   {
     "rank": 213,
@@ -6946,7 +7326,8 @@
     "scoringBaseline": {
       "timeSeconds": 3397,
       "attempts": 4931
-    }
+    },
+    "packs": []
   },
   {
     "rank": 214,
@@ -6986,7 +7367,11 @@
     "scoringBaseline": {
       "timeSeconds": 917,
       "attempts": 4165
-    }
+    },
+    "packs": [
+      "Old Impossible Nine Circles Pack",
+      "Old Impossible Pack III"
+    ]
   },
   {
     "rank": 215,
@@ -7026,7 +7411,10 @@
     "scoringBaseline": {
       "timeSeconds": 613,
       "attempts": 1269
-    }
+    },
+    "packs": [
+      "ILL Top 1 Pack"
+    ]
   },
   {
     "rank": 216,
@@ -7059,7 +7447,8 @@
     "scoringBaseline": {
       "timeSeconds": 2771,
       "attempts": 3462
-    }
+    },
+    "packs": []
   },
   {
     "rank": 217,
@@ -7240,7 +7629,10 @@
     "scoringBaseline": {
       "timeSeconds": 1018,
       "attempts": 1410
-    }
+    },
+    "packs": [
+      "XL Pack"
+    ]
   },
   {
     "rank": 218,
@@ -7280,7 +7672,8 @@
     "scoringBaseline": {
       "timeSeconds": 1767,
       "attempts": 2111
-    }
+    },
+    "packs": []
   },
   {
     "rank": 219,
@@ -7306,7 +7699,8 @@
     "scoringBaseline": {
       "timeSeconds": 2345,
       "attempts": 4486
-    }
+    },
+    "packs": []
   },
   {
     "rank": 220,
@@ -7339,7 +7733,8 @@
     "scoringBaseline": {
       "timeSeconds": 1435,
       "attempts": 9964
-    }
+    },
+    "packs": []
   },
   {
     "rank": 221,
@@ -7365,7 +7760,8 @@
     "scoringBaseline": {
       "timeSeconds": 1412,
       "attempts": 1772
-    }
+    },
+    "packs": []
   },
   {
     "rank": 222,
@@ -7391,7 +7787,8 @@
     "scoringBaseline": {
       "timeSeconds": 2307,
       "attempts": 2364
-    }
+    },
+    "packs": []
   },
   {
     "rank": 223,
@@ -7417,7 +7814,10 @@
     "scoringBaseline": {
       "timeSeconds": 3077,
       "attempts": 2813
-    }
+    },
+    "packs": [
+      "Polis Pack"
+    ]
   },
   {
     "rank": 224,
@@ -7464,7 +7864,8 @@
     "scoringBaseline": {
       "timeSeconds": 707,
       "attempts": 1962
-    }
+    },
+    "packs": []
   },
   {
     "rank": 225,
@@ -7490,7 +7891,8 @@
     "scoringBaseline": {
       "timeSeconds": 1349,
       "attempts": 1647
-    }
+    },
+    "packs": []
   },
   {
     "rank": 226,
@@ -7523,7 +7925,8 @@
     "scoringBaseline": {
       "timeSeconds": 1686,
       "attempts": 6701
-    }
+    },
+    "packs": []
   },
   {
     "rank": 227,
@@ -7563,7 +7966,11 @@
     "scoringBaseline": {
       "timeSeconds": 1705,
       "attempts": 1865
-    }
+    },
+    "packs": [
+      "Group Beats Pack",
+      "Silent Clubstep Pack"
+    ]
   },
   {
     "rank": 228,
@@ -7603,7 +8010,8 @@
     "scoringBaseline": {
       "timeSeconds": 2108,
       "attempts": 6636
-    }
+    },
+    "packs": []
   },
   {
     "rank": 229,
@@ -7629,7 +8037,8 @@
     "scoringBaseline": {
       "timeSeconds": 2353,
       "attempts": 3227
-    }
+    },
+    "packs": []
   },
   {
     "rank": 230,
@@ -7655,7 +8064,10 @@
     "scoringBaseline": {
       "timeSeconds": 3179,
       "attempts": 3058
-    }
+    },
+    "packs": [
+      "One Gamemode Pack"
+    ]
   },
   {
     "rank": 231,
@@ -7688,7 +8100,8 @@
     "scoringBaseline": {
       "timeSeconds": 1491,
       "attempts": 1875
-    }
+    },
+    "packs": []
   },
   {
     "rank": 232,
@@ -7735,7 +8148,8 @@
     "scoringBaseline": {
       "timeSeconds": 1938,
       "attempts": 2226
-    }
+    },
+    "packs": []
   },
   {
     "rank": 233,
@@ -7761,7 +8175,8 @@
     "scoringBaseline": {
       "timeSeconds": 3016,
       "attempts": 2880
-    }
+    },
+    "packs": []
   },
   {
     "rank": 234,
@@ -7801,7 +8216,8 @@
     "scoringBaseline": {
       "timeSeconds": 1407,
       "attempts": 4089
-    }
+    },
+    "packs": []
   },
   {
     "rank": 235,
@@ -7827,7 +8243,8 @@
     "scoringBaseline": {
       "timeSeconds": 1676,
       "attempts": 5799
-    }
+    },
+    "packs": []
   },
   {
     "rank": 236,
@@ -7853,7 +8270,10 @@
     "scoringBaseline": {
       "timeSeconds": 1629,
       "attempts": 1258
-    }
+    },
+    "packs": [
+      "greafer Pack"
+    ]
   },
   {
     "rank": 237,
@@ -7886,7 +8306,10 @@
     "scoringBaseline": {
       "timeSeconds": 1474,
       "attempts": 1480
-    }
+    },
+    "packs": [
+      "Fanmade Exasperation Pack"
+    ]
   },
   {
     "rank": 238,
@@ -7912,7 +8335,8 @@
     "scoringBaseline": {
       "timeSeconds": 1204,
       "attempts": 1676
-    }
+    },
+    "packs": []
   },
   {
     "rank": 239,
@@ -7952,7 +8376,8 @@
     "scoringBaseline": {
       "timeSeconds": 1180,
       "attempts": 1328
-    }
+    },
+    "packs": []
   },
   {
     "rank": 240,
@@ -7985,7 +8410,10 @@
     "scoringBaseline": {
       "timeSeconds": 1496,
       "attempts": 2419
-    }
+    },
+    "packs": [
+      "Memory Pack"
+    ]
   },
   {
     "rank": 241,
@@ -8011,7 +8439,8 @@
     "scoringBaseline": {
       "timeSeconds": 2372,
       "attempts": 2336
-    }
+    },
+    "packs": []
   },
   {
     "rank": 242,
@@ -8051,7 +8480,8 @@
     "scoringBaseline": {
       "timeSeconds": 2651,
       "attempts": 3307
-    }
+    },
+    "packs": []
   },
   {
     "rank": 243,
@@ -8077,7 +8507,10 @@
     "scoringBaseline": {
       "timeSeconds": 2579,
       "attempts": 3189
-    }
+    },
+    "packs": [
+      "Polis Pack"
+    ]
   },
   {
     "rank": 244,
@@ -8117,7 +8550,11 @@
     "scoringBaseline": {
       "timeSeconds": 1398,
       "attempts": 1390
-    }
+    },
+    "packs": [
+      "Group Beats Pack",
+      "Unnerfed Pack"
+    ]
   },
   {
     "rank": 245,
@@ -8150,7 +8587,8 @@
     "scoringBaseline": {
       "timeSeconds": 1907,
       "attempts": 10219
-    }
+    },
+    "packs": []
   },
   {
     "rank": 246,
@@ -8176,7 +8614,8 @@
     "scoringBaseline": {
       "timeSeconds": 1712,
       "attempts": 1967
-    }
+    },
+    "packs": []
   },
   {
     "rank": 247,
@@ -8202,7 +8641,8 @@
     "scoringBaseline": {
       "timeSeconds": 1661,
       "attempts": 2258
-    }
+    },
+    "packs": []
   },
   {
     "rank": 248,
@@ -8235,7 +8675,8 @@
     "scoringBaseline": {
       "timeSeconds": 1875,
       "attempts": 1986
-    }
+    },
+    "packs": []
   },
   {
     "rank": 249,
@@ -8275,7 +8716,8 @@
     "scoringBaseline": {
       "timeSeconds": 1280,
       "attempts": 1606
-    }
+    },
+    "packs": []
   },
   {
     "rank": 250,
@@ -8301,7 +8743,10 @@
     "scoringBaseline": {
       "timeSeconds": 1705,
       "attempts": 1477
-    }
+    },
+    "packs": [
+      "Memory Pack"
+    ]
   },
   {
     "rank": 251,
@@ -8327,7 +8772,10 @@
     "scoringBaseline": {
       "timeSeconds": 1448,
       "attempts": 2041
-    }
+    },
+    "packs": [
+      "Silent Clubstep Pack"
+    ]
   },
   {
     "rank": 252,
@@ -8353,7 +8801,8 @@
     "scoringBaseline": {
       "timeSeconds": 1416,
       "attempts": 1709
-    }
+    },
+    "packs": []
   },
   {
     "rank": 253,
@@ -8379,7 +8828,8 @@
     "scoringBaseline": {
       "timeSeconds": 5033,
       "attempts": 5037
-    }
+    },
+    "packs": []
   },
   {
     "rank": 254,
@@ -8405,7 +8855,8 @@
     "scoringBaseline": {
       "timeSeconds": 1861,
       "attempts": 1714
-    }
+    },
+    "packs": []
   },
   {
     "rank": 255,
@@ -8438,7 +8889,8 @@
     "scoringBaseline": {
       "timeSeconds": 1107,
       "attempts": 2433
-    }
+    },
+    "packs": []
   },
   {
     "rank": 256,
@@ -8464,7 +8916,8 @@
     "scoringBaseline": {
       "timeSeconds": 1966,
       "attempts": 16970
-    }
+    },
+    "packs": []
   },
   {
     "rank": 257,
@@ -8511,7 +8964,8 @@
     "scoringBaseline": {
       "timeSeconds": 2381,
       "attempts": 3020
-    }
+    },
+    "packs": []
   },
   {
     "rank": 258,
@@ -8544,7 +8998,8 @@
     "scoringBaseline": {
       "timeSeconds": 1208,
       "attempts": 1315
-    }
+    },
+    "packs": []
   },
   {
     "rank": 259,
@@ -8577,7 +9032,10 @@
     "scoringBaseline": {
       "timeSeconds": 2361,
       "attempts": 3019
-    }
+    },
+    "packs": [
+      "SupremeSDB's Favorite Picks"
+    ]
   },
   {
     "rank": 260,
@@ -8610,7 +9068,8 @@
     "scoringBaseline": {
       "timeSeconds": 1731,
       "attempts": 7038
-    }
+    },
+    "packs": []
   },
   {
     "rank": 261,
@@ -8643,7 +9102,8 @@
     "scoringBaseline": {
       "timeSeconds": 1405,
       "attempts": 1448
-    }
+    },
+    "packs": []
   },
   {
     "rank": 262,
@@ -8683,7 +9143,10 @@
     "scoringBaseline": {
       "timeSeconds": 1190,
       "attempts": 1505
-    }
+    },
+    "packs": [
+      "Anceps Pack"
+    ]
   },
   {
     "rank": 263,
@@ -8709,7 +9172,10 @@
     "scoringBaseline": {
       "timeSeconds": 1625,
       "attempts": 3575
-    }
+    },
+    "packs": [
+      "ILL Top 1 Pack"
+    ]
   },
   {
     "rank": 264,
@@ -8742,7 +9208,8 @@
     "scoringBaseline": {
       "timeSeconds": 1598,
       "attempts": 1732
-    }
+    },
+    "packs": []
   },
   {
     "rank": 265,
@@ -8782,7 +9249,8 @@
     "scoringBaseline": {
       "timeSeconds": 1214,
       "attempts": 2162
-    }
+    },
+    "packs": []
   },
   {
     "rank": 266,
@@ -8815,7 +9283,8 @@
     "scoringBaseline": {
       "timeSeconds": 1555,
       "attempts": 5413
-    }
+    },
+    "packs": []
   },
   {
     "rank": 267,
@@ -8848,7 +9317,8 @@
     "scoringBaseline": {
       "timeSeconds": 1088,
       "attempts": 3615
-    }
+    },
+    "packs": []
   },
   {
     "rank": 268,
@@ -8881,7 +9351,8 @@
     "scoringBaseline": {
       "timeSeconds": 1284,
       "attempts": 2125
-    }
+    },
+    "packs": []
   },
   {
     "rank": 269,
@@ -8914,7 +9385,8 @@
     "scoringBaseline": {
       "timeSeconds": 1335,
       "attempts": 1778
-    }
+    },
+    "packs": []
   },
   {
     "rank": 270,
@@ -8940,7 +9412,8 @@
     "scoringBaseline": {
       "timeSeconds": 2677,
       "attempts": 4817
-    }
+    },
+    "packs": []
   },
   {
     "rank": 271,
@@ -8973,7 +9446,8 @@
     "scoringBaseline": {
       "timeSeconds": 1043,
       "attempts": 8861
-    }
+    },
+    "packs": []
   },
   {
     "rank": 272,
@@ -9034,7 +9508,10 @@
     "scoringBaseline": {
       "timeSeconds": 419,
       "attempts": 1477
-    }
+    },
+    "packs": [
+      "Satanic Pack"
+    ]
   },
   {
     "rank": 273,
@@ -9060,7 +9537,8 @@
     "scoringBaseline": {
       "timeSeconds": 1525,
       "attempts": 13984
-    }
+    },
+    "packs": []
   },
   {
     "rank": 274,
@@ -9093,7 +9571,8 @@
     "scoringBaseline": {
       "timeSeconds": 1428,
       "attempts": 3711
-    }
+    },
+    "packs": []
   },
   {
     "rank": 275,
@@ -9119,7 +9598,8 @@
     "scoringBaseline": {
       "timeSeconds": 2183,
       "attempts": 2353
-    }
+    },
+    "packs": []
   },
   {
     "rank": 276,
@@ -9145,7 +9625,8 @@
     "scoringBaseline": {
       "timeSeconds": 2074,
       "attempts": 2728
-    }
+    },
+    "packs": []
   },
   {
     "rank": 277,
@@ -9178,7 +9659,10 @@
     "scoringBaseline": {
       "timeSeconds": 1353,
       "attempts": 2433
-    }
+    },
+    "packs": [
+      "Silent Clubstep Pack II"
+    ]
   },
   {
     "rank": 278,
@@ -9204,12 +9688,13 @@
     "scoringBaseline": {
       "timeSeconds": 1581,
       "attempts": 6727
-    }
+    },
+    "packs": []
   },
   {
     "rank": 279,
-    "name": "Wistfully (Fishavolo)",
-    "creators": "Fishavolo, RealDynamix",
+    "name": "Wistfully (microgram)",
+    "creators": "microgram, RealDynamix",
     "id": "101656380",
     "length": "1m 39s",
     "tps": 240,
@@ -9258,7 +9743,8 @@
     "scoringBaseline": {
       "timeSeconds": 1668,
       "attempts": 2031
-    }
+    },
+    "packs": []
   },
   {
     "rank": 280,
@@ -9284,7 +9770,8 @@
     "scoringBaseline": {
       "timeSeconds": 2169,
       "attempts": 3416
-    }
+    },
+    "packs": []
   },
   {
     "rank": 281,
@@ -9324,7 +9811,8 @@
     "scoringBaseline": {
       "timeSeconds": 1605,
       "attempts": 1672
-    }
+    },
+    "packs": []
   },
   {
     "rank": 282,
@@ -9364,7 +9852,10 @@
     "scoringBaseline": {
       "timeSeconds": 1422,
       "attempts": 1776
-    }
+    },
+    "packs": [
+      "Sonic Wave Pack"
+    ]
   },
   {
     "rank": 283,
@@ -9397,7 +9888,10 @@
     "scoringBaseline": {
       "timeSeconds": 1144,
       "attempts": 1369
-    }
+    },
+    "packs": [
+      "Sonic Wave Pack"
+    ]
   },
   {
     "rank": 284,
@@ -9437,7 +9931,11 @@
     "scoringBaseline": {
       "timeSeconds": 1716,
       "attempts": 2309
-    }
+    },
+    "packs": [
+      "Possible Pack",
+      "Unnerfed Pack II"
+    ]
   },
   {
     "rank": 285,
@@ -9463,7 +9961,8 @@
     "scoringBaseline": {
       "timeSeconds": 821,
       "attempts": 4376
-    }
+    },
+    "packs": []
   },
   {
     "rank": 286,
@@ -9489,7 +9988,8 @@
     "scoringBaseline": {
       "timeSeconds": 4105,
       "attempts": 39335
-    }
+    },
+    "packs": []
   },
   {
     "rank": 287,
@@ -9522,7 +10022,8 @@
     "scoringBaseline": {
       "timeSeconds": 1537,
       "attempts": 1717
-    }
+    },
+    "packs": []
   },
   {
     "rank": 288,
@@ -9562,7 +10063,8 @@
     "scoringBaseline": {
       "timeSeconds": 736,
       "attempts": 1048
-    }
+    },
+    "packs": []
   },
   {
     "rank": 289,
@@ -9588,7 +10090,8 @@
     "scoringBaseline": {
       "timeSeconds": 6601,
       "attempts": 10397
-    }
+    },
+    "packs": []
   },
   {
     "rank": 290,
@@ -9614,7 +10117,8 @@
     "scoringBaseline": {
       "timeSeconds": 1965,
       "attempts": 4331
-    }
+    },
+    "packs": []
   },
   {
     "rank": 291,
@@ -9648,7 +10152,8 @@
     "scoringBaseline": {
       "timeSeconds": 1179,
       "attempts": 1488
-    }
+    },
+    "packs": []
   },
   {
     "rank": 292,
@@ -9688,7 +10193,8 @@
     "scoringBaseline": {
       "timeSeconds": 935,
       "attempts": 1472
-    }
+    },
+    "packs": []
   },
   {
     "rank": 293,
@@ -9721,7 +10227,11 @@
     "scoringBaseline": {
       "timeSeconds": 922,
       "attempts": 1318
-    }
+    },
+    "packs": [
+      "icedcave Pack",
+      "Old Impossible Pack"
+    ]
   },
   {
     "rank": 294,
@@ -9754,7 +10264,8 @@
     "scoringBaseline": {
       "timeSeconds": 964,
       "attempts": 1400
-    }
+    },
+    "packs": []
   },
   {
     "rank": 295,
@@ -9808,7 +10319,10 @@
     "scoringBaseline": {
       "timeSeconds": 1067,
       "attempts": 1129
-    }
+    },
+    "packs": [
+      "Polis Pack"
+    ]
   },
   {
     "rank": 296,
@@ -9841,7 +10355,10 @@
     "scoringBaseline": {
       "timeSeconds": 1205,
       "attempts": 1538
-    }
+    },
+    "packs": [
+      "SupremeSDB's Favorite Picks"
+    ]
   },
   {
     "rank": 297,
@@ -9867,7 +10384,11 @@
     "scoringBaseline": {
       "timeSeconds": 3043,
       "attempts": 2918
-    }
+    },
+    "packs": [
+      "One Gamemode Pack",
+      "Ship Carried Pack"
+    ]
   },
   {
     "rank": 298,
@@ -9914,7 +10435,10 @@
     "scoringBaseline": {
       "timeSeconds": 982,
       "attempts": 1254
-    }
+    },
+    "packs": [
+      "Supreme Pack"
+    ]
   },
   {
     "rank": 299,
@@ -9940,7 +10464,8 @@
     "scoringBaseline": {
       "timeSeconds": 1864,
       "attempts": 45503
-    }
+    },
+    "packs": []
   },
   {
     "rank": 300,
@@ -10008,7 +10533,8 @@
     "scoringBaseline": {
       "timeSeconds": 631,
       "attempts": 4625
-    }
+    },
+    "packs": []
   },
   {
     "rank": 301,
@@ -10034,7 +10560,8 @@
     "scoringBaseline": {
       "timeSeconds": 970,
       "attempts": 1462
-    }
+    },
+    "packs": []
   },
   {
     "rank": 302,
@@ -10060,7 +10587,8 @@
     "scoringBaseline": {
       "timeSeconds": 1225,
       "attempts": 23772
-    }
+    },
+    "packs": []
   },
   {
     "rank": 303,
@@ -10086,7 +10614,8 @@
     "scoringBaseline": {
       "timeSeconds": 1984,
       "attempts": 2486
-    }
+    },
+    "packs": []
   },
   {
     "rank": 304,
@@ -10126,7 +10655,10 @@
     "scoringBaseline": {
       "timeSeconds": 1190,
       "attempts": 2066
-    }
+    },
+    "packs": [
+      "Exasperation Pack"
+    ]
   },
   {
     "rank": 305,
@@ -10152,7 +10684,8 @@
     "scoringBaseline": {
       "timeSeconds": 1997,
       "attempts": 2572
-    }
+    },
+    "packs": []
   },
   {
     "rank": 306,
@@ -10185,7 +10718,8 @@
     "scoringBaseline": {
       "timeSeconds": 1384,
       "attempts": 6051
-    }
+    },
+    "packs": []
   },
   {
     "rank": 307,
@@ -10218,7 +10752,8 @@
     "scoringBaseline": {
       "timeSeconds": 2067,
       "attempts": 19323
-    }
+    },
+    "packs": []
   },
   {
     "rank": 308,
@@ -10244,7 +10779,8 @@
     "scoringBaseline": {
       "timeSeconds": 1144,
       "attempts": 2111
-    }
+    },
+    "packs": []
   },
   {
     "rank": 309,
@@ -10270,7 +10806,8 @@
     "scoringBaseline": {
       "timeSeconds": 1882,
       "attempts": 1635
-    }
+    },
+    "packs": []
   },
   {
     "rank": 310,
@@ -10303,7 +10840,10 @@
     "scoringBaseline": {
       "timeSeconds": 2195,
       "attempts": 6444
-    }
+    },
+    "packs": [
+      "Old Impossible Pack"
+    ]
   },
   {
     "rank": 311,
@@ -10329,7 +10869,8 @@
     "scoringBaseline": {
       "timeSeconds": 1102,
       "attempts": 6741
-    }
+    },
+    "packs": []
   },
   {
     "rank": 312,
@@ -10362,7 +10903,10 @@
     "scoringBaseline": {
       "timeSeconds": 1057,
       "attempts": 1438
-    }
+    },
+    "packs": [
+      "Blast Processing Pack"
+    ]
   },
   {
     "rank": 313,
@@ -10388,7 +10932,8 @@
     "scoringBaseline": {
       "timeSeconds": 1635,
       "attempts": 2306
-    }
+    },
+    "packs": []
   },
   {
     "rank": 314,
@@ -10414,7 +10959,8 @@
     "scoringBaseline": {
       "timeSeconds": 1781,
       "attempts": 2462
-    }
+    },
+    "packs": []
   },
   {
     "rank": 315,
@@ -10440,7 +10986,8 @@
     "scoringBaseline": {
       "timeSeconds": 1092,
       "attempts": 1425
-    }
+    },
+    "packs": []
   },
   {
     "rank": 316,
@@ -10466,7 +11013,8 @@
     "scoringBaseline": {
       "timeSeconds": 1061,
       "attempts": 1335
-    }
+    },
+    "packs": []
   },
   {
     "rank": 317,
@@ -10492,7 +11040,8 @@
     "scoringBaseline": {
       "timeSeconds": 2393,
       "attempts": 8950
-    }
+    },
+    "packs": []
   },
   {
     "rank": 318,
@@ -10518,7 +11067,8 @@
     "scoringBaseline": {
       "timeSeconds": 1301,
       "attempts": 1319
-    }
+    },
+    "packs": []
   },
   {
     "rank": 319,
@@ -10544,7 +11094,8 @@
     "scoringBaseline": {
       "timeSeconds": 2036,
       "attempts": 3002
-    }
+    },
+    "packs": []
   },
   {
     "rank": 320,
@@ -10577,7 +11128,8 @@
     "scoringBaseline": {
       "timeSeconds": 1409,
       "attempts": 1804
-    }
+    },
+    "packs": []
   },
   {
     "rank": 321,
@@ -10610,7 +11162,8 @@
     "scoringBaseline": {
       "timeSeconds": 654,
       "attempts": 776
-    }
+    },
+    "packs": []
   },
   {
     "rank": 322,
@@ -10636,7 +11189,8 @@
     "scoringBaseline": {
       "timeSeconds": 2267,
       "attempts": 3267
-    }
+    },
+    "packs": []
   },
   {
     "rank": 323,
@@ -10662,7 +11216,10 @@
     "scoringBaseline": {
       "timeSeconds": 1439,
       "attempts": 1802
-    }
+    },
+    "packs": [
+      "Never Clear Pack"
+    ]
   },
   {
     "rank": 324,
@@ -10688,7 +11245,8 @@
     "scoringBaseline": {
       "timeSeconds": 964,
       "attempts": 5118
-    }
+    },
+    "packs": []
   },
   {
     "rank": 325,
@@ -10721,7 +11279,8 @@
     "scoringBaseline": {
       "timeSeconds": 705,
       "attempts": 1067
-    }
+    },
+    "packs": []
   },
   {
     "rank": 326,
@@ -10761,7 +11320,10 @@
     "scoringBaseline": {
       "timeSeconds": 785,
       "attempts": 920
-    }
+    },
+    "packs": [
+      "Group Beats Pack"
+    ]
   },
   {
     "rank": 327,
@@ -10794,7 +11356,8 @@
     "scoringBaseline": {
       "timeSeconds": 892,
       "attempts": 1483
-    }
+    },
+    "packs": []
   },
   {
     "rank": 328,
@@ -10834,7 +11397,10 @@
     "scoringBaseline": {
       "timeSeconds": 698,
       "attempts": 1481
-    }
+    },
+    "packs": [
+      "Anceps Pack"
+    ]
   },
   {
     "rank": 329,
@@ -10860,7 +11426,8 @@
     "scoringBaseline": {
       "timeSeconds": 482,
       "attempts": 6280
-    }
+    },
+    "packs": []
   },
   {
     "rank": 330,
@@ -10900,7 +11467,11 @@
     "scoringBaseline": {
       "timeSeconds": 1207,
       "attempts": 1432
-    }
+    },
+    "packs": [
+      "Never Clear Pack",
+      "Unnerfed Pack"
+    ]
   },
   {
     "rank": 331,
@@ -10926,7 +11497,8 @@
     "scoringBaseline": {
       "timeSeconds": 2626,
       "attempts": 6408
-    }
+    },
+    "packs": []
   },
   {
     "rank": 332,
@@ -10952,7 +11524,8 @@
     "scoringBaseline": {
       "timeSeconds": 1919,
       "attempts": 3044
-    }
+    },
+    "packs": []
   },
   {
     "rank": 333,
@@ -10978,7 +11551,10 @@
     "scoringBaseline": {
       "timeSeconds": 1037,
       "attempts": 1253
-    }
+    },
+    "packs": [
+      "Satanic Pack"
+    ]
   },
   {
     "rank": 334,
@@ -11011,7 +11587,10 @@
     "scoringBaseline": {
       "timeSeconds": 730,
       "attempts": 840
-    }
+    },
+    "packs": [
+      "Main Level Pack"
+    ]
   },
   {
     "rank": 335,
@@ -11037,7 +11616,8 @@
     "scoringBaseline": {
       "timeSeconds": 1179,
       "attempts": 1472
-    }
+    },
+    "packs": []
   },
   {
     "rank": 336,
@@ -11077,7 +11657,10 @@
     "scoringBaseline": {
       "timeSeconds": 1207,
       "attempts": 1537
-    }
+    },
+    "packs": [
+      "Unnerfed Pack II"
+    ]
   },
   {
     "rank": 337,
@@ -11103,7 +11686,8 @@
     "scoringBaseline": {
       "timeSeconds": 1288,
       "attempts": 1790
-    }
+    },
+    "packs": []
   },
   {
     "rank": 338,
@@ -11136,7 +11720,11 @@
     "scoringBaseline": {
       "timeSeconds": 775,
       "attempts": 5074
-    }
+    },
+    "packs": [
+      "IiIOpTiCaLIiI Pack",
+      "Satanic Pack"
+    ]
   },
   {
     "rank": 339,
@@ -11169,7 +11757,8 @@
     "scoringBaseline": {
       "timeSeconds": 897,
       "attempts": 2243
-    }
+    },
+    "packs": []
   },
   {
     "rank": 340,
@@ -11195,7 +11784,8 @@
     "scoringBaseline": {
       "timeSeconds": 1706,
       "attempts": 2462
-    }
+    },
+    "packs": []
   },
   {
     "rank": 341,
@@ -11229,7 +11819,10 @@
     "scoringBaseline": {
       "timeSeconds": 960,
       "attempts": 3930
-    }
+    },
+    "packs": [
+      "Silent Clubstep Pack II"
+    ]
   },
   {
     "rank": 342,
@@ -11269,7 +11862,8 @@
     "scoringBaseline": {
       "timeSeconds": 1115,
       "attempts": 1305
-    }
+    },
+    "packs": []
   },
   {
     "rank": 343,
@@ -11316,7 +11910,10 @@
     "scoringBaseline": {
       "timeSeconds": 1046,
       "attempts": 1298
-    }
+    },
+    "packs": [
+      "Anceps Pack"
+    ]
   },
   {
     "rank": 344,
@@ -11356,7 +11953,8 @@
     "scoringBaseline": {
       "timeSeconds": 1036,
       "attempts": 1236
-    }
+    },
+    "packs": []
   },
   {
     "rank": 345,
@@ -11403,7 +12001,11 @@
     "scoringBaseline": {
       "timeSeconds": 886,
       "attempts": 916
-    }
+    },
+    "packs": [
+      "Possible Pack",
+      "Unnerfed Pack"
+    ]
   },
   {
     "rank": 346,
@@ -11429,7 +12031,10 @@
     "scoringBaseline": {
       "timeSeconds": 2046,
       "attempts": 1629
-    }
+    },
+    "packs": [
+      "Mirror Portal Pack"
+    ]
   },
   {
     "rank": 347,
@@ -11462,7 +12067,11 @@
     "scoringBaseline": {
       "timeSeconds": 685,
       "attempts": 1994
-    }
+    },
+    "packs": [
+      "Old Impossible Pack II",
+      "Silent Clubstep Pack"
+    ]
   },
   {
     "rank": 348,
@@ -11509,7 +12118,10 @@
     "scoringBaseline": {
       "timeSeconds": 588,
       "attempts": 977
-    }
+    },
+    "packs": [
+      "Full Runs by 1 Player Pack"
+    ]
   },
   {
     "rank": 349,
@@ -11542,7 +12154,8 @@
     "scoringBaseline": {
       "timeSeconds": 485,
       "attempts": 793
-    }
+    },
+    "packs": []
   },
   {
     "rank": 350,
@@ -11575,7 +12188,8 @@
     "scoringBaseline": {
       "timeSeconds": 1032,
       "attempts": 1412
-    }
+    },
+    "packs": []
   },
   {
     "rank": 351,
@@ -11608,7 +12222,8 @@
     "scoringBaseline": {
       "timeSeconds": 882,
       "attempts": 1418
-    }
+    },
+    "packs": []
   },
   {
     "rank": 352,
@@ -11676,7 +12291,10 @@
     "scoringBaseline": {
       "timeSeconds": 882,
       "attempts": 1197
-    }
+    },
+    "packs": [
+      "Group Beats Pack"
+    ]
   },
   {
     "rank": 353,
@@ -11709,7 +12327,8 @@
     "scoringBaseline": {
       "timeSeconds": 857,
       "attempts": 906
-    }
+    },
+    "packs": []
   },
   {
     "rank": 354,
@@ -11777,7 +12396,10 @@
     "scoringBaseline": {
       "timeSeconds": 934,
       "attempts": 1071
-    }
+    },
+    "packs": [
+      "Never Clear Pack"
+    ]
   },
   {
     "rank": 355,
@@ -11824,7 +12446,10 @@
     "scoringBaseline": {
       "timeSeconds": 237,
       "attempts": 249
-    }
+    },
+    "packs": [
+      "Full Runs by 1 Player Pack"
+    ]
   },
   {
     "rank": 356,
@@ -11899,7 +12524,12 @@
     "scoringBaseline": {
       "timeSeconds": 444,
       "attempts": 824
-    }
+    },
+    "packs": [
+      "Old Impossible Nine Circles Pack",
+      "Old Impossible Pack II",
+      "Satanic Pack"
+    ]
   },
   {
     "rank": 357,
@@ -11925,7 +12555,10 @@
     "scoringBaseline": {
       "timeSeconds": 632,
       "attempts": 895
-    }
+    },
+    "packs": [
+      "Christmas Pack"
+    ]
   },
   {
     "rank": 358,
@@ -11958,7 +12591,8 @@
     "scoringBaseline": {
       "timeSeconds": 925,
       "attempts": 1327
-    }
+    },
+    "packs": []
   },
   {
     "rank": 359,
@@ -11991,7 +12625,10 @@
     "scoringBaseline": {
       "timeSeconds": 928,
       "attempts": 1711
-    }
+    },
+    "packs": [
+      "Christmas Pack"
+    ]
   },
   {
     "rank": 360,
@@ -12031,7 +12668,8 @@
     "scoringBaseline": {
       "timeSeconds": 1009,
       "attempts": 1145
-    }
+    },
+    "packs": []
   },
   {
     "rank": 361,
@@ -12064,7 +12702,8 @@
     "scoringBaseline": {
       "timeSeconds": 980,
       "attempts": 1217
-    }
+    },
+    "packs": []
   },
   {
     "rank": 362,
@@ -12132,7 +12771,8 @@
     "scoringBaseline": {
       "timeSeconds": 447,
       "attempts": 2910
-    }
+    },
+    "packs": []
   },
   {
     "rank": 363,
@@ -12165,7 +12805,8 @@
     "scoringBaseline": {
       "timeSeconds": 958,
       "attempts": 1432
-    }
+    },
+    "packs": []
   },
   {
     "rank": 364,
@@ -12198,7 +12839,8 @@
     "scoringBaseline": {
       "timeSeconds": 585,
       "attempts": 27029
-    }
+    },
+    "packs": []
   },
   {
     "rank": 365,
@@ -12224,7 +12866,8 @@
     "scoringBaseline": {
       "timeSeconds": 912,
       "attempts": 1382
-    }
+    },
+    "packs": []
   },
   {
     "rank": 366,
@@ -12250,7 +12893,8 @@
     "scoringBaseline": {
       "timeSeconds": 909,
       "attempts": 1096
-    }
+    },
+    "packs": []
   },
   {
     "rank": 367,
@@ -12276,7 +12920,12 @@
     "scoringBaseline": {
       "timeSeconds": 5281,
       "attempts": 7679
-    }
+    },
+    "packs": [
+      "Blast Processing Pack",
+      "Main Level Pack",
+      "Old Impossible Pack II"
+    ]
   },
   {
     "rank": 368,
@@ -12344,7 +12993,10 @@
     "scoringBaseline": {
       "timeSeconds": 875,
       "attempts": 1126
-    }
+    },
+    "packs": [
+      "Unnerfed Pack"
+    ]
   },
   {
     "rank": 369,
@@ -12419,7 +13071,10 @@
     "scoringBaseline": {
       "timeSeconds": 913,
       "attempts": 978
-    }
+    },
+    "packs": [
+      "Possible Pack"
+    ]
   },
   {
     "rank": 370,
@@ -12459,7 +13114,8 @@
     "scoringBaseline": {
       "timeSeconds": 868,
       "attempts": 1164
-    }
+    },
+    "packs": []
   },
   {
     "rank": 371,
@@ -12492,7 +13148,8 @@
     "scoringBaseline": {
       "timeSeconds": 737,
       "attempts": 6530
-    }
+    },
+    "packs": []
   },
   {
     "rank": 372,
@@ -12525,7 +13182,10 @@
     "scoringBaseline": {
       "timeSeconds": 934,
       "attempts": 1154
-    }
+    },
+    "packs": [
+      "Grandson Pack"
+    ]
   },
   {
     "rank": 373,
@@ -12551,7 +13211,8 @@
     "scoringBaseline": {
       "timeSeconds": 508,
       "attempts": 4101
-    }
+    },
+    "packs": []
   },
   {
     "rank": 374,
@@ -12584,7 +13245,8 @@
     "scoringBaseline": {
       "timeSeconds": 1485,
       "attempts": 2995
-    }
+    },
+    "packs": []
   },
   {
     "rank": 375,
@@ -12610,7 +13272,8 @@
     "scoringBaseline": {
       "timeSeconds": 2100,
       "attempts": 4604
-    }
+    },
+    "packs": []
   },
   {
     "rank": 376,
@@ -12636,7 +13299,8 @@
     "scoringBaseline": {
       "timeSeconds": 1958,
       "attempts": 2053
-    }
+    },
+    "packs": []
   },
   {
     "rank": 377,
@@ -12669,7 +13333,8 @@
     "scoringBaseline": {
       "timeSeconds": 878,
       "attempts": 1170
-    }
+    },
+    "packs": []
   },
   {
     "rank": 378,
@@ -12702,7 +13367,8 @@
     "scoringBaseline": {
       "timeSeconds": 976,
       "attempts": 1065
-    }
+    },
+    "packs": []
   },
   {
     "rank": 379,
@@ -12742,7 +13408,11 @@
     "scoringBaseline": {
       "timeSeconds": 945,
       "attempts": 993
-    }
+    },
+    "packs": [
+      "Full Runs by 1 Player Pack",
+      "greafer Pack"
+    ]
   },
   {
     "rank": 380,
@@ -12775,7 +13445,10 @@
     "scoringBaseline": {
       "timeSeconds": 908,
       "attempts": 6950
-    }
+    },
+    "packs": [
+      "Challenge Pack"
+    ]
   },
   {
     "rank": 381,
@@ -12801,7 +13474,8 @@
     "scoringBaseline": {
       "timeSeconds": 2181,
       "attempts": 2663
-    }
+    },
+    "packs": []
   },
   {
     "rank": 382,
@@ -12827,7 +13501,8 @@
     "scoringBaseline": {
       "timeSeconds": 1392,
       "attempts": 5893
-    }
+    },
+    "packs": []
   },
   {
     "rank": 383,
@@ -12860,7 +13535,8 @@
     "scoringBaseline": {
       "timeSeconds": 862,
       "attempts": 1332
-    }
+    },
+    "packs": []
   },
   {
     "rank": 384,
@@ -12907,7 +13583,8 @@
     "scoringBaseline": {
       "timeSeconds": 880,
       "attempts": 1063
-    }
+    },
+    "packs": []
   },
   {
     "rank": 385,
@@ -12940,7 +13617,8 @@
     "scoringBaseline": {
       "timeSeconds": 1613,
       "attempts": 1972
-    }
+    },
+    "packs": []
   },
   {
     "rank": 386,
@@ -12966,7 +13644,10 @@
     "scoringBaseline": {
       "timeSeconds": 1368,
       "attempts": 2509
-    }
+    },
+    "packs": [
+      "Never Clear Pack"
+    ]
   },
   {
     "rank": 387,
@@ -12992,7 +13673,8 @@
     "scoringBaseline": {
       "timeSeconds": 1620,
       "attempts": 2232
-    }
+    },
+    "packs": []
   },
   {
     "rank": 388,
@@ -13018,7 +13700,8 @@
     "scoringBaseline": {
       "timeSeconds": 1487,
       "attempts": 1871
-    }
+    },
+    "packs": []
   },
   {
     "rank": 389,
@@ -13051,7 +13734,8 @@
     "scoringBaseline": {
       "timeSeconds": 2128,
       "attempts": 2500
-    }
+    },
+    "packs": []
   },
   {
     "rank": 390,
@@ -13084,7 +13768,8 @@
     "scoringBaseline": {
       "timeSeconds": 1053,
       "attempts": 2828
-    }
+    },
+    "packs": []
   },
   {
     "rank": 391,
@@ -13292,6 +13977,9 @@
     "scoringBaseline": {
       "timeSeconds": 690,
       "attempts": 969
-    }
+    },
+    "packs": [
+      "Possible Pack"
+    ]
   }
 ]
