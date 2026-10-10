@@ -85,7 +85,7 @@ const PACK_COLORS = {
   ],
   "ILL Top 1 Pack": [
     "#318a73",
-    "#1b523f"
+    "#123a2c"
   ],
   "Mirror Portal Pack": [
     "#ff8800",
@@ -131,17 +131,21 @@ const PACK_COLORS = {
     "#ff5263",
     "#68e39b"
   ],
-  "SupremeSDB's Favorite Picks": [
+  "SupremeSDB's Favorite Pack": [
     "#505a68",
     "#529dff"
   ],
-  "RMGD Legend": [
+  "RMGD Legend Pack": [
     "#2C211A",
     "#1F131F"
   ],
   "Legend Pack": [
     "#002353",
     "#001D2C"
+  ],
+  "Legend Pack II": [
+    "#27012E",
+    "#DA00FF"
   ],
   "Blast Processing Pack": [
     "#ff9100",
@@ -178,8 +182,44 @@ const PACK_COLORS = {
   "Rampant Pack": [
     "#474747",
     "#131312"
-  ], 
- "Swift Pack": [
+  ],
+  "V2 Pack": [
+    "#7a7cff",
+    "#101827"
+  ],
+  "1Cicl3 Pack": [
+    "#a3daff",
+    "#2b0b3a"
+  ],
+  "2019 Pack": [
+    "#ffb703",
+    "#f94144"
+  ],
+  "2017 Pack": [
+    "#fca311",
+    "#14213d"
+  ],
+  "SLL Nine Circles Pack": [
+    "#d900ff",
+    "#1d3557"
+  ],
+  "ILL Top 1 Pack II": [
+    "#2531d8",
+    "rgb(29, 28, 95)"
+  ],
+  "Fast Pack": [
+    "#f500d4",
+    "#9c0000"
+  ],
+  "AngelEffect Pack": [
+    "#8de4ff",
+    "#ffffff"
+  ],
+  "One Player Dual Pack": [
+    "#f6bd60",
+    "#2a9d8f"
+  ],
+  "Swift Pack": [
     "#a8ff9e",
     "#ff9eff"
   ]

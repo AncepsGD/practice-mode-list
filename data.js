@@ -178,6 +178,10 @@ function mergeVerificationSources(remoteData, savedData) {
     if (!savedItem) return remoteItem;
 
     const result = { ...remoteItem, ...savedItem };
+    result.packs = [...new Set([
+      ...(Array.isArray(remoteItem.packs) ? remoteItem.packs : []),
+      ...(Array.isArray(savedItem.packs) ? savedItem.packs : []),
+    ].map((pack) => String(pack || "").trim()).filter(Boolean))];
     ["creator", "creators", "tier", "length", "precision", "tps", "ratio", "twoPlayer", "showcaseVideo", "showcaseVideoUrl", "image", "thumbnail"].forEach((field) => {
       if (savedItem[field] === "" || savedItem[field] === null || savedItem[field] === undefined) {
         result[field] = remoteItem[field];

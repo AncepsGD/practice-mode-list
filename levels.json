@@ -399,7 +399,9 @@
       "timeSeconds": 9583,
       "attempts": 133429
     },
-    "packs": []
+    "packs": [
+      "SLL Nine Circles Pack"
+    ]
   },
   {
     "rank": 14,
@@ -443,7 +445,8 @@
     "showcaseVideo": "https://www.youtube.com/watch?v=Rl2IALks5_E",
     "image": "",
     "packs": [
-      "Swift Pack"
+      "Swift Pack",
+      "ILL Top 1 Pack II"
     ],
     "victors": [
       {
@@ -497,9 +500,12 @@
     "tps": 1285,
     "precision": "",
     "ratio": "SH46(4) C32.5(3) W21.5(2) D43.3(4) S56.7(4) IM0.0(0) NM100.0(0) 0.5X62.9(3) 4X14(11) 2X11.2(7) 3X10.4(7) 1X1.5(2)",
-    "twoPlayer": "",
+    "twoPlayer": "2 Player",
     "showcaseVideo": "https://youtu.be/qi5622PJg9Q",
     "image": "",
+    "packs": [
+      "ILL Top 1 Pack"
+    ],
     "victors": [
       {
         "name": "RMGD",
@@ -512,10 +518,7 @@
     "scoringBaseline": {
       "timeSeconds": 7177,
       "attempts": 38479
-    },
-    "packs": [
-      "ILL Top 1 Pack"
-    ]
+    }
   },
   {
     "rank": 18,
@@ -606,7 +609,9 @@
       "timeSeconds": 7437,
       "attempts": 16249
     },
-    "packs": []
+    "packs": [
+      "ILL Top 1 Pack II"
+    ]
   },
   {
     "rank": 21,
@@ -620,6 +625,10 @@
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=nLtkxV_ms88",
     "image": "",
+    "packs": [
+      "ILL Top 1 Pack",
+      "2017 Pack"
+    ],
     "victors": [
       {
         "name": "Anceps",
@@ -632,10 +641,7 @@
     "scoringBaseline": {
       "timeSeconds": 5324,
       "attempts": 10957
-    },
-    "packs": [
-      "ILL Top 1 Pack"
-    ]
+    }
   },
   {
     "rank": 22,
@@ -663,7 +669,8 @@
       "attempts": 82527
     },
     "packs": [
-      "Rampant Pack"
+      "Rampant Pack",
+      "SLL Nine Circles Pack"
     ]
   },
   {
@@ -1032,7 +1039,8 @@
       "attempts": 9459
     },
     "packs": [
-      "XL Pack"
+      "XL Pack",
+      "Fast Pack"
     ]
   },
   {
@@ -1307,7 +1315,9 @@
       "timeSeconds": 6320,
       "attempts": 24775
     },
-    "packs": []
+    "packs": [
+      "ILL Top 1 Pack II"
+    ]
   },
   {
     "rank": 43,
@@ -2528,7 +2538,10 @@
       "timeSeconds": 4699,
       "attempts": 10719
     },
-    "packs": []
+    "packs": [
+      "V2 Pack",
+      "AngelEffect Pack"
+    ]
   },
   {
     "rank": 82,
@@ -2570,7 +2583,8 @@
     "showcaseVideo": "https://www.youtube.com/watch?v=Hip-msSnBGU",
     "image": "",
     "packs": [
-      "Swift Pack"
+      "Swift Pack",
+      "SLL Nine Circles Pack"
     ],
     "victors": [
       {
@@ -2703,7 +2717,8 @@
       "attempts": 5272
     },
     "packs": [
-      "XL Pack II"
+      "XL Pack II",
+      "Fast Pack"
     ]
   },
   {
@@ -2851,7 +2866,8 @@
     },
     "packs": [
       "Bloodshadow Pack",
-      "KOM Trilogy Pack"
+      "KOM Trilogy Pack",
+      "ILL Top 1 Pack II"
     ]
   },
   {
@@ -2886,7 +2902,9 @@
       "timeSeconds": 2791,
       "attempts": 2876
     },
-    "packs": []
+    "packs": [
+      "Fast Pack"
+    ]
   },
   {
     "rank": 92,
@@ -3066,6 +3084,10 @@
     "twoPlayer": "",
     "showcaseVideo": "",
     "image": "",
+    "packs": [
+      "Brainrotted Pack",
+      "SupremeSDB's Favorite Pack"
+    ],
     "victors": [
       {
         "name": "TheEscaderGD",
@@ -3073,16 +3095,19 @@
         "time": "5h 14m 21s",
         "attempts": 8800,
         "video": "https://youtu.be/4YLCLwCSvSk"
+      },
+      {
+        "name": "MrT1",
+        "date": "2026-10-09",
+        "time": "44m 30s",
+        "attempts": 27911,
+        "video": "https://youtu.be/ISEby4QANQs"
       }
     ],
     "scoringBaseline": {
       "timeSeconds": 18861,
       "attempts": 8800
-    },
-    "packs": [
-      "Brainrotted Pack",
-      "SupremeSDB's Favorite Picks"
-    ]
+    }
   },
   {
     "rank": 97,
@@ -3463,7 +3488,8 @@
       "attempts": 2165
     },
     "packs": [
-      "XL Pack"
+      "XL Pack",
+      "AngelEffect Pack"
     ]
   },
   {
@@ -3505,7 +3531,9 @@
       "timeSeconds": 3229,
       "attempts": 3440
     },
-    "packs": []
+    "packs": [
+      "AngelEffect Pack"
+    ]
   },
   {
     "rank": 110,
@@ -3693,7 +3721,7 @@
     },
     "packs": [
       "Brainrotted Pack",
-      "SupremeSDB's Favorite Picks"
+      "SupremeSDB's Favorite Pack"
     ]
   },
   {
@@ -4109,7 +4137,9 @@
       "timeSeconds": 3550,
       "attempts": 22475
     },
-    "packs": []
+    "packs": [
+      "V2 Pack"
+    ]
   },
   {
     "rank": 127,
@@ -4475,7 +4505,8 @@
     "packs": [
       "Old Impossible Nine Circles Pack",
       "Old Impossible Pack",
-      "PML Day One Pack"
+      "PML Day One Pack",
+      "ILL Top 1 Pack II"
     ]
   },
   {
@@ -5842,7 +5873,9 @@
       "timeSeconds": 1231,
       "attempts": 4259
     },
-    "packs": []
+    "packs": [
+      "2019 Pack"
+    ]
   },
   {
     "rank": 176,
@@ -5856,6 +5889,9 @@
     "twoPlayer": "2 Player",
     "showcaseVideo": "https://youtu.be/UWl8haXonPg",
     "image": "https://levelthumbs.prevter.me/thumbnail/39685177/high",
+    "packs": [
+      "2017 Pack"
+    ],
     "victors": [
       {
         "name": "OtherChris",
@@ -5896,8 +5932,7 @@
     "scoringBaseline": {
       "timeSeconds": 1240,
       "attempts": 5987
-    },
-    "packs": []
+    }
   },
   {
     "rank": 177,
@@ -6552,7 +6587,8 @@
     },
     "packs": [
       "Exasperation Pack",
-      "XL Pack"
+      "XL Pack",
+      "2017 Pack"
     ]
   },
   {
@@ -7300,7 +7336,9 @@
       "timeSeconds": 921,
       "attempts": 1438
     },
-    "packs": []
+    "packs": [
+      "One Player Dual Pack"
+    ]
   },
   {
     "rank": 213,
@@ -7413,7 +7451,8 @@
       "attempts": 1269
     },
     "packs": [
-      "ILL Top 1 Pack"
+      "ILL Top 1 Pack",
+      "2019 Pack"
     ]
   },
   {
@@ -7462,6 +7501,9 @@
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/xJMDlzGyb6c",
     "image": "",
+    "packs": [
+      "XL Pack"
+    ],
     "victors": [
       {
         "name": "Skeletonette",
@@ -7623,16 +7665,20 @@
         "time": "54m 57s",
         "attempts": 6942,
         "video": "https://www.youtube.com/watch?v=SuvT7WcAlRA&t=844"
+      },
+      {
+        "name": "catsua",
+        "date": "2026-10-10",
+        "time": "1h 10m 34s",
+        "attempts": 15517,
+        "video": "https://origrid.io/d/H8DIv9AVw"
       }
     ],
     "tier": "Advanced",
     "scoringBaseline": {
       "timeSeconds": 1018,
       "attempts": 1410
-    },
-    "packs": [
-      "XL Pack"
-    ]
+    }
   },
   {
     "rank": 218,
@@ -7700,7 +7746,9 @@
       "timeSeconds": 2345,
       "attempts": 4486
     },
-    "packs": []
+    "packs": [
+      "2019 Pack"
+    ]
   },
   {
     "rank": 220,
@@ -7816,7 +7864,8 @@
       "attempts": 2813
     },
     "packs": [
-      "Polis Pack"
+      "Polis Pack",
+      "1Cicl3 Pack"
     ]
   },
   {
@@ -8272,7 +8321,8 @@
       "attempts": 1258
     },
     "packs": [
-      "greafer Pack"
+      "greafer Pack",
+      "One Player Dual Pack"
     ]
   },
   {
@@ -8629,6 +8679,7 @@
     "twoPlayer": "",
     "showcaseVideo": "",
     "image": "",
+    "packs": [],
     "victors": [
       {
         "name": "RMGD",
@@ -8636,13 +8687,19 @@
         "time": "27m 41s",
         "attempts": 2258,
         "video": "https://www.youtube.com/playlist?list=PLUQBDv3sBlps"
+      },
+      {
+        "name": "Stereogamer992",
+        "date": "2026-10-10",
+        "time": "23m 17s",
+        "attempts": 12438,
+        "video": "https://youtube.com/live/lJ6caMTgvNg"
       }
     ],
     "scoringBaseline": {
       "timeSeconds": 1661,
       "attempts": 2258
-    },
-    "packs": []
+    }
   },
   {
     "rank": 248,
@@ -9034,7 +9091,7 @@
       "attempts": 3019
     },
     "packs": [
-      "SupremeSDB's Favorite Picks"
+      "SupremeSDB's Favorite Pack"
     ]
   },
   {
@@ -9599,7 +9656,9 @@
       "timeSeconds": 2183,
       "attempts": 2353
     },
-    "packs": []
+    "packs": [
+      "AngelEffect Pack"
+    ]
   },
   {
     "rank": 276,
@@ -9934,7 +9993,8 @@
     },
     "packs": [
       "Possible Pack",
-      "Unnerfed Pack II"
+      "Unnerfed Pack II",
+      "Fast Pack"
     ]
   },
   {
@@ -10357,7 +10417,7 @@
       "attempts": 1538
     },
     "packs": [
-      "SupremeSDB's Favorite Picks"
+      "SupremeSDB's Favorite Pack"
     ]
   },
   {
@@ -10657,7 +10717,8 @@
       "attempts": 2066
     },
     "packs": [
-      "Exasperation Pack"
+      "Exasperation Pack",
+      "Fast Pack"
     ]
   },
   {
@@ -11498,7 +11559,9 @@
       "timeSeconds": 2626,
       "attempts": 6408
     },
-    "packs": []
+    "packs": [
+      "V2 Pack"
+    ]
   },
   {
     "rank": 332,
@@ -12004,7 +12067,8 @@
     },
     "packs": [
       "Possible Pack",
-      "Unnerfed Pack"
+      "Unnerfed Pack",
+      "One Player Dual Pack"
     ]
   },
   {
@@ -12342,6 +12406,9 @@
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/jvqxtKUZzuQ",
     "image": "",
+    "packs": [
+      "Never Clear Pack"
+    ],
     "victors": [
       {
         "name": "RMGD",
@@ -12391,15 +12458,19 @@
         "time": "19m 21s",
         "attempts": 2930,
         "video": "https://youtu.be/s662TCUmxrQ"
+      },
+      {
+        "name": "catsua",
+        "date": "2026-10-10",
+        "time": "25m 31s",
+        "attempts": 4963,
+        "video": "https://drive.google.com/file/d/1aO9NVeaNfrm6LrjA0fsdbIplxHeFjOWL/view?usp=sharing"
       }
     ],
     "scoringBaseline": {
       "timeSeconds": 934,
       "attempts": 1071
-    },
-    "packs": [
-      "Never Clear Pack"
-    ]
+    }
   },
   {
     "rank": 355,
@@ -13368,7 +13439,9 @@
       "timeSeconds": 976,
       "attempts": 1065
     },
-    "packs": []
+    "packs": [
+      "AngelEffect Pack"
+    ]
   },
   {
     "rank": 379,
@@ -13674,7 +13747,9 @@
       "timeSeconds": 1620,
       "attempts": 2232
     },
-    "packs": []
+    "packs": [
+      "One Player Dual Pack"
+    ]
   },
   {
     "rank": 388,
@@ -13768,8 +13843,7 @@
     "scoringBaseline": {
       "timeSeconds": 1053,
       "attempts": 2828
-    },
-    "packs": []
+    }
   },
   {
     "rank": 391,
