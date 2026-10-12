@@ -29,35 +29,6 @@
   },
   {
     "rank": 2,
-    "name": "Minus World (Old)",
-    "creators": "IcEDCave, InVisible",
-    "id": "111168619",
-    "length": "3m 2s",
-    "tps": 1140,
-    "precision": "",
-    "ratio": "W100(0) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 3X54.5(2) 0.5X45.5(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/eUYtHhjgang?si=HVtAfD4iwknt-3jO",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-08-27",
-        "time": "10h 21m 21s",
-        "attempts": 695759,
-        "video": "https://www.youtube.com/playlist?list=PLYRdTDDy6Qgc"
-      }
-    ],
-    "scoringBaseline": {
-      "timeSeconds": 37281,
-      "attempts": 695759
-    },
-    "packs": [
-      "icedcave Pack"
-    ]
-  },
-  {
-    "rank": 3,
     "name": "The Twilight Zone (Unnerfed)",
     "creators": "IiIOpTiCaLIiI",
     "id": "137338835",
@@ -92,6 +63,35 @@
     "packs": [
       "IiIOpTiCaLIiI Pack",
       "KOM Trilogy Pack"
+    ]
+  },
+  {
+    "rank": 3,
+    "name": "Minus World (Old)",
+    "creators": "IcEDCave, InVisible",
+    "id": "111168619",
+    "length": "3m 2s",
+    "tps": 1140,
+    "precision": "",
+    "ratio": "W100(0) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 3X54.5(2) 0.5X45.5(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/eUYtHhjgang?si=HVtAfD4iwknt-3jO",
+    "image": "",
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-08-27",
+        "time": "10h 21m 21s",
+        "attempts": 695759,
+        "video": "https://www.youtube.com/playlist?list=PLYRdTDDy6Qgc"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 37281,
+      "attempts": 695759
+    },
+    "packs": [
+      "icedcave Pack"
     ]
   },
   {
