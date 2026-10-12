@@ -2661,11 +2661,12 @@
     "id": "125861426",
     "length": "2m 7s",
     "tps": 240,
-    "precision": "",
+    "precision": 858.45,
     "ratio": "SH37.7(6) U20.7(9) R18.5(3) B14.6(6) W4.6(2) C2.1(3) SP1.8(2) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X56.4(10) 1X20.7(10) 4X10.2(3) 3X6.6(3) 2X6.1(5)",
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=UEM2h1OLEuQ",
     "image": "",
+    "packs": [],
     "victors": [
       {
         "name": "kyle1saurus",
@@ -2678,8 +2679,7 @@
     "scoringBaseline": {
       "timeSeconds": 3762,
       "attempts": 4783
-    },
-    "packs": []
+    }
   },
   {
     "rank": 87,
@@ -6615,11 +6615,16 @@
     "id": "140724097",
     "length": "6m 38s",
     "tps": 240,
-    "precision": "",
+    "precision": 306,
     "ratio": "C37.3(28) SH28.2(28) W20.8(19) U6.1(9) B4.6(6) R1.7(4) SP1.4(3) D3.9(3) S96.1(3) IM0.0(0) NM100.0(0) 0.5X100(1)",
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/3JdCgAuTuFQ",
     "image": "https://levelthumbs.prevter.me/thumbnail/36869898/high",
+    "packs": [
+      "Exasperation Pack",
+      "XL Pack",
+      "2017 Pack"
+    ],
     "victors": [
       {
         "name": "Skinniboi3",
@@ -6674,12 +6679,7 @@
     "scoringBaseline": {
       "timeSeconds": 2226,
       "attempts": 1539
-    },
-    "packs": [
-      "Exasperation Pack",
-      "XL Pack",
-      "2017 Pack"
-    ]
+    }
   },
   {
     "rank": 198,
@@ -13816,11 +13816,15 @@
     "id": "95647061",
     "length": "2m 17s",
     "tps": 360,
-    "precision": "",
+    "precision": 488.25,
     "ratio": "C88.7(21) SH5.8(14) W2.5(8) B1.7(4) U1(7) SP0.2(2) D36.6(4) S63.4(3) IM0.0(0) NM100.0(0) 0.5X82.6(22) 4X7.7(15) 1X7.3(15) 3X1.3(13) 2X1(12)",
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/xCVLSlk_d8E",
     "image": "",
+    "packs": [
+      "Full Runs by 1 Player Pack",
+      "greafer Pack"
+    ],
     "victors": [
       {
         "name": "RMGD",
@@ -13847,11 +13851,7 @@
     "scoringBaseline": {
       "timeSeconds": 945,
       "attempts": 993
-    },
-    "packs": [
-      "Full Runs by 1 Player Pack",
-      "greafer Pack"
-    ]
+    }
   },
   {
     "rank": 391,
