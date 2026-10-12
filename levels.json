@@ -376,6 +376,35 @@
   },
   {
     "rank": 13,
+    "name": "Zobros Worst Fear",
+    "creators": "Senpranton15",
+    "id": "82669598",
+    "length": "40s",
+    "tps": 2633,
+    "precision": "",
+    "ratio": "W63.9(2) C35.2(0) SH0.9(1) D91.9(1) S8.1(0) IM0.0(0) NM100.0(0) 0.5X49.4(3) 4X43(5) 3X5.6(4) 2X1.7(2) 1X0.3(1)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://youtu.be/ZzNkYe7WDCc?si=W8kVfNz5XFcTPmI9",
+    "image": "",
+    "packs": [
+      "SLL Nine Circles Pack"
+    ],
+    "victors": [
+      {
+        "name": "RMGD",
+        "date": "2026-07-23",
+        "time": "2h 39m 43s",
+        "attempts": 133429,
+        "video": "https://youtu.be/7Xdthw8FkTs"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 9583,
+      "attempts": 133429
+    }
+  },
+  {
+    "rank": 14,
     "name": "BtSk Legend",
     "creators": "BtSik",
     "id": "82295785",
@@ -404,7 +433,7 @@
     ]
   },
   {
-    "rank": 14,
+    "rank": 15,
     "name": "Formosa",
     "creators": "eightos",
     "id": "92796375",
@@ -434,7 +463,7 @@
     }
   },
   {
-    "rank": 15,
+    "rank": 16,
     "name": "grandma demon",
     "creators": "Skyyee",
     "id": "92518531",
@@ -463,7 +492,7 @@
     ]
   },
   {
-    "rank": 16,
+    "rank": 17,
     "name": "arcturus (Unnerfed)",
     "creators": "maxfs",
     "id": "67059113",
@@ -492,7 +521,7 @@
     }
   },
   {
-    "rank": 17,
+    "rank": 18,
     "name": "Minus World (Old, 1P, Skip)",
     "creators": "IcEDCave, InVisible",
     "id": "139501388",
@@ -526,7 +555,7 @@
     "packs": []
   },
   {
-    "rank": 18,
+    "rank": 19,
     "name": "Sailent Clubvoid",
     "creators": "nostaplaca",
     "id": "96403526",
@@ -556,7 +585,7 @@
     ]
   },
   {
-    "rank": 19,
+    "rank": 20,
     "name": "MINUSclub",
     "creators": "SeptaGon7, Akira Kurisu",
     "id": "65476277",
@@ -585,7 +614,7 @@
     ]
   },
   {
-    "rank": 20,
+    "rank": 21,
     "name": "ICE Carbon Destiny",
     "creators": "Chicharito52",
     "id": "141594975",
@@ -615,7 +644,7 @@
     }
   },
   {
-    "rank": 21,
+    "rank": 22,
     "name": "Rampant Circles (Unnerfed)",
     "creators": "NXISE",
     "id": "62543354",
@@ -645,7 +674,7 @@
     ]
   },
   {
-    "rank": 22,
+    "rank": 23,
     "name": "Provocation Circles",
     "creators": "RMGD",
     "id": "128519465",
@@ -672,7 +701,7 @@
     "packs": []
   },
   {
-    "rank": 23,
+    "rank": 24,
     "name": "Basalt Caverns",
     "creators": "higuy2016 & more",
     "id": "126105053",
@@ -699,7 +728,7 @@
     "packs": []
   },
   {
-    "rank": 24,
+    "rank": 25,
     "name": "wistfully (Old)",
     "creators": "nanayuisei, Veyltheris, KrXyt",
     "id": "120341680",
@@ -734,7 +763,7 @@
     "packs": []
   },
   {
-    "rank": 25,
+    "rank": 26,
     "name": "Sailent Discoworld",
     "creators": "SylenPaws, SuperUltra64",
     "id": "108115322",
@@ -763,7 +792,7 @@
     ]
   },
   {
-    "rank": 26,
+    "rank": 27,
     "name": "YTRAKUSS (1P)",
     "creators": "Sleepypann, ItsRobianny",
     "id": "147560896",
@@ -790,7 +819,7 @@
     "packs": []
   },
   {
-    "rank": 27,
+    "rank": 28,
     "name": "supreme Machine",
     "creators": "IiIOpTiCaLIiI",
     "id": "127761173",
@@ -820,7 +849,7 @@
     ]
   },
   {
-    "rank": 28,
+    "rank": 29,
     "name": "firefly",
     "creators": "thegqc & more",
     "id": "128711665",
@@ -847,7 +876,7 @@
     "packs": []
   },
   {
-    "rank": 29,
+    "rank": 30,
     "name": "The Twilight Zone (ILL)",
     "creators": "IiIOpTiCaLIiI, skeletonlol",
     "id": "122700146",
@@ -874,7 +903,7 @@
     "packs": []
   },
   {
-    "rank": 30,
+    "rank": 31,
     "name": "Satanic Palm Mutes (ILL)",
     "creators": "IiIOpTiCaLIiI, skeletonlol",
     "id": "122699857",
@@ -901,7 +930,7 @@
     "packs": []
   },
   {
-    "rank": 31,
+    "rank": 32,
     "name": "Kingdom of Miracalis (ILL)",
     "creators": "gdmiracle, skeletonlol",
     "id": "77452038",
@@ -928,7 +957,7 @@
     "packs": []
   },
   {
-    "rank": 32,
+    "rank": 33,
     "name": "ZOINK NEVER CLEAR (Unnerfed)",
     "creators": "Smarted",
     "id": "136891983",
@@ -958,7 +987,7 @@
     ]
   },
   {
-    "rank": 33,
+    "rank": 34,
     "name": "Treasures of Ruin",
     "creators": "realhutoew",
     "id": "96919097",
@@ -985,7 +1014,7 @@
     "packs": []
   },
   {
-    "rank": 34,
+    "rank": 35,
     "name": "Anima Immortalis",
     "creators": "fishunboxing",
     "id": "142017727",
@@ -1012,35 +1041,6 @@
     "packs": [
       "XL Pack",
       "Fast Pack"
-    ]
-  },
-  {
-    "rank": 35,
-    "name": "Zobros Worst Fear",
-    "creators": "Senpranton15",
-    "id": "82669598",
-    "length": "40s",
-    "tps": 2633,
-    "precision": "",
-    "ratio": "W63.9(2) C35.2(0) SH0.9(1) D91.9(1) S8.1(0) IM0.0(0) NM100.0(0) 0.5X49.4(3) 4X43(5) 3X5.6(4) 2X1.7(2) 1X0.3(1)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://youtu.be/ZzNkYe7WDCc?si=W8kVfNz5XFcTPmI9",
-    "image": "",
-    "victors": [
-      {
-        "name": "RMGD",
-        "date": "2026-07-23",
-        "time": "2h 39m 43s",
-        "attempts": 133429,
-        "video": "https://youtu.be/7Xdthw8FkTs"
-      }
-    ],
-    "scoringBaseline": {
-      "timeSeconds": 9583,
-      "attempts": 133429
-    },
-    "packs": [
-      "SLL Nine Circles Pack"
     ]
   },
   {
