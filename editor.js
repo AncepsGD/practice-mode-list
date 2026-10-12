@@ -618,12 +618,91 @@ function deleteLevel(index) {
   renderEditTable();
 }
 
+function moveCurrentVerificationToMain() {
+  if (editingIndex === -1) {
+    alert("Save the verification before moving it to the main list.");
+    return;
+  }
+  moveVerificationToMain(editingIndex);
+}
+
+function moveVerificationToMain(index) {
+  if (editingSource !== "verifications") {
+    alert("Switch to the Verifications Editor to move a level to the main list.");
+    return;
+  }
+
+  const verificationData = window.verifications;
+  if (!Array.isArray(verificationData) || index < 0 || index >= verificationData.length) {
+    alert("Level not found.");
+    return;
+  }
+
+  const verification = verificationData[index];
+  const normalizedItem = normalizeEditorItem(verification, verificationData.length + 1);
+  const normalizedName = normalizedItem.name.trim().toLowerCase();
+  const levelId = normalizedItem.id.trim();
+  const duplicate = rawData.find((level) => {
+    const existingId = String(level.id || level.levelId || "").trim();
+    const existingName = String(level.name || level.levelName || "").trim().toLowerCase();
+    return (levelId && existingId === levelId) || (normalizedName && existingName === normalizedName);
+  });
+
+  if (duplicate) {
+    alert(`"${normalizedItem.name}" is already in the main list.`);
+    return;
+  }
+
+  const rank = rawData.length + 1;
+  if (!confirm(`Move "${normalizedItem.name}" to the main list at rank ${rank}?`)) return;
+
+  const victors = Array.isArray(verification.victors) ? verification.victors : [];
+  const movedLevel = {
+    rank,
+    name: normalizedItem.name,
+    creators: normalizedItem.creators,
+    id: normalizedItem.id,
+    length: normalizedItem.length,
+    tps: normalizedItem.tps === "" ? "" : Number(normalizedItem.tps),
+    precision: normalizedItem.precision === "" ? "" : Number(normalizedItem.precision),
+    ratio: normalizedItem.ratio,
+    twoPlayer: normalizedItem.twoPlayer,
+    showcaseVideo: normalizedItem.showcaseVideo,
+    image: normalizedItem.image,
+    victors,
+    scoringBaseline: createScoringBaseline(victors, verification.scoringBaseline, victors),
+    packs: [...new Set(normalizedItem.packs.map((pack) => String(pack || "").trim()).filter(Boolean))],
+  };
+
+  verificationData.splice(index, 1);
+  rawData.push(movedLevel);
+  rawData.forEach((level, levelIndex) => {
+    level.rank = levelIndex + 1;
+  });
+
+  localStorage.setItem("pml_edit_data", JSON.stringify(rawData));
+  localStorage.setItem("pml_verifications_data", JSON.stringify(verificationData));
+  sessionStorage.removeItem("verifications-list");
+  persistEditorDraftState();
+  processRawData(rawData);
+  saveAndRefresh();
+  showEditView("list");
+  renderEditTable();
+  alert(
+    `"${normalizedItem.name}" was moved to the main list at rank ${rank}. Export both files separately: export verifications.json from the Verifications Editor and levels.json from the Levels Editor.`
+  );
+}
+
 function openLevelForm(index) {
   editingIndex = -1;
   editorEstimatedRankRange = null;
   const isNew = index === -1;
 
   document.getElementById("form-delete-btn").style.display = isNew ? "none" : "";
+  const moveButton = document.getElementById("form-move-main-btn");
+  if (moveButton) {
+    moveButton.style.display = !isNew && editingSource === "verifications" ? "" : "none";
+  }
 
   const data = getEditorData();
   updateEditorTierVisibility();
