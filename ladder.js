@@ -943,9 +943,13 @@ function App() {
                           </td>
                           <td style={{textAlign: "center"}}>
                             {rec.isUnverified
-                              ? rec.estimatedMainListRankRange
-                                ? `#${rec.estimatedMainListRankRange.min}-${rec.estimatedMainListRankRange.max}~`
-                                : rec.estimatedMainListRank ? `#${rec.estimatedMainListRank}~` : "—"
+                              ? Number.isFinite(rec.estimatedMainListRankRange?.estimatedRank)
+                                ? `#${Math.round(rec.estimatedMainListRankRange.estimatedRank)}~`
+                                : rec.estimatedMainListRankRange
+                                  ? rec.estimatedMainListRankRange.min === rec.estimatedMainListRankRange.max
+                                    ? `#${rec.estimatedMainListRankRange.min}~`
+                                    : `#${rec.estimatedMainListRankRange.min}-${rec.estimatedMainListRankRange.max}~`
+                                  : rec.estimatedMainListRank ? `#${rec.estimatedMainListRank}~` : "—"
                               : rec.rank ? `#${rec.rank}` : "—"}
                           </td>
                           <td>

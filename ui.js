@@ -1457,18 +1457,53 @@ function shuffleArray(array) {
   return shuffled;
 }
 
-const unverifiedEstimatedRankCache = new WeakMap();
+const unverifiedEstimatedRankCache = new Map();
 
 function getUnverifiedEstimatedRank(level) {
   if (!level || typeof level !== 'object') return null;
-  if (unverifiedEstimatedRankCache.has(level)) return unverifiedEstimatedRankCache.get(level);
+  const id = String(level.id || level.levelId || '').trim();
+  const name = String(level.name || level.levelName || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const key = id ? `id:${id}` : name ? `name:${name}` : null;
+  const signature = JSON.stringify([
+    level.tier,
+    level.tierName,
+    level.is2Player,
+    level.twoPlayer,
+    level.tps,
+    level.TPS,
+    level.length,
+    level.levelLength,
+    level.precision,
+    level.Precision,
+    level.ratio,
+    level.recordedClearCount,
+    level.clearCount,
+    level.completionCount,
+    level.victorCount,
+    level.sourceConfidence,
+    level.rank,
+    level.modelRank,
+    level._difficultyRank,
+    level.rankRange,
+    level.estimatedRankRange,
+    level.estimatedRankMin,
+    level.estimatedRankMax,
+    (Array.isArray(level.victors) ? level.victors : []).map(victor => [
+      victor?.name,
+      victor?.seconds,
+      victor?.time,
+      victor?.attempts,
+    ]),
+  ]);
+  const cached = key ? unverifiedEstimatedRankCache.get(key) : null;
+  if (cached?.signature === signature) return cached.rank;
 
   const prediction = typeof LadderUtils !== 'undefined'
     && typeof LadderUtils.getEstimatedRankRange === 'function'
-    ? LadderUtils.getEstimatedRankRange(level, levels, [])
+    ? LadderUtils.getEstimatedRankRange({ ...level, isUnverified: true }, levels, [])
     : null;
   const rank = Number.isFinite(prediction?.estimatedRank) ? prediction.estimatedRank : null;
-  unverifiedEstimatedRankCache.set(level, rank);
+  if (key) unverifiedEstimatedRankCache.set(key, { signature, rank });
   return rank;
 }
 

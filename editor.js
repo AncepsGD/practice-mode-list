@@ -177,7 +177,7 @@ function renderRankEstimateBasis(level, hasSecretEstimate) {
   });
   if (usableVictorEvidence) used.push("victor names, times, and attempts");
   else missing.push("victor evidence");
-  if (hasSecretEstimate) used.push("estimated difficulty list position");
+  if (hasSecretEstimate) used.push("unverified rank estimate");
 
   container.textContent = `Estimated using ${used.join(", ") || "no matching inputs"}.`
     + (missing.length ? ` Missing: ${missing.join(", ")}.` : "");
@@ -193,6 +193,7 @@ function estimateRankFromLevel() {
     precision: document.getElementById("f-precision").value,
     ratio: document.getElementById("f-ratio").value,
     is2Player: document.getElementById("f-twoplayer").value === "2 Player",
+    isUnverified: editingSource === "verifications",
     victors: Array.from(document.querySelectorAll("#victors-list .victor-entry")).map(entry => ({
       name: entry.querySelector('[data-field="name"]').value,
       time: entry.querySelector('[data-field="time"]').value,

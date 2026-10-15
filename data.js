@@ -543,7 +543,7 @@ function getVerificationPredictedRank(item) {
     && typeof LadderUtils.getEstimatedRankRange === "function"
     && Array.isArray(levels)
     && levels.length) {
-    const prediction = LadderUtils.getEstimatedRankRange(item, levels, []);
+    const prediction = LadderUtils.getEstimatedRankRange({ ...item, isUnverified: true }, levels, []);
     if (Number.isFinite(prediction?.estimatedRank)) return prediction.estimatedRank;
   }
 

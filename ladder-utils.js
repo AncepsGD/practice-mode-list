@@ -3,7 +3,7 @@ const LOCAL_KEY = "pml_edit_data";
 const LEVEL_METRIC_SCHEMA = Object.freeze({
 
   tps: Object.freeze({ unit: "ticks/second", minimum: 1, maximum: 10000 }),
-  length: Object.freeze({ unit: "seconds", minimum: 1, maximum: 3600 }),
+  length: Object.freeze({ unit: "seconds", minimum: 1, maximum: 86400 }),
   precision: Object.freeze({ unit: "dataset precision units", minimum: 1, maximum: 100000 }),
 });
 
@@ -284,31 +284,76 @@ function weightedMedian(values) {
 }
 
 function getEstimatedMainListRank(level, calibrationLevels = []) {
-  const estimatedRank = Number(level?._difficultyRank);
-  const estimatedListSize = Number(level?._estimatedRankMax);
-  if (!level?.isUnverified || !Number.isFinite(estimatedRank) || estimatedRank <= 0
-    || !Number.isFinite(estimatedListSize) || estimatedListSize <= 1
-    || !Array.isArray(calibrationLevels) || calibrationLevels.length <= 1) return null;
+  if (!level?.isUnverified || !Array.isArray(calibrationLevels) || calibrationLevels.length <= 1) return null;
+
+  const explicitEstimatedRank = Number(level?._difficultyRank);
+  const fallbackEstimatedRank = Number(level?.modelRank ?? level?.rank);
+  const estimatedRank = Number.isFinite(explicitEstimatedRank) && explicitEstimatedRank > 0
+    ? explicitEstimatedRank
+    : (Number.isFinite(fallbackEstimatedRank) && fallbackEstimatedRank > 0 ? fallbackEstimatedRank : null);
+  const estimatedListSize = Number(level?._estimatedRankMax)
+    || Math.max(2, Number(level?.rank) || 2)
+    || 0;
+  if (!Number.isFinite(estimatedRank) || estimatedRank <= 0
+    || !Number.isFinite(estimatedListSize) || estimatedListSize <= 1) return null;
   const normalizedRank = (estimatedRank - 1) / (estimatedListSize - 1);
   return Math.round(1 + normalizedRank * (calibrationLevels.length - 1));
 }
 
 function getTierEstimatedRankRange(level, calibrationLevels = [], estimatedListSize = 0) {
-  if (!level?.isUnverified || !Array.isArray(calibrationLevels) || calibrationLevels.length < 2
-    || !Number.isFinite(estimatedListSize) || estimatedListSize <= 1) return null;
+  if (!level?.isUnverified || !Array.isArray(calibrationLevels) || calibrationLevels.length < 2) return null;
 
   const tier = String(level.tier || level.tierName || "").trim().toLowerCase();
-  if (!tier) return null;
-  const tierRanks = calibrationLevels
-    .filter(candidate => String(candidate?.tier || candidate?.tierName || "").trim().toLowerCase() === tier)
-    .map(candidate => Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank))
-    .filter(rank => Number.isFinite(rank) && rank > 0);
-  if (!tierRanks.length) return null;
+  const fallbackRank = Number(level?.rank);
+  const fallbackListSize = Math.max(
+    2,
+    Number.isFinite(estimatedListSize) && estimatedListSize > 1 ? estimatedListSize : 0,
+    Number.isFinite(fallbackRank) ? fallbackRank : 0,
+  );
 
-  return {
-    min: Math.min(...tierRanks),
-    max: Math.max(...tierRanks),
-  };
+  if (tier && tier !== "pending") {
+    const tierRanks = calibrationLevels
+      .filter(candidate => String(candidate?.tier || candidate?.tierName || "").trim().toLowerCase() === tier)
+      .map(candidate => Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank))
+      .filter(rank => Number.isFinite(rank) && rank > 0);
+    if (tierRanks.length) {
+      const tierRange = {
+        min: Math.min(...tierRanks),
+        max: Math.max(...tierRanks),
+      };
+      const prediction = typeof LadderUtils !== "undefined"
+        && typeof LadderUtils.getEstimatedRankRange === "function"
+        ? LadderUtils.getEstimatedRankRange(
+          level,
+          calibrationLevels,
+          [],
+        )
+        : null;
+      return {
+        ...tierRange,
+        ...(Number.isFinite(prediction?.estimatedRank)
+          ? { estimatedRank: clamp(prediction.estimatedRank, tierRange.min, tierRange.max) }
+          : {}),
+      };
+    }
+  }
+
+  if (Number.isFinite(fallbackRank) && fallbackRank > 0 && Number.isFinite(fallbackListSize) && fallbackListSize > 1) {
+    return {
+      min: Math.max(1, Math.min(fallbackListSize, fallbackRank)),
+      max: Math.max(1, Math.min(fallbackListSize, fallbackRank)),
+    };
+  }
+
+  if (!tier) {
+    const prediction = typeof LadderUtils !== "undefined"
+      && typeof LadderUtils.getEstimatedRankRange === "function"
+      ? LadderUtils.getEstimatedRankRange(level, calibrationLevels, [])
+      : null;
+    if (Number.isFinite(prediction?.estimatedRank)) return prediction;
+  }
+
+  return null;
 }
 
 function buildEstimatedDifficultyAnchors(calibrationLevels, estimatedNames) {
@@ -482,6 +527,27 @@ function predictUnverifiedPoints(level, calibrationModel, estimatedNames) {
   const logPoints = calibrationModel.weights.reduce((sum, weight, index) => sum + weight * standardized[index], 0);
   if (!Number.isFinite(logPoints)) return null;
   return clamp(Math.exp(logPoints), 10, 360);
+}
+
+function getUnverifiedFallbackPoints(level, calibrationLevels = [], estimatedNames = []) {
+  if (!level?.isUnverified) return null;
+
+  const estimatedListSize = Number(level?._estimatedRankMax)
+    || (Array.isArray(estimatedNames) ? estimatedNames.length : 0)
+    || (Array.isArray(calibrationLevels) ? calibrationLevels.length : 0)
+    || 50;
+  const fallbackMaxRank = Math.max(2, estimatedListSize);
+  const rankedValues = [
+    Number(level?.rank),
+    Number(level?._difficultyRank),
+    Number(level?.modelRank),
+  ].filter(value => Number.isFinite(value) && value > 0);
+  const fallbackRank = rankedValues.length
+    ? Math.max(1, Math.min(fallbackMaxRank, rankedValues[0]))
+    : Math.max(1, Math.min(fallbackMaxRank, Math.ceil(fallbackMaxRank * 0.8)));
+
+  const basePoints = calculatePoints(fallbackRank, fallbackMaxRank);
+  return clamp(basePoints * getUnverifiedMetadataPointMultiplier(level, calibrationLevels), 10, 360);
 }
 
 function prepareUnverifiedData(verifications, estimatedNames, verifiedLevels = []) {
@@ -683,15 +749,21 @@ function processRawData(data, options = {}) {
   uniqueLevels.forEach(level => {
     if (!level.isUnverified) return;
     const tierRange = getTierEstimatedRankRange(level, options.calibrationLevels, estimatedListSize);
-    if (!tierRange) return;
+    const fallbackRank = Number(level?.rank);
+    const hasFallbackRank = Number.isFinite(fallbackRank) && fallbackRank > 0;
+    if (!tierRange && !hasFallbackRank) return;
+
     level._tierEstimatedRankRange = tierRange;
-    level._tierPrimaryRank = tierRange.estimatedRank
-      ?? Math.round((tierRange.min + tierRange.max) / 2);
-    level._difficultyRank = level._tierPrimaryRank;
+    level._tierPrimaryRank = tierRange?.estimatedRank
+      ?? (tierRange ? Math.round((tierRange.min + tierRange.max) / 2) : fallbackRank);
+    level._difficultyRank = level._difficultyRank || level._tierPrimaryRank || fallbackRank;
     level._estimatedRankMax = Math.max(
+      Number(level?._estimatedRankMax) || 0,
       ...options.calibrationLevels.map(candidate => (
         Number(candidate?.modelRank || candidate?._difficultyRank || candidate?.rank) || 0
       )),
+      Number(level?.rank) || 0,
+      estimatedListSize,
       1,
     );
     level._hasEstimatedRank = true;
@@ -723,23 +795,25 @@ function processRawData(data, options = {}) {
     const rankBasedPoints = Number.isFinite(Number(l._tierPrimaryRank))
       ? rankPoints
       : (anchorPoints ?? rankPoints);
-    if (l.isUnverified && !l._hasEstimatedRank) {
-      l.points = 0;
-    } else if (l.isUnverified) {
+    if (l.isUnverified) {
       l.metadataPointMultiplier = getUnverifiedMetadataPointMultiplier(l, calibrationLevels);
-      const metadataAdjustedPoints = clamp(rankBasedPoints * l.metadataPointMultiplier, 10, 360);
+      const fallbackPoints = getUnverifiedFallbackPoints(l, calibrationLevels, options.estimatedNames);
+      const effectiveBasePoints = Number.isFinite(Number(rankBasedPoints)) && rankBasedPoints > 0
+        ? rankBasedPoints
+        : (Number.isFinite(Number(fallbackPoints)) ? fallbackPoints : 10);
+      const metadataAdjustedPoints = clamp(effectiveBasePoints * l.metadataPointMultiplier, 10, 360);
       const evidenceAdjustedPoints = modelPoints === null
         ? metadataAdjustedPoints
         : clamp(modelPoints * l.metadataPointMultiplier, 10, 360);
       const evidenceConfidence = l.sourceConfidence ?? getUnverifiedSourceConfidence(l);
       l.evidenceConfidence = evidenceConfidence;
       l.evidenceAdjustedPoints = clamp(
-        rankBasedPoints + (evidenceAdjustedPoints - rankBasedPoints) * evidenceConfidence,
+        effectiveBasePoints + (evidenceAdjustedPoints - effectiveBasePoints) * evidenceConfidence,
         10,
         360,
       );
       l.points = clamp(
-        rankBasedPoints * 0.65 + l.evidenceAdjustedPoints * 0.35,
+        effectiveBasePoints * 0.65 + l.evidenceAdjustedPoints * 0.35,
         10,
         360,
       );
@@ -2116,6 +2190,8 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
       weight: typeof ATTEMPTS_PERFORMANCE_WEIGHT !== "undefined" ? ATTEMPTS_PERFORMANCE_WEIGHT : 0.3,
     });
   }
+  if (level.isUnverified && performanceScores.length === 0) return 1;
+
   const availableMetricWeight = performanceScores.reduce((total, item) => total + item.weight, 0);
   const performanceScore = availableMetricWeight
     ? performanceScores.reduce((total, item) => total + item.score * item.weight, 0) / availableMetricWeight
