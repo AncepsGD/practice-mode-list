@@ -117,6 +117,9 @@ function App() {
   const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(
     typeof savedLadderState.excludeTwoPlayer === "boolean" ? savedLadderState.excludeTwoPlayer : true
   );
+  const [routeSortOrder, setRouteSortOrder] = useState(
+    savedLadderState.routeSortOrder === "time" ? "time" : "efficiency"
+  );
   const [showAllRatioExposure, setShowAllRatioExposure] = useState(false);
 
   useEffect(() => {
@@ -130,10 +133,11 @@ function App() {
         selectedPlayer,
         targetPlayerName,
         excludeTwoPlayer,
+        routeSortOrder,
       }));
     } catch {
     }
-  }, [includeUnverified, unverifiedOnly, useFullSecretList, includeRebeats, rebeatsOnly, selectedPlayer, targetPlayerName, excludeTwoPlayer]);
+  }, [includeUnverified, unverifiedOnly, useFullSecretList, includeRebeats, rebeatsOnly, selectedPlayer, targetPlayerName, excludeTwoPlayer, routeSortOrder]);
 
   useEffect(() => {
     loadLadderData()
@@ -617,8 +621,19 @@ function App() {
   const optimized = excludeTwoPlayer ? optimizedWithout2P : optimizedWith2P;
   const pointsNeeded = optimized?.pointsNeeded ?? initialPointsNeeded;
 
-  const projectedPath = [...(optimized?.picks || [])]
-    .sort((a, b) => (b.expectedValue || 0) - (a.expectedValue || 0));
+  const projectedPath = useMemo(
+    () => [...(optimized?.picks || [])].sort((a, b) => {
+      if (routeSortOrder === "time") {
+        return a.expectedHours - b.expectedHours || (b.expectedValue || 0) - (a.expectedValue || 0);
+      }
+      if (routeSortOrder === "points") {
+        return (b.projectedPoints || 0) - (a.projectedPoints || 0)
+          || (b.expectedValue || 0) - (a.expectedValue || 0);
+      }
+      return (b.expectedValue || 0) - (a.expectedValue || 0);
+    }),
+    [optimized, routeSortOrder]
+  );
   const fallbackRoute = optimized?.fallback || false;
   const totalPoints = projectedPath.reduce((a, b) => a + b.projectedPoints, 0);
   const totalHours = projectedPath.reduce((a, b) => a + b.expectedHours, 0);
@@ -871,6 +886,19 @@ function App() {
                   </div>
                 </div>
               )}
+              <div className="optimizer-route-sort">
+                <label htmlFor="optimizer-route-sort-order">Sort by</label>
+                <select
+                  id="optimizer-route-sort-order"
+                  className="form-select"
+                  value={routeSortOrder}
+                  onChange={event => setRouteSortOrder(event.target.value)}
+                >
+                  <option value="efficiency">Efficiency</option>
+                  <option value="time">Shortest predicted time</option>
+                  <option value="points">Adjusted points</option>
+                </select>
+              </div>
               <div className="optimizer-table-wrap">
                 <table className="optimizer-table">
                   <thead>
