@@ -740,6 +740,7 @@ function getLevelSummaryRows(level) {
 }
 
 const thumbnailCache = new Map();
+const renderedLevelsByCardKey = new Map();
 let thumbnailObserver = null;
 
 function escapeHTML(value) {
@@ -876,8 +877,54 @@ function bindVideoModalEvents() {
   });
 }
 
+function getLevelDetailsMarkup(level) {
+  if (!level._sortedVictors) {
+    level._sortedVictors = sortVictorsByDate(level.victors || []);
+  }
+
+  const victorPointAwards = buildVictorPointAwards([level]);
+  return `
+    <table class="victors-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Player</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Attempts</th>
+          <th>Points</th>
+          <th>Video</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${level._sortedVictors.map((victor, index) => {
+          const award = getVictorPointAward(victorPointAwards, level, victor);
+          const pointsDisplay = `<span class="award-total" tabindex="0" aria-label="${award.points.toFixed(1)} points; focus or hover for score breakdown" title="${escapeHTML(getScoreBreakdownTooltip(award))}">${award.points.toFixed(1)}</span>`;
+          return `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${getPlayerCountryEmoji(victor.name) ? getPlayerCountryEmoji(victor.name) + ' ' : ''}${escapeHTML(victor.name)}</td>
+              <td>${victor.date}</td>
+              <td>${victor.wrTime ? victor.wrTime : '—'}</td>
+              <td>${victor.wrAttempts == null ? '—' : victor.wrAttempts.toLocaleString()}</td>
+              <td class="stat-cell">${pointsDisplay}</td>
+              <td>
+                ${victor.victorVideoUrl
+                  ? `<button class="btn-video btn-video-inline" type="button" data-open-video-modal="${escapeHTML(victor.victorVideoUrl)}" title="Watch video" aria-label="Watch video"><i class="fa-solid fa-play"></i></button>`
+                  : '—'}
+              </td>
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
+    ${getRatioStatisticsMarkup(level.ratio)}
+  `;
+}
+
 function renderLevels(data) {
   const container = document.getElementById('levels-container');
+  renderedLevelsByCardKey.clear();
 
   if (!data.length) {
     container.innerHTML = '<div class="empty-state">// NO LEVELS FOUND //</div>';
@@ -885,7 +932,6 @@ function renderLevels(data) {
   }
 
   const fragment = document.createDocumentFragment();
-  const victorPointAwards = buildVictorPointAwards(levels);
 
   const wrapper = document.createElement('div');
 
@@ -895,15 +941,12 @@ function renderLevels(data) {
     </div>
     ${data.map((lvl, index) => {
       const levelKey = getLevelCardKey(lvl, index);
+      renderedLevelsByCardKey.set(levelKey, lvl);
       const cardClass = index % 2 ?
         'level-card variant-b' :
         'level-card variant-a';
       const rankValue = Number(lvl.rank);
       const rankClass = rankValue === 1 ? 'rank-gold' : rankValue === 2 ? 'rank-silver' : rankValue === 3 ? 'rank-bronze' : '';
-
-      if (!lvl._sortedVictors) {
-        lvl._sortedVictors = sortVictorsByDate(lvl.victors || []);
-      }
 
       return `
       <div class="${cardClass}" id="card-${levelKey}">
@@ -954,47 +997,7 @@ function renderLevels(data) {
       </div>
 
       <div class="expand-panel" id="expand-${levelKey}">
-        <div class="expand-inner">
-          <table class="victors-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Player</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Attempts</th>
-              <th>Points</th>
-              <th>Video</th>
-            </tr>
-          </thead>
-
-          <tbody>
-          ${lvl._sortedVictors.map((v,i)=>{
-            const award = getVictorPointAward(victorPointAwards, lvl, v);
-            const pointsDisplay = `<span class="award-total" tabindex="0" aria-label="${award.points.toFixed(1)} points; focus or hover for score breakdown" title="${escapeHTML(getScoreBreakdownTooltip(award))}">${award.points.toFixed(1)}</span>`;
-            return `
-            <tr>
-              <td>${i+1}</td>
-              <td>${getPlayerCountryEmoji(v.name) ? getPlayerCountryEmoji(v.name) + ' ' : ''}${escapeHTML(v.name)}</td>
-              <td>${v.date}</td>
-              <td>${v.wrTime ? v.wrTime : '—'}</td>
-              <td>${v.wrAttempts == null ? '—' : v.wrAttempts.toLocaleString()}</td>
-              <td class="stat-cell">${pointsDisplay}</td>
-              <td>
-                ${
-                  v.victorVideoUrl
-                  ? `<button class="btn-video btn-video-inline" type="button" data-open-video-modal="${escapeHTML(v.victorVideoUrl)}" title="Watch video" aria-label="Watch video"><i class="fa-solid fa-play"></i></button>`
-                  : '—'
-                }
-              </td>
-            </tr>
-          `;
-          }).join('')}
-          </tbody>
-
-          </table>
-          ${getRatioStatisticsMarkup(lvl.ratio)}
-        </div>
+        <div class="expand-inner"></div>
       </div>`;
     }).join('')}
   `;
@@ -1100,6 +1103,14 @@ function toggleExpand(id) {
   if (!panel || !button) return;
 
   const isOpen = panel.classList.toggle('open');
+  const details = panel.querySelector('.expand-inner');
+  if (isOpen && details && !details.dataset.loaded) {
+    const level = renderedLevelsByCardKey.get(id);
+    if (level) {
+      details.innerHTML = getLevelDetailsMarkup(level);
+      details.dataset.loaded = 'true';
+    }
+  }
   const icon = button.querySelector('i');
   if (icon) {
     icon.classList.toggle('fa-chevron-up', isOpen);
@@ -1459,7 +1470,7 @@ function shuffleArray(array) {
 
 const unverifiedEstimatedRankCache = new Map();
 
-function getUnverifiedEstimatedRank(level) {
+function getUnverifiedRankCacheEntry(level) {
   if (!level || typeof level !== 'object') return null;
   const id = String(level.id || level.levelId || '').trim();
   const name = String(level.name || level.levelName || '').trim().toLowerCase().replace(/\s+/g, ' ');
@@ -1495,15 +1506,34 @@ function getUnverifiedEstimatedRank(level) {
       victor?.attempts,
     ]),
   ]);
+  return { key, signature };
+}
+
+function getCachedUnverifiedEstimatedRank(level) {
+  const entry = getUnverifiedRankCacheEntry(level);
+  if (!entry?.key) return null;
+  const cached = unverifiedEstimatedRankCache.get(entry.key);
+  return cached?.signature === entry.signature
+      && cached.calibrationLevels === levels
+    ? cached.rank
+    : null;
+}
+
+function getUnverifiedEstimatedRank(level) {
+  const entry = getUnverifiedRankCacheEntry(level);
+  if (!entry) return null;
+  const { key, signature } = entry;
   const cached = key ? unverifiedEstimatedRankCache.get(key) : null;
-  if (cached?.signature === signature) return cached.rank;
+  if (cached?.signature === signature && cached.calibrationLevels === levels) {
+    return cached.rank;
+  }
 
   const prediction = typeof LadderUtils !== 'undefined'
     && typeof LadderUtils.getEstimatedRankRange === 'function'
     ? LadderUtils.getEstimatedRankRange({ ...level, isUnverified: true }, levels, [])
     : null;
   const rank = Number.isFinite(prediction?.estimatedRank) ? prediction.estimatedRank : null;
-  if (key) unverifiedEstimatedRankCache.set(key, { signature, rank });
+  if (key) unverifiedEstimatedRankCache.set(key, { signature, rank, calibrationLevels: levels });
   return rank;
 }
 

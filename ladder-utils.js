@@ -36,13 +36,25 @@ function assignTiers(levelsList) {
   });
 }
 
+function fetchFreshData(url, options = {}) {
+  const separator = url.includes("?") ? "&" : "?";
+  return fetch(`${url}${separator}_pml=${Date.now()}`, {
+    ...options,
+    cache: "no-store",
+  });
+}
+
 function loadLevelsJson() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
-  return fetch("levels.json", { signal: controller.signal })
+  return fetchFreshData("levels.json", { signal: controller.signal })
     .then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
+    })
+    .then(data => {
+      if (!Array.isArray(data)) throw new TypeError("levels.json must contain a JSON array");
+      return data;
     })
     .catch((err) => {
       const saved = localStorage.getItem(LOCAL_KEY);
@@ -60,19 +72,28 @@ function loadLevelsJson() {
 }
 
 function loadLadderData() {
-  const loadJson = (url, fallback) => fetch(url)
+  const loadJson = (url, fallback) => fetchFreshData(url)
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return response.json();
+      return response.json().then(data => {
+        if (!Array.isArray(data)) throw new TypeError(`${url} must contain a JSON array`);
+        return data;
+      });
     })
-    .catch(() => fallback);
+    .catch(error => {
+      console.error(`Failed to load ${url}`, error);
+      return fallback;
+    });
 
-  const loadText = (url, fallback) => fetch(url)
+  const loadText = (url, fallback) => fetchFreshData(url)
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.text();
     })
-    .catch(() => fallback);
+    .catch(error => {
+      console.error(`Failed to load ${url}`, error);
+      return fallback;
+    });
 
   return Promise.all([
     loadJson("levels.json", []),

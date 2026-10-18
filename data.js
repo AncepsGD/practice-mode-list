@@ -1,4 +1,5 @@
 const LOCAL_KEY = "pml_edit_data";
+const VERIFICATIONS_DRAFT_BASELINE_KEY = "pml_verifications_data_baseline";
 const MODEL_STATE_KEY = "pml_demon_system_state";
 const VERIFICATION_TIER_RESET_KEY = "pml_verification_tiers_reset_v1";
 const EDITOR_REMOTE_BASELINE_KEY = "pml_editor_remote_baseline";
@@ -10,6 +11,7 @@ let leaderboard = [];
 let maxScore = 1;
 let editingIndex = -1;
 let editorRemoteBaseline = null;
+let verificationLoadGeneration = 0;
 
 function syncDemonSystemFromRawData() {
 }
@@ -17,7 +19,12 @@ function syncDemonSystemFromRawData() {
 function fetchWithTimeout(url, timeoutMs = 10000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timeout));
+  const separator = url.includes("?") ? "&" : "?";
+  const freshUrl = `${url}${separator}_pml=${Date.now()}`;
+  return fetch(freshUrl, {
+    signal: controller.signal,
+    cache: "no-store",
+  }).finally(() => clearTimeout(timeout));
 }
 
 function getDemonSystem() {
@@ -165,38 +172,6 @@ function normalizeLevelEntry(item) {
   return normalized;
 }
 
-function mergeVerificationSources(remoteData, savedData) {
-  const savedByIdentity = new Map();
-  (Array.isArray(savedData) ? savedData : []).forEach((item) => {
-    const identity = String(item?.id || item?.levelId || item?.name || item?.levelName || "").trim().toLowerCase();
-    if (identity) savedByIdentity.set(identity, item);
-  });
-
-  const merged = (Array.isArray(remoteData) ? remoteData : []).map((remoteItem) => {
-    const identity = String(remoteItem?.id || remoteItem?.levelId || remoteItem?.name || remoteItem?.levelName || "").trim().toLowerCase();
-    const savedItem = savedByIdentity.get(identity);
-    if (!savedItem) return remoteItem;
-
-    const result = { ...remoteItem, ...savedItem };
-    result.packs = [...new Set([
-      ...(Array.isArray(remoteItem.packs) ? remoteItem.packs : []),
-      ...(Array.isArray(savedItem.packs) ? savedItem.packs : []),
-    ].map((pack) => String(pack || "").trim()).filter(Boolean))];
-    ["creator", "creators", "tier", "length", "precision", "tps", "ratio", "twoPlayer", "showcaseVideo", "showcaseVideoUrl", "image", "thumbnail"].forEach((field) => {
-      if (savedItem[field] === "" || savedItem[field] === null || savedItem[field] === undefined) {
-        result[field] = remoteItem[field];
-      }
-    });
-    return result;
-  });
-
-  const remoteIdentities = new Set(merged.map((item) => String(item?.id || item?.levelId || item?.name || item?.levelName || "").trim().toLowerCase()));
-  return merged.concat((Array.isArray(savedData) ? savedData : []).filter((item) => {
-    const identity = String(item?.id || item?.levelId || item?.name || item?.levelName || "").trim().toLowerCase();
-    return identity && !remoteIdentities.has(identity);
-  }));
-}
-
 function markPendingVictorLevels(verificationData) {
   const mainLevelIds = new Set(levels.map((item) => String(item.id || item.levelId || "").trim().toLowerCase()).filter(Boolean));
   const mainLevelNames = new Set(levels.map((item) => String(item.name || item.levelName || "").trim().toLowerCase()).filter(Boolean));
@@ -215,6 +190,12 @@ function loadData() {
     .then((r) => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
+    })
+    .then((data) => {
+      if (!Array.isArray(data)) {
+        throw new TypeError("levels.json must contain a JSON array");
+      }
+      return data;
     })
     .catch((err) => {
       const saved = localStorage.getItem(LOCAL_KEY);
@@ -245,6 +226,11 @@ function persistEditorRemoteBaseline(data, source = "levels") {
   return snapshot;
 }
 
+function isCurrentVerificationsDraft(savedData, savedBaseline, remoteData) {
+  return Array.isArray(savedData)
+    && savedBaseline === EditorStateUtils.buildDataSignature(remoteData);
+}
+
 function loadEditorRemoteBaseline() {
   const raw = localStorage.getItem(EDITOR_REMOTE_BASELINE_KEY);
   if (!raw) return null;
@@ -258,6 +244,7 @@ function loadEditorRemoteBaseline() {
 
 function processRawData(data) {
   rawData = data;
+  const currentVerificationLoad = ++verificationLoadGeneration;
 
   const rawLevels = data
     .filter((item) => item && (item.name || item.levelName || item.id))
@@ -344,20 +331,43 @@ function processRawData(data) {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
         })
-        .then((data) => {
-          const mergedData = mergeVerificationSources(data, savedData);
-          const verificationsList = mergedData
+        .then((remoteData) => {
+          if (!Array.isArray(remoteData)) {
+            throw new TypeError("verifications.json must contain a JSON array");
+          }
+          if (currentVerificationLoad !== verificationLoadGeneration) return;
+          const remoteVerifications = remoteData
             .filter((item) => item && (item.name || item.levelName || item.id))
             .map((item) => normalizeLevelEntry(item));
-          const pendingVerificationsList = markPendingVictorLevels(verificationsList);
-          assignTiers(pendingVerificationsList, false);
-          window.verifications = pendingVerificationsList;
-          persistEditorRemoteBaseline(pendingVerificationsList, "verifications");
+          const remotePending = markPendingVictorLevels(remoteVerifications);
+          assignTiers(remotePending, false);
+          const savedBaseline = localStorage.getItem(VERIFICATIONS_DRAFT_BASELINE_KEY);
+          const hasCurrentDraft = isCurrentVerificationsDraft(
+            savedData, savedBaseline, remoteData
+          );
+
+          if (hasCurrentDraft) {
+            window.verifications = markPendingVictorLevels(savedData);
+            assignTiers(window.verifications, false);
+          } else {
+            window.verifications = remotePending;
+            if (savedBaseline || savedVerifications) {
+              console.info(
+                "Discarded a stale local verifications.json draft because the remote file changed."
+              );
+              localStorage.removeItem("pml_verifications_data");
+              localStorage.removeItem(VERIFICATIONS_DRAFT_BASELINE_KEY);
+            }
+          }
+
+          persistEditorRemoteBaseline(remoteData, "verifications");
           initializeVerifications();
           syncDemonSystemFromRawData();
         })
-        .catch(() => {
-          window.verifications = markPendingVictorLevels(savedData);
+        .catch((err) => {
+          if (currentVerificationLoad !== verificationLoadGeneration) return;
+          console.error("Failed to load verifications.json", err);
+          window.verifications = [];
           initializeVerifications();
           syncDemonSystemFromRawData();
         });
@@ -366,9 +376,16 @@ function processRawData(data) {
   }
 
   fetchWithTimeout("verifications.json")
-    .then((r) => r.json())
-    .then((data) => {
-      const verificationsList = data
+    .then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
+    .then((remoteData) => {
+      if (!Array.isArray(remoteData)) {
+        throw new TypeError("verifications.json must contain a JSON array");
+      }
+      if (currentVerificationLoad !== verificationLoadGeneration) return;
+      const verificationsList = remoteData
         .filter((item) => item && (item.name || item.levelName || item.id))
         .map((item) => normalizeLevelEntry(item));
       const pendingVerificationsList = markPendingVictorLevels(verificationsList);
@@ -378,12 +395,14 @@ function processRawData(data) {
         console.error("Failed to assign tiers to verifications", e);
       }
       window.verifications = pendingVerificationsList;
-      persistEditorRemoteBaseline(pendingVerificationsList, "verifications");
+      persistEditorRemoteBaseline(remoteData, "verifications");
       initializeVerifications();
       syncDemonSystemFromRawData();
     })
-    .catch(() => {
-      console.log("No verifications.json found, using levels with no victors");
+    .catch((err) => {
+      if (currentVerificationLoad !== verificationLoadGeneration) return;
+      console.error("Failed to load verifications.json", err);
+      window.verifications = [];
       initializeVerifications();
       syncDemonSystemFromRawData();
     });
@@ -422,6 +441,12 @@ function persistCurrentEditorData() {
   if (!window.editorSessionActive) return;
   if (editingSource === "verifications") {
     localStorage.setItem("pml_verifications_data", JSON.stringify(window.verifications));
+    if (editorRemoteBaseline?.source === "verifications") {
+      localStorage.setItem(
+        VERIFICATIONS_DRAFT_BASELINE_KEY,
+        editorRemoteBaseline.signature
+      );
+    }
     sessionStorage.removeItem("verifications-list");
   } else {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(rawData));
@@ -450,6 +475,7 @@ function resetToOriginal() {
   if (!confirm("Clear all local edits and reload from levels.json?")) return;
   localStorage.removeItem(LOCAL_KEY);
   localStorage.removeItem("pml_verifications_data");
+  localStorage.removeItem(VERIFICATIONS_DRAFT_BASELINE_KEY);
   window.verifications = [];
   document.getElementById("reset-notice").classList.add("show");
   fetchWithTimeout("levels.json")
@@ -491,7 +517,7 @@ const VERIFICATION_EXPORT_TIER_ORDER = [
   "novice",
 ];
 
-function sortVerificationExportData(data) {
+function sortVerificationExportData(data, cachedRanksOnly = false) {
   const sortableItems = (Array.isArray(data) ? data : []).map((item, index) => {
     const tier = String(item?.tier || item?.tierName || "").trim().toLowerCase();
     const tierRank = VERIFICATION_EXPORT_TIER_ORDER.indexOf(tier);
@@ -501,7 +527,7 @@ function sortVerificationExportData(data) {
     return {
       item,
       index,
-      predictedRank: getVerificationPredictedRank(item),
+      predictedRank: getVerificationPredictedRank(item, cachedRanksOnly),
       tier,
       tierRank: tierRank === -1 ? VERIFICATION_EXPORT_TIER_ORDER.length : tierRank,
       length: Number.isFinite(length) && length > 0 ? length : null,
@@ -538,8 +564,26 @@ function sortVerificationExportData(data) {
   }).map(entry => entry.item);
 }
 
-function getVerificationPredictedRank(item) {
-  if (typeof LadderUtils !== "undefined"
+function getVerificationPredictedRank(item, cachedOnly = false) {
+  if (typeof getCachedUnverifiedEstimatedRank === "function") {
+    const estimatedRank = getCachedUnverifiedEstimatedRank(item);
+    if (Number.isFinite(estimatedRank)) return estimatedRank;
+  }
+
+  if (cachedOnly) {
+    const explicitRange = item?.rankRange || item?.estimatedRankRange;
+    const min = Number(explicitRange?.min ?? item?.estimatedRankMin);
+    const max = Number(explicitRange?.max ?? item?.estimatedRankMax);
+    if (Number.isFinite(min) && Number.isFinite(max) && min > 0 && max > 0) {
+      return (Math.min(min, max) + Math.max(min, max)) / 2;
+    }
+    return null;
+  }
+
+  if (typeof getUnverifiedEstimatedRank === "function") {
+    const estimatedRank = getUnverifiedEstimatedRank(item);
+    if (Number.isFinite(estimatedRank)) return estimatedRank;
+  } else if (typeof LadderUtils !== "undefined"
     && typeof LadderUtils.getEstimatedRankRange === "function"
     && Array.isArray(levels)
     && levels.length) {
@@ -557,25 +601,68 @@ function getVerificationPredictedRank(item) {
 }
 
 function buildVerificationExportData(data) {
-  return sortVerificationExportData(data).map((item, index) => ({
+  return sortVerificationExportData(data, true).map((item, index) => ({
     ...item,
     rank: index + 1,
   }));
 }
 
-function exportJSON() {
-  const sourceData = editingSource === "verifications" ? window.verifications : rawData;
-  const data = editingSource === "verifications"
-    ? buildVerificationExportData(sourceData)
-    : sourceData;
-  const json = JSON.stringify(data, null, 2);
-  const signature = EditorStateUtils.buildDataSignature(data || []);
-  navigator.clipboard.writeText(json).then(() => {
-    setLastPublishedSignature(signature);
+let editorExportInProgress = false;
+
+function serializeEditorExport(data, sourceData) {
+  return new Promise((resolve, reject) => {
+    let worker;
+    try {
+      worker = new Worker(new URL("editor-export-worker.js", window.location.href));
+    } catch (error) {
+      reject(error);
+      return;
+    }
+
+    const finish = (callback, value) => {
+      worker.terminate();
+      callback(value);
+    };
+    worker.onmessage = (event) => {
+      if (event.data?.error) {
+        finish(reject, new Error(event.data.error));
+        return;
+      }
+      finish(resolve, event.data);
+    };
+    worker.onerror = (event) => {
+      event.preventDefault();
+      finish(reject, new Error(event.message || "Editor export worker failed"));
+    };
+    try {
+      worker.postMessage({ data, sourceData });
+    } catch (error) {
+      finish(reject, error);
+    }
+  });
+}
+
+async function exportJSON() {
+  if (editorExportInProgress) return;
+  editorExportInProgress = true;
+
+  try {
+    const sourceData = editingSource === "verifications" ? window.verifications : rawData;
+    const data = editingSource === "verifications"
+      ? buildVerificationExportData(sourceData)
+      : sourceData;
+    const result = await serializeEditorExport(data, sourceData);
+    await navigator.clipboard.writeText(result.json);
+    setLastPublishedSignature(result.sourceSignature);
     if (typeof window.renderPublishBanner === "function") {
-      window.renderPublishBanner();
+      window.renderPublishBanner(result.sourceSignature);
     }
     flashCopied();
     alert(`Copied ${getEditorDataSourceName()} to clipboard.\n\nThis is NOT live yet. Paste it over the file in your repo and deploy — visitors are still seeing the old version until you do.`);
-  });
+  } catch (error) {
+    console.error("Failed to export editor JSON", error);
+    alert(`Unable to export ${getEditorDataSourceName()}. See the browser console for details.`);
+  } finally {
+    editorExportInProgress = false;
+  }
 }

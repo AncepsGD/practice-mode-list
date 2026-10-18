@@ -303,7 +303,11 @@ async function checkEditorConflictBeforeExit() {
 
   try {
     const response = await fetchWithTimeout(source === "verifications" ? "verifications.json" : "levels.json");
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const remoteData = await response.json();
+    if (!Array.isArray(remoteData)) {
+      throw new TypeError(`${getEditorDataSourceName()} must contain a JSON array`);
+    }
     const remoteSignature = EditorStateUtils.buildDataSignature(remoteData || []);
     if (remoteSignature !== baseline.signature) {
       showEditorConflictNotice();
@@ -343,7 +347,11 @@ async function refreshEditorRemoteBaseline() {
 
   try {
     const response = await fetchWithTimeout(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const remoteData = await response.json();
+    if (!Array.isArray(remoteData)) {
+      throw new TypeError(`${url} must contain a JSON array`);
+    }
     persistEditorRemoteBaseline(remoteData || [], source);
     return remoteData;
   } catch (err) {
@@ -427,14 +435,14 @@ function renderEditTable() {
   renderPublishBanner();
 }
 
-function getUnpublishedChangeState() {
+function getUnpublishedChangeState(currentSignature = null) {
   const data = getEditorData();
-  const currentSignature = EditorStateUtils.buildDataSignature(data || []);
+  const signature = currentSignature || EditorStateUtils.buildDataSignature(data || []);
   const lastPublished = getLastPublishedSignature();
   return {
-    currentSignature,
+    currentSignature: signature,
     lastPublished,
-    hasUnpublished: lastPublished !== null && lastPublished !== currentSignature,
+    hasUnpublished: lastPublished !== null && lastPublished !== signature,
   };
 }
 
@@ -451,10 +459,10 @@ function ensurePublishBanner() {
   return banner;
 }
 
-function renderPublishBanner() {
+function renderPublishBanner(currentSignature = null) {
   const banner = ensurePublishBanner();
   if (!banner) return;
-  const state = getUnpublishedChangeState();
+  const state = getUnpublishedChangeState(currentSignature);
   if (state.hasUnpublished) {
     banner.style.background = "#b91c1c";
     banner.style.color = "#fff";
