@@ -16,14 +16,12 @@ let verificationLoadGeneration = 0;
 function syncDemonSystemFromRawData() {
 }
 
-function fetchWithTimeout(url, timeoutMs = 10000) {
+function fetchWithTimeout(url, timeoutMs = 10000, cache = "default") {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  const separator = url.includes("?") ? "&" : "?";
-  const freshUrl = `${url}${separator}_pml=${Date.now()}`;
-  return fetch(freshUrl, {
+  return fetch(url, {
     signal: controller.signal,
-    cache: "no-store",
+    cache,
   }).finally(() => clearTimeout(timeout));
 }
 
@@ -326,7 +324,7 @@ function processRawData(data) {
   if (savedVerifications) {
     try {
       const savedData = JSON.parse(savedVerifications);
-      fetchWithTimeout("verifications.json")
+      fetchWithTimeout("verifications.json", 10000, "no-cache")
         .then((r) => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
@@ -375,7 +373,7 @@ function processRawData(data) {
     } catch (e) { }
   }
 
-  fetchWithTimeout("verifications.json")
+  fetchWithTimeout("verifications.json", 10000, "no-cache")
     .then((r) => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
@@ -478,7 +476,7 @@ function resetToOriginal() {
   localStorage.removeItem(VERIFICATIONS_DRAFT_BASELINE_KEY);
   window.verifications = [];
   document.getElementById("reset-notice").classList.add("show");
-  fetchWithTimeout("levels.json")
+  fetchWithTimeout("levels.json", 10000, "no-cache")
     .then((r) => r.json())
     .then((data) => {
       processRawData(data);

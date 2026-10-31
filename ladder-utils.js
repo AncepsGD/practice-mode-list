@@ -36,18 +36,14 @@ function assignTiers(levelsList) {
   });
 }
 
-function fetchFreshData(url, options = {}) {
-  const separator = url.includes("?") ? "&" : "?";
-  return fetch(`${url}${separator}_pml=${Date.now()}`, {
-    ...options,
-    cache: "no-store",
-  });
+function fetchData(url, options = {}) {
+  return fetch(url, options);
 }
 
 function loadLevelsJson() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
-  return fetchFreshData("levels.json", { signal: controller.signal })
+  return fetchData("levels.json", { signal: controller.signal })
     .then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
@@ -72,7 +68,7 @@ function loadLevelsJson() {
 }
 
 function loadLadderData() {
-  const loadJson = (url, fallback) => fetchFreshData(url)
+  const loadJson = (url, fallback) => fetchData(url)
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json().then(data => {
@@ -85,7 +81,7 @@ function loadLadderData() {
       return fallback;
     });
 
-  const loadText = (url, fallback) => fetchFreshData(url)
+  const loadText = (url, fallback) => fetchData(url)
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.text();

@@ -302,7 +302,7 @@ async function checkEditorConflictBeforeExit() {
   if (!baseline) return true;
 
   try {
-    const response = await fetchWithTimeout(source === "verifications" ? "verifications.json" : "levels.json");
+    const response = await fetchWithTimeout(source === "verifications" ? "verifications.json" : "levels.json", 10000, "no-cache");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const remoteData = await response.json();
     if (!Array.isArray(remoteData)) {
@@ -346,7 +346,7 @@ async function refreshEditorRemoteBaseline() {
   const url = source === "verifications" ? "verifications.json" : "levels.json";
 
   try {
-    const response = await fetchWithTimeout(url);
+    const response = await fetchWithTimeout(url, 10000, "no-cache");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const remoteData = await response.json();
     if (!Array.isArray(remoteData)) {
@@ -479,9 +479,7 @@ function renderPublishBanner(currentSignature = null) {
 }
 window.renderPublishBanner = renderPublishBanner;
 
-async function init() {
-  const data = await loadData();
-
+async function loadEditorEstimatedNames() {
   try {
     const response = await fetchWithTimeout("secret.txt");
     if (response.ok) {
@@ -493,24 +491,27 @@ async function init() {
   } catch (err) {
     console.warn("Unable to load secret.txt for estimated rank ranges", err);
   }
+}
 
+async function loadPlayerCountries() {
   window.playerCountries = {};
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-    const res = await fetch('players_countries.json', { signal: controller.signal });
-    if (res && res.ok) {
-      try {
-        const mapping = await res.json();
-        if (mapping && typeof mapping === 'object') window.playerCountries = mapping;
-      } catch (e) {
-        console.warn('Failed to parse players_countries.json', e);
-      }
+    const response = await fetchWithTimeout("players_countries.json", 5000);
+    if (response.ok) {
+      const mapping = await response.json();
+      if (mapping && typeof mapping === "object") window.playerCountries = mapping;
     }
-    clearTimeout(timeout);
-  } catch (e) {
-
+  } catch (err) {
+    console.warn("Unable to load players_countries.json", err);
   }
+}
+
+async function init() {
+  const [data] = await Promise.all([
+    loadData(),
+    loadEditorEstimatedNames(),
+    loadPlayerCountries(),
+  ]);
 
   loadEditorRemoteBaseline();
   restoreEditorDraftState();
@@ -782,7 +783,8 @@ function openLevelForm(index) {
     victorEntries[i].querySelector('[data-field="date"]').value = v.date || "";
     victorEntries[i].querySelector('[data-field="time"]').value = v.time || "";
     victorEntries[i].querySelector('[data-field="attempts"]').value = v.attempts || "";
-    victorEntries[i].querySelector('[data-field="video"]').value = v.video || "";
+    victorEntries[i].querySelector('[data-field="video"]').value =
+      v.video || v.videoUrl || v.victorVideoUrl || "";
   });
 
   showEditView("form");

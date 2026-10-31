@@ -1440,7 +1440,7 @@ function filterLeaderboard() {
 
 function getUnverifiedLevels() {
   const mainLevelNames = new Set(levels.map((lvl) => String(lvl.name || '').trim().toLowerCase()));
-  const sourceLevels = verifications.length > 0 ? verifications : levels.filter((lvl) => !lvl.victors || lvl.victors.length === 0);
+  const sourceLevels = Array.isArray(window.verifications) ? window.verifications : [];
   const removedLevels = [];
 
   const filteredLevels = sourceLevels.filter((lvl) => {
