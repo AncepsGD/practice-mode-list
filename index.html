@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Practice Mode List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="styles/styles.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>
+        The <span class="word-practice">Practice</span>
+        <span class="word-mode">Mode</span> List
+      </h1>
+      <nav>
+        <button class="nav-btn active" onclick="showPage('list', this)">
+          <span class="nav-icon"><i class="fa-solid fa-list"></i></span><span class="nav-label">The List</span>
+        </button>
+        <button class="nav-btn" onclick="showPage('leaderboard', this)">
+          <span class="nav-icon"><i class="fa-solid fa-trophy"></i></span><span class="nav-label">Leaderboard</span>
+        </button>
+        <button class="nav-btn" onclick="showPage('optimizer', this)">
+          <span class="nav-icon"><i class="fa-solid fa-route"></i></span><span class="nav-label">Ladder</span>
+        </button>
+        <button class="nav-btn" onclick="showPage('verifications', this)">
+          <span class="nav-icon"><i class="fa-solid fa-circle-check"></i></span><span class="nav-label">Unverified</span>
+        </button>
+        <button class="nav-btn" onclick="showPage('todo', this)">
+          <span class="nav-icon"><i class="fa-solid fa-list-check"></i></span><span class="nav-label">To-Do</span>
+        </button>
+        <button class="nav-btn" onclick="showPage('packs', this)">
+          <span class="nav-icon"><i class="fa-solid fa-boxes-stacked"></i></span><span class="nav-label">Packs</span>
+        </button>
+        <button class="nav-btn" onclick="showPage('timeline', this)">
+          <span class="nav-icon"><i class="fa-solid fa-clock"></i></span><span class="nav-label">Timeline</span>
+        </button>
+        <a class="nav-btn" href="https://discord.gg/CECEzxRu28" target="_blank">
+          <span class="nav-icon"><i class="fa-brands fa-discord"></i></span><span class="nav-label">Discord</span>
+        </a>
+      </nav>
+    </header>
+
+    <div id="page-list" class="page active">
+      <div class="stats-strip" id="stats-strip"></div>
+      <div class="list-toolbar">
+        <div class="list-sort-controls">
+          <label class="leaderboard-label" for="list-sort-key">Sort by</label>
+          <div class="sort-controls">
+            <select id="list-sort-key" onchange="handleListSortChange()">
+              <optgroup label="General">
+                <option value="rank">Rank</option>
+                <option value="name">Name</option>
+                <option value="creators">Creators</option>
+                <option value="victors">Victors</option>
+                <option value="averageTime">Average Time</option>
+                <option value="averageAttempts">Average Attempts</option>
+                <option value="earliestDate">Earliest Date</option>
+                <option value="id">ID</option>
+              </optgroup>
+              <optgroup label="Length">
+                <option value="length">Level Length</option>
+              </optgroup>
+              <optgroup label="Gamemode Coverage">
+              <option value="coverageShip">Ship Coverage</option>
+              <option value="coverageUfo">UFO Coverage</option>
+              <option value="coverageRobot">Robot Coverage</option>
+              <option value="coverageSwing">Swing Coverage</option>
+              <option value="coverageCube">Cube Coverage</option>
+              <option value="coverageBall">Ball Coverage</option>
+              <option value="coverageSpider">Spider Coverage</option>
+              <option value="coverageWave">Wave Coverage</option>
+              </optgroup>
+              <optgroup label="Gameplay Coverage">
+              <option value="coverageDual">Dual Coverage</option>
+              <option value="mirrorChanges">Mirror Portal Changes</option>
+              </optgroup>
+              <optgroup label="Speed Coverage">
+                <option value="speed">Average Speed</option>
+              </optgroup>
+            </select>
+            <button id="list-sort-direction-btn" class="sort-direction-btn" type="button" onclick="toggleListSortDirection()" aria-label="Toggle list sort direction">▲</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input class="search-input" type="text" placeholder="Search levels or creators..." id="list-search"
+            oninput="handleListSearch()" />
+        </div>
+      </div>
+      <div id="levels-container"></div>
+    </div>
+
+    <div id="page-leaderboard" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="leaderboard-toolbar">
+        <div class="leaderboard-sort-controls">
+          <label class="leaderboard-label" for="lb-sort-key">Sort by</label>
+          <div class="sort-controls">
+            <select id="lb-sort-key" onchange="handleLeaderboardSortChange()">
+              <option value="rank">Rank</option>
+              <option value="name">Player</option>
+              <option value="completed">Completed Levels</option>
+              <option value="totalTime">Total Time</option>
+              <option value="totalAttempts">Total Attempts</option>
+              <option value="hardest">Peak Hardest</option>
+            </select>
+            <button id="lb-sort-direction-btn" class="sort-direction-btn" type="button" onclick="toggleLeaderboardSortDirection()" aria-label="Toggle leaderboard sort direction">▲</button>
+          </div>
+        </div>
+        <div class="leaderboard-search-wrap">
+          <label class="leaderboard-label" for="lb-search">Search players</label>
+          <div class="search-bar">
+            <input class="search-input-lb" type="text" placeholder="Search players, levels, or scores..." id="lb-search"
+              oninput="filterLeaderboard()" />
+          </div>
+        </div>
+      </div>
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Completed Levels</th>
+            <th aria-label="Completion details"></th>
+          </tr>
+        </thead>
+        <tbody id="lb-body"></tbody>
+      </table>
+    </div>
+
+    <div id="page-packs" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="packs-header">
+        <div>
+          <h2>Packs</h2>
+          <p class="packs-subtitle">Earn 1–10 bonus points per completed level, based on its list points, plus 50 bonus points for completing the entire pack.</p>
+        </div>
+        <div class="packs-player-control">
+          <label class="leaderboard-label" for="packs-player-select">View progress for</label>
+          <select id="packs-player-select" onchange="handlePackPlayerChange()">
+            <option value="">Select a player</option>
+          </select>
+        </div>
+      </div>
+      <div id="packs-summary" class="packs-summary" aria-live="polite"></div>
+      <div id="packs-container" class="packs-grid"></div>
+    </div>
+
+    <div id="page-verifications" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="verifications-header">
+        <h2>Levels Pending Verification</h2>
+        <p class="verifications-subtitle">Levels with no verified completions yet, ordered by estimated difficulty.</p>
+        <button class="btn-refresh-verifications" onclick="shuffleVerifications()"><i
+            class="fa-solid fa-shuffle"></i> Randomize List</button>
+      </div>
+      <div class="list-toolbar">
+        <div class="list-sort-controls">
+          <label class="leaderboard-label" for="verification-sort-key">Sort by</label>
+          <div class="sort-controls">
+            <select id="verification-sort-key" onchange="handleVerificationSortChange()">
+              <optgroup label="General">
+                <option value="estimatedRank">Estimated Difficulty</option>
+                <option value="rank">Rank</option>
+                <option value="name">Name</option>
+                <option value="creators">Creators</option>
+                <option value="victors">Victors</option>
+                <option value="averageTime">Average Time</option>
+                <option value="averageAttempts">Average Attempts</option>
+                <option value="earliestDate">Earliest Date</option>
+                <option value="id">ID</option>
+              </optgroup>
+              <optgroup label="Length">
+                <option value="length">Level Length</option>
+              </optgroup>
+              <optgroup label="Gamemode Coverage">
+                <option value="coverageShip">Ship Coverage</option>
+                <option value="coverageUfo">UFO Coverage</option>
+                <option value="coverageRobot">Robot Coverage</option>
+                <option value="coverageSwing">Swing Coverage</option>
+                <option value="coverageCube">Cube Coverage</option>
+                <option value="coverageBall">Ball Coverage</option>
+                <option value="coverageSpider">Spider Coverage</option>
+                <option value="coverageWave">Wave Coverage</option>
+              </optgroup>
+              <optgroup label="Gameplay Coverage">
+                <option value="coverageDual">Dual Coverage</option>
+                <option value="mirrorChanges">Mirror Portal Changes</option>
+              </optgroup>
+              <optgroup label="Speed Coverage">
+                <option value="speed">Average Speed</option>
+              </optgroup>
+            </select>
+            <button id="verification-sort-direction-btn" class="sort-direction-btn" type="button" onclick="toggleVerificationSortDirection()" aria-label="Toggle unverified list sort direction">▲</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input class="search-input" type="text" placeholder="Search levels or creators..." id="verification-search"
+            oninput="handleVerificationSearch()" />
+        </div>
+      </div>
+      <div id="verifications-container"></div>
+    </div>
+
+    <div id="page-todo" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="todo-header">
+        <h2>Favorited Levels</h2>
+        <p class="todo-subtitle">Levels you marked for review across the main list and the unverified list.</p>
+      </div>
+      <div id="todo-container"></div>
+    </div>
+
+    <div id="page-timeline" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div id="timeline-container"></div>
+    </div>
+
+    <div id="page-optimizer" class="page">
+      <div class="section-header">
+        <div class="line"></div>
+      </div>
+      <div class="optimizer-frame-wrap">
+        <iframe class="optimizer-frame" src="ladder.html?v=20261014-11" title="Practice Mode List Optimized Ladder"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div id="edit-modal">
+    <div class="edit-wrap">
+      <div class="edit-topbar">
+        <h2>✏️ Edit List</h2>
+        <div class="edit-topbar-actions">
+          <button class="ebtn ebtn-ghost" onclick="showEditView('list'); setEditingSource('levels')">
+            Levels Editor
+          </button>
+          <button class="ebtn ebtn-ghost" onclick="showEditView('list'); setEditingSource('verifications')">
+            Verifications Editor
+          </button>
+          <button class="ebtn ebtn-ghost" onclick="resetToOriginal()">
+            Reset to Original
+          </button>
+          <button class="ebtn ebtn-green" onclick="exportJSON()">
+            Export JSON
+          </button>
+          <button class="ebtn ebtn-ghost" onclick="closeEditMenu()">
+            Close ✕
+          </button>
+        </div>
+      </div>
+
+      <div id="reset-notice" class="reset-notice">
+        ⚠ Local edits cleared. Reloading from levels.json on next page load.
+      </div>
+
+      <div id="edit-view-list" class="edit-view active">
+        <div class="edit-list-actions">
+          <button class="ebtn ebtn-purple" onclick="openLevelForm(-1)">
+            + Add Level
+          </button>
+        </div>
+        <div class="edit-table-wrap">
+          <table class="edit-table" id="edit-level-table">
+            <thead>
+              <tr>
+                <th style="width: 30px"></th>
+                <th>#</th>
+                <th>Name</th>
+                <th>Creator(s)</th>
+                <th class="tier-col">Tier</th>
+                <th>ID</th>
+                <th>Length</th>
+                <th>TPS</th>
+                <th>Precision</th>
+                <th>IA/s</th>
+                <th>Victors</th>
+                <th style="text-align: right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="edit-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="edit-view-form" class="edit-view">
+        <div class="form-header">
+          <button class="ebtn ebtn-ghost" onclick="showEditView('list')">
+            ← Back
+          </button>
+          <h3 id="form-title">Add Level</h3>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Level Name</label>
+            <input class="form-input" id="f-name" type="text" placeholder="e.g. Bloodbath" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Creator(s)</label>
+            <input class="form-input" id="f-creators" type="text" placeholder="e.g. Riot" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Level ID</label>
+            <input class="form-input" id="f-id" type="text" placeholder="e.g. 10672088" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Rank</label>
+            <input class="form-input" id="f-rank" type="number" placeholder="e.g. 1" min="1" />
+          </div>
+          <div class="form-group" id="move-unverified-rank-group" style="display: none">
+            <label class="form-label" for="f-unverified-rank">Unverified rank (optional)</label>
+            <input class="form-input" id="f-unverified-rank" type="number" placeholder="Blank = bottom" min="1" step="1" />
+          </div>
+          <div class="form-group" id="rank-range-group">
+            <label class="form-label">Estimated Rank Range (optional)</label>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <input class="form-input" id="f-rank-min" type="number" placeholder="Min" min="1" />
+              <span>-</span>
+              <input class="form-input" id="f-rank-max" type="number" placeholder="Max" min="1" />
+              <button class="ebtn ebtn-ghost ebtn-sm" type="button" onclick="estimateRankFromLevel()">Estimate from ladder</button>
+            </div>
+            <div id="rank-estimate-basis" class="rank-estimate-basis" role="status" aria-live="polite"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Length</label>
+            <input class="form-input" id="f-length" type="text" placeholder="e.g. 2m 5s" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">TPS</label>
+            <input class="form-input" id="f-tps" type="number" placeholder="e.g. 240" min="0" step="1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Precision</label>
+            <input class="form-input" id="f-precision" type="number" placeholder="e.g. 525.4" min="0" step="0.1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Input Activity (IA/s)</label>
+            <input class="form-input" id="f-ia-per-second" type="number" placeholder="e.g. 12.34" min="0" max="10000" step="0.01" />
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Ratio</label>
+            <input class="form-input" id="f-ratio" type="text" placeholder="C62.3(5) W23.1(5) SH9.6(3) B4.9(1) D1.6(1) S98.4(1) IM5.5(4) NM94.5(4) 0.5X29.4(3) 1X19.1(1) 2X11(1) 3X40.6(1)" />
+          </div>
+          <div class="form-group" id="tier-field-group">
+            <label class="form-label">Tier</label>
+            <select class="form-select" id="f-tier">
+              <option value="">(None)</option>
+              <option value="Novice">Novice</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              <option value="Insane">Insane</option>
+              <option value="Legendary">Legendary</option>
+              <option value="Master">Master</option>
+              <option value="Divine">Divine</option>
+              <option value="Transcendent">Transcendent</option>
+              <option value="Ethereal">Ethereal</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">2-Player?</label>
+            <select class="form-select" id="f-twoplayer">
+              <option value="">No</option>
+              <option value="2 Player">Yes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Showcase Video URL</label>
+            <input class="form-input" id="f-showcase" type="text" placeholder="https://..." />
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Custom Thumbnail URL (leave blank for auto)</label>
+            <input class="form-input" id="f-image" type="text" placeholder="https://... or leave blank" />
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Packs (comma-separated)</label>
+            <input class="form-input" id="f-packs" type="text" placeholder="e.g. Geometry Pack, XL Pack" />
+          </div>
+        </div>
+
+        <div class="victors-section">
+          <div class="victors-section-header">
+            <span class="victors-section-title">Victors</span>
+            <button class="ebtn ebtn-purple ebtn-sm" onclick="addVictorRow()">
+              + Add Victor
+            </button>
+          </div>
+          <div id="victors-list"></div>
+        </div>
+
+        <div class="form-actions">
+          <button class="ebtn ebtn-green" onclick="saveLevelForm()">
+            Save Level
+          </button>
+          <button class="ebtn ebtn-ghost" onclick="showEditView('list')">
+            Cancel
+          </button>
+          <button class="ebtn ebtn-purple" id="form-move-main-btn" onclick="moveCurrentVerificationToMain()" style="display: none">
+            Move to Main
+          </button>
+          <button class="ebtn ebtn-purple" id="form-move-unverified-btn" onclick="moveCurrentLevelToVerifications()" style="display: none">
+            Move to Unverified
+          </button>
+          <button class="ebtn ebtn-red" id="form-delete-btn" onclick="deleteCurrentLevel()" style="margin-left: auto">
+            Delete Level
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-flash" id="save-flash">✓ SAVED</div>
+
+  <div id="video-modal" class="video-modal" hidden>
+    <div class="video-modal-backdrop" data-close-video-modal></div>
+    <div class="video-modal-shell" role="dialog" aria-modal="true" aria-label="Video player">
+      <button class="video-modal-close" type="button" aria-label="Close video player" data-close-video-modal>✕</button>
+      <div class="video-modal-frame-wrap">
+        <iframe id="video-modal-iframe" class="video-modal-frame" title="Embedded video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/format.js"></script>
+  <script src="scripts/leaderboard-utils.js"></script>
+  <script src="scripts/ladder-rank-utils.js?v=20261104-1"></script>
+  <script src="scripts/packs.js"></script>
+  <script src="scripts/pack-utils.js"></script>
+  <script src="scripts/data.js?v=20261104-2"></script>
+  <script src="scripts/editor-state-utils.js"></script>
+  <script src="scripts/video-player.js"></script>
+  <script src="scripts/ui.js?v=20261104-2"></script>
+  <script src="scripts/editor.js?v=20261104-3"></script>
+</body>
+
+</html>>
