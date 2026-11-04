@@ -129,6 +129,7 @@ function getRatioStatisticsMarkup(ratio) {
 }
 
 const TARGETED_LEVELS_STORAGE_KEY = 'pml_targeted_levels';
+let targetedLevelKeysCache = null;
 
 function getTargetedLevelKey(level) {
   const sourceId = String(level?.id ?? '').trim();
@@ -138,26 +139,45 @@ function getTargetedLevelKey(level) {
 }
 
 function getStoredTargetedLevels() {
+  if (targetedLevelKeysCache) return [...targetedLevelKeysCache];
+
   try {
     const saved = JSON.parse(localStorage.getItem(TARGETED_LEVELS_STORAGE_KEY) || '[]');
-    return Array.isArray(saved) ? saved.filter((entry) => typeof entry === 'string').map((entry) => String(entry).trim().toLowerCase()) : [];
+    targetedLevelKeysCache = new Set(
+      Array.isArray(saved)
+        ? saved.filter((entry) => typeof entry === 'string').map((entry) => String(entry).trim().toLowerCase())
+        : []
+    );
   } catch (error) {
-    return [];
+    targetedLevelKeysCache = new Set();
   }
+
+  return [...targetedLevelKeysCache];
+}
+
+function getTargetedLevelSet() {
+  getStoredTargetedLevels();
+  return targetedLevelKeysCache;
 }
 
 function saveStoredTargetedLevels(keys) {
+  const uniqueKeys = [...new Set(keys.filter(Boolean))];
+  targetedLevelKeysCache = new Set(uniqueKeys);
   try {
-    localStorage.setItem(TARGETED_LEVELS_STORAGE_KEY, JSON.stringify([...new Set(keys.filter(Boolean))]));
+    localStorage.setItem(TARGETED_LEVELS_STORAGE_KEY, JSON.stringify(uniqueKeys));
   } catch (error) {
     // localStorage may be unavailable
   }
 }
 
+window.addEventListener('storage', (event) => {
+  if (event.key === null || event.key === TARGETED_LEVELS_STORAGE_KEY) targetedLevelKeysCache = null;
+});
+
 function isLevelTargeted(level) {
   const key = getTargetedLevelKey(level);
   if (!key) return false;
-  return getStoredTargetedLevels().includes(key);
+  return getTargetedLevelSet().has(key);
 }
 
 function toggleTargetLevel(level) {
@@ -176,10 +196,10 @@ function toggleTargetLevel(level) {
 }
 
 function getTargetedLevelsFromData(sourceLevels) {
-  const keyed = getStoredTargetedLevels();
-  if (!keyed.length) return [];
+  const keyed = getTargetedLevelSet();
+  if (!keyed.size) return [];
 
-  return (sourceLevels || []).filter((level) => keyed.includes(getTargetedLevelKey(level)));
+  return (sourceLevels || []).filter((level) => keyed.has(getTargetedLevelKey(level)));
 }
 
 function getTodoTierRankRange(level) {
@@ -752,6 +772,7 @@ function getLevelSummaryRows(level) {
 const thumbnailCache = new Map();
 const renderedLevelsByCardKey = new Map();
 let thumbnailObserver = null;
+let timelineLoadPromise = null;
 
 function escapeHTML(value) {
   return String(value ?? '')
@@ -1140,6 +1161,7 @@ function getScoreBreakdownTooltip(entry) {
 
 function renderLeaderboard(data) {
   const body = document.getElementById('lb-body');
+  body.dataset.dirty = 'false';
   const sortedData = getSortedLeaderboardData(data);
   if (!sortedData.length) {
     body.innerHTML = '<tr><td colspan="5" class="empty-state">// NO PLAYERS FOUND //</td></tr>';
@@ -1264,6 +1286,7 @@ function renderPacks(packs, players) {
   const summary = document.getElementById('packs-summary');
   const container = document.getElementById('packs-container');
   if (!playerSelect || !summary || !container) return;
+  container.dataset.dirty = 'false';
 
   const selectedPlayerName = playerSelect.value || loadSelectedPackPlayer();
   const sortedPlayers = [...players].sort((a, b) => b.points - a.points);
@@ -1410,6 +1433,14 @@ function showPage(name, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(`page-${name}`).classList.add('active');
   btn.classList.add('active');
+
+  if (name === 'leaderboard' && document.getElementById('lb-body').dataset.dirty !== 'false') {
+    renderLeaderboard(leaderboard);
+  }
+  if (name === 'packs' && document.getElementById('packs-container').dataset.dirty !== 'false') {
+    renderPacks(PACKS, leaderboard);
+  }
+  if (name === 'timeline') initializeTimeline();
 }
 
 function handleListSearch() {
@@ -1775,8 +1806,14 @@ function renderTimeline(data) {
 }
 
 function initializeTimeline() {
-  fetch('data/timeline.json')
+  if (timelineLoadPromise) return timelineLoadPromise;
+
+  timelineLoadPromise = fetch('data/timeline.json')
     .then((response) => response.json())
     .then((data) => renderTimeline(data))
-    .catch(() => renderTimeline([]));
+    .catch(() => {
+      timelineLoadPromise = null;
+      renderTimeline([]);
+    });
+  return timelineLoadPromise;
 }

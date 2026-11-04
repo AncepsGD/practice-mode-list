@@ -520,6 +520,9 @@ async function loadPlayerCountries() {
     if (response.ok) {
       const mapping = await response.json();
       if (mapping && typeof mapping === "object") window.playerCountries = mapping;
+      if (dataReady && document.getElementById("page-leaderboard").classList.contains("active")) {
+        renderLeaderboard(leaderboard);
+      }
     }
   } catch (err) {
     console.warn("Unable to load players_countries.json", err);
@@ -527,11 +530,9 @@ async function loadPlayerCountries() {
 }
 
 async function init() {
-  const [data] = await Promise.all([
-    loadData(),
-    loadEditorEstimatedNames(),
-    loadPlayerCountries(),
-  ]);
+  loadEditorEstimatedNames();
+  loadPlayerCountries();
+  const data = await loadData();
 
   loadEditorRemoteBaseline();
   restoreEditorDraftState();

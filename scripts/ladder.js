@@ -940,9 +940,9 @@ function App() {
                 <div className="optimizer-note" style={{backgroundColor: "#fff3cd00", borderColor: "#ffc107"}}>
                   <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                     <span>
-                      {lockedLevelIds.length > 0 && <span>📌 {lockedLevelIds.length} locked</span>}
+                      {lockedLevelIds.length > 0 && <span><i className="fa-solid fa-thumbtack" aria-hidden="true" /> {lockedLevelIds.length} locked</span>}
                       {lockedLevelIds.length > 0 && removedLevelIds.length > 0 && <span> • </span>}
-                      {removedLevelIds.length > 0 && <span>✕ {removedLevelIds.length} removed</span>}
+                      {removedLevelIds.length > 0 && <span><i className="fa-solid fa-xmark" aria-hidden="true" /> {removedLevelIds.length} removed</span>}
                     </span>
                     <button
                       onClick={clearModifications}
@@ -1000,6 +1000,7 @@ function App() {
                             <button
                               onClick={() => toggleLevelLocked(recId)}
                               title={isLocked ? "Unlock this level" : "Lock this level to route"}
+                              aria-label={isLocked ? "Unlock this level" : "Lock this level to route"}
                               style={{
                                 background: isLocked ? "#28a745" : "transparent",
                                 color: isLocked ? "white" : "#666",
@@ -1011,11 +1012,12 @@ function App() {
                                 fontWeight: "bold",
                               }}
                             >
-                              📌
+                              <i className="fa-solid fa-thumbtack" aria-hidden="true" />
                             </button>
                             <button
                               onClick={() => toggleLevelRemoved(recId)}
                               title={isRemoved ? "Re-include this level" : "Remove from route"}
+                              aria-label={isRemoved ? "Re-include this level" : "Remove from route"}
                               style={{
                                 background: isRemoved ? "#dc3545" : "transparent",
                                 color: isRemoved ? "white" : "#666",
@@ -1027,7 +1029,7 @@ function App() {
                                 fontWeight: "bold",
                               }}
                             >
-                              ✕
+                              <i className="fa-solid fa-xmark" aria-hidden="true" />
                             </button>
                           </td>
                           <td style={{textAlign: "center"}}>

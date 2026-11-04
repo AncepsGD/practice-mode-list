@@ -334,9 +334,17 @@ function processRawData(data, options = {}) {
   renderStats();
   renderLevels(getSortedLevelData(levels));
   renderTargetedLevels();
-  renderLeaderboard(leaderboard);
-  renderPacks(PACKS, leaderboard);
-  initializeTimeline();
+  document.getElementById("lb-body").dataset.dirty = "true";
+  document.getElementById("packs-container").dataset.dirty = "true";
+  if (document.getElementById("page-leaderboard").classList.contains("active")) {
+    renderLeaderboard(leaderboard);
+  }
+  if (document.getElementById("page-packs").classList.contains("active")) {
+    renderPacks(PACKS, leaderboard);
+  }
+  if (document.getElementById("page-timeline").classList.contains("active")) {
+    initializeTimeline();
+  }
 
   if (skipVerificationReload && verificationsDataReady) {
     initializeVerifications({ skipPackRefresh: true });
@@ -451,8 +459,14 @@ function refreshPackCatalog() {
   leaderboard = PackUtils.applyBonuses(buildLeaderboard(levels), PACKS, levels);
   maxScore = Math.max(...leaderboard.map((player) => player.points), 1);
   renderStats();
-  renderLeaderboard(leaderboard);
-  renderPacks(PACKS, leaderboard);
+  document.getElementById("lb-body").dataset.dirty = "true";
+  document.getElementById("packs-container").dataset.dirty = "true";
+  if (document.getElementById("page-leaderboard").classList.contains("active")) {
+    renderLeaderboard(leaderboard);
+  }
+  if (document.getElementById("page-packs").classList.contains("active")) {
+    renderPacks(PACKS, leaderboard);
+  }
 }
 
 function getDatasetSignature() {

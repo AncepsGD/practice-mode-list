@@ -92,6 +92,13 @@ h1 {
   margin: 0 auto;
 }
 
+h1 .site-logo {
+  width: clamp(36px, 6vw, 56px);
+  height: auto;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 h1 .word-practice {
   color: var(--violet-bright);
 }
