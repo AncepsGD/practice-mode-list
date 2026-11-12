@@ -436,55 +436,68 @@ nav {
 .level-meta {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px 12px;
   flex-wrap: wrap;
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.12);
 }
 
-.meta-pill {
+.level-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  padding: 3px 9px;
-  letter-spacing: 0.5px;
-  border-radius: 999px;
+  font-size: 11px;
+  font-weight: inherit;
+  line-height: 1.35;
+  text-shadow: inherit;
+  white-space: nowrap;
 }
 
-.meta-pill.creator {
+.level-meta-item:hover {
+  filter: brightness(1.2);
+}
+
+.level-meta-item:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.level-meta-item.creator {
   color: var(--mint);
-  border-color: rgba(46, 230, 166, 0.22);
-  background: rgba(46, 230, 166, 0.2);
 }
 
-.meta-pill.id {
+.level-meta-item.id {
   color: var(--violet-bright);
-  border-color: rgba(124, 92, 255, 0.25);
-  background: rgba(124, 92, 255, 0.22);
 }
 
-.meta-pill.two-player {
-  color: var(--red);
-  border-color: rgba(255, 84, 112, 0.25);
-  background: rgba(255, 84, 112, 0.22);
+.level-meta-item.two-player {
+  color: #f36b1c;
 }
 
-.meta-pill.tps {
-  color: #aac5ff;
-  border-color: rgba(113, 151, 255, 0.35);
-  background: rgba(113, 151, 255, 0.18);
+.level-meta-item.tps,
+.level-meta-item.verification-status {
+  color: #70aaff;
 }
 
-.meta-pill.tier {
+.level-meta-item.precision {
+  color: #ec4876;
+}
+
+.level-meta-item.ia-per-second {
+  color: #c8cbd5;
+}
+
+.level-meta-item.tier {
   color: var(--gold);
-  border-color: rgba(245, 201, 74, 0.25);
-  background: rgba(245, 201, 74, 0.22);
-}
-
-.meta-pill.verification-status {
-  color: #aac5ff;
-  border-color: rgba(113, 151, 255, 0.35);
-  background: rgba(113, 151, 255, 0.18);
 }
 
 .victor-row {
@@ -1623,7 +1636,7 @@ nav {
   }
 
   .level-meta {
-    gap: 6px;
+    gap: 5px 10px;
   }
 
   .thumb-col {
@@ -1759,9 +1772,8 @@ nav {
     font-size: 18px;
   }
 
-  .meta-pill {
-    font-size: 9px;
-    padding: 3px 8px;
+  .level-meta-item {
+    font-size: 10px;
   }
 
   .btn-expand,

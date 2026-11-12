@@ -14,6 +14,19 @@ function flashCopied() {
   }, 2000);
 }
 
+document.addEventListener('click', async (event) => {
+  const metaItem = event.target.closest('.level-meta-item[data-copy-value]');
+  if (!metaItem) return;
+
+  try {
+    await navigator.clipboard.writeText(metaItem.dataset.copyValue);
+    flashCopied();
+  } catch (error) {
+    console.error('Failed to copy level metadata', error);
+    alert('Unable to copy this value. Check clipboard permissions and try again.');
+  }
+});
+
 function fitLevelNames() {
   document.querySelectorAll('.level-name').forEach((nameElement) => {
     nameElement.style.fontSize = '';
@@ -261,10 +274,7 @@ function renderTargetedLevels() {
           <div class="info-col">
             <div class="level-name">${escapeHTML(lvl.name || '')}</div>
             <div class="level-meta">
-              ${sourceLabel ? `<span class="meta-pill creator">${escapeHTML(sourceLabel)}</span>` : ''}
-              ${lvl.tier ? `<span class="meta-pill tier">${escapeHTML(lvl.tier)}</span>` : ''}
-              ${getLevelTpsDisplayValue(lvl) !== null ? `<span class="meta-pill tps">TPS: ${escapeHTML(String(getLevelTpsDisplayValue(lvl)))}</span>` : ''}
-              ${String(lvl.id || '').trim() ? `<span class="meta-pill id">ID: ${escapeHTML(String(lvl.id || '').trim())}</span>` : ''}
+              ${getLevelMetaMarkup(lvl, sourceLabel)}
             </div>
             ${getLevelSummaryRows(lvl).map((row) => `<div class="victor-row"><span class="victor-label">${escapeHTML(row.label || '')}:</span><span class="victor-name">${escapeHTML(row.name || '')}</span><span class="victor-stats">${escapeHTML(row.stat || '')}</span></div>`).join('')}
           </div>
@@ -337,7 +347,7 @@ const LIST_SORT_SPEED_MULTIPLIERS = new Map([['0.5X', 0.5], ['1X', 1], ['2X', 2]
 const LIST_SORT_SPEED_PATTERN = /(?:^|\s)(0\.5X|1X|2X|3X|4X)(\d+(?:\.\d+)?)\(\d+\)/gi;
 const LIST_SORT_KEYS = [
   'rank', 'name', 'creators', 'victors', 'averageTime', 'averageAttempts',
-  'earliestDate', 'length', ...LIST_SORT_RATIO_KEYS, 'speed', 'id',
+  'precision', 'iaPerSecond', 'earliestDate', 'length', ...LIST_SORT_RATIO_KEYS, 'speed', 'id',
 ];
 let listSortState = { ...LIST_SORT_DEFAULT_STATE };
 const VERIFICATION_SORT_STORAGE_KEY = 'pml_verification_sort_state';
@@ -397,6 +407,7 @@ function handleListSortChange() {
   if (!sortSelect) return;
   listSortState.key = sortSelect.value;
   if (listSortState.key === 'length' || listSortState.key === 'speed'
+    || listSortState.key === 'precision' || listSortState.key === 'iaPerSecond'
     || LIST_SORT_RATIO_KEYS.includes(listSortState.key)) listSortState.direction = 'desc';
   saveListSortState();
   updateListSortControls();
@@ -460,6 +471,18 @@ function getListSortValue(item, key, direction = 1) {
         .filter((value) => Number.isFinite(value) && value > 0);
       return attempts.length
         ? attempts.reduce((sum, value) => sum + value, 0) / attempts.length
+        : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
+    }
+    case 'precision': {
+      const value = Number(item.precision ?? item.Precision);
+      return Number.isFinite(value) && value > 0
+        ? value
+        : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
+    }
+    case 'iaPerSecond': {
+      const value = Number(item.iaPerSecond ?? item.inputActivityPerSecond);
+      return Number.isFinite(value) && value > 0
+        ? value
         : (direction === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY);
     }
     case 'earliestDate': {
@@ -681,43 +704,37 @@ function getLevelTpsDisplayValue(level) {
   return Number.isFinite(value) ? value : null;
 }
 
-function getLevelMetaMarkup(level) {
-  const metaPills = [];
-  const creatorValue = getLevelCreatorValue(level);
+function getLevelMetaMarkup(level, creatorLabel = getLevelCreatorValue(level)) {
+  const metaItems = [];
+  const addMetaItem = (type, icon, value, copyValue = value) => {
+    if (!value) return;
+    metaItems.push(`<button type="button" class="level-meta-item ${type}" data-copy-value="${escapeHTML(copyValue)}" title="Click to copy" aria-label="Copy ${escapeHTML(value)}"><i class="fa-solid ${icon}" aria-hidden="true"></i><span>${escapeHTML(value)}</span></button>`);
+  };
 
-  if (creatorValue) {
-    metaPills.push(`<span class="meta-pill creator">${escapeHTML(creatorValue)}</span>`);
-  }
+  addMetaItem('creator', 'fa-hammer', creatorLabel);
+  addMetaItem('tier', 'fa-layer-group', level.tier);
 
-  if (level.tier) {
-    metaPills.push(`<span class="meta-pill tier">${escapeHTML(level.tier)}</span>`);
-  }
-
-  const verificationStatus = String(level.verificationStatus || "").trim();
-  if (verificationStatus) {
-    metaPills.push(`<span class="meta-pill verification-status">${escapeHTML(verificationStatus)}</span>`);
-  }
+  const verificationStatus = String(level.verificationStatus || '').trim();
+  addMetaItem('verification-status', 'fa-circle-check', verificationStatus);
 
   const tpsValue = getLevelTpsDisplayValue(level);
-  if (tpsValue !== null) {
-    metaPills.push(`<span class="meta-pill tps">TPS: ${escapeHTML(String(tpsValue))}</span>`);
+  if (tpsValue !== null) addMetaItem('tps', 'fa-gauge-high', `TPS: ${tpsValue}`, String(tpsValue));
+
+  const precision = Number(level.precision ?? level.Precision);
+  if (Number.isFinite(precision) && precision > 0) {
+    addMetaItem('precision', 'fa-crosshairs', `Precision: ${precision.toFixed(2)}`, precision.toFixed(2));
   }
 
   const iaPerSecond = Number(level.iaPerSecond ?? level.inputActivityPerSecond);
   if (Number.isFinite(iaPerSecond) && iaPerSecond > 0) {
-    metaPills.push(`<span class="meta-pill">IA/s: ${escapeHTML(iaPerSecond.toFixed(2))}</span>`);
+    addMetaItem('ia-per-second', 'fa-keyboard', `IA/s: ${iaPerSecond.toFixed(2)}`, iaPerSecond.toFixed(2));
   }
 
   const idValue = String(level.id ?? '').trim();
-  if (idValue) {
-    metaPills.push(`<span class="meta-pill id">ID: ${escapeHTML(idValue)}</span>`);
-  }
+  if (idValue) addMetaItem('id', 'fa-hashtag', idValue);
+  if (level.is2Player) addMetaItem('two-player', 'fa-user-group', '2-Player');
 
-  if (level.is2Player) {
-    metaPills.push('<span class="meta-pill two-player">2-PLAYER</span>');
-  }
-
-  return metaPills.join('');
+  return metaItems.join('');
 }
 
 function getLevelSummaryRows(level) {
@@ -989,11 +1006,7 @@ function renderLevels(data) {
           <div class="level-name">${escapeHTML(lvl.name)}</div>
 
           <div class="level-meta">
-            ${getLevelCreatorValue(lvl) ? `<span class="meta-pill creator">${escapeHTML(getLevelCreatorValue(lvl))}</span>` : ''}
-            ${lvl.tier ? `<span class="meta-pill tier">${escapeHTML(lvl.tier)}</span>` : ''}
-            ${getLevelTpsDisplayValue(lvl) !== null ? `<span class="meta-pill tps">TPS: ${escapeHTML(String(getLevelTpsDisplayValue(lvl)))}</span>` : ''}
-            <span class="meta-pill id">ID: ${lvl.id}</span>
-            ${lvl.is2Player ? '<span class="meta-pill two-player">2-PLAYER</span>' : ''}
+            ${getLevelMetaMarkup(lvl)}
           </div>
 
           ${getLevelSummaryRows(lvl)
