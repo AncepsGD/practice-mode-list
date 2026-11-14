@@ -1593,11 +1593,51 @@ function getUnverifiedEstimatedRank(level) {
   return rank;
 }
 
+function getUnverifiedDifficultyRank(level) {
+  const entry = getUnverifiedRankCacheEntry(level);
+  if (!entry) return null;
+  const { key, signature } = entry;
+  const rank = getUnverifiedEstimatedRank(level);
+  const cached = key ? unverifiedEstimatedRankCache.get(key) : null;
+  if (cached?.signature === signature
+      && cached.calibrationLevels === levels
+      && Object.prototype.hasOwnProperty.call(cached, 'difficultyRank')) {
+    return cached.difficultyRank;
+  }
+
+  const prediction = typeof LadderUtils !== 'undefined'
+    && typeof LadderUtils.getEstimatedRankRange === 'function'
+    ? LadderUtils.getEstimatedRankRange({
+      ...level,
+      tier: undefined,
+      tierName: undefined,
+      isUnverified: true,
+    }, levels, [])
+    : null;
+  const difficultyRank = Number.isFinite(prediction?.estimatedRankValue)
+    ? prediction.estimatedRankValue
+    : (Number.isFinite(prediction?.estimatedRank) ? prediction.estimatedRank : null);
+  if (key && cached?.signature === signature && cached.calibrationLevels === levels) {
+    cached.difficultyRank = difficultyRank;
+  } else if (key) {
+    unverifiedEstimatedRankCache.set(key, {
+      signature,
+      rank,
+      difficultyRank,
+      calibrationLevels: levels,
+    });
+  }
+  return difficultyRank;
+}
+
 function sortUnverifiedByEstimatedDifficulty(unverifiedLevels) {
   return [...unverifiedLevels].sort((a, b) => {
     const rankA = getUnverifiedEstimatedRank(a) ?? Infinity;
     const rankB = getUnverifiedEstimatedRank(b) ?? Infinity;
     if (rankA !== rankB) return rankA - rankB;
+    const difficultyRankA = getUnverifiedDifficultyRank(a) ?? Infinity;
+    const difficultyRankB = getUnverifiedDifficultyRank(b) ?? Infinity;
+    if (difficultyRankA !== difficultyRankB) return difficultyRankA - difficultyRankB;
     return String(a.name || '').localeCompare(String(b.name || ''));
   });
 }

@@ -43,6 +43,9 @@
     ridge: 0.002,
     minVariance: 1,
     minSkill: 0.02,
+    tierPriorMaxPrecisionRatio: 4,
+    timeNormalizationRidge: 0.05,
+    timeNormalizationStrength: 0.25,
     // Leave-one-out fit on the 199 levels shared by secret.txt and levels.json.
     priorBlend: 0,
     inferredRankShift: -0.82,
@@ -261,12 +264,82 @@
     return name ? `name:${name}` : `index:${fallbackIndex}`;
   }
 
-  function buildVictorFactorModel(levels, field) {
+  function fitVictorTimeNormalization(levels) {
+    const observations = [];
+    levels.forEach(level => {
+      const length = getMetricValue(level, "length");
+      const tps = getMetricValue(level, "tps");
+      if (!Number.isFinite(length) || length <= 0 || !Number.isFinite(tps) || tps <= 0) return;
+      const timeValues = getVictorLogValues(level, "time");
+      if (!timeValues.size) return;
+      observations.push({
+        logLength: Math.log(length),
+        logTps: Math.log(tps),
+        logTimePerLength: getMedian([...timeValues.values()]),
+      });
+    });
+
+    const normalization = {
+      meanLogLength: 0,
+      meanLogTps: 0,
+      lengthAdjustment: 0,
+      tpsExponent: 0,
+    };
+    if (observations.length < MODEL.minFeatureSamples) return normalization;
+
+    const total = observations.length;
+    normalization.meanLogLength = observations.reduce((sum, point) => sum + point.logLength, 0) / total;
+    normalization.meanLogTps = observations.reduce((sum, point) => sum + point.logTps, 0) / total;
+    const meanTimePerLength = observations.reduce((sum, point) => sum + point.logTimePerLength, 0) / total;
+    let lengthVariance = 0;
+    let tpsVariance = 0;
+    let crossCovariance = 0;
+    let lengthTimeCovariance = 0;
+    let tpsTimeCovariance = 0;
+    observations.forEach(point => {
+      const lengthDelta = point.logLength - normalization.meanLogLength;
+      const tpsDelta = point.logTps - normalization.meanLogTps;
+      const timeDelta = point.logTimePerLength - meanTimePerLength;
+      lengthVariance += lengthDelta ** 2;
+      tpsVariance += tpsDelta ** 2;
+      crossCovariance += lengthDelta * tpsDelta;
+      lengthTimeCovariance += lengthDelta * timeDelta;
+      tpsTimeCovariance += tpsDelta * timeDelta;
+    });
+
+    const ridge = MODEL.timeNormalizationRidge * Math.max(lengthVariance, tpsVariance, 1);
+    const regularizedLengthVariance = lengthVariance + ridge;
+    const regularizedTpsVariance = tpsVariance + ridge;
+    const determinant = regularizedLengthVariance * regularizedTpsVariance - crossCovariance ** 2;
+    if (!Number.isFinite(determinant) || determinant <= 0) return normalization;
+
+    normalization.lengthAdjustment = clamp(
+      (
+        lengthTimeCovariance * regularizedTpsVariance
+        - tpsTimeCovariance * crossCovariance
+      ) / determinant,
+      -1,
+      1,
+    );
+    normalization.tpsExponent = clamp(
+      (
+        tpsTimeCovariance * regularizedLengthVariance
+        - lengthTimeCovariance * crossCovariance
+      ) / determinant,
+      0,
+      1.5,
+    );
+    normalization.lengthAdjustment *= MODEL.timeNormalizationStrength;
+    normalization.tpsExponent *= MODEL.timeNormalizationStrength;
+    return normalization;
+  }
+
+  function buildVictorFactorModel(levels, field, timeNormalization = null) {
     const calibrationLevelsByKey = new Map();
     const observationsByLevel = new Map();
     levels.forEach((level, levelIndex) => {
       calibrationLevelsByKey.set(getLevelIdentityKey(level, levelIndex), level);
-      const playerValues = getVictorLogValues(level, field);
+      const playerValues = getVictorLogValues(level, field, timeNormalization);
       if (playerValues.size) observationsByLevel.set(levelIndex, playerValues);
     });
 
@@ -382,6 +455,7 @@
       playerReliabilities,
       calibratedLevels,
       calibrationLevelsByKey,
+      timeNormalization,
     };
   }
 
@@ -400,8 +474,9 @@
   }
 
   function buildVictorFactorModels(levels) {
+    const timeNormalization = fitVictorTimeNormalization(levels);
     return {
-      time: buildVictorFactorModel(levels, "time"),
+      time: buildVictorFactorModel(levels, "time", timeNormalization),
       attempts: buildVictorFactorModel(levels, "attempts"),
     };
   }
@@ -411,7 +486,7 @@
     if (factorModel.calibrationLevelsByKey.get(identityKey) === level) {
       return factorModel.calibratedLevels.get(identityKey) ?? null;
     }
-    const playerValues = getVictorLogValues(level, field);
+    const playerValues = getVictorLogValues(level, field, factorModel.timeNormalization);
     let reliableWeight = 0;
     let reliableConsensus = 0;
     playerValues.forEach((value, player) => {
@@ -609,33 +684,66 @@
     return `${factorModelId}|${pool.scope}|${entries.join(";")}`;
   }
 
-  function getVictorLogValues(level, field) {
+  function getVictorLogValues(level, field, timeNormalization = null) {
     const victors = Array.isArray(level?.victors) ? level.victors : [];
-    const cached = level && typeof level === "object" ? victorLogValueCache.get(level) : null;
-    if (cached?.victors === victors && cached.values.has(field)) {
-      return cached.values.get(field);
+    const rawLength = getMetricValue(level, "length");
+    const rawTps = getMetricValue(level, "tps");
+    const levelLength = Number.isFinite(rawLength) && rawLength > 0 ? rawLength : null;
+    const levelTps = Number.isFinite(rawTps) && rawTps > 0 ? rawTps : null;
+    let cached = level && typeof level === "object" ? victorLogValueCache.get(level) : null;
+    if (!cached
+        || cached.victors !== victors
+        || cached.length !== levelLength
+        || cached.tps !== levelTps) {
+      cached = {
+        victors,
+        length: levelLength,
+        tps: levelTps,
+        values: new Map(),
+        normalizedTime: new WeakMap(),
+      };
+      if (level && typeof level === "object") victorLogValueCache.set(level, cached);
     }
 
-    const valuesByPlayer = new Map();
-    victors.forEach(victor => {
-      const player = normalizeName(victor?.name);
-      const value = field === "time"
-        ? parseVictorTime(victor?.seconds ?? victor?.time)
-        : Number(victor?.attempts);
-      if (!player || !Number.isFinite(value) || value <= 0) return;
-      if (!valuesByPlayer.has(player)) valuesByPlayer.set(player, []);
-      valuesByPlayer.get(player).push(Math.log(value));
-    });
-    valuesByPlayer.forEach((values, player) => {
-      valuesByPlayer.set(player, values.reduce((sum, value) => sum + value, 0) / values.length);
-    });
-    if (level && typeof level === "object") {
-      const current = victorLogValueCache.get(level);
-      const values = current?.victors === victors ? current.values : new Map();
-      values.set(field, valuesByPlayer);
-      victorLogValueCache.set(level, { victors, values });
+    let valuesByPlayer = cached.values.get(field);
+    if (!valuesByPlayer) {
+      valuesByPlayer = new Map();
+      victors.forEach(victor => {
+        const player = normalizeName(victor?.name);
+        const timeSeconds = field === "time"
+          ? parseVictorTime(victor?.seconds ?? victor?.time)
+          : null;
+        const value = field === "time"
+          ? (Number.isFinite(timeSeconds) && levelLength !== null
+            ? timeSeconds / levelLength
+            : null)
+          : Number(victor?.attempts);
+        if (!player || !Number.isFinite(value) || value <= 0) return;
+        if (!valuesByPlayer.has(player)) valuesByPlayer.set(player, []);
+        valuesByPlayer.get(player).push(Math.log(value));
+      });
+      valuesByPlayer.forEach((values, player) => {
+        valuesByPlayer.set(player, values.reduce((sum, value) => sum + value, 0) / values.length);
+      });
+      cached.values.set(field, valuesByPlayer);
     }
-    return valuesByPlayer;
+
+    if (field !== "time" || !timeNormalization) return valuesByPlayer;
+    const normalizedValues = cached.normalizedTime.get(timeNormalization);
+    if (normalizedValues) return normalizedValues;
+
+    const lengthOffset = levelLength !== null
+      ? timeNormalization.lengthAdjustment * (Math.log(levelLength) - timeNormalization.meanLogLength)
+      : 0;
+    const tpsOffset = levelTps !== null
+      ? timeNormalization.tpsExponent * (Math.log(levelTps) - timeNormalization.meanLogTps)
+      : 0;
+    const adjustedValues = new Map([...valuesByPlayer].map(([player, value]) => [
+      player,
+      value - lengthOffset - tpsOffset,
+    ]));
+    cached.normalizedTime.set(timeNormalization, adjustedValues);
+    return adjustedValues;
   }
 
   function getSharedVictorLogRatio(left, right, playerReliabilities) {
@@ -713,9 +821,10 @@
     return fields.map(field => {
       const comparisonsByPair = new Map();
       const observationsByPlayer = new Map();
-      const playerReliabilities = victorFactorModels[field].playerReliabilities;
+      const factorModel = victorFactorModels[field];
+      const playerReliabilities = factorModel.playerReliabilities;
       pool.entries.forEach((entry, index) => {
-        getVictorLogValues(entry.candidate, field).forEach((value, player) => {
+        getVictorLogValues(entry.candidate, field, factorModel.timeNormalization).forEach((value, player) => {
           if (!(playerReliabilities.get(player) > 0)) return;
           if (!observationsByPlayer.has(player)) observationsByPlayer.set(player, []);
           observationsByPlayer.get(player).push({
@@ -762,6 +871,7 @@
       return {
         field,
         playerReliabilities,
+        timeNormalization: factorModel.timeNormalization,
         comparisons: comparisons.length,
         points: predictionPoints,
         bandwidth: calibration?.bandwidth ?? null,
@@ -778,9 +888,9 @@
     let comparisonCount = 0;
     models.forEach(model => {
       if (model.bandwidth === null) return;
-      const targetValues = getVictorLogValues(level, model.field);
+      const targetValues = getVictorLogValues(level, model.field, model.timeNormalization);
       pool.entries.forEach((entry, index) => {
-        const candidateValues = getVictorLogValues(entry.candidate, model.field);
+        const candidateValues = getVictorLogValues(entry.candidate, model.field, model.timeNormalization);
         const shared = getSharedVictorLogRatio(
           targetValues,
           candidateValues,
@@ -996,7 +1106,7 @@
     }
     const { model, targetVector, poolModel } = getPredictionModel(level, pool, victorFactorModels, cache, maxRank);
     const empty = { points: null, spread: null, used: model.used, missing: model.missing };
-    const hasVictorEvidence = getVictorLogValues(level, "time").size
+    const hasVictorEvidence = getVictorLogValues(level, "time", victorFactorModels.time.timeNormalization).size
       || getVictorLogValues(level, "attempts").size;
     if (hasVictorEvidence && !poolModel.headToHead) {
       poolModel.headToHead = buildHeadToHeadModels(pool, victorFactorModels);
@@ -1064,6 +1174,7 @@
       min: lower,
       max: upper,
       estimatedRank,
+      estimatedRankValue: constrainToBounds ? clamp(value, min, max) : value,
     };
   }
 
@@ -1077,19 +1188,17 @@
     const explicit = readExplicitRange(level);
     const tier = getLevelTier(level);
     const sameTier = tier ? ranked.filter(entry => entry.tier === tier) : ranked;
-    const tierConstrained = Boolean(level.isUnverified && tier && tier !== "pending" && sameTier.length);
-    const tierBounds = tierConstrained ? getRankSpan(sameTier) : null;
-    const bounds = explicit || tierBounds || getRankSpan(ranked);
+    const bounds = explicit || getRankSpan(ranked);
     let tierPrior = null;
-    if (sameTier.length && (!tierConstrained || explicit)) {
+    if (sameTier.length) {
       const tierEntries = sameTier.map(entry => ({
-        points: rankToPoints(entry.rank, calibrationLevels.length),
+        rank: entry.rank,
         weight: entry.weight,
       }));
       const totalWeight = tierEntries.reduce((sum, entry) => sum + entry.weight, 0);
-      const tierMean = tierEntries.reduce((sum, entry) => sum + entry.points * entry.weight, 0) / totalWeight;
+      const tierMean = tierEntries.reduce((sum, entry) => sum + entry.rank * entry.weight, 0) / totalWeight;
       const tierVariance = tierEntries.reduce(
-        (sum, entry) => sum + entry.weight * (entry.points - tierMean) ** 2,
+        (sum, entry) => sum + entry.weight * (entry.rank - tierMean) ** 2,
         0,
       ) / totalWeight;
       tierPrior = { mean: tierMean, variance: Math.max(MODEL.minVariance, tierVariance) };
@@ -1105,17 +1214,22 @@
     }
     const prediction = predictFromFeatures(level, pool, victorFactorModels, calibrationLevels, calibrationLevels.length);
 
-    let points = Number.isFinite(prediction.points)
-      ? prediction.points
-      : (tierPrior?.mean ?? rankToPoints((bounds.min + bounds.max) / 2, calibrationLevels.length));
+    let rank = Number.isFinite(prediction.points)
+      ? pointsToRank(prediction.points, calibrationLevels.length)
+      : (tierPrior?.mean ?? (bounds.min + bounds.max) / 2);
     if (tierPrior && Number.isFinite(prediction.points)) {
-      const predictionVariance = Math.max(MODEL.minVariance, (prediction.pointsSpread || 0) ** 2);
+      const predictionVariance = Math.max(
+        MODEL.minVariance,
+        Number.isFinite(prediction.spread) ? prediction.spread ** 2 : 0,
+      );
       const predictionPrecision = 1 / predictionVariance;
-      const tierPrecision = 1 / tierPrior.variance;
-      points = (prediction.points * predictionPrecision + tierPrior.mean * tierPrecision)
+      const tierPrecision = Math.min(
+        1 / tierPrior.variance,
+        predictionPrecision * MODEL.tierPriorMaxPrecisionRatio,
+      );
+      rank = (rank * predictionPrecision + tierPrior.mean * tierPrecision)
         / (predictionPrecision + tierPrecision);
     }
-    const rank = pointsToRank(points, calibrationLevels.length);
     const prior = estimatedRanks.get(getLevelName(level)) ?? null;
     const result = finalizeEstimate(
       bounds.min,
@@ -1125,7 +1239,7 @@
       explicit,
       prediction.spread,
       calibrationLevels.length,
-      tierConstrained,
+      Boolean(explicit),
     );
 
     return {
@@ -1148,9 +1262,176 @@
     };
   }
 
+  function summarizeRankBacktest(predictions) {
+    if (!predictions.length) {
+      return {
+        count: 0,
+        meanAbsoluteError: null,
+        medianAbsoluteError: null,
+        rootMeanSquaredError: null,
+        within5Rate: null,
+        within10Rate: null,
+        intervalCoverage: null,
+      };
+    }
+
+    const errors = predictions.map(prediction => prediction.absoluteError);
+    const within5Count = errors.filter(error => error <= 5).length;
+    const within10Count = errors.filter(error => error <= 10).length;
+    const squaredError = errors.reduce((sum, error) => sum + error ** 2, 0);
+    const intervalPredictions = predictions.filter(prediction => (
+      Number.isFinite(prediction.rankRange?.min) && Number.isFinite(prediction.rankRange?.max)
+    ));
+    const coveredIntervals = intervalPredictions.filter(prediction => (
+      prediction.actualRank >= prediction.rankRange.min
+      && prediction.actualRank <= prediction.rankRange.max
+    )).length;
+
+    return {
+      count: predictions.length,
+      meanAbsoluteError: errors.reduce((sum, error) => sum + error, 0) / errors.length,
+      medianAbsoluteError: getMedian(errors),
+      rootMeanSquaredError: Math.sqrt(squaredError / errors.length),
+      within5Rate: within5Count / errors.length,
+      within10Rate: within10Count / errors.length,
+      intervalCoverage: intervalPredictions.length
+        ? coveredIntervals / intervalPredictions.length
+        : null,
+    };
+  }
+
+  async function backtestEstimatedRanks(levels, estimatedNames = []) {
+    if (!Array.isArray(levels)) throw new TypeError("levels must be an array");
+    if (!Array.isArray(estimatedNames)) throw new TypeError("estimatedNames must be an array");
+
+    const backtestLevels = levels.map(level => ({ ...level }));
+    const tierMarkers = [];
+    const seenTiers = new Set();
+    backtestLevels.forEach((level, index) => {
+      const tier = String(level.tier || level.tierName || "").trim();
+      if (tier && !seenTiers.has(tier.toLowerCase())) {
+        seenTiers.add(tier.toLowerCase());
+        tierMarkers.push({ index, tier });
+      }
+    });
+    tierMarkers.forEach((marker, markerIndex) => {
+      const end = markerIndex + 1 < tierMarkers.length
+        ? tierMarkers[markerIndex + 1].index
+        : backtestLevels.length;
+      for (let index = marker.index; index < end; index += 1) {
+        backtestLevels[index].tier = marker.tier;
+      }
+    });
+
+    const rankedLevels = backtestLevels
+      .map(level => ({ level, rank: Number(level?.rank) }))
+      .filter(entry => Number.isFinite(entry.rank) && entry.rank > 0);
+    const maximumActualRank = Math.max(...rankedLevels.map(entry => entry.rank), 1);
+    const predictions = [];
+
+    for (const { level, rank: actualRank } of rankedLevels) {
+      const targetKey = getLevelName(level);
+      const targetId = String(level?.id || level?.levelId || "").trim();
+      if (!targetKey && !targetId) {
+        await new Promise(resolve => setTimeout(resolve, 0));
+        continue;
+      }
+
+      const heldOutLevel = {
+        ...level,
+        isUnverified: true,
+        rank: undefined,
+        modelRank: undefined,
+        _difficultyRank: undefined,
+        _tierPrimaryRank: undefined,
+        _tierEstimatedRankRange: undefined,
+        rankRange: undefined,
+        estimatedRankRange: undefined,
+        estimatedRankMin: undefined,
+        estimatedRankMax: undefined,
+      };
+      const heldOutNames = estimatedNames.map(name => (
+        normalizeName(name) === targetKey ? "" : name
+      ));
+      // Keep observed features available, but candidate collection excludes this target by identity.
+      const estimate = getEstimatedRankRange(heldOutLevel, backtestLevels, heldOutNames);
+      if (!estimate || !Number.isFinite(estimate.estimatedRankValue)) {
+        await new Promise(resolve => setTimeout(resolve, 0));
+        continue;
+      }
+
+      const scaleRank = value => {
+        const percentile = backtestLevels.length > 1
+          ? clamp((value - 1) / (backtestLevels.length - 1), 0, 1)
+          : 0;
+        return 1 + percentile * (maximumActualRank - 1);
+      };
+      const predictedRank = scaleRank(estimate.estimatedRankValue);
+      const rankRange = {
+        min: scaleRank(estimate.min),
+        max: scaleRank(estimate.max),
+      };
+      const trainingLevels = backtestLevels.filter(candidate => !isSameLevel(level, candidate));
+      const getValidRank = candidate => {
+        const rank = Number(candidate?.rank);
+        return Number.isFinite(rank) && rank > 0 ? rank : null;
+      };
+      const trainingRanks = trainingLevels.map(getValidRank).filter(rank => Number.isFinite(rank));
+      const tierRanks = trainingLevels
+        .filter(candidate => getLevelTier(candidate) === getLevelTier(level))
+        .map(getValidRank)
+        .filter(rank => Number.isFinite(rank));
+      const baselineRanks = tierRanks.length ? tierRanks : trainingRanks;
+      const tierMidpointRank = baselineRanks.length
+        ? (Math.min(...baselineRanks) + Math.max(...baselineRanks)) / 2
+        : null;
+      predictions.push({
+        name: String(level?.name || level?.levelName || ""),
+        tier: getLevelTier(level) || "unknown",
+        actualRank,
+        predictedRank,
+        absoluteError: Math.abs(predictedRank - actualRank),
+        rankRange,
+        tierMidpointRank,
+        tierMidpointError: Number.isFinite(tierMidpointRank)
+          ? Math.abs(tierMidpointRank - actualRank)
+          : null,
+      });
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+
+    const tiers = new Map();
+    predictions.forEach(prediction => {
+      if (!tiers.has(prediction.tier)) tiers.set(prediction.tier, []);
+      tiers.get(prediction.tier).push(prediction);
+    });
+
+    return {
+      totalLevels: levels.length,
+      eligibleLevels: rankedLevels.length,
+      evaluatedLevels: predictions.length,
+      skippedLevels: rankedLevels.length - predictions.length,
+      metrics: summarizeRankBacktest(predictions),
+      baselineMetrics: {
+        tierMidpoint: summarizeRankBacktest(predictions
+          .filter(prediction => Number.isFinite(prediction.tierMidpointError))
+          .map(prediction => ({
+            actualRank: prediction.actualRank,
+            absoluteError: prediction.tierMidpointError,
+          }))),
+      },
+      byTier: Object.fromEntries([...tiers].map(([tier, tierPredictions]) => [
+        tier,
+        summarizeRankBacktest(tierPredictions),
+      ])),
+      predictions,
+    };
+  }
+
   root.LadderUtils = root.LadderUtils || {};
   root.LadderUtils.ESTIMATED_RANK_METRIC_WEIGHTS = ESTIMATED_RANK_METRIC_WEIGHTS;
   root.LadderUtils.ESTIMATED_RANK_PENALTIES = ESTIMATED_RANK_PENALTIES;
   root.LadderUtils.ESTIMATED_RANK_NORMALIZATION = ESTIMATED_RANK_NORMALIZATION;
   root.LadderUtils.getEstimatedRankRange = getEstimatedRankRange;
+  root.LadderUtils.backtestEstimatedRanks = backtestEstimatedRanks;
 }(typeof window !== "undefined" ? window : globalThis));
