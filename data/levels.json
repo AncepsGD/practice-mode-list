@@ -5,10 +5,12 @@
     "creators": "IiIOpTiCaLIiI, RMGD",
     "id": "149146500",
     "length": "4m 49s",
-    "tps": 3500,
+    "tps": 2500,
     "precision": "",
     "iaPerSecond": "",
     "ratio": "W73.1(45) C12.3(22) SH10.4(26) B2.6(6) R1.1(6) U0.5(2) D1.4(2) S98.6(2) IM0.0(0) NM100.0(0) 0.5X49(25) 3X22.2(23) 2X17.7(12) 1X11.1(17)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/Sfp_kvGsk1w",
     "image": "",
@@ -63,10 +65,12 @@
     "creators": "IiIOpTiCaLIiI",
     "id": "137338835",
     "length": "2m 1s",
-    "tps": 3500,
+    "tps": 2500,
     "precision": "",
     "iaPerSecond": "",
     "ratio": "W65.2(24) C16.1(11) SH12.4(16) B3.6(3) R2.2(4) U0.4(1) D1.9(1) S98.1(1) IM0.0(0) NM100.0(0) 0.5X38.3(11) 3X31.2(12) 2X17.9(5) 1X12.6(7)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/7hgRVle0fLg?si=1Txh6B3xefgeAFQP",
     "image": "",
@@ -258,9 +262,12 @@
     "creators": "gdmiracle",
     "id": "74840910",
     "length": "2m 23s",
-    "tps": 2750,
+    "tps": 1500,
+    "precision": 10857.39,
     "iaPerSecond": "",
     "ratio": "W42.2(28) C30.1(17) SH16.9(17) B5.9(9) R2.6(3) U2.2(3) D2.6(2) S97.4(2) IM0.0(0) NM100.0(0) 0.5X46.3(19) 3X44.1(18) 1X7(3) 2X2.6(2)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/RC2yvZlTDjM",
     "image": "",
@@ -293,8 +300,7 @@
     "scoringBaseline": {
       "timeSeconds": 15345,
       "attempts": 89121
-    },
-    "precision": 10857.39
+    }
   },
   {
     "rank": 10,
@@ -1720,13 +1726,20 @@
     "rank": 55,
     "name": "Kingdom of Miracalis (2022 15 CPS Fix)",
     "creators": "gdmiracle",
-    "id": "127839106",
+    "id": "136897609",
     "length": "2m 24s",
     "tps": 1200,
+    "precision": "",
+    "iaPerSecond": "",
     "ratio": "W47.2(27) C26.4(17) SH17.4(17) B5(9) R2.2(3) U1.9(3) D2.6(2) S97.4(2) IM0.0(0) NM100.0(0) 0.5X57.8(19) 3X34.1(17) 1X5.9(3) 2X2.2(2)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=NjjRRoun1eg",
     "image": "",
+    "packs": [
+      "PML Day One Pack"
+    ],
     "victors": [
       {
         "name": "Redacted Player #2",
@@ -1746,10 +1759,7 @@
     "scoringBaseline": {
       "timeSeconds": 4598,
       "attempts": 30796
-    },
-    "packs": [
-      "PML Day One Pack"
-    ]
+    }
   },
   {
     "rank": 56,
@@ -2139,11 +2149,14 @@
     "rank": 68,
     "name": "rare",
     "creators": "greafer",
-    "id": "81002356",
+    "id": "96496947",
     "length": "2m 20s",
     "tps": 720,
+    "precision": 1126.8,
     "iaPerSecond": "",
     "ratio": "C88.7(20) SH5.4(14) W2.5(9) B2.1(3) U1.1(7) SP0.1(1) D4.3(3) S95.7(3) IM0.0(0) NM100.0(0) 0.5X82.6(22) 4X7.7(15) 1X7.3(15) 3X1.3(13) 2X1(12)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://youtu.be/3vlpoX6e2I4?si=oDbKhxk6t6ljZz1Q",
     "image": "",
@@ -2169,8 +2182,7 @@
     "scoringBaseline": {
       "timeSeconds": 3054,
       "attempts": 3295
-    },
-    "precision": 1126.8
+    }
   },
   {
     "rank": 69,
@@ -15039,9 +15051,12 @@
     "creators": "muriday",
     "id": "82141289",
     "length": "1m 8s",
-    "tps": 240,
+    "tps": 680,
+    "precision": "",
     "iaPerSecond": "",
     "ratio": "C86.3(4) SH13.7(4) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 1X100(1)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=JkHvRdnPpDg",
     "image": "",
