@@ -2281,6 +2281,36 @@
   },
   {
     "rank": 74,
+    "name": "Kingdom of Miracalis (ILL)",
+    "creators": "gdmiracle, skeletonlol",
+    "id": "77452038",
+    "length": "2m 31s",
+    "tps": 1200,
+    "precision": 3826.1,
+    "iaPerSecond": "",
+    "ratio": "W42.2(28) C30.1(17) SH16.9(17) B5.9(9) R2.6(3) U2.2(3) D2.6(2) S97.4(2) IM0.0(0) NM100.0(0) 0.5X46.3(19) 3X44.1(18) 1X7(3) 2X2.6(2)",
+    "tags": [],
+    "tagOverrides": {},
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=T7z2ytF068w",
+    "image": "",
+    "packs": [],
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-11-16",
+        "time": "1h 20m 34s",
+        "attempts": 25286,
+        "video": "https://www.youtube.com/playlist?list=PLWRd-bS8uwrU"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 4834,
+      "attempts": 25286
+    }
+  },
+  {
+    "rank": 75,
     "name": "Infernoplex",
     "creators": "cheapyyyyy",
     "id": "141735424",
@@ -2359,7 +2389,7 @@
     }
   },
   {
-    "rank": 75,
+    "rank": 76,
     "name": "Divine Geometry II",
     "creators": "ItzZap, Cyrillic",
     "id": "18598734",
@@ -2387,7 +2417,7 @@
     ]
   },
   {
-    "rank": 76,
+    "rank": 77,
     "name": "Discombobulation",
     "creators": "Lasandr_90",
     "id": "121997915",
@@ -2415,7 +2445,7 @@
     ]
   },
   {
-    "rank": 77,
+    "rank": 78,
     "name": "Bloodiest Water",
     "creators": "Skyyee, RMGD",
     "id": "144311881",
@@ -2452,7 +2482,7 @@
     }
   },
   {
-    "rank": 78,
+    "rank": 79,
     "name": "Blood in the Water (Unnerfed)",
     "creators": "Skyyee",
     "id": "83078578",
@@ -2545,7 +2575,7 @@
     }
   },
   {
-    "rank": 79,
+    "rank": 80,
     "name": "hell to play",
     "creators": "Arsenjeex",
     "id": "114100723",
@@ -2586,7 +2616,7 @@
     }
   },
   {
-    "rank": 80,
+    "rank": 81,
     "name": "Linquited",
     "creators": "Apocalipse",
     "id": "82450218",
@@ -2620,7 +2650,7 @@
     }
   },
   {
-    "rank": 81,
+    "rank": 82,
     "name": "The great undoing",
     "creators": "Anceps",
     "id": "147881540",
@@ -2649,7 +2679,7 @@
     ]
   },
   {
-    "rank": 82,
+    "rank": 83,
     "name": "Chiangmai",
     "creators": "swansong & more",
     "id": "122897343",
@@ -2686,7 +2716,7 @@
     }
   },
   {
-    "rank": 83,
+    "rank": 84,
     "name": "Animal",
     "creators": "Aasu",
     "id": "145201963",
@@ -2712,7 +2742,7 @@
     }
   },
   {
-    "rank": 84,
+    "rank": 85,
     "name": "Dead Inside",
     "creators": "adapti, 0483, loligd",
     "id": "147138558",
@@ -2739,7 +2769,7 @@
     }
   },
   {
-    "rank": 85,
+    "rank": 86,
     "name": "Chaotic Circles (RMGD)",
     "creators": "RMGD, Kylra",
     "id": "148562055",
@@ -2773,7 +2803,7 @@
     }
   },
   {
-    "rank": 86,
+    "rank": 87,
     "name": "deadly processing",
     "creators": "Caner",
     "id": "144196527",
@@ -2801,7 +2831,34 @@
     }
   },
   {
-    "rank": 87,
+    "rank": 88,
+    "name": "Satanic Palm Mutes (ILL)",
+    "creators": "IiIOpTiCaLIiI, skeletonlol",
+    "id": "122699857",
+    "length": "1m",
+    "tps": 970,
+    "iaPerSecond": "",
+    "ratio": "W66.6(6) C19.3(5) SH8.8(1) U3(1) B2.3(1) D65.5(5) S34.5(4) IM2.9(1) NM97.1(1) 2X71.4(3) 0.5X28.6(2)",
+    "twoPlayer": "2 Player",
+    "showcaseVideo": "https://www.youtube.com/watch?v=4EQ9nG6NIak",
+    "image": "",
+    "packs": [],
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-11-17",
+        "time": "1h 2m 8s",
+        "attempts": 43361,
+        "video": "https://youtu.be/b6gMg962LkQ"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 3728,
+      "attempts": 43361
+    }
+  },
+  {
+    "rank": 89,
     "name": "flaofret",
     "creators": "hexitine",
     "id": "114091323",
@@ -2836,7 +2893,7 @@
     }
   },
   {
-    "rank": 88,
+    "rank": 90,
     "name": "Glitching Television",
     "creators": "TheHardyGoD",
     "id": "138030707",
@@ -2863,7 +2920,7 @@
     }
   },
   {
-    "rank": 89,
+    "rank": 91,
     "name": "Goldenous (Unnerfed)",
     "creators": "xristpro & more",
     "id": "125861426",
@@ -2890,7 +2947,7 @@
     "precision": 858.45
   },
   {
-    "rank": 90,
+    "rank": 92,
     "name": "PARALLEL UNIVERSE (Old)",
     "creators": "SilenceDTM",
     "id": "148108528",
@@ -2937,7 +2994,7 @@
     }
   },
   {
-    "rank": 91,
+    "rank": 93,
     "name": "Challenge Circles 2p (Unintended)",
     "creators": "RMGD",
     "id": "135819992",
@@ -2963,7 +3020,7 @@
     "packs": []
   },
   {
-    "rank": 92,
+    "rank": 94,
     "name": "Realm of 2010 (1P)",
     "creators": "BunnyClowmy",
     "id": "148304188",
@@ -2989,7 +3046,7 @@
     "packs": []
   },
   {
-    "rank": 93,
+    "rank": 95,
     "name": "Citadel in Hell",
     "creators": "realhutoew, kyle1saurus",
     "id": "150495325",
@@ -3016,7 +3073,7 @@
     }
   },
   {
-    "rank": 94,
+    "rank": 96,
     "name": "Snow Dynasty",
     "creators": "P4rax",
     "id": "138152649",
@@ -3067,7 +3124,7 @@
     }
   },
   {
-    "rank": 95,
+    "rank": 97,
     "name": "Fredrick Survive II",
     "creators": "ZoliReal",
     "id": "133738923",
@@ -3096,7 +3153,7 @@
     }
   },
   {
-    "rank": 96,
+    "rank": 98,
     "name": "joke submission",
     "creators": "maxfs",
     "id": "67854544",
@@ -3124,7 +3181,7 @@
     }
   },
   {
-    "rank": 97,
+    "rank": 99,
     "name": "Hard Flying 3",
     "creators": "MakiaYT",
     "id": "144280574",
@@ -3168,7 +3225,7 @@
     }
   },
   {
-    "rank": 98,
+    "rank": 100,
     "name": "IFBTMMLSASTIWDIG",
     "creators": "Alitheia & more",
     "id": "135872989",
@@ -3195,7 +3252,7 @@
     }
   },
   {
-    "rank": 99,
+    "rank": 101,
     "name": "Eddies Castle",
     "creators": "EddiesEpic",
     "id": "129113296",
@@ -3230,7 +3287,7 @@
     ]
   },
   {
-    "rank": 100,
+    "rank": 102,
     "name": "Pricey Circles",
     "creators": "Bukkk",
     "id": "79833207",
@@ -3265,7 +3322,7 @@
     "precision": 9940.2
   },
   {
-    "rank": 101,
+    "rank": 103,
     "name": "Monroy Force in Hell",
     "creators": "AserejeJaDeJeOG, kyle1saurus",
     "id": "150579945",
@@ -3291,7 +3348,7 @@
     }
   },
   {
-    "rank": 102,
+    "rank": 104,
     "name": "regularity",
     "creators": "Starz879",
     "id": "134439124",
@@ -3318,7 +3375,7 @@
     }
   },
   {
-    "rank": 103,
+    "rank": 105,
     "name": "The Disturbance",
     "creators": "cheapyyyyy",
     "id": "142171106",
@@ -3388,7 +3445,7 @@
     ]
   },
   {
-    "rank": 104,
+    "rank": 106,
     "name": "Slaughterhouse II",
     "creators": "IcEDCave",
     "id": "27690219",
@@ -3431,7 +3488,7 @@
     }
   },
   {
-    "rank": 105,
+    "rank": 107,
     "name": "Bad Times G",
     "creators": "Danyko & more",
     "id": "63711033",
@@ -3466,7 +3523,7 @@
     "precision": 356.5
   },
   {
-    "rank": 106,
+    "rank": 108,
     "name": "Rampant Circles (1P)",
     "creators": "NXISE",
     "id": "https://cdn.discordapp.com/attachments/1533548909090177105/1553914146339295353/Rampant_Circles_1P.gmd?ex=6abafad2&is=6ab9a952&hm=6422afe677d68d0383b7e262ea8debb5eba9fbbb2904a238fb572feb560adc2a&",
@@ -3493,7 +3550,7 @@
     }
   },
   {
-    "rank": 107,
+    "rank": 109,
     "name": "XANE GETS SEQUELL",
     "creators": "ProgNostico",
     "id": "138689383",
@@ -3519,7 +3576,7 @@
     "packs": []
   },
   {
-    "rank": 108,
+    "rank": 110,
     "name": "BtSk Legend (RMGD)",
     "creators": "BtSiK",
     "id": "144178276",
@@ -3545,7 +3602,7 @@
     "packs": []
   },
   {
-    "rank": 109,
+    "rank": 111,
     "name": "Green World",
     "creators": "thegqc, saRy & more",
     "id": "101089817",
@@ -3594,7 +3651,7 @@
     }
   },
   {
-    "rank": 110,
+    "rank": 112,
     "name": "Marble Caverns",
     "creators": "VoidedArchive",
     "id": "126401253",
@@ -3620,7 +3677,7 @@
     "packs": []
   },
   {
-    "rank": 111,
+    "rank": 113,
     "name": "Satans Circles Redux (1P)",
     "creators": "ItzCheesy",
     "id": "145491516",
@@ -3668,7 +3725,7 @@
     }
   },
   {
-    "rank": 112,
+    "rank": 114,
     "name": "Porq Legend IV",
     "creators": "Porqkyp",
     "id": "73866070",
@@ -3710,7 +3767,7 @@
     }
   },
   {
-    "rank": 113,
+    "rank": 115,
     "name": "World Render",
     "creators": "AngelEffect",
     "id": "118059486",
@@ -3769,7 +3826,7 @@
     "precision": 525.4
   },
   {
-    "rank": 114,
+    "rank": 116,
     "name": "GXXDNXGHT",
     "creators": "glitchi",
     "id": "126063960",
@@ -3803,7 +3860,7 @@
     }
   },
   {
-    "rank": 115,
+    "rank": 117,
     "name": "Rikkachet Love",
     "creators": "AngelEffect",
     "id": "120306904",
@@ -3853,7 +3910,7 @@
     "precision": 330.4
   },
   {
-    "rank": 116,
+    "rank": 118,
     "name": "Io",
     "creators": "HIROST",
     "id": "141700670",
@@ -3890,7 +3947,7 @@
     }
   },
   {
-    "rank": 117,
+    "rank": 119,
     "name": "Zap legend",
     "creators": "ItzZap",
     "id": "150312967",
@@ -3919,7 +3976,7 @@
     }
   },
   {
-    "rank": 118,
+    "rank": 120,
     "name": "Ton 618 PML",
     "creators": "Arctic, Pooooooooooooch",
     "id": "151188698",
@@ -3962,7 +4019,7 @@
     }
   },
   {
-    "rank": 119,
+    "rank": 121,
     "name": "Planet Y",
     "creators": "adapti, chronosify2",
     "id": "138001198",
@@ -3995,7 +4052,7 @@
     }
   },
   {
-    "rank": 120,
+    "rank": 122,
     "name": "chordjack famr",
     "creators": "Redacted Player #1",
     "id": "144615435",
@@ -4035,7 +4092,7 @@
     "packs": []
   },
   {
-    "rank": 121,
+    "rank": 123,
     "name": "YTRAKUSS (1P)",
     "creators": "Sleepypann, ItsRobianny",
     "id": "147560896",
@@ -4070,7 +4127,7 @@
     }
   },
   {
-    "rank": 122,
+    "rank": 124,
     "name": "Cyber Raptor (Unnerfed)",
     "creators": "Robotition & more",
     "id": "86038554",
@@ -4148,7 +4205,7 @@
     }
   },
   {
-    "rank": 123,
+    "rank": 125,
     "name": "Perdition",
     "creators": "SylenPaws",
     "id": "145109287",
@@ -4188,7 +4245,7 @@
     }
   },
   {
-    "rank": 124,
+    "rank": 126,
     "name": "1450",
     "creators": "1450",
     "id": "141611055",
@@ -4216,7 +4273,7 @@
     }
   },
   {
-    "rank": 125,
+    "rank": 127,
     "name": "Slaughterhouse II (RMGD)",
     "creators": "icedcave, RMGD",
     "id": "146193959",
@@ -4242,7 +4299,7 @@
     "packs": []
   },
   {
-    "rank": 126,
+    "rank": 128,
     "name": "Incommodiousness",
     "creators": "Thycket & more",
     "id": "79449270",
@@ -4286,7 +4343,7 @@
     "precision": 326.8
   },
   {
-    "rank": 127,
+    "rank": 129,
     "name": "Dehumanization Dance",
     "creators": "Nick24, Anaya",
     "id": "145928521",
@@ -4313,7 +4370,7 @@
     }
   },
   {
-    "rank": 128,
+    "rank": 130,
     "name": "ICE Carbon Destiny",
     "creators": "Chicharito52",
     "id": "141594975",
@@ -4357,7 +4414,7 @@
     }
   },
   {
-    "rank": 129,
+    "rank": 131,
     "name": "John Wave Trials",
     "creators": "Mr. Happy Junior, OddMod",
     "id": "144285423",
@@ -4409,7 +4466,7 @@
     }
   },
   {
-    "rank": 130,
+    "rank": 132,
     "name": "Singularity (Redacted Player #1)",
     "creators": "070, Redacted Player #1",
     "id": "139503221",
@@ -4435,7 +4492,7 @@
     "packs": []
   },
   {
-    "rank": 131,
+    "rank": 133,
     "name": "Plushie Legend",
     "creators": "realplushieee",
     "id": "148765252",
@@ -4464,7 +4521,7 @@
     }
   },
   {
-    "rank": 132,
+    "rank": 134,
     "name": "Ouranophobia",
     "creators": "V420PER",
     "id": "137533659",
@@ -4491,7 +4548,7 @@
     "precision": 649.5
   },
   {
-    "rank": 133,
+    "rank": 135,
     "name": "Monochrome Wave in Hell",
     "creators": "Gurt63, kyle1saurus",
     "id": "150911244",
@@ -4518,7 +4575,7 @@
     }
   },
   {
-    "rank": 134,
+    "rank": 136,
     "name": "InFierNoPoLis",
     "creators": "IIZebII, kyle1saurus",
     "id": "150907536",
@@ -4545,7 +4602,7 @@
     }
   },
   {
-    "rank": 135,
+    "rank": 137,
     "name": "a message to rainn",
     "creators": "DubbyBall",
     "id": "79406868",
@@ -4573,7 +4630,7 @@
     }
   },
   {
-    "rank": 136,
+    "rank": 138,
     "name": "The Last Hour",
     "creators": "iterremotin, jojo989",
     "id": "148827742",
@@ -4610,7 +4667,7 @@
     }
   },
   {
-    "rank": 137,
+    "rank": 139,
     "name": "supreme t7b 7din",
     "creators": "RMGD, kyle1saurus",
     "id": "151002517",
@@ -4637,7 +4694,7 @@
     }
   },
   {
-    "rank": 138,
+    "rank": 140,
     "name": "Wrath of the Anubis",
     "creators": "KidJolly, kyle1saurus",
     "id": "150634809",
@@ -4664,7 +4721,7 @@
     }
   },
   {
-    "rank": 139,
+    "rank": 141,
     "name": "silent lake of lava",
     "creators": "2tim, kyle1saurus",
     "id": "151048687",
@@ -4691,7 +4748,7 @@
     }
   },
   {
-    "rank": 140,
+    "rank": 142,
     "name": "silent processing (swiftsneak)",
     "creators": "swiftsneak",
     "id": "130480063",
@@ -4721,7 +4778,7 @@
     "precision": 927.2
   },
   {
-    "rank": 141,
+    "rank": 143,
     "name": "Sonic Processing",
     "creators": "",
     "id": "126401161",
@@ -4751,7 +4808,7 @@
     }
   },
   {
-    "rank": 142,
+    "rank": 144,
     "name": "Deadtone Symphony",
     "creators": "cheapyyyyy, kyle1saurus",
     "id": "147176256",
@@ -4779,7 +4836,7 @@
     ]
   },
   {
-    "rank": 143,
+    "rank": 145,
     "name": "Colorless Television",
     "creators": "TheHardyGoD",
     "id": "136163536",
@@ -4807,7 +4864,7 @@
     "precision": 1820.84
   },
   {
-    "rank": 144,
+    "rank": 146,
     "name": "The Twilight Zone (ILL)",
     "creators": "IiIOpTiCaLIiI, skeletonlol",
     "id": "122700146",
@@ -4848,63 +4905,6 @@
     "scoringBaseline": {
       "timeSeconds": 3554,
       "attempts": 37408
-    }
-  },
-  {
-    "rank": 145,
-    "name": "Kingdom of Miracalis (ILL)",
-    "creators": "gdmiracle, skeletonlol",
-    "id": "77452038",
-    "length": "2m 31s",
-    "tps": 1200,
-    "precision": 3826.1,
-    "iaPerSecond": "",
-    "ratio": "W42.2(28) C30.1(17) SH16.9(17) B5.9(9) R2.6(3) U2.2(3) D2.6(2) S97.4(2) IM0.0(0) NM100.0(0) 0.5X46.3(19) 3X44.1(18) 1X7(3) 2X2.6(2)",
-    "tags": [],
-    "tagOverrides": {},
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=T7z2ytF068w",
-    "image": "",
-    "packs": [],
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-11-16",
-        "time": "1h 20m 34s",
-        "attempts": 25286,
-        "video": "https://www.youtube.com/playlist?list=PLWRd-bS8uwrU"
-      }
-    ],
-    "scoringBaseline": {
-      "timeSeconds": 4834,
-      "attempts": 25286
-    }
-  },
-  {
-    "rank": 146,
-    "name": "Satanic Palm Mutes (ILL)",
-    "creators": "IiIOpTiCaLIiI, skeletonlol",
-    "id": "122699857",
-    "length": "1m",
-    "tps": 970,
-    "iaPerSecond": "",
-    "ratio": "W66.6(6) C19.3(5) SH8.8(1) U3(1) B2.3(1) D65.5(5) S34.5(4) IM2.9(1) NM97.1(1) 2X71.4(3) 0.5X28.6(2)",
-    "twoPlayer": "2 Player",
-    "showcaseVideo": "https://www.youtube.com/watch?v=4EQ9nG6NIak",
-    "image": "",
-    "packs": [],
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-11-17",
-        "time": "1h 2m 8s",
-        "attempts": 43361,
-        "video": "https://youtu.be/b6gMg962LkQ"
-      }
-    ],
-    "scoringBaseline": {
-      "timeSeconds": 3728,
-      "attempts": 43361
     }
   },
   {
@@ -5625,6 +5625,47 @@
   },
   {
     "rank": 166,
+    "name": "kaleidoscope",
+    "creators": "SureFir3",
+    "id": "146992864",
+    "length": "30s",
+    "tps": 2000,
+    "precision": "",
+    "iaPerSecond": "",
+    "ratio": "W42.5(11) C21.1(9) U13.1(4) SP10.9(4) SH7.5(1) B3.8(2) SW1(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X62.9(12) 1X31.6(12) 2X5(5) 3X0.3(2) 4X0.1(1)",
+    "tags": [
+      "TPS Switches",
+      "Swifts",
+      "Alignments"
+    ],
+    "tagOverrides": {},
+    "twoPlayer": "",
+    "showcaseVideo": "https://www.youtube.com/watch?v=x6KSQejlO-M",
+    "image": "",
+    "packs": [],
+    "victors": [
+      {
+        "name": "kyle1saurus",
+        "date": "2026-11-24",
+        "time": "38m 13s",
+        "attempts": 5913,
+        "video": "https://www.youtube.com/playlist?list=PLfQXEItfvmCk"
+      },
+      {
+        "name": "Anceps",
+        "date": "2026-11-25",
+        "time": "14m 11s",
+        "attempts": 7971,
+        "video": "https://youtu.be/0DZUd0YQqew"
+      }
+    ],
+    "scoringBaseline": {
+      "timeSeconds": 2293,
+      "attempts": 5913
+    }
+  },
+  {
+    "rank": 167,
     "name": "Mid Life Crisis",
     "creators": "Uwuniper",
     "id": "114813427",
@@ -5659,7 +5700,7 @@
     }
   },
   {
-    "rank": 167,
+    "rank": 168,
     "name": "ephemeral geometry",
     "creators": "sharpiesmell",
     "id": "147765421",
@@ -5696,7 +5737,7 @@
     }
   },
   {
-    "rank": 168,
+    "rank": 169,
     "name": "Bye Level",
     "creators": "jongaminggd",
     "id": "71160956",
@@ -5731,7 +5772,7 @@
     }
   },
   {
-    "rank": 169,
+    "rank": 170,
     "name": "Satanic Palm Mutes (ILL, Old)",
     "creators": "IiIOpTiCaLIiI, skeletonlol",
     "id": "https://discord.com/channels/598711655077249054/1426358508592431224/1426358508592431224",
@@ -5757,7 +5798,7 @@
     }
   },
   {
-    "rank": 170,
+    "rank": 171,
     "name": "Rampant Circles (1p, Nerf, Old ILL)",
     "creators": "NXISE",
     "id": "132997477",
@@ -5790,7 +5831,7 @@
     "packs": []
   },
   {
-    "rank": 171,
+    "rank": 172,
     "name": "Relife 2020",
     "creators": "AuraXalaiv",
     "id": "144792056",
@@ -5858,7 +5899,7 @@
     "packs": []
   },
   {
-    "rank": 172,
+    "rank": 173,
     "name": "Scatmans worlD",
     "creators": "le0iumgmd",
     "id": "132758245",
@@ -5892,7 +5933,7 @@
     }
   },
   {
-    "rank": 173,
+    "rank": 174,
     "name": "Formosa (Debuff)",
     "creators": "eightos, Statera",
     "id": "147445175",
@@ -5953,7 +5994,7 @@
     }
   },
   {
-    "rank": 174,
+    "rank": 175,
     "name": "Medusa",
     "creators": "cheapyyyyy",
     "id": "142025716",
@@ -5993,7 +6034,7 @@
     }
   },
   {
-    "rank": 175,
+    "rank": 176,
     "name": "Thermal Radiation",
     "creators": "Windogs",
     "id": "74208521",
@@ -6040,7 +6081,7 @@
     }
   },
   {
-    "rank": 176,
+    "rank": 177,
     "name": "Silent Out Circles D (Fix)",
     "creators": "7300",
     "id": "139730094",
@@ -6082,7 +6123,7 @@
     }
   },
   {
-    "rank": 177,
+    "rank": 178,
     "name": "Dark Nightmares",
     "creators": "Blazek & more",
     "id": "144851821",
@@ -6113,47 +6154,6 @@
     "scoringBaseline": {
       "timeSeconds": 3212,
       "attempts": 12439
-    }
-  },
-  {
-    "rank": 178,
-    "name": "kaleidoscope",
-    "creators": "SureFir3",
-    "id": "146992864",
-    "length": "30s",
-    "tps": 2000,
-    "precision": "",
-    "iaPerSecond": "",
-    "ratio": "W42.5(11) C21.1(9) U13.1(4) SP10.9(4) SH7.5(1) B3.8(2) SW1(1) D0.0(0) S100.0(0) IM0.0(0) NM100.0(0) 0.5X62.9(12) 1X31.6(12) 2X5(5) 3X0.3(2) 4X0.1(1)",
-    "tags": [
-      "TPS Switches",
-      "Swifts",
-      "Alignments"
-    ],
-    "tagOverrides": {},
-    "twoPlayer": "",
-    "showcaseVideo": "https://www.youtube.com/watch?v=x6KSQejlO-M",
-    "image": "",
-    "packs": [],
-    "victors": [
-      {
-        "name": "kyle1saurus",
-        "date": "2026-11-24",
-        "time": "38m 13s",
-        "attempts": 5913,
-        "video": "https://www.youtube.com/playlist?list=PLfQXEItfvmCk"
-      },
-      {
-        "name": "Anceps",
-        "date": "2026-11-25",
-        "time": "14m 11s",
-        "attempts": 7971,
-        "video": "https://youtu.be/0DZUd0YQqew"
-      }
-    ],
-    "scoringBaseline": {
-      "timeSeconds": 2293,
-      "attempts": 5913
     }
   },
   {
