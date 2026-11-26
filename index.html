@@ -11,14 +11,9 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png?v=20261104" />
   <meta name="apple-mobile-web-app-title" content="PML" />
   <link rel="manifest" href="/public/site.webmanifest?v=20261104" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="styles/styles.css?v=20261124-17" />
 </head>
 
 <body>
@@ -72,7 +67,7 @@
                 <option value="averageTime">Average Time</option>
                 <option value="averageAttempts">Average Attempts</option>
                 <option value="precision">Precision</option>
-                <option value="iaPerSecond">IA/s</option>
+                <option value="iaPerSecond">Input Activity</option>
                 <option value="earliestDate">Earliest Date</option>
                 <option value="id">ID</option>
               </optgroup>
@@ -193,7 +188,7 @@
                 <option value="averageTime">Average Time</option>
                 <option value="averageAttempts">Average Attempts</option>
                 <option value="precision">Precision</option>
-                <option value="iaPerSecond">IA/s</option>
+                <option value="iaPerSecond">Input Activity</option>
                 <option value="earliestDate">Earliest Date</option>
                 <option value="id">ID</option>
               </optgroup>
@@ -252,7 +247,7 @@
         <div class="line"></div>
       </div>
       <div class="optimizer-frame-wrap">
-        <iframe class="optimizer-frame" src="ladder.html?v=20261014-11" title="Practice Mode List Optimized Ladder"></iframe>
+        <iframe class="optimizer-frame" data-src="ladder.html?v=20261124-3" title="Practice Mode List Optimized Ladder"></iframe>
       </div>
     </div>
   </div>
@@ -303,7 +298,7 @@
                 <th>Length</th>
                 <th>TPS</th>
                 <th>Precision</th>
-                <th>IA/s</th>
+                <th>Input Activity</th>
                 <th>Victors</th>
                 <th style="text-align: right">Actions</th>
               </tr>
@@ -365,8 +360,13 @@
             <input class="form-input" id="f-precision" type="number" placeholder="e.g. 525.4" min="0" step="0.1" />
           </div>
           <div class="form-group">
-            <label class="form-label">Input Activity (IA/s)</label>
+            <label class="form-label">Input Activity</label>
             <input class="form-input" id="f-ia-per-second" type="number" placeholder="e.g. 12.34" min="0" max="10000" step="0.01" />
+          </div>
+          <div class="form-group" id="variant-of-field-group">
+            <label class="form-label" for="f-variant-of">Variant of (optional)</label>
+            <input class="form-input" id="f-variant-of" type="text" placeholder="Type the base level name" />
+            <small style="color: var(--text-muted); font-size: 12px">Enter the name of the base level this entry is a variant of.</small>
           </div>
           <div class="form-group full">
             <label class="form-label">Ratio</label>
@@ -384,7 +384,9 @@
               <option value="Master">Master</option>
               <option value="Divine">Divine</option>
               <option value="Transcendent">Transcendent</option>
+              <option value="Celestial">Celestial</option>
               <option value="Ethereal">Ethereal</option>
+              <option value="Empyrean">Empyrean</option>
             </select>
           </div>
           <div class="form-group">
@@ -405,6 +407,11 @@
           <div class="form-group full">
             <label class="form-label">Packs (comma-separated)</label>
             <input class="form-input" id="f-packs" type="text" placeholder="e.g. Geometry Pack, XL Pack" />
+          </div>
+          <div class="form-group full">
+            <span id="level-tags-label" class="form-label">Tags</span>
+            <div id="level-tags-options" class="level-tag-options" role="group" aria-labelledby="level-tags-label"></div>
+            <small class="level-tags-help">Automatic tags start checked. Changing one overrides its calculated value for this level.</small>
           </div>
         </div>
 
@@ -439,6 +446,11 @@
     </div>
   </div>
 
+  <div class="page-scroll-controls" role="group" aria-label="Page navigation">
+    <button class="page-scroll-arrow" type="button" data-scroll-edge="top" aria-label="Jump to top" title="Jump to top">↑</button>
+    <button class="page-scroll-arrow" type="button" data-scroll-edge="bottom" aria-label="Jump to bottom" title="Jump to bottom">↓</button>
+  </div>
+
   <div class="save-flash" id="save-flash">✓ SAVED</div>
 
   <div id="video-modal" class="video-modal" hidden>
@@ -451,16 +463,17 @@
     </div>
   </div>
 
-  <script src="scripts/format.js"></script>
-  <script src="scripts/leaderboard-utils.js"></script>
-  <script src="scripts/ladder-rank-utils.js?v=20261104-1"></script>
+  <script src="scripts/format.js?v=20261124-1"></script>
+  <script src="scripts/variant-utils.js?v=20261123-6"></script>
+  <script src="scripts/leaderboard-utils.js?v=20261123-9"></script>
+  <script src="scripts/ladder-rank-utils.js?v=20261123-5"></script>
   <script src="scripts/packs.js"></script>
-  <script src="scripts/pack-utils.js"></script>
-  <script src="scripts/data.js?v=20261104-2"></script>
+  <script src="scripts/pack-utils.js?v=20261123-6"></script>
+  <script src="scripts/data.js?v=20261124-4"></script>
   <script src="scripts/editor-state-utils.js"></script>
   <script src="scripts/video-player.js"></script>
-  <script src="scripts/ui.js?v=20261104-2"></script>
-  <script src="scripts/editor.js?v=20261104-3"></script>
+  <script src="scripts/ui.js?v=20261124-29"></script>
+  <script src="scripts/app-init.js?v=20261124-1"></script>
 </body>
 
 </html>>

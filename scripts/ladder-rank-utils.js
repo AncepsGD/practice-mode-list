@@ -18,7 +18,7 @@
     length: "Length",
     levelVolume: "TPS × Length",
     precision: "Precision",
-    iaPerSecond: "IA/s",
+    iaPerSecond: "Input Activity",
     ratio: "Ratio",
     victorCount: "Victor count",
     victorTime: "Victor times",
@@ -35,7 +35,7 @@
   const MODEL = Object.freeze({
     minTierPool: 4,
     minFeatureSamples: 4,
-    maxValidationSamples: 128,
+    maxValidationSamples: 64,
     factorIterations: 50,
     factorTolerance: 1e-7,
     bandwidths: Object.freeze([0.15, 0.3, 0.6, 1e6]),
@@ -49,7 +49,7 @@
     // Leave-one-out fit on the 199 levels shared by secret.txt and levels.json.
     priorBlend: 0,
     inferredRankShift: -0.82,
-    difficultyCurveExponent: 1.6,
+    difficultyCurveExponent: 2,
     rankIntervalCoverage: 0.8,
     // 80th percentile of absolute rank error / spread across 400 leave-one-out estimates.
     rankIntervalScale: 0.5814800029047544,
@@ -631,8 +631,38 @@
     return meanY + slope * (targetX - meanX);
   }
 
-  function selectFeatureBandwidth(points) {
+  function predictLocalLinearFromArrays(xValues, yValues, pointWeights, targetX, bandwidth, skipIndex) {
+    let sumWeight = 0;
+    let sumX = 0;
+    let sumY = 0;
+    let sumXX = 0;
+    let sumXY = 0;
+    for (let index = 0; index < xValues.length; index++) {
+      if (index === skipIndex) continue;
+      const x = xValues[index];
+      const z = (x - targetX) / bandwidth;
+      const weight = pointWeights[index] * (Math.exp(-0.5 * z * z) + MODEL.kernelFloor);
+      sumWeight += weight;
+      sumX += weight * x;
+      sumY += weight * yValues[index];
+      sumXX += weight * x * x;
+      sumXY += weight * x * yValues[index];
+    }
+    if (!(sumWeight > 0)) return null;
+
+    const meanX = sumX / sumWeight;
+    const meanY = sumY / sumWeight;
+    const sxx = sumXX - sumWeight * meanX * meanX;
+    const sxy = sumXY - sumWeight * meanX * meanY;
+    const slope = sxy / (sxx + MODEL.ridge * sumWeight);
+    return meanY + slope * (targetX - meanX);
+  }
+
+  function selectLocalLinearBandwidth(points, minPrediction, maxPrediction) {
     if (points.length < MODEL.minFeatureSamples) return null;
+    const xValues = points.map(point => point.x);
+    const yValues = points.map(point => point.y);
+    const pointWeights = points.map(point => point.weight);
     let best = null;
     MODEL.bandwidths.forEach(bandwidth => {
       let errorSum = 0;
@@ -641,11 +671,17 @@
       const validationStep = points.length / validationCount;
       for (let sample = 0; sample < validationCount; sample++) {
         const index = Math.floor(sample * validationStep);
-        const point = points[index];
-        const predicted = predictLocalLinear(points, point.x, bandwidth, index);
+        const predicted = predictLocalLinearFromArrays(
+          xValues,
+          yValues,
+          pointWeights,
+          xValues[index],
+          bandwidth,
+          index,
+        );
         if (predicted === null) continue;
-        errorSum += point.weight * (clamp(predicted, 10, 360) - point.y) ** 2;
-        weightSum += point.weight;
+        errorSum += pointWeights[index] * (clamp(predicted, minPrediction, maxPrediction) - yValues[index]) ** 2;
+        weightSum += pointWeights[index];
       }
       if (!weightSum) return;
       const mse = errorSum / weightSum;
@@ -654,6 +690,10 @@
     return best
       ? { bandwidth: best.bandwidth, variance: Math.max(MODEL.minVariance, best.mse) }
       : null;
+  }
+
+  function selectFeatureBandwidth(points) {
+    return selectLocalLinearBandwidth(points, 10, 360);
   }
 
   function getWeightedPointsVariance(entries) {
@@ -771,28 +811,7 @@
   }
 
   function selectHeadToHeadBandwidth(points) {
-    if (points.length < MODEL.minFeatureSamples) return null;
-    let best = null;
-    MODEL.bandwidths.forEach(bandwidth => {
-      let errorSum = 0;
-      let weightSum = 0;
-      const validationCount = Math.min(points.length, MODEL.maxValidationSamples);
-      const validationStep = points.length / validationCount;
-      for (let sample = 0; sample < validationCount; sample++) {
-        const index = Math.floor(sample * validationStep);
-        const point = points[index];
-        const predicted = predictLocalLinear(points, point.x, bandwidth, index);
-        if (predicted === null) continue;
-        errorSum += point.weight * (clamp(predicted, -350, 350) - point.y) ** 2;
-        weightSum += point.weight;
-      }
-      if (!weightSum) return;
-      const mse = errorSum / weightSum;
-      if (!best || mse < best.mse) best = { bandwidth, mse };
-    });
-    return best
-      ? { bandwidth: best.bandwidth, variance: Math.max(MODEL.minVariance, best.mse) }
-      : null;
+    return selectLocalLinearBandwidth(points, -350, 350);
   }
 
   function aggregateHeadToHeadPoints(points) {

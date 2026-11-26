@@ -27,37 +27,64 @@ document.addEventListener('click', async (event) => {
   }
 });
 
-function fitLevelNames() {
-  document.querySelectorAll('.level-name').forEach((nameElement) => {
-    nameElement.style.fontSize = '';
-    const baseSize = parseFloat(getComputedStyle(nameElement).fontSize);
-    if (!Number.isFinite(baseSize) || nameElement.scrollWidth <= nameElement.clientWidth) return;
+document.addEventListener('click', (event) => {
+  const scrollButton = event.target.closest('[data-scroll-edge]');
+  if (!scrollButton) return;
 
-    let low = 1;
-    let high = baseSize;
-    while (high - low > 0.1) {
-      const size = (low + high) / 2;
-      nameElement.style.fontSize = `${size}px`;
-      if (nameElement.scrollWidth <= nameElement.clientWidth) {
-        low = size;
-      } else {
-        high = size;
-      }
-    }
-    nameElement.style.fontSize = `${low}px`;
+  const top = scrollButton.dataset.scrollEdge === 'top';
+  window.scrollTo({
+    top: top ? 0 : document.documentElement.scrollHeight - window.innerHeight,
+    behavior: 'smooth',
   });
+});
+
+document.addEventListener('click', (event) => {
+  const jumpButton = event.target.closest('.btn-jump-level');
+  if (!jumpButton) return;
+
+  const levelMap = jumpButton.dataset.jumpScope === 'verification'
+    ? renderedVerificationLevelsByCardKey
+    : renderedLevelsByCardKey;
+  const level = levelMap.get(jumpButton.dataset.jumpLevel);
+  if (!level) return;
+
+  if (jumpButton.dataset.jumpScope === 'verification') {
+    jumpToVerificationLevel(level);
+  } else {
+    jumpToMainListLevel(level);
+  }
+});
+
+const pageScrollButtonThreshold = 300;
+
+function updatePageScrollButtonVisibility() {
+  const topButton = document.querySelector('[data-scroll-edge="top"]');
+  const bottomButton = document.querySelector('[data-scroll-edge="bottom"]');
+  if (!topButton || !bottomButton) return;
+
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  topButton.hidden = scrollTop <= pageScrollButtonThreshold;
+  bottomButton.hidden = maxScroll - scrollTop <= pageScrollButtonThreshold;
 }
 
-window.addEventListener('resize', fitLevelNames);
+window.addEventListener('scroll', updatePageScrollButtonVisibility, { passive: true });
+window.addEventListener('resize', updatePageScrollButtonVisibility);
+if ('ResizeObserver' in window) {
+  const pageScrollResizeObserver = new ResizeObserver(updatePageScrollButtonVisibility);
+  pageScrollResizeObserver.observe(document.body);
+}
+updatePageScrollButtonVisibility();
 
 function renderStats() {
   const totalVictors = new Set(levels.flatMap(lvl => lvl.victors.map(victor => victor.name))).size;
   const totalCompletions = levels.reduce((sum, lvl) => sum + lvl.victors.length, 0);
+  const rankedLevelCount = levels.filter(level => !level.isVariant).length;
   const totalTimeSeconds = leaderboard.reduce((sum, player) => sum + (Number.isFinite(player.totalTimeSeconds) ? player.totalTimeSeconds : 0), 0);
   const totalAttempts = leaderboard.reduce((sum, player) => sum + (Number.isFinite(player.totalAttempts) ? player.totalAttempts : 0), 0);
 
   document.getElementById('stats-strip').innerHTML = `
-    <div class="stat-box"><span class="val">${levels.length}</span><span class="lbl">Levels Ranked</span></div>
+    <div class="stat-box"><span class="val">${rankedLevelCount}</span><span class="lbl">Levels Ranked</span></div>
     <div class="stat-box"><span class="val">${totalVictors}</span><span class="lbl">Unique Players</span></div>
     <div class="stat-box"><span class="val">${totalCompletions}</span><span class="lbl">Total Completions</span></div>
     <div class="stat-box"><span class="val">${formatDuration(totalTimeSeconds)}</span><span class="lbl">Total Time</span></div>
@@ -220,8 +247,8 @@ function getTodoTierRankRange(level) {
   if (!tier) return null;
 
   const tierRanks = levels
-    .filter((mainLevel) => String(mainLevel?.tier || '').trim().toLowerCase() === tier)
-    .map((mainLevel) => Number(mainLevel.rank))
+    .filter((mainLevel) => !mainLevel.isVariant && String(mainLevel?.tier || '').trim().toLowerCase() === tier)
+    .map((mainLevel) => Number(mainLevel.displayRank ?? mainLevel.rank))
     .filter((rank) => Number.isFinite(rank));
 
   if (!tierRanks.length) return null;
@@ -235,6 +262,7 @@ function renderTargetedLevels() {
   const container = document.getElementById('todo-container');
 
   if (!container) return;
+  unobserveLazyThumbnails(container);
 
   const targetedMain = getTargetedLevelsFromData(levels);
   const targetedUnverified = getTargetedLevelsFromData(verifications);
@@ -248,8 +276,8 @@ function renderTargetedLevels() {
 
   const cards = combined
     .sort((a, b) => {
-      const aRank = Number(a.rank ?? Number.MAX_SAFE_INTEGER);
-      const bRank = Number(b.rank ?? Number.MAX_SAFE_INTEGER);
+      const aRank = Number(a.sortRank ?? a.rank ?? Number.MAX_SAFE_INTEGER);
+      const bRank = Number(b.sortRank ?? b.rank ?? Number.MAX_SAFE_INTEGER);
       if (Number.isFinite(aRank) && Number.isFinite(bRank) && aRank !== bRank) return aRank - bRank;
       return String(a.name || '').localeCompare(String(b.name || ''));
     })
@@ -259,8 +287,10 @@ function renderTargetedLevels() {
       const sourceLabel = isMainList ? 'Main List' : 'Unverified';
       const buttonText = 'Remove Target';
       const tierRankRange = !isMainList ? getTodoTierRankRange(lvl) : null;
-      const rankLabel = isMainList && Number.isFinite(Number(lvl.rank))
-        ? `#${lvl.rank}`
+      const rankLabel = isMainList && lvl.isVariant
+        ? ''
+        : isMainList && Number.isFinite(Number(lvl.displayRank ?? lvl.rank))
+          ? `#${lvl.displayRank ?? lvl.rank}`
         : tierRankRange
           ? `#${tierRankRange.min}-${tierRankRange.max}~`
           : '•';
@@ -268,13 +298,14 @@ function renderTargetedLevels() {
       return `
         <div class="${cardClass}">
           <div class="rank-col">
-            <span class="rank-num" aria-hidden="true">${rankLabel}</span>
+            ${rankLabel ? `<span class="rank-num" aria-hidden="true">${rankLabel}</span>` : ''}
           </div>
 
           <div class="info-col">
             <div class="level-name">${escapeHTML(lvl.name || '')}</div>
             <div class="level-meta">
               ${getLevelMetaMarkup(lvl, sourceLabel)}
+              ${isMainList && lvl.isVariant ? `<span class="level-meta-item variant-tag"><i class="fa-solid fa-code-branch" aria-hidden="true"></i><span>Variant of ${escapeHTML(lvl.variantParentName)}</span></span>` : ''}
             </div>
             ${getLevelSummaryRows(lvl).map((row) => `<div class="victor-row"><span class="victor-label">${escapeHTML(row.label || '')}:</span><span class="victor-name">${escapeHTML(row.name || '')}</span><span class="victor-stats">${escapeHTML(row.stat || '')}</span></div>`).join('')}
           </div>
@@ -290,8 +321,7 @@ function renderTargetedLevels() {
     }).join('');
 
   container.innerHTML = cards;
-  fitLevelNames();
-  initLazyThumbnails();
+  initLazyThumbnails(container);
 }
 
 const LB_SORT_STORAGE_KEY = 'pml_lb_sort_state';
@@ -448,7 +478,7 @@ function getAverageSpeedMultiplier(ratio, direction = 1) {
 function getListSortValue(item, key, direction = 1) {
   switch (key) {
     case 'rank': {
-      const value = Number.isFinite(Number(item.rank)) ? Number(item.rank) : null;
+      const value = Number.isFinite(Number(item.sortRank ?? item.rank)) ? Number(item.sortRank ?? item.rank) : null;
       return value !== null ? value : (direction === 1 ? Number.MAX_SAFE_INTEGER : Number.MIN_SAFE_INTEGER);
     }
     case 'name':
@@ -704,6 +734,214 @@ function getLevelTpsDisplayValue(level) {
   return Number.isFinite(value) ? value : null;
 }
 
+const GAMEMODE_LEVEL_TAGS = Object.freeze([
+  { key: "gamemode:cube", label: "Cube", ratioKey: "C" },
+  { key: "gamemode:ship", label: "Ship", ratioKey: "SH" },
+  { key: "gamemode:ball", label: "Ball", ratioKey: "B" },
+  { key: "gamemode:ufo", label: "UFO", ratioKey: "U" },
+  { key: "gamemode:wave", label: "Wave", ratioKey: "W" },
+  { key: "gamemode:robot", label: "Robot", ratioKey: "R" },
+  { key: "gamemode:spider", label: "Spider", ratioKey: "SP" },
+  { key: "gamemode:swing", label: "Swing", ratioKey: "SW" },
+]);
+
+const AUTOMATIC_LEVEL_TAG_OPTIONS = Object.freeze([
+  ...GAMEMODE_LEVEL_TAGS,
+  { key: "dual", label: "Dual" },
+  { key: "mirror-portals", label: "Mirror Portals" },
+  { key: "challenge", label: "Challenge" },
+  { key: "xl", label: "XL" },
+  { key: "xxl", label: "XXL" },
+  { key: "fast-paced", label: "Fast-Paced" },
+]);
+
+const AUTOMATIC_LEVEL_TAG_THRESHOLDS = Object.freeze({
+  gamemodeCoveragePercent: 15,
+  dualCoveragePercent: 15,
+  mirrorPortalChanges: 5,
+  mirrorCoveragePercent: 5,
+  fastPacedSpeedPercent: 40,
+});
+
+function getLevelTagDefinitions(level) {
+  const tags = [];
+  const ratio = String(level?.ratio || "");
+  const overrides = normalizeLevelTagOverrides(level?.tagOverrides);
+  const calculatedTags = new Map();
+  const addAutomaticTag = (key, label, title) => {
+    calculatedTags.set(key, { label, title, type: "auto" });
+  };
+
+  const gamemodeTags = GAMEMODE_LEVEL_TAGS
+    .map((gamemode, index) => {
+      const coverage = getRatioSortValue(ratio, gamemode.ratioKey, "percent");
+      if (coverage >= AUTOMATIC_LEVEL_TAG_THRESHOLDS.gamemodeCoveragePercent) {
+        addAutomaticTag(
+          gamemode.key,
+          gamemode.label,
+          `${gamemode.label} coverage: ${coverage}% (threshold: ${AUTOMATIC_LEVEL_TAG_THRESHOLDS.gamemodeCoveragePercent}%)`,
+        );
+      }
+
+      return {
+        index,
+        coverage,
+        tag: getEffectiveAutomaticTag(gamemode, calculatedTags, overrides),
+      };
+    })
+    .filter(({ tag }) => tag)
+    .sort((a, b) => b.coverage - a.coverage || a.index - b.index)
+    .map(({ tag }) => tag);
+
+  const dualCoverage = getRatioSortValue(ratio, "D", "percent");
+  if (dualCoverage >= AUTOMATIC_LEVEL_TAG_THRESHOLDS.dualCoveragePercent) {
+    addAutomaticTag(
+      "dual",
+      "Dual",
+      `Dual coverage: ${dualCoverage}% (threshold: ${AUTOMATIC_LEVEL_TAG_THRESHOLDS.dualCoveragePercent}%)`,
+    );
+  }
+
+  const inverseMirrorCoverage = getRatioSortValue(ratio, "IM", "percent");
+  const normalMirrorCoverage = getRatioSortValue(ratio, "NM", "percent");
+  const mirrorChanges = getRatioSortValue(ratio, "IM", "count")
+    + getRatioSortValue(ratio, "NM", "count");
+  if (mirrorChanges >= AUTOMATIC_LEVEL_TAG_THRESHOLDS.mirrorPortalChanges
+    && inverseMirrorCoverage >= AUTOMATIC_LEVEL_TAG_THRESHOLDS.mirrorCoveragePercent
+    && normalMirrorCoverage >= AUTOMATIC_LEVEL_TAG_THRESHOLDS.mirrorCoveragePercent) {
+    addAutomaticTag(
+      "mirror-portals",
+      "Mirror Portals",
+      `${mirrorChanges} changes (minimum ${AUTOMATIC_LEVEL_TAG_THRESHOLDS.mirrorPortalChanges}); normal ${normalMirrorCoverage}% and inverse ${inverseMirrorCoverage}% (each minimum ${AUTOMATIC_LEVEL_TAG_THRESHOLDS.mirrorCoveragePercent}%)`,
+    );
+  }
+
+  const lengthSeconds = parseDurationToSeconds(level?.length ?? level?.levelLength);
+  if (lengthSeconds !== null && lengthSeconds > 0 && lengthSeconds < 30) {
+    addAutomaticTag("challenge", "Challenge", `Level length: ${lengthSeconds} seconds`);
+  } else if (lengthSeconds !== null && lengthSeconds >= 120 && lengthSeconds < 240) {
+    addAutomaticTag("xl", "XL", `Level length: ${lengthSeconds} seconds`);
+  } else if (lengthSeconds !== null && lengthSeconds >= 240) {
+    addAutomaticTag("xxl", "XXL", `Level length: ${lengthSeconds} seconds`);
+  }
+
+  const fastPacedSpeedPercent = ["2X", "3X", "4X"]
+    .reduce((total, key) => total + getRatioSortValue(ratio, key, "percent"), 0);
+  if (fastPacedSpeedPercent >= AUTOMATIC_LEVEL_TAG_THRESHOLDS.fastPacedSpeedPercent) {
+    addAutomaticTag(
+      "fast-paced",
+      "Fast-Paced",
+      `${fastPacedSpeedPercent}% of gameplay at 2x speed or higher (threshold: ${AUTOMATIC_LEVEL_TAG_THRESHOLDS.fastPacedSpeedPercent}%)`,
+    );
+  }
+
+  tags.push(...gamemodeTags);
+  AUTOMATIC_LEVEL_TAG_OPTIONS.slice(GAMEMODE_LEVEL_TAGS.length).forEach((option) => {
+    const tag = getEffectiveAutomaticTag(option, calculatedTags, overrides);
+    if (tag) tags.push(tag);
+  });
+
+  normalizeManualLevelTags(level?.tags).forEach((label) => {
+    tags.push({ label, title: "Manual tag", type: "manual" });
+  });
+  return tags;
+}
+
+function getEffectiveAutomaticTag(option, calculatedTags, overrides) {
+  if (overrides[option.key] === false) return null;
+  const calculatedTag = calculatedTags.get(option.key);
+  if (calculatedTag) return calculatedTag;
+  if (overrides[option.key] === true) {
+    return { label: option.label, title: "Always shown for this level", type: "auto" };
+  }
+  return null;
+}
+
+const LEVEL_TAG_ICONS = Object.freeze({
+  Dual: "fa-clone",
+  "Mirror Portals": "fa-right-left",
+  Challenge: "fa-hourglass-start",
+  XL: "fa-hourglass-half",
+  XXL: "fa-hourglass-end",
+  "Fast-Paced": "fa-gauge-high",
+  Memory: "fa-brain",
+  "2P": "fa-user-group",
+  Unbalanced: "fa-scale-unbalanced",
+  Flow: "fa-water",
+  Timings: "fa-stopwatch",
+  Spam: "fa-burst",
+  "TPS Switches": "fa-toggle-on",
+  Swifts: "fa-feather-pointed",
+  Chokepoints: "fa-filter",
+  Bossfight: "fa-dragon",
+  "Pre-2.1": "fa-clock-rotate-left",
+  Tentative: "fa-circle-question",
+  Alignments: "fa-align-center",
+  Snaps: "fa-crosshairs",
+  Counters: "fa-calculator",
+});
+
+const LEVEL_TAG_SVGS = Object.freeze({
+  Cube: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><rect x="12" y="12" width="40" height="40"/></svg>`,
+  Ship: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path d="M5 29h20l8-10h8l-3 10 20 3-20 3 3 10h-8l-8-10H5z"/></svg>`,
+  Ball: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><circle cx="32" cy="32" r="22"/></svg>`,
+  UFO: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5 38c4-9 15-14 27-14s23 5 27 14c-4 8-15 12-27 12S9 46 5 38z M28 38a4 4 0 1 0 8 0a4 4 0 1 0 -8 0z"/><path d="M22 27a10 10 0 0 1 20 0" fill="none" stroke="currentColor" stroke-width="4"/></svg>`,
+  Wave: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path d="M54 10L10 28l18 8 8 18z"/></svg>`,
+  Robot: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16 20h32v30H16z M23 30h6v6h-6z M35 30h6v6h-6z"/><path d="M32 10v10" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="32" cy="8" r="3"/></svg>`,
+  Spider: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="9" fill="currentColor" stroke="none"/><path d="M25 26 17 16 10 18M23 30 10 27 6 31M23 35 10 38 6 35M25 39 17 49 10 47M39 26 47 16 54 18M41 30 54 27 58 31M41 35 54 38 58 35M39 39 47 49 54 47"/></svg>`,
+  Swing: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M32 8a24 24 0 1 0 0 48a24 24 0 1 0 0-48z M41 23a6 6 0 1 0 0 12a6 6 0 1 0 0-12z"/><path d="M3 20h9v7H3zM52 37h9v7h-9z"/></svg>`,
+  Circles: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><rect x="16" y="16" width="32" height="32" transform="rotate(45 32 32)"/></svg>`,
+  Timings: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M32 6L58 56H6z M32 22L46 48H18z"/></svg>`,
+  "Fast-Paced": `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12L32 32L12 52M34 12L54 32L34 52"/></svg>`,
+  Flow: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M6 44C18 4 28 4 32 32S46 60 58 20"/></svg>`,
+  Snaps: `<svg class="level-tag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="miter" aria-hidden="true"><path d="M14 8V50H56"/></svg>`,
+});
+
+const LEVEL_TAG_COLORS = Object.freeze({
+  Cube: "#4aff59",
+  Ship: "#ff98ff",
+  Ball: "#ff5f36",
+  UFO: "#ff9c00",
+  Wave: "#25daff",
+  Robot: "#e0e0df",
+  Spider: "#7843ff",
+  Swing: "#ffff7c",
+  Dual: "#ffc600",
+  "Mirror Portals": "#67d4ff",
+  Challenge: "#bb9172",
+  XL: "#ffbc6f",
+  XXL: "#ff7968",
+  "Fast-Paced": "#fb1f73",
+  Memory: "#f5a9ff",
+  Circles: "#ca0000",
+  "2P": "#ff5e00",
+  Unbalanced: "#f87171",
+  Flow: "#29ffe3",
+  Timings: "#a78bfa",
+  Spam: "#ff6b6b",
+  "TPS Switches": "#e9d5ff",
+  Swifts: "#bef264",
+  Chokepoints: "#888888",
+  Bossfight: "#e11d48",
+  "Pre-2.1": "#93c5fd",
+  Tentative: "#cbd5e1",
+  Alignments: "#f0abfc",
+  Snaps: "#fbbf24",
+  Counters: "#607cfa",
+});
+
+function getLevelTagsMarkup(level) {
+  const tags = getLevelTagDefinitions(level)
+    .filter(({ label }) => !(level.is2Player && (label === "2P" || label === "Dual")));
+  if (!tags.length) return "";
+  return tags.map(({ label, title, type }) => {
+    const color = LEVEL_TAG_COLORS[label] || (type === "auto" ? "#65d8ff" : "#a682ff");
+    const iconMarkup = LEVEL_TAG_SVGS[label]
+      || `<i class="fa-solid ${LEVEL_TAG_ICONS[label] || "fa-tag"}" aria-hidden="true"></i>`;
+    return `<span class="level-meta-item level-tag level-tag-${type}" style="--level-tag-color:${color}" title="${escapeHTML(title)}">${iconMarkup}<span>${escapeHTML(label)}</span></span>`;
+  }).join("");
+}
+
 function getLevelMetaMarkup(level, creatorLabel = getLevelCreatorValue(level)) {
   const metaItems = [];
   const addMetaItem = (type, icon, value, copyValue = value) => {
@@ -727,12 +965,15 @@ function getLevelMetaMarkup(level, creatorLabel = getLevelCreatorValue(level)) {
 
   const iaPerSecond = Number(level.iaPerSecond ?? level.inputActivityPerSecond);
   if (Number.isFinite(iaPerSecond) && iaPerSecond > 0) {
-    addMetaItem('ia-per-second', 'fa-keyboard', `IA/s: ${iaPerSecond.toFixed(2)}`, iaPerSecond.toFixed(2));
+    addMetaItem('ia-per-second', 'fa-keyboard', `Input Activity: ${iaPerSecond.toFixed(2)}`, iaPerSecond.toFixed(2));
   }
 
   const idValue = String(level.id ?? '').trim();
   if (idValue) addMetaItem('id', 'fa-hashtag', idValue);
   if (level.is2Player) addMetaItem('two-player', 'fa-user-group', '2-Player');
+
+  const tagsMarkup = getLevelTagsMarkup(level);
+  if (tagsMarkup) metaItems.push(tagsMarkup);
 
   return metaItems.join('');
 }
@@ -788,6 +1029,20 @@ function getLevelSummaryRows(level) {
 
 const thumbnailCache = new Map();
 const renderedLevelsByCardKey = new Map();
+const renderedVerificationLevelsByCardKey = new Map();
+const expandedVariantGroups = new Set();
+const expandedLevelKeys = new Set();
+const virtualLevelHeightCache = new Map();
+const VIRTUAL_LEVEL_OVERSCAN = 8;
+const VIRTUAL_LEVEL_ESTIMATE_DESKTOP = 190;
+const VIRTUAL_LEVEL_ESTIMATE_MOBILE = 260;
+let virtualLevelGroups = [];
+let virtualLevelGroupRenderer = null;
+let virtualLevelPrefixHeights = [0];
+let virtualLevelRenderedRange = null;
+let virtualLevelResizeObserver = null;
+let virtualLevelRenderScheduled = false;
+let virtualLevelViewportWidth = window.innerWidth;
 let thumbnailObserver = null;
 let timelineLoadPromise = null;
 
@@ -806,19 +1061,56 @@ function truncateDisplayText(value, maxLength) {
   return `${Array.from(text).slice(0, Math.max(0, maxLength - 3)).join('')}...`;
 }
 
-function getPlayerCountryEmoji(name) {
+const COUNTRY_NAMES = {
+  AR: 'Argentina',
+  BR: 'Brazil',
+  BY: 'Belarus',
+  CA: 'Canada',
+  CO: 'Colombia',
+  DE: 'Germany',
+  ES: 'Spain',
+  GB: 'United Kingdom',
+  HU: 'Hungary',
+  IE: 'Ireland',
+  IL: 'Israel',
+  KR: 'South Korea',
+  NZ: 'New Zealand',
+  PH: 'Philippines',
+  RO: 'Romania',
+  RU: 'Russia',
+  UA: 'Ukraine',
+  US: 'United States',
+  VN: 'Vietnam',
+};
+
+function getPlayerCountryFlagMarkup(name) {
   if (!name || typeof name !== 'string') return '';
   const code = window.playerCountries && window.playerCountries[name.trim()];
-  if (!code || typeof code !== 'string' || code.length !== 2) return '';
-  return code.toUpperCase().split('').map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
+  if (!code || typeof code !== 'string' || !/^[a-z]{2}$/i.test(code)) return '';
+  const normalizedCode = code.toUpperCase();
+  const countryName = COUNTRY_NAMES[normalizedCode];
+  if (!countryName) return '';
+  const escapedCountryName = escapeHTML(countryName);
+  return `<img class="country-flag" src="public/flags/${normalizedCode.toLowerCase()}.svg" alt="${escapedCountryName} flag" title="${escapedCountryName}" loading="lazy" decoding="async">`;
 }
 
 function getThumbnailMarkup(level) {
-  if (thumbnailCache.has(level.id)) {
-    return thumbnailCache.get(level.id);
-  }
-
   const explicitThumbnail = String(level.thumbnail || '').trim();
+  const levelId = String(level.id || '').trim();
+  const levelName = String(level.name || level.levelName || '').trim();
+  const victorVideoUrls = (level.victors || [])
+    .map(v => v.victorVideoUrl)
+    .filter(Boolean);
+  const cacheKey = JSON.stringify([
+    levelId,
+    levelName,
+    explicitThumbnail,
+    level.showcaseVideoUrl || '',
+    victorVideoUrls,
+  ]);
+  if (thumbnailCache.has(cacheKey)) {
+    return thumbnailCache.get(cacheKey);
+  }
 
   let markup = '';
 
@@ -826,16 +1118,14 @@ function getThumbnailMarkup(level) {
     markup = `
       <div class="thumb-col">
         <img class="lazy-thumb"
-             src="${explicitThumbnail}"
-             data-id="${level.id}"
-             alt="${escapeHTML(level.name)}"
-             loading="lazy">
+             data-src="${escapeHTML(explicitThumbnail)}"
+             data-id="${escapeHTML(levelId)}"
+             alt="${escapeHTML(levelName)}"
+             loading="lazy"
+             decoding="async"
+             fetchpriority="low">
       </div>`;
   } else {
-    const victorVideoUrls = (level.victors || [])
-      .map(v => v.victorVideoUrl)
-      .filter(Boolean);
-
     const candidates = window.getThumbnailUrlSequence
       ? window.getThumbnailUrlSequence(
           '',
@@ -852,17 +1142,19 @@ function getThumbnailMarkup(level) {
       markup = `
         <div class="thumb-col">
           <img class="lazy-thumb"
-               src="${unique[0]}"
+               data-src="${escapeHTML(unique[0])}"
                data-fallbacks="${encodeURIComponent(JSON.stringify(unique.slice(1)))}"
-               data-id="${level.id}"
-               alt="${escapeHTML(level.name)}"
+               data-id="${escapeHTML(levelId)}"
+               alt="${escapeHTML(levelName)}"
                loading="lazy"
+               decoding="async"
+               fetchpriority="low"
                onerror="tryThumbnailFallback(this)">
         </div>`;
     }
   }
 
-  thumbnailCache.set(level.id, markup);
+  thumbnailCache.set(cacheKey, markup);
   return markup;
 }
 function openVideoModal(url) {
@@ -930,7 +1222,7 @@ function getLevelDetailsMarkup(level) {
     level._sortedVictors = sortVictorsByDate(level.victors || []);
   }
 
-  const victorPointAwards = buildVictorPointAwards([level]);
+  const victorPointAwards = buildVictorPointAwards([level], levels);
   return `
     <table class="victors-table">
       <thead>
@@ -951,7 +1243,7 @@ function getLevelDetailsMarkup(level) {
           return `
             <tr>
               <td>${index + 1}</td>
-              <td>${getPlayerCountryEmoji(victor.name) ? getPlayerCountryEmoji(victor.name) + ' ' : ''}${escapeHTML(victor.name)}</td>
+              <td>${getPlayerCountryFlagMarkup(victor.name)}${escapeHTML(victor.name)}</td>
               <td>${victor.date}</td>
               <td>${victor.wrTime ? victor.wrTime : '—'}</td>
               <td>${victor.wrAttempts == null ? '—' : victor.wrAttempts.toLocaleString()}</td>
@@ -970,36 +1262,336 @@ function getLevelDetailsMarkup(level) {
   `;
 }
 
+function getVirtualLevelEstimatedHeight() {
+  const measuredHeights = [...virtualLevelHeightCache.values()]
+    .filter((height) => Number.isFinite(height) && height > 0)
+    .sort((a, b) => a - b);
+  if (!measuredHeights.length) {
+    return window.innerWidth <= 700
+      ? VIRTUAL_LEVEL_ESTIMATE_MOBILE
+      : VIRTUAL_LEVEL_ESTIMATE_DESKTOP;
+  }
+  return measuredHeights[Math.floor(measuredHeights.length / 2)];
+}
+
+function rebuildVirtualLevelPrefixHeights() {
+  const estimate = getVirtualLevelEstimatedHeight();
+  virtualLevelPrefixHeights = [0];
+  virtualLevelGroups.forEach((group) => {
+    const measured = virtualLevelHeightCache.get(group.key);
+    const height = Number.isFinite(measured) && measured > 0 ? measured : estimate;
+    virtualLevelPrefixHeights.push(virtualLevelPrefixHeights[virtualLevelPrefixHeights.length - 1] + height);
+  });
+}
+
+function getVirtualLevelVisibleRange() {
+  const groupCount = virtualLevelGroups.length;
+  const listWindow = document.querySelector('#levels-container .virtual-list-window');
+  if (!listWindow || !listWindow.clientWidth) {
+    return { start: 0, end: Math.min(groupCount, 20) };
+  }
+
+  const listTop = listWindow.getBoundingClientRect().top + window.scrollY;
+  const viewportTop = Math.max(0, window.scrollY - listTop);
+  const viewportBottom = viewportTop + window.innerHeight;
+  let firstVisible = 0;
+  while (firstVisible < groupCount && virtualLevelPrefixHeights[firstVisible + 1] <= viewportTop) {
+    firstVisible += 1;
+  }
+
+  let endVisible = firstVisible;
+  while (endVisible < groupCount && virtualLevelPrefixHeights[endVisible] < viewportBottom) {
+    endVisible += 1;
+  }
+
+  let start = Math.max(0, firstVisible - VIRTUAL_LEVEL_OVERSCAN);
+  let end = Math.min(groupCount, Math.max(firstVisible + 1, endVisible) + VIRTUAL_LEVEL_OVERSCAN);
+  const activeItem = document.activeElement.closest?.('.virtual-list-item');
+  if (activeItem) {
+    const activeRect = activeItem.getBoundingClientRect();
+    const activeIndex = Number(activeItem.getAttribute('aria-posinset')) - 1;
+    if (activeRect.bottom > 0 && activeRect.top < window.innerHeight
+      && activeIndex >= 0 && activeIndex < groupCount) {
+      start = Math.min(start, activeIndex);
+      end = Math.max(end, activeIndex + 1);
+    }
+  }
+  return { start, end };
+}
+
+function scheduleVirtualLevelRender() {
+  const listPage = document.getElementById('page-list');
+  if (listPage && !listPage.classList.contains('active')) return;
+  if (virtualLevelRenderScheduled) return;
+  virtualLevelRenderScheduled = true;
+  requestAnimationFrame(() => {
+    virtualLevelRenderScheduled = false;
+    renderVirtualLevelWindow();
+  });
+}
+
+function recordVirtualLevelHeight(element) {
+  const key = element.dataset.virtualKey;
+  const height = element.getBoundingClientRect().height;
+  if (!key || !Number.isFinite(height) || height <= 0) return false;
+
+  const previous = virtualLevelHeightCache.get(key);
+  if (Number.isFinite(previous) && Math.abs(previous - height) < 1) return false;
+  virtualLevelHeightCache.set(key, height);
+  return true;
+}
+
+function observeVirtualLevelItems(itemsContainer) {
+  const items = itemsContainer.querySelectorAll('.virtual-list-item');
+  if (!('ResizeObserver' in window)) {
+    let changed = false;
+    items.forEach((item) => {
+      changed = recordVirtualLevelHeight(item) || changed;
+    });
+    if (changed) {
+      rebuildVirtualLevelPrefixHeights();
+      scheduleVirtualLevelRender();
+    }
+    return;
+  }
+
+  if (!virtualLevelResizeObserver) {
+    virtualLevelResizeObserver = new ResizeObserver((entries) => {
+      let changed = false;
+      entries.forEach((entry) => {
+        changed = recordVirtualLevelHeight(entry.target) || changed;
+      });
+      if (changed) {
+        rebuildVirtualLevelPrefixHeights();
+        scheduleVirtualLevelRender();
+      }
+    });
+  } else {
+    virtualLevelResizeObserver.disconnect();
+  }
+  items.forEach((item) => virtualLevelResizeObserver.observe(item));
+}
+
+function renderVirtualLevelWindow() {
+  if (!virtualLevelGroupRenderer || !virtualLevelGroups.length) return;
+
+  const windowElement = document.querySelector('#levels-container .virtual-list-window');
+  const topSpacer = windowElement?.querySelector('.virtual-list-spacer-top');
+  const bottomSpacer = windowElement?.querySelector('.virtual-list-spacer-bottom');
+  const itemsContainer = windowElement?.querySelector('.virtual-list-items');
+  if (!windowElement || !topSpacer || !bottomSpacer || !itemsContainer) return;
+
+  const range = getVirtualLevelVisibleRange();
+  const totalHeight = virtualLevelPrefixHeights[virtualLevelGroups.length];
+  topSpacer.style.height = `${Math.round(virtualLevelPrefixHeights[range.start])}px`;
+  bottomSpacer.style.height = `${Math.max(0, Math.round(totalHeight - virtualLevelPrefixHeights[range.end]))}px`;
+
+  if (virtualLevelRenderedRange
+    && virtualLevelRenderedRange.start === range.start
+    && virtualLevelRenderedRange.end === range.end) return;
+
+  const targetGroups = virtualLevelGroups.slice(range.start, range.end);
+  const activeElement = document.activeElement;
+  const activeItem = activeElement.closest?.('.virtual-list-item');
+  const activeRect = activeItem?.getBoundingClientRect();
+  const activeIndex = Number(activeItem?.getAttribute('aria-posinset')) - 1;
+  const activeFocusableIndex = activeItem
+    ? getVirtualLevelFocusableElements(activeItem).indexOf(activeElement)
+    : -1;
+  const restoreFocus = activeItem
+    && activeRect.bottom > 0
+    && activeRect.top < window.innerHeight
+    && activeIndex >= range.start
+    && activeIndex < range.end
+    && activeFocusableIndex >= 0;
+
+  virtualLevelRenderedRange = range;
+  renderedLevelsByCardKey.clear();
+  const existingItems = new Map();
+  Array.from(itemsContainer.children).forEach((item) => {
+    if (item.dataset.virtualKey) existingItems.set(item.dataset.virtualKey, item);
+  });
+  const targetKeys = new Set(targetGroups.map((group) => group.key));
+  existingItems.forEach((item, key) => {
+    if (targetKeys.has(key)) return;
+    unobserveLazyThumbnails(item);
+    item.remove();
+  });
+
+  let nextItem = itemsContainer.firstElementChild;
+  targetGroups.forEach((group, offset) => {
+    let item = existingItems.get(group.key);
+    if (!item) {
+      const markupContainer = document.createElement('div');
+      markupContainer.innerHTML = virtualLevelGroupRenderer(group, range.start + offset);
+      item = markupContainer.firstElementChild;
+      if (!item) throw new Error('Virtualized level renderer returned no item.');
+    }
+    if (item !== nextItem) itemsContainer.insertBefore(item, nextItem);
+    nextItem = item.nextElementSibling;
+
+    renderedLevelsByCardKey.set(getLevelCardKey(group.level, group.index), group.level);
+    group.variants.forEach((variant) => {
+      renderedLevelsByCardKey.set(getLevelCardKey(variant.level, variant.index), variant.level);
+    });
+  });
+  while (nextItem) {
+    const followingItem = nextItem.nextElementSibling;
+    unobserveLazyThumbnails(nextItem);
+    nextItem.remove();
+    nextItem = followingItem;
+  }
+  initExpandHandlers();
+  initLazyThumbnails(itemsContainer);
+  bindVideoModalEvents();
+  itemsContainer.onkeydown = handleVirtualLevelKeydown;
+  observeVirtualLevelItems(itemsContainer);
+  if (restoreFocus) {
+    const replacementGroup = itemsContainer.querySelector(`[aria-posinset="${activeIndex + 1}"]`);
+    if (replacementGroup) {
+      getVirtualLevelFocusableElements(replacementGroup)[activeFocusableIndex]?.focus({ preventScroll: true });
+    }
+  }
+}
+
+function getVirtualLevelFocusableElements(groupElement) {
+  return [...groupElement.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  )].filter((element) => element.getClientRects().length);
+}
+
+function focusVirtualLevelGroup(groupIndex, direction) {
+  const listWindow = document.querySelector('#levels-container .virtual-list-window');
+  if (!listWindow) return;
+
+  const listTop = listWindow.getBoundingClientRect().top + window.scrollY;
+  const groupTop = listTop + virtualLevelPrefixHeights[groupIndex];
+  const targetScroll = direction === 'backward'
+    ? groupTop - window.innerHeight + getVirtualLevelEstimatedHeight()
+    : groupTop;
+  window.scrollTo(0, Math.max(0, targetScroll));
+  renderVirtualLevelWindow();
+
+  const group = document.querySelector(`#levels-container [aria-posinset="${groupIndex + 1}"]`);
+  const focusableElements = group ? getVirtualLevelFocusableElements(group) : [];
+  const focusTarget = direction === 'backward'
+    ? focusableElements[focusableElements.length - 1]
+    : focusableElements[0];
+  focusTarget?.focus();
+}
+
+function handleVirtualLevelKeydown(event) {
+  if (event.key !== 'Tab' || !virtualLevelRenderedRange) return;
+
+  const group = event.target.closest('.virtual-list-item');
+  if (!group) return;
+  const groupIndex = Number(group.getAttribute('aria-posinset')) - 1;
+  const focusableElements = getVirtualLevelFocusableElements(group);
+  if (!focusableElements.length) return;
+
+  if (!event.shiftKey
+    && groupIndex === virtualLevelRenderedRange.end - 1
+    && virtualLevelRenderedRange.end < virtualLevelGroups.length
+    && event.target === focusableElements[focusableElements.length - 1]) {
+    event.preventDefault();
+    focusVirtualLevelGroup(virtualLevelRenderedRange.end, 'forward');
+  } else if (event.shiftKey
+    && groupIndex === virtualLevelRenderedRange.start
+    && virtualLevelRenderedRange.start > 0
+    && event.target === focusableElements[0]) {
+    event.preventDefault();
+    focusVirtualLevelGroup(virtualLevelRenderedRange.start - 1, 'backward');
+  }
+}
+
+function handleVirtualLevelResize() {
+  if (virtualLevelViewportWidth !== window.innerWidth) {
+    virtualLevelViewportWidth = window.innerWidth;
+    virtualLevelHeightCache.clear();
+    virtualLevelRenderedRange = null;
+    rebuildVirtualLevelPrefixHeights();
+  }
+  scheduleVirtualLevelRender();
+}
+
+window.addEventListener('scroll', scheduleVirtualLevelRender, { passive: true });
+window.addEventListener('resize', handleVirtualLevelResize);
+
 function renderLevels(data) {
   const container = document.getElementById('levels-container');
+  unobserveLazyThumbnails(container);
   renderedLevelsByCardKey.clear();
 
   if (!data.length) {
+    virtualLevelGroups = [];
+    virtualLevelGroupRenderer = null;
+    virtualLevelPrefixHeights = [0];
+    virtualLevelRenderedRange = null;
+    if (virtualLevelResizeObserver) virtualLevelResizeObserver.disconnect();
     container.innerHTML = '<div class="empty-state">// NO LEVELS FOUND //</div>';
     return;
   }
 
-  const fragment = document.createDocumentFragment();
+  const variantRelations = VariantUtils.getVariantRelations(levels);
+  const levelIndexes = new Map();
+  levels.forEach((level, index) => {
+    levelIndexes.set(level, index);
+  });
 
-  const wrapper = document.createElement('div');
+  const displayGroups = [];
+  const addedVariantRoots = new Set();
+  data.forEach((level, index) => {
+    const sourceIndex = levelIndexes.get(level) ?? index;
+    const root = variantRelations.parentByVariant.get(level) || level;
+    const rootIndex = levelIndexes.get(root) ?? sourceIndex;
+    const variantGroupKey = `variant:${normalizeLevelSearchText(root.name)}`;
+    if (addedVariantRoots.has(root)) return;
 
-  wrapper.innerHTML = `
-    <div class="section-header">
-      <div class="line"></div>
-    </div>
-    ${data.map((lvl, index) => {
-      const levelKey = getLevelCardKey(lvl, index);
-      renderedLevelsByCardKey.set(levelKey, lvl);
-      const cardClass = index % 2 ?
-        'level-card variant-b' :
-        'level-card variant-a';
-      const rankValue = Number(lvl.rank);
-      const rankClass = rankValue === 1 ? 'rank-gold' : rankValue === 2 ? 'rank-silver' : rankValue === 3 ? 'rank-bronze' : '';
+    const variants = (variantRelations.variantsByParent.get(root) || [])
+      .map(variant => ({ level: variant, index: levelIndexes.get(variant) ?? index }));
+    if (!variants.length) {
+      displayGroups.push({
+        key: getLevelCardKey(level, sourceIndex),
+        level,
+        index: sourceIndex,
+        variants: [],
+        id: '',
+      });
+      return;
+    }
 
-      return `
-      <div class="${cardClass}" id="card-${levelKey}">
+    addedVariantRoots.add(root);
+    displayGroups.push({
+      key: getLevelCardKey(root, rootIndex),
+      level: root,
+      index: rootIndex,
+      variants,
+      id: variantGroupKey,
+    });
+  });
+
+  const renderLevelCard = (lvl, index, cardIndex, isVariant = false, variantToggle = null) => {
+    const levelKey = getLevelCardKey(lvl, index);
+    renderedLevelsByCardKey.set(levelKey, lvl);
+    const cardClass = cardIndex % 2 ? 'variant-b' : 'variant-a';
+    const rankValue = Number(lvl.displayRank ?? lvl.rank);
+    const rankClass = rankValue === 1 ? 'rank-gold' : rankValue === 2 ? 'rank-silver' : rankValue === 3 ? 'rank-bronze' : '';
+    const variantMarkup = variantToggle
+      ? `<button class="btn-variant-toggle" type="button" data-variant-group="${escapeHTML(variantToggle.id)}" data-variant-panel="${variantToggle.panelId}" data-variant-count="${variantToggle.count}" aria-expanded="${variantToggle.isOpen}" aria-controls="${variantToggle.panelId}" title="${variantToggle.label}" aria-label="${variantToggle.label}">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+        <span class="variant-toggle-label">${variantToggle.count}</span>
+        </button>`
+      : '';
+    const jumpMarkup = normalizeLevelSearchText(document.getElementById('list-search')?.value || '')
+      ? `<button class="btn-jump-level" type="button" data-jump-scope="main" data-jump-level="${escapeHTML(levelKey)}" title="Jump to this level in the full list" aria-label="Jump to ${escapeHTML(lvl.name)} in the full list">
+          <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </button>`
+      : '';
+
+    return `
+      <div class="level-card ${cardClass}${isVariant ? ' is-variant' : ''}" id="card-${levelKey}">
         <div class="rank-col">
-          <span class="rank-num ${rankClass}">#${lvl.rank}</span>
+          ${isVariant ? '' : `<span class="rank-num ${rankClass}">#${lvl.displayRank ?? lvl.rank}</span>`}
         </div>
 
         <div class="info-col">
@@ -1007,6 +1599,7 @@ function renderLevels(data) {
 
           <div class="level-meta">
             ${getLevelMetaMarkup(lvl)}
+            ${isVariant ? `<span class="level-meta-item variant-tag"><i class="fa-solid fa-code-branch" aria-hidden="true"></i><span>Variant of ${escapeHTML(variantRelations.parentByVariant.get(lvl)?.name || lvl.variantParentName || '')}</span></span>` : ''}
           </div>
 
           ${getLevelSummaryRows(lvl)
@@ -1023,12 +1616,14 @@ function renderLevels(data) {
         ${getThumbnailMarkup(lvl)}
 
         <div class="actions-col">
-          <button class="btn-expand" data-level="${levelKey}" title="Toggle victors list" aria-label="Toggle victors list">
-            <i class="fa-solid fa-chevron-down"></i>
+          <button class="btn-expand" data-level="${levelKey}" title="Toggle victors list" aria-label="Toggle victors list" aria-expanded="${expandedLevelKeys.has(levelKey)}">
+            <i class="fa-solid ${expandedLevelKeys.has(levelKey) ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>
           </button>
+          ${variantMarkup}
           <button class="btn-target-toggle ${isLevelTargeted(lvl) ? 'targeted' : ''}" type="button" data-target-level="${escapeHTML(getTargetedLevelKey(lvl))}" title="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}" aria-label="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}">
             <i class="fa-solid ${isLevelTargeted(lvl) ? 'fa-check' : 'fa-star'}"></i>
           </button>
+          ${jumpMarkup}
 
           ${
             lvl.showcaseVideoUrl
@@ -1040,24 +1635,72 @@ function renderLevels(data) {
         </div>
       </div>
 
-      <div class="expand-panel" id="expand-${levelKey}">
-        <div class="expand-inner"></div>
+      <div class="expand-panel${expandedLevelKeys.has(levelKey) ? ' open' : ''}" id="expand-${levelKey}">
+        <div class="expand-inner"${expandedLevelKeys.has(levelKey) ? ' data-loaded="true"' : ''}>${expandedLevelKeys.has(levelKey) ? getLevelDetailsMarkup(lvl) : ''}</div>
       </div>`;
-    }).join('')}
-  `;
+  };
 
-  fragment.appendChild(wrapper);
-  container.replaceChildren(fragment);
-  fitLevelNames();
+  virtualLevelGroups = displayGroups;
+  virtualLevelGroupRenderer = (group, groupIndex) => {
+    const { level: lvl, index, variants, id, key } = group;
+    const levelKey = getLevelCardKey(lvl, index);
+    const panelId = `variants-${levelKey}`;
+    const isOpen = id ? expandedVariantGroups.has(id) : false;
+    const variantLabel = `${isOpen ? 'Hide' : 'Show'} ${variants.length} variant${variants.length === 1 ? '' : 's'}`;
+    const groupMarkup = !variants.length
+      ? renderLevelCard(lvl, index, groupIndex)
+      : `
+        <div class="variant-group">
+          ${renderLevelCard(lvl, index, groupIndex, false, { id, panelId, isOpen, count: variants.length, label: variantLabel })}
+          <div class="variant-panel${isOpen ? ' open' : ''}" id="${panelId}" aria-hidden="${!isOpen}">
+            <div class="variant-panel-inner">
+              ${variants.map((variant, variantIndex) => renderLevelCard(
+                variant.level,
+                variant.index,
+                variantIndex,
+                true,
+              )).join('')}
+            </div>
+          </div>
+        </div>`;
 
-  initExpandHandlers();
-  initLazyThumbnails();
-  bindVideoModalEvents();
+    return `<div class="virtual-list-item" data-virtual-key="${escapeHTML(key)}" role="listitem" aria-posinset="${groupIndex + 1}" aria-setsize="${displayGroups.length}">${groupMarkup}</div>`;
+  };
+
+  virtualLevelRenderedRange = null;
+  rebuildVirtualLevelPrefixHeights();
+  container.innerHTML = `
+    <div class="section-header">
+      <div class="line"></div>
+    </div>
+    <div class="virtual-list-window">
+      <div class="virtual-list-spacer-top" aria-hidden="true"></div>
+      <div class="virtual-list-items" role="list" aria-label="Ranked levels" aria-setsize="${displayGroups.length}"></div>
+      <div class="virtual-list-spacer-bottom" aria-hidden="true"></div>
+    </div>`;
+  renderVirtualLevelWindow();
 }
 function initExpandHandlers() {
   const container = document.getElementById('levels-container');
 
   container.onclick = e => {
+    const variantButton = e.target.closest('.btn-variant-toggle');
+    if (variantButton) {
+      const groupId = String(variantButton.dataset.variantGroup || '');
+      const panel = document.getElementById(variantButton.dataset.variantPanel);
+      if (!groupId || !panel) return;
+
+      const isOpen = panel.classList.toggle('open');
+      if (isOpen) expandedVariantGroups.add(groupId);
+      else expandedVariantGroups.delete(groupId);
+      panel.setAttribute('aria-hidden', String(!isOpen));
+      variantButton.setAttribute('aria-expanded', String(isOpen));
+      const label = `${isOpen ? 'Hide' : 'Show'} ${variantButton.dataset.variantCount} variant${variantButton.dataset.variantCount === '1' ? '' : 's'}`;
+      variantButton.title = label;
+      variantButton.setAttribute('aria-label', label);
+      return;
+    }
+
     const button = e.target.closest('.btn-expand');
 
     if (!button) return;
@@ -1065,31 +1708,42 @@ function initExpandHandlers() {
     toggleExpand(button.dataset.level);
   };
 }
-function initLazyThumbnails() {
-  const images = document.querySelectorAll('.lazy-thumb');
+function unobserveLazyThumbnails(root) {
+  if (!thumbnailObserver || !root) return;
+  root.querySelectorAll('.lazy-thumb').forEach((img) => thumbnailObserver.unobserve(img));
+}
 
-  if (thumbnailObserver) {
-    thumbnailObserver.disconnect();
+function initLazyThumbnails(root = document) {
+  const images = root.querySelectorAll('.lazy-thumb[data-src]');
+  if (!('IntersectionObserver' in window)) {
+    images.forEach(loadThumbnail);
+    return;
   }
 
-  if (!('IntersectionObserver' in window)) return;
+  if (!thumbnailObserver) {
+    thumbnailObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting || !entry.target.isConnected) continue;
 
-  thumbnailObserver = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
+        const img = entry.target;
+        loadThumbnail(img);
+        thumbnailObserver.unobserve(img);
+      }
+    }, {
+      rootMargin: '300px',
+    });
+  }
 
-      const img = entry.target;
-
-      img.loading = 'lazy';
-
-      thumbnailObserver.unobserve(img);
-    }
-  }, {
-    rootMargin: '300px'
-  });
-
-  images.forEach(img => thumbnailObserver.observe(img));
+  images.forEach((img) => thumbnailObserver.observe(img));
 }
+
+function loadThumbnail(img) {
+  const source = img.dataset.src;
+  if (!source) return;
+  img.removeAttribute('data-src');
+  img.src = source;
+}
+
 function tryThumbnailFallback(img) {
   let urls = [];
 
@@ -1101,10 +1755,12 @@ function tryThumbnailFallback(img) {
 
   const id = img.dataset.id;
 
-  urls.push(
-    `https://raw.githubusercontent.com/AncepsGD/practice-mode-list/main/thumbnails/${id}.webp`,
-    `https://raw.githubusercontent.com/AncepsGD/practice-mode-list/main/thumbnails/${id}.png`
-  );
+  if (id) {
+    urls.push(
+      `https://raw.githubusercontent.com/AncepsGD/practice-mode-list/main/thumbnails/${id}.webp`,
+      `https://raw.githubusercontent.com/AncepsGD/practice-mode-list/main/thumbnails/${id}.png`
+    );
+  }
 
   let index = Number(img.dataset.fallbackIndex || 0);
 
@@ -1147,6 +1803,8 @@ function toggleExpand(id) {
   if (!panel || !button) return;
 
   const isOpen = panel.classList.toggle('open');
+  if (isOpen) expandedLevelKeys.add(id);
+  else expandedLevelKeys.delete(id);
   const details = panel.querySelector('.expand-inner');
   if (isOpen && details && !details.dataset.loaded) {
     const level = renderedLevelsByCardKey.get(id);
@@ -1160,16 +1818,78 @@ function toggleExpand(id) {
     icon.classList.toggle('fa-chevron-up', isOpen);
     icon.classList.toggle('fa-chevron-down', !isOpen);
   }
+  button.setAttribute('aria-expanded', String(isOpen));
 }
 
 function getScoreBreakdownTooltip(entry) {
-  return [
+  const lines = [
     `Base level points: ${Number(entry.basePoints ?? entry.points ?? 0).toFixed(1)}`,
     `Performance — time: +${Number(entry.timePerformancePoints || 0).toFixed(1)}, attempts: +${Number(entry.attemptsPerformancePoints || 0).toFixed(1)}`,
     `First victor bonus: +${Number(entry.firstVictorBonus || 0).toFixed(1)}`,
     `Record bonuses — fastest time: +${Number(entry.timeRecordBonus || 0).toFixed(1)}, fewest attempts: +${Number(entry.attemptsRecordBonus || 0).toFixed(1)}`,
-    `Total: ${Number(entry.earnedPoints ?? entry.points ?? 0).toFixed(1)}`,
-  ].join('\n');
+  ];
+  if (Number(entry.aggregatedClearCount) > 1) {
+    lines.unshift(`Combined score across ${entry.aggregatedClearCount} clears`);
+    lines.push('Individual variant, repeat, and timeline multipliers are included.');
+  }
+  if (Number(entry.variantMultiplier) < 1) {
+    lines.push(`Variant diminishing multiplier: ${(Number(entry.variantMultiplier) * 100).toFixed(2)}%`);
+  }
+  if (Number(entry.repeatMultiplier) < 1) {
+    lines.push(`Repeat completion multiplier: ${(Number(entry.repeatMultiplier) * 100).toFixed(2)}%`);
+  }
+  if (Number(entry.timelineMultiplier) > 1) {
+    lines.push(`Timeline top-1-at-clear multiplier: ${Number(entry.timelineMultiplier).toFixed(1)}x`);
+  }
+  lines.push(`Total: ${Number(entry.earnedPoints ?? entry.points ?? 0).toFixed(1)}`);
+  return lines.join('\n');
+}
+
+function aggregateLeaderboardCompletions(completions) {
+  const grouped = new Map();
+  const summedFields = [
+    'earnedPoints',
+    'basePoints',
+    'performancePoints',
+    'timePerformancePoints',
+    'attemptsPerformancePoints',
+    'recordBonusPoints',
+    'firstVictorBonus',
+    'timeRecordBonus',
+    'attemptsRecordBonus',
+  ];
+
+  completions.forEach((entry, index) => {
+    const name = String(entry.name || '').trim().replace(/\s+/g, ' ');
+    const key = name.toLowerCase() || `completion-${index}`;
+    let group = grouped.get(key);
+    if (!group) {
+      group = { entry, count: 0, totals: Object.fromEntries(summedFields.map(field => [field, 0])) };
+      grouped.set(key, group);
+    }
+
+    group.count += 1;
+    summedFields.forEach((field) => {
+      const fallback = field === 'earnedPoints' || field === 'basePoints'
+        ? entry.points
+        : 0;
+      const value = Number(entry[field] ?? fallback);
+      if (Number.isFinite(value)) group.totals[field] += value;
+    });
+  });
+
+  return [...grouped.values()].map(({ entry, count, totals }) => {
+    if (count === 1) return entry;
+    return {
+      ...entry,
+      ...totals,
+      points: totals.earnedPoints,
+      variantMultiplier: undefined,
+      repeatMultiplier: undefined,
+      timelineMultiplier: undefined,
+      aggregatedClearCount: count,
+    };
+  });
 }
 
 function renderLeaderboard(data) {
@@ -1181,18 +1901,12 @@ function renderLeaderboard(data) {
     return;
   }
 
-  function countryCodeToEmoji(code) {
-    if (!code || typeof code !== 'string' || code.length !== 2) return '';
-
-    const chars = code.toUpperCase().split('');
-    return chars.map(c => String.fromCodePoint(127397 + c.charCodeAt(0))).join('');
-  }
-
   body.innerHTML = sortedData
     .map((p) => {
       const completionDetails = Array.isArray(p.completionDetails) && p.completionDetails.length
         ? p.completionDetails
         : (p.levels || []).map((name) => ({ name, points: 0, tier: 'unknown' }));
+      const groupedCompletionDetails = aggregateLeaderboardCompletions(completionDetails);
       const completionCount = p.completionCount ?? completionDetails.length;
       const hardestCompletion = p.hardestCompletion || completionDetails.reduce((best, current) => {
         if (!best) return current;
@@ -1201,7 +1915,7 @@ function renderLeaderboard(data) {
       const hardestLabel = hardestCompletion
         ? `<span class="hardest-completion-primary">${escapeHTML(truncateDisplayText(hardestCompletion.name, 32))}</span><span class="hardest-completion-secondary">${escapeHTML(hardestCompletion.tier || 'Unknown')} · ${Number(hardestCompletion.points || 0).toFixed(0)} pts</span>`
         : '<span class="hardest-completion-primary">None</span>';
-      const orderedLevelsMarkup = completionDetails.map((entry) => `
+      const orderedLevelsMarkup = groupedCompletionDetails.map((entry) => `
         <li class="completion-order-item">
           <span class="completion-order-name">${escapeHTML(truncateDisplayText(entry.name, 32))}</span>
           <span class="completion-order-meta">
@@ -1215,7 +1929,7 @@ function renderLeaderboard(data) {
       return `
         <tr class="leaderboard-row">
           <td class="rank-td">${p.rank ?? sortedData.indexOf(p) + 1}</td>
-          <td><span class="player-name">${(window.playerCountries && window.playerCountries[p.name]) ? countryCodeToEmoji(window.playerCountries[p.name]) + ' ' : ''}${escapeHTML(p.name)}</span></td>
+          <td><span class="player-name">${getPlayerCountryFlagMarkup(p.name)}${escapeHTML(p.name)}</span></td>
           <td><span class="score-val">${p.points.toFixed(1)}</span></td>
           <td class="completion-cell">
             <div class="completion-summary-row">
@@ -1314,7 +2028,7 @@ function renderPacks(packs, players) {
   const packLevelRanks = new Map();
   levels.forEach((level) => {
     const key = getPackLevelLookupKey(level.name);
-    if (key) packLevelRanks.set(key, Number(level.rank) || Number.POSITIVE_INFINITY);
+    if (key) packLevelRanks.set(key, Number(level.sortRank ?? level.rank) || Number.POSITIVE_INFINITY);
   });
   (Array.isArray(window.verifications) ? window.verifications : []).forEach((level) => {
     const key = getPackLevelLookupKey(level.name);
@@ -1345,7 +2059,7 @@ function renderPacks(packs, players) {
       .filter(Boolean);
     const levelThumbnails = packLevels
       .filter((level) => level.id)
-      .map((level) => `https://levelthumbs.prevter.me/thumbnail/${encodeURIComponent(level.id)}`);
+      .map((level) => `https://levelthumbs.prevter.me/thumbnail/${encodeURIComponent(level.id)}/small`);
     const showcaseThumbnails = packLevels.flatMap((level) => {
       const videoThumbnails = window.getThumbnailUrlSequence
         ? window.getThumbnailUrlSequence('', level.showcaseVideoUrl || '', '', '', [])
@@ -1441,19 +2155,107 @@ function handlePackPlayerChange() {
   renderPacks(PACKS, leaderboard);
 }
 
+let playerCountriesPromise = null;
+
+function loadPlayerCountries() {
+  if (playerCountriesPromise) return playerCountriesPromise;
+
+  window.playerCountries = {};
+  playerCountriesPromise = fetchWithTimeout("data/players_countries.json", 5000)
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .then((mapping) => {
+      if (mapping && typeof mapping === "object") window.playerCountries = mapping;
+      if (dataReady && document.getElementById("page-leaderboard").classList.contains("active")) {
+        renderLeaderboard(leaderboard);
+      }
+      if (dataReady && document.getElementById("page-list").classList.contains("active")) {
+        const searchInput = document.getElementById("list-search");
+        if (typeof filterList === "function") {
+          filterList(searchInput ? searchInput.value : "");
+        } else if (typeof renderLevels === "function") {
+          renderLevels(getSortedLevelData(levels));
+        }
+      }
+      if (dataReady && document.getElementById("page-verifications").classList.contains("active")
+        && typeof filterVerifications === "function") {
+        filterVerifications();
+      }
+      return window.playerCountries;
+    })
+    .catch((error) => {
+      console.warn("Unable to load players_countries.json", error);
+      playerCountriesPromise = null;
+      return window.playerCountries;
+    });
+
+  return playerCountriesPromise;
+}
+
+let editorScriptPromise = null;
+
+function requestEditorOpen() {
+  if (!editorScriptPromise) {
+    editorScriptPromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "scripts/editor.js?v=20261124-5";
+      script.onload = resolve;
+      script.onerror = () => {
+        editorScriptPromise = null;
+        reject(new Error("Failed to load scripts/editor.js"));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  return editorScriptPromise
+    .then(() => {
+      const editorOpen = window.openEditMenu;
+      if (typeof editorOpen !== "function" || editorOpen === requestEditorOpen) {
+        throw new Error("Editor script loaded without defining openEditMenu");
+      }
+      return editorOpen();
+    })
+    .catch((error) => {
+      console.error("Failed to load the editor", error);
+      alert("The editor could not be loaded. Please reload the page and try again.");
+    });
+}
+
+window.openEditMenu = requestEditorOpen;
+
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(`page-${name}`).classList.add('active');
   btn.classList.add('active');
 
+  if (name === 'optimizer') {
+    const optimizerFrame = document.querySelector('.optimizer-frame[data-src]');
+    if (optimizerFrame) {
+      optimizerFrame.src = optimizerFrame.dataset.src;
+      optimizerFrame.removeAttribute('data-src');
+    }
+  }
+
   if (name === 'leaderboard' && document.getElementById('lb-body').dataset.dirty !== 'false') {
     renderLeaderboard(leaderboard);
+  }
+  if (name === 'leaderboard') {
+    loadPlayerCountries();
+    Promise.all([loadVerificationsData(), loadTimelineData()])
+      .then(() => refreshPackCatalog());
+  }
+  if (name === 'verifications' || name === 'todo' || name === 'packs') {
+    loadVerificationsData();
   }
   if (name === 'packs' && document.getElementById('packs-container').dataset.dirty !== 'false') {
     renderPacks(PACKS, leaderboard);
   }
   if (name === 'timeline') initializeTimeline();
+  scheduleVirtualLevelRender();
 }
 
 function handleListSearch() {
@@ -1472,6 +2274,46 @@ function filterList(query) {
     : [...levels];
 
   renderLevels(getSortedLevelData(rankedLevels));
+}
+
+function jumpToMainListLevel(level) {
+  const searchInput = document.getElementById('list-search');
+  if (searchInput) searchInput.value = '';
+
+  const levelIndex = levels.indexOf(level);
+  if (levelIndex < 0) return;
+
+  const variantRelations = VariantUtils.getVariantRelations(levels);
+  const root = variantRelations.parentByVariant.get(level) || level;
+  if (root !== level) {
+    expandedVariantGroups.add(`variant:${normalizeLevelSearchText(root.name)}`);
+  }
+
+  filterList('');
+  const groupIndex = virtualLevelGroups.findIndex((group) => group.level === root);
+  if (groupIndex < 0) return;
+
+  const listWindow = document.querySelector('#levels-container .virtual-list-window');
+  if (!listWindow) return;
+  const listTop = listWindow.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top: listTop + virtualLevelPrefixHeights[groupIndex] });
+  renderVirtualLevelWindow();
+
+  const card = document.getElementById(`card-${getLevelCardKey(level, levelIndex)}`);
+  card?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function jumpToVerificationLevel(level) {
+  const searchInput = document.getElementById('verification-search');
+  if (searchInput) searchInput.value = '';
+
+  filterVerifications();
+  const cardEntry = [...renderedVerificationLevelsByCardKey.entries()]
+    .find(([, renderedLevel]) => renderedLevel === level);
+  if (!cardEntry) return;
+
+  document.getElementById(`card-${cardEntry[0]}`)
+    ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function filterLeaderboard() {
@@ -1761,6 +2603,8 @@ function filterVerifications() {
 
 function renderVerifications(data, emptyMessage = '// ALL LEVELS VERIFIED! //') {
   const container = document.getElementById('verifications-container');
+  unobserveLazyThumbnails(container);
+  renderedVerificationLevelsByCardKey.clear();
   if (!data.length) {
     container.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
     return;
@@ -1771,10 +2615,16 @@ function renderVerifications(data, emptyMessage = '// ALL LEVELS VERIFIED! //') 
       const cardClass = index % 2 === 0 ? 'level-card variant-a' : 'level-card variant-b';
       const actionsClass = index % 2 === 0 ? 'actions-col variant-a' : 'actions-col variant-b';
       const levelKey = getLevelCardKey(lvl, index);
+      renderedVerificationLevelsByCardKey.set(levelKey, lvl);
       const thumbnailMarkup = getThumbnailMarkup(lvl);
       const metaMarkup = getLevelMetaMarkup(lvl);
       const estimatedRank = getUnverifiedEstimatedRank(lvl);
       const rankLabel = estimatedRank === null ? '•' : `#${Math.round(estimatedRank)}~`;
+      const jumpMarkup = normalizeLevelSearchText(document.getElementById('verification-search')?.value || '')
+        ? `<button class="btn-jump-level" type="button" data-jump-scope="verification" data-jump-level="${escapeHTML(levelKey)}" title="Jump to this level in the full list" aria-label="Jump to ${escapeHTML(lvl.name)} in the full list">
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+          </button>`
+        : '';
       const summaryRowsMarkup = getLevelSummaryRows(lvl)
         .map((row) => `<div class="victor-row"><span class="victor-label">${escapeHTML(row.label || '')}:</span><span class="victor-name">${escapeHTML(row.name || '')}</span><span class="victor-stats">${escapeHTML(row.stat || '')}</span></div>`)
         .join('');
@@ -1795,6 +2645,7 @@ function renderVerifications(data, emptyMessage = '// ALL LEVELS VERIFIED! //') 
           <button class="btn-target-toggle ${isLevelTargeted(lvl) ? 'targeted' : ''}" type="button" data-target-level="${escapeHTML(getTargetedLevelKey(lvl))}" title="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}" aria-label="${isLevelTargeted(lvl) ? 'Remove target' : 'Add to To-Do'}">
             <i class="fa-solid ${isLevelTargeted(lvl) ? 'fa-check' : 'fa-star'}"></i>
           </button>
+          ${jumpMarkup}
           ${lvl.showcaseVideoUrl ? `<button class="btn-video" type="button" data-open-video-modal="${escapeHTML(lvl.showcaseVideoUrl)}" title="Open showcase video" aria-label="Open showcase video"><i class="fa-solid fa-video"></i></button>` : '<span class="btn-video no-link" title="No video available"><i class="fa-solid fa-video-slash"></i></span>'}
         </div>
       </div>
@@ -1803,12 +2654,12 @@ function renderVerifications(data, emptyMessage = '// ALL LEVELS VERIFIED! //') 
     .join('');
 
   container.innerHTML = cards;
-  fitLevelNames();
-  initLazyThumbnails();
+  initLazyThumbnails(container);
 }
 
 function renderTimeline(data) {
   const container = document.getElementById('timeline-container');
+  unobserveLazyThumbnails(container);
   if (!data.length) {
     container.innerHTML = '<div class="empty-state">// NO TIMELINE ENTRIES FOUND //</div>';
     return;
@@ -1854,15 +2705,13 @@ function renderTimeline(data) {
   }).join('');
 
   container.innerHTML = cards;
-  fitLevelNames();
-  initLazyThumbnails();
+  initLazyThumbnails(container);
 }
 
 function initializeTimeline() {
   if (timelineLoadPromise) return timelineLoadPromise;
 
-  timelineLoadPromise = fetch('data/timeline.json')
-    .then((response) => response.json())
+  timelineLoadPromise = loadTimelineData()
     .then((data) => renderTimeline(data))
     .catch(() => {
       timelineLoadPromise = null;

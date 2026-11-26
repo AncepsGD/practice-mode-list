@@ -4,7 +4,7 @@ const LEVEL_METRIC_SCHEMA = Object.freeze({
 
   tps: Object.freeze({ unit: "ticks/second", minimum: 1, maximum: 10000 }),
   length: Object.freeze({ unit: "seconds", minimum: 1, maximum: 86400 }),
-  precision: Object.freeze({ unit: "dataset precision units", minimum: 1, maximum: 100000 }),
+  precision: Object.freeze({ unit: "precision", minimum: 0, maximum: Number.MAX_VALUE }),
   iaPerSecond: Object.freeze({ unit: "input activity/second", minimum: 0, maximum: 10000 }),
 });
 
@@ -82,7 +82,7 @@ function loadLadderData() {
       return fallback;
     });
 
-  const loadText = (url, fallback) => fetchData(url)
+  const loadText = (url, fallback) => fetchData(url, { cache: "no-cache" })
     .then(response => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.text();
@@ -95,12 +95,19 @@ function loadLadderData() {
   return Promise.all([
     loadJson("data/levels.json", []),
     loadJson("data/verifications.json", []),
+    loadJson("data/timeline.json", []),
     loadText("data/secret.txt", ""),
-  ]).then(([verified, verifications, estimatedText]) => ({
-    verified: Array.isArray(verified) ? verified : [],
-    verifications: Array.isArray(verifications) ? verifications : [],
-    estimatedNames: parseEstimatedDifficultyList(estimatedText),
-  }));
+  ]).then(([verified, verifications, timelineLevels, estimatedText]) => {
+    if (typeof window !== "undefined") {
+      window.timelineLevels = Array.isArray(timelineLevels) ? timelineLevels : [];
+    }
+    return {
+      verified: Array.isArray(verified) ? verified : [],
+      verifications: Array.isArray(verifications) ? verifications : [],
+      timelineLevels: Array.isArray(timelineLevels) ? timelineLevels : [],
+      estimatedNames: parseEstimatedDifficultyList(estimatedText),
+    };
+  });
 }
 
 function parseEstimatedDifficultyList(text) {
@@ -140,7 +147,9 @@ function isVerifiedLevel(item, verifiedIdentity) {
 
 function getTierDifficultyMultiplier(level) {
   const tierMultipliers = {
+    empyrean: 2.5,
     ethereal: 2.35,
+    celestial: 2.225,
     novice: 0.72,
     intermediate: 0.86,
     advanced: 1.0,
@@ -152,12 +161,6 @@ function getTierDifficultyMultiplier(level) {
   };
   const tier = String(level?.tier || "").trim().toLowerCase();
   return tierMultipliers[tier] || 1;
-}
-
-function getPrecisionDifficultyMultiplier(level, calibrationLevels = []) {
-  const precision = Number(level?.precision);
-  if (!level?.isUnverified || !Number.isFinite(precision) || precision <= 0) return 1;
-  return clamp(precision / getVerifiedPrecisionBaseline(level, calibrationLevels), 0.7, 1.8);
 }
 
 function getIaPerSecondDifficultyMultiplier(level, calibrationLevels = []) {
@@ -186,7 +189,7 @@ const nearestCalibrationCache = new WeakMap();
 const calibrationProfileCache = new WeakMap();
 const calibrationTimeProfileCache = new WeakMap();
 const estimatedDifficultyAnchorCache = new WeakMap();
-const CALIBRATION_NUMERIC_FIELDS = Object.freeze(["length", "precision", "tps", "iaPerSecond"]);
+const CALIBRATION_NUMERIC_FIELDS = Object.freeze(["length", "tps", "iaPerSecond"]);
 
 function getCalibrationProfile(calibrationLevels) {
   let profile = calibrationProfileCache.get(calibrationLevels);
@@ -451,7 +454,9 @@ function interpolateDifficultyPoints(level, calibrationLevels, estimatedNames) {
 }
 
 const CALIBRATION_TIER_SCORES = {
+  empyrean: 8.5,
   ethereal: 8,
+  celestial: 7.5,
   novice: 0,
   intermediate: 1,
   advanced: 2,
@@ -461,60 +466,6 @@ const CALIBRATION_TIER_SCORES = {
   divine: 6,
   transcendent: 7,
 };
-
-function getCalibrationFeatureVector(level, estimatedRanks, estimatedListSize) {
-  const key = normalizeLadderName(level?.name);
-  const estimatedRank = estimatedRanks.get(key);
-  const rankPercentile = Number.isFinite(estimatedRank) && estimatedListSize > 1
-    ? (estimatedListSize - estimatedRank) / (estimatedListSize - 1)
-    : 0;
-  const precision = Number(level?.precision);
-  const iaPerSecond = Number(level?.iaPerSecond);
-  const length = Number(level?.length);
-  const tps = Number(level?.tps);
-  const tier = String(level?.tier || level?.tierName || "").trim().toLowerCase();
-  const hasCreator = Boolean(String(level?.creators || level?.creator || "").trim());
-  const hasId = Boolean(String(level?.id || level?.levelId || "").trim());
-  const hasShowcase = Boolean(String(level?.showcaseVideo || level?.showcaseVideoUrl || "").trim());
-  const ratioDifficulty = getRatioDifficultyScore(level?.ratio);
-
-  return [
-    1,
-    rankPercentile,
-    Number.isFinite(precision) && precision > 0 ? Math.log1p(precision) : 0,
-    Number.isFinite(precision) && precision > 0 ? 1 : 0,
-    Number.isFinite(iaPerSecond) && iaPerSecond > 0 ? Math.log1p(iaPerSecond) : 0,
-    Number.isFinite(iaPerSecond) && iaPerSecond > 0 ? 1 : 0,
-    Number.isFinite(length) && length > 0 ? Math.log1p(length) : 0,
-    Number.isFinite(length) && length > 0 ? 1 : 0,
-    Number.isFinite(tps) && tps > 0 ? Math.log1p(tps) : 0,
-    Number.isFinite(tps) && tps > 0 ? 1 : 0,
-    level?.is2Player === true ? 1 : 0,
-    CALIBRATION_TIER_SCORES[tier] ?? 0,
-    hasCreator ? 1 : 0,
-    hasId ? 1 : 0,
-    hasShowcase ? 1 : 0,
-    ratioDifficulty ?? 0,
-    ratioDifficulty === null ? 0 : 1,
-  ];
-}
-
-function buildUnverifiedCalibrationModel(calibrationLevels, estimatedNames) {
-  const estimatedRanks = new Map();
-  estimatedNames.forEach((name, index) => {
-    const key = normalizeLadderName(name);
-    if (key && !estimatedRanks.has(key)) estimatedRanks.set(key, index + 1);
-  });
-
-  const rows = calibrationLevels
-    .filter(level => Number.isFinite(Number(level?.points)) && Number(level.points) > 0)
-    .filter(level => estimatedRanks.has(normalizeLadderName(level.name)))
-    .map(level => ({
-      x: getCalibrationFeatureVector(level, estimatedRanks, estimatedNames.length),
-      y: level.points,
-    }));
-  return rows.length >= 20 ? trainLinearRegression(rows, 0.1) : null;
-}
 
 function getUnverifiedSourceConfidence(level) {
   if (!level?.isUnverified) return 1;
@@ -549,20 +500,6 @@ function getUnverifiedSourceConfidence(level) {
   );
 
   return clamp(evidenceScore, 0.25, 1);
-}
-
-function predictUnverifiedPoints(level, calibrationModel, estimatedNames) {
-  if (!calibrationModel || !Array.isArray(estimatedNames)) return null;
-  const estimatedRanks = new Map();
-  estimatedNames.forEach((name, index) => {
-    const key = normalizeLadderName(name);
-    if (key && !estimatedRanks.has(key)) estimatedRanks.set(key, index + 1);
-  });
-  const features = getCalibrationFeatureVector(level, estimatedRanks, estimatedNames.length);
-  const standardized = standardizeFeatureVector(features, calibrationModel.scaler);
-  const logPoints = calibrationModel.weights.reduce((sum, weight, index) => sum + weight * standardized[index], 0);
-  if (!Number.isFinite(logPoints)) return null;
-  return clamp(Math.exp(logPoints), 10, 360);
 }
 
 function getUnverifiedFallbackPoints(level, calibrationLevels = [], estimatedNames = []) {
@@ -732,6 +669,7 @@ function processRawData(data, options = {}) {
         _hasEstimatedRank: Number.isFinite(Number(item._difficultyRank)) && Number(item._difficultyRank) > 0,
         name: item.name,
         id: item.id,
+        variantOf: item.variantOf || "",
         packs: Array.isArray(item.packs) ? [...item.packs] : [],
         scoringBaseline: item.scoringBaseline,
         tps: parseLevelMetric(item.tps ?? item.TPS, LEVEL_METRIC_SCHEMA.tps),
@@ -784,6 +722,20 @@ function processRawData(data, options = {}) {
   assignTiers(uniqueLevels.filter(level => !level.isUnverified));
 
   const estimatedListSize = Array.isArray(options.estimatedNames) ? options.estimatedNames.length : 0;
+  const verifiedLevels = uniqueLevels.filter(level => !level.isUnverified);
+  const variantContext = VariantUtils.assignRanklessRanks(verifiedLevels);
+  const calibrationLevels = Array.isArray(options.calibrationLevels) ? options.calibrationLevels : [];
+  const calibrationRelations = VariantUtils.getVariantRelations(calibrationLevels);
+  const calibrationRankCount = calibrationLevels.length
+    ? calibrationLevels.filter(level => !calibrationRelations.parentByVariant.has(level)).length
+    : variantContext.rankedLevels.length;
+  const unverifiedRankMax = Math.max(
+    0,
+    ...uniqueLevels
+      .filter(level => level.isUnverified)
+      .map(level => Number(level._difficultyRank || level.rank) || 0),
+  );
+  const maxRank = Math.max(variantContext.rankedLevels.length, estimatedListSize, unverifiedRankMax, 1);
   uniqueLevels.forEach(level => {
     if (!level.isUnverified) return;
     const tierRange = getTierEstimatedRankRange(level, options.calibrationLevels, estimatedListSize);
@@ -807,28 +759,23 @@ function processRawData(data, options = {}) {
     level._hasEstimatedRank = true;
   });
 
-  const maxRank = Math.max(...uniqueLevels.map(l => l._difficultyRank || l.rank || 0), 1);
-  const calibrationLevels = Array.isArray(options.calibrationLevels) ? options.calibrationLevels : [];
-  const calibrationModel = options.calibrationModel
-    || (options.estimatedNames ? buildUnverifiedCalibrationModel(calibrationLevels, options.estimatedNames) : null);
   uniqueLevels.forEach(l => {
-    const hasRankCalibration = l.isUnverified && calibrationLevels.length > 1;
+    const hasRankCalibration = l.isUnverified && calibrationRankCount > 1;
     const calibratedRank = hasRankCalibration
       ? (Number.isFinite(Number(l._tierPrimaryRank))
         ? Number(l._tierPrimaryRank)
         : getEstimatedMainListRank(l, calibrationLevels))
       : null;
+    const variantParent = variantContext.parentByVariant.get(l);
+    const effectiveRank = variantParent?.displayRank ?? l.displayRank;
     const rankPoints = calculatePoints(
-      calibratedRank || l._difficultyRank || l.rank,
-      hasRankCalibration ? calibrationLevels.length : maxRank,
+      calibratedRank || effectiveRank || l._difficultyRank || l.rank,
+      hasRankCalibration ? calibrationRankCount : maxRank,
     );
-    l.modelRank = calibratedRank || l.rank || l._difficultyRank || 0;
+    l.modelRank = calibratedRank || effectiveRank || l.rank || l._difficultyRank || 0;
     l.tierEstimatedRankRange = l._tierEstimatedRankRange || null;
     const anchorPoints = l.isUnverified
       ? interpolateDifficultyPoints(l, calibrationLevels, options.estimatedNames)
-      : null;
-    const modelPoints = l.isUnverified && l._hasEstimatedRank
-      ? predictUnverifiedPoints(l, calibrationModel, options.estimatedNames)
       : null;
     const rankBasedPoints = Number.isFinite(Number(l._tierPrimaryRank))
       ? rankPoints
@@ -839,31 +786,9 @@ function processRawData(data, options = {}) {
       const effectiveBasePoints = Number.isFinite(Number(rankBasedPoints)) && rankBasedPoints > 0
         ? rankBasedPoints
         : (Number.isFinite(Number(fallbackPoints)) ? fallbackPoints : 10);
-      const metadataAdjustedPoints = clamp(effectiveBasePoints * l.metadataPointMultiplier, 10, 360);
-      const evidenceAdjustedPoints = modelPoints === null
-        ? metadataAdjustedPoints
-        : clamp(modelPoints * l.metadataPointMultiplier, 10, 360);
-      const evidenceConfidence = l.sourceConfidence ?? getUnverifiedSourceConfidence(l);
-      l.evidenceConfidence = evidenceConfidence;
-      l.evidenceAdjustedPoints = clamp(
-        effectiveBasePoints + (evidenceAdjustedPoints - effectiveBasePoints) * evidenceConfidence,
-        10,
-        360,
-      );
-      l.points = clamp(
-        effectiveBasePoints * 0.65 + l.evidenceAdjustedPoints * 0.35,
-        10,
-        360,
-      );
-    } else if (modelPoints === null) {
-      l.points = rankBasedPoints;
+      l.points = clamp(effectiveBasePoints * l.metadataPointMultiplier, 10, 360);
     } else {
-      const confidence = l.sourceConfidence ?? getUnverifiedSourceConfidence(l);
-      l.points = clamp(
-        rankBasedPoints * (1 - confidence * 0.35) + modelPoints * confidence * 0.35,
-        10,
-        360,
-      );
+      l.points = rankBasedPoints;
     }
   });
 
@@ -1375,9 +1300,22 @@ const SPEED_DIFFICULTY_ORDER = Object.freeze({
   "1x": 2,
   "0.5x": 1,
 });
+const GAMEMODE_FULL_NAME_ENTRIES = Object.entries(GAMEMODE_RATIO_NAMES)
+  .map(([key, name]) => [key, name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")]);
+const GAMEMODE_FULL_NAME_PATTERN = new RegExp(
+  `\\b(${GAMEMODE_FULL_NAME_ENTRIES.map(([, name]) => name).join("|")})\\s+(\\d+(?:\\.\\d+)?)%`,
+  "gi",
+);
+const GAMEMODE_KEY_BY_NAME = new Map(
+  Object.entries(GAMEMODE_RATIO_NAMES).map(([key, name]) => [name.toLowerCase(), key])
+);
+const gamemodeRatioCache = new Map();
+const ratioDetailsCache = new Map();
 
 function parseGamemodeRatio(value) {
   const text = String(value || "");
+  const cached = gamemodeRatioCache.get(text);
+  if (cached !== undefined) return cached;
   const modes = new Map();
   const addMode = (key, percent) => {
     const parsedPercent = Number(percent);
@@ -1386,26 +1324,27 @@ function parseGamemodeRatio(value) {
     }
   };
 
-  const fullNames = Object.entries(GAMEMODE_RATIO_NAMES)
-    .map(([key, name]) => [key, name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")]);
-  const fullPattern = new RegExp(`\\b(${fullNames.map(([, name]) => name).join("|")})\\s+(\\d+(?:\\.\\d+)?)%`, "gi");
-  for (const match of text.matchAll(fullPattern)) {
-    const entry = fullNames.find(([, name]) => name.toLowerCase() === match[1].toLowerCase());
-    if (entry) addMode(entry[0], match[2]);
+  for (const match of text.matchAll(GAMEMODE_FULL_NAME_PATTERN)) {
+    const key = GAMEMODE_KEY_BY_NAME.get(match[1].toLowerCase());
+    if (key) addMode(key, match[2]);
   }
 
   const shortPattern = /(?:^|\s)(SH|SP|SW|C|B|U|W|R)(\d+(?:\.\d+)?)\(\d+\)/g;
   for (const match of text.matchAll(shortPattern)) addMode(match[1], match[2]);
 
-  return [...modes.entries()].map(([mode, percent]) => ({
+  const parsed = [...modes.entries()].map(([mode, percent]) => ({
     mode,
     name: GAMEMODE_RATIO_NAMES[mode],
     percent,
   }));
+  gamemodeRatioCache.set(text, parsed);
+  return parsed;
 }
 
 function parseRatioDetails(value) {
   const text = String(value || "");
+  const cached = ratioDetailsCache.get(text);
+  if (cached !== undefined) return cached;
   const speeds = new Map();
   const addSpeed = (speed, percent, changes) => {
     const parsedPercent = Number(percent);
@@ -1434,13 +1373,15 @@ function parseRatioDetails(value) {
     ? Number(mirrorHeader[1])
     : fullMirrorSwitches || compactMirrorSwitches;
 
-  return {
+  const details = {
     speeds: [...speeds.entries()].map(([speed, details]) => ({ speed, ...details })),
     mirrorSwitches: Number.isFinite(mirrorSwitches) ? mirrorSwitches : 0,
     inversePercent: Number(inverse?.[1] || compactInverse?.[1] || 0),
     normalPercent: Number(normal?.[1] || compactNormal?.[1] || 0),
     dualPercent: Number(text.match(/\bDual\s+(\d+(?:\.\d+)?)%/i)?.[1] || text.match(/\bD(\d+(?:\.\d+)?)/i)?.[1] || 0),
   };
+  ratioDetailsCache.set(text, details);
+  return details;
 }
 
 function getRatioDifficultyScore(value) {
@@ -1480,7 +1421,35 @@ function getRatioDifficultyScore(value) {
   );
 }
 
+const playerAnalysisCache = new WeakMap();
+
+function getPlayerAnalysisContext(levels) {
+  let context = playerAnalysisCache.get(levels);
+  if (context) return context;
+
+  context = {
+    componentsByPlayer: new Map(),
+    skillsByPlayer: new Map(),
+    leaderboardRankByPlayer: null,
+    leaderboardSize: 0,
+  };
+  playerAnalysisCache.set(levels, context);
+  return context;
+}
+
 function calculateSkillComponents(levels, playerName) {
+  const context = getPlayerAnalysisContext(levels);
+  const playerKey = String(playerName || "").trim().toLowerCase();
+  if (!context.componentsByPlayer.has(playerKey)) {
+    context.componentsByPlayer.set(
+      playerKey,
+      calculateSkillComponentsUncached(levels, playerName),
+    );
+  }
+  return context.componentsByPlayer.get(playerKey);
+}
+
+function calculateSkillComponentsUncached(levels, playerName) {
   const speedRatios = [];
   const attemptRatios = [];
   const speedWeights = [];
@@ -1525,6 +1494,9 @@ function calculateSkillComponents(levels, playerName) {
   const playerLevels = levels.filter(level =>
     (level.victors || []).some(victor => victor.name === playerName)
   );
+  const playerPrecisionBaseline = median(playerLevels
+    .map(level => Number(level.precision))
+    .filter(value => Number.isFinite(value) && value > 0));
   const ratioExposure = {
     levels: 0,
     modes: {},
@@ -1619,10 +1591,6 @@ function calculateSkillComponents(levels, playerName) {
       ? 1.15
       : 1;
     const recencyWeight = getRecencyWeight(playerEntry.date);
-    const playerPrecisionValues = playerLevels
-      .map(level => Number(level.precision))
-      .filter(value => Number.isFinite(value) && value > 0);
-    const playerPrecisionBaseline = median(playerPrecisionValues);
     const precisionSignal = Number.isFinite(Number(lvl.precision)) && Number(lvl.precision) > 0
       && playerPrecisionBaseline
       ? clamp(1 + Math.min(0.25, Math.abs(Math.log(Number(lvl.precision) / playerPrecisionBaseline)) / 2), 1, 1.25)
@@ -1792,6 +1760,22 @@ const PLAYER_SKILL_WEIGHTS = Object.freeze({
 });
 
 function calculatePlayerSkill(levels, playerName) {
+  const context = getPlayerAnalysisContext(levels);
+  const playerKey = String(playerName || "").trim().toLowerCase();
+  if (context.skillsByPlayer.has(playerKey)) {
+    return context.skillsByPlayer.get(playerKey);
+  }
+  if (!context.leaderboardRankByPlayer) {
+    const leaderboard = typeof buildLeaderboard === "function" ? buildLeaderboard(levels) : [];
+    context.leaderboardRankByPlayer = new Map(
+      leaderboard.map((player, index) => [
+        String(player.name || "").trim().toLowerCase(),
+        index,
+      ])
+    );
+    context.leaderboardSize = leaderboard.length;
+  }
+
   const components = calculateSkillComponents(levels, playerName);
   const speedFactor = Number.isFinite(components.speed) && components.speed > 0
     ? components.speed
@@ -1818,17 +1802,18 @@ function calculatePlayerSkill(levels, playerName) {
     return count + (timeWr ? 1 : 0) + (attemptWr ? 1 : 0);
   }, 0);
   const recordBonus = 1 + 0.05 * Math.log1p(recordCount);
-  const leaderboard = typeof buildLeaderboard === "function" ? buildLeaderboard(levels) : [];
-  const playerIndex = leaderboard.findIndex(player => player.name === playerName);
-  const rankPercentile = playerIndex >= 0 && leaderboard.length > 1
-    ? 1 - playerIndex / (leaderboard.length - 1)
+  const playerIndex = context.leaderboardRankByPlayer.get(playerKey) ?? -1;
+  const rankPercentile = playerIndex >= 0 && context.leaderboardSize > 1
+    ? 1 - playerIndex / (context.leaderboardSize - 1)
     : 0.5;
   const rankPrior = 0.85 + 0.45 * clamp(rankPercentile, 0, 1);
 
   const displaySkill = (Number.isFinite(rawSkill) && rawSkill > 0 ? 1 / rawSkill : 1)
     * recordBonus
     * rankPrior;
-  return Number.isFinite(displaySkill) && displaySkill > 0 ? displaySkill : 1;
+  const skill = Number.isFinite(displaySkill) && displaySkill > 0 ? displaySkill : 1;
+  context.skillsByPlayer.set(playerKey, skill);
+  return skill;
 }
 
 function calculateAvgTimePerPoint(levels) {
@@ -1867,6 +1852,13 @@ function getVerifiedPrecisionBaseline(level, calibrationLevels) {
     value: neighbor.level.precision,
     weight: neighbor.weight,
   }))) ?? 525.4;
+}
+
+function getPrecisionDifficultyMultiplier(level, calibrationLevels = []) {
+  const precision = Number(level?.precision);
+  if (!level?.isUnverified || !Number.isFinite(precision) || precision <= 0) return 1;
+  const baseline = getVerifiedPrecisionBaseline(level, calibrationLevels);
+  return baseline > 0 ? clamp(precision / baseline, 0.7, 1.8) : 1;
 }
 
 function getVerifiedTpsBaseline(level, calibrationLevels) {
@@ -2221,7 +2213,7 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
     name: String(playerName || "projected-player").trim() || "projected-player",
     seconds: Number.isFinite(expectedSeconds) && expectedSeconds > 0 ? expectedSeconds : null,
     attempts: Number.isFinite(expectedAttempts) && expectedAttempts > 0 ? expectedAttempts : null,
-    date: "0000-01-01T00:00:00.000Z",
+    date: new Date().toISOString(),
   };
 
   const validEntries = (level.victors || [])
@@ -2274,7 +2266,9 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
       weight: typeof ATTEMPTS_PERFORMANCE_WEIGHT !== "undefined" ? ATTEMPTS_PERFORMANCE_WEIGHT : 0.3,
     });
   }
-  if (level.isUnverified && performanceScores.length === 0) return 1;
+  if (level.isUnverified && performanceScores.length === 0) {
+    return getTimelineMultiplier(level, syntheticPlayer.date);
+  }
 
   const availableMetricWeight = performanceScores.reduce((total, item) => total + item.weight, 0);
   const performanceScore = availableMetricWeight
@@ -2297,7 +2291,9 @@ function projectedMultiplierFor(level, expectedSeconds, expectedAttempts, player
     ? lowestAttemptsBonus * Math.min(lowestAttempts / expectedAttempts, 1)
     : 0;
 
-  return performanceScore + timeRecordBonus + attemptsRecordBonus + firstVictorBonus;
+  const timelineMultiplier = getTimelineMultiplier(level, syntheticPlayer.date);
+  return (performanceScore + timeRecordBonus + attemptsRecordBonus + firstVictorBonus)
+    * timelineMultiplier;
 }
 
 function getSkillAdjustedWrPotential(playerSkill, wrHolderName, levels, rawPotential) {
@@ -2346,17 +2342,38 @@ function predictRebeatOutcome(outcome, completion, ageYears) {
 function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, allLevels = levels, calibrationLevels = [], allowRebeats = false) {
   if (!player) return [];
   const beaten = new Set(player.levels);
-  const currentAwards = new Map(
-    (Array.isArray(player.completionDetails) ? player.completionDetails : [])
-      .map(detail => [String(detail.name || "").trim().toLowerCase(), {
-        points: Number(detail.earnedPoints ?? detail.points),
-        date: detail.date || "",
-        seconds: Number(detail.seconds),
-        attempts: Number(detail.attempts),
-      }])
-      .filter(([name, award]) => name && Number.isFinite(award.points))
-  );
+  const currentAwards = new Map();
+  (Array.isArray(player.completionDetails) ? player.completionDetails : []).forEach((detail) => {
+    const name = String(detail.name || "").trim().toLowerCase();
+    const points = Number(detail.earnedPoints ?? detail.points);
+    if (!name || !Number.isFinite(points)) return;
+    const completion = {
+      points,
+      date: detail.date || "",
+      seconds: Number(detail.seconds),
+      attempts: Number(detail.attempts),
+    };
+    const existing = currentAwards.get(name);
+    const timestamp = typeof getVictorSortValue === "function"
+      ? getVictorSortValue(completion)
+      : Date.parse(String(completion.date || ""));
+    const existingTimestamp = existing
+      ? (typeof getVictorSortValue === "function"
+        ? getVictorSortValue(existing)
+        : Date.parse(String(existing.date || "")))
+      : null;
+    const validTimestamp = Number.isFinite(timestamp);
+    const existingValidTimestamp = Number.isFinite(existingTimestamp);
+    if (!existing
+      || (validTimestamp && !existingValidTimestamp)
+      || (validTimestamp && existingValidTimestamp && timestamp >= existingTimestamp)
+      || (!validTimestamp && !existingValidTimestamp)) {
+      currentAwards.set(name, completion);
+    }
+  });
   const playerSkill = calculatePlayerSkill(levels, player.name);
+  const variantContext = VariantUtils.createPlayerContext(player, allLevels);
+  const variantProgress = variantContext.progress;
   const components = calculateSkillComponents(
     calibrationLevels.length ? calibrationLevels : levels,
     player.name,
@@ -2410,9 +2427,17 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
       const expectedHours = expectedSeconds / 3600;
       const projectedMult = projectedMultiplierFor(lvl, expectedSeconds, expectedAttempts, player.name);
       const currentPoints = isRebeat ? currentCompletion.points : 0;
-      const projectedPoints = isRebeat
-        ? Math.max(0, basePoints * projectedMult - (currentPoints || 0))
-        : basePoints * projectedMult;
+      const repeatMultiplier = isRebeat
+        ? VariantUtils.getNextRepeatMultiplier(player, lvl.name)
+        : 1;
+      const variantMultiplier = lvl.isVariant
+        ? (isRebeat
+          ? variantProgress.multiplierByVariantName.get(VariantUtils.normalizeName(lvl.name))
+            ?? VariantUtils.getNextVariantMultiplier(player, lvl, allLevels, [], variantContext)
+          : VariantUtils.getNextVariantMultiplier(player, lvl, allLevels, [], variantContext))
+        : 1;
+      const rawProjectedPoints = basePoints * projectedMult * repeatMultiplier;
+      const projectedPoints = rawProjectedPoints * variantMultiplier;
       if (isRebeat && projectedPoints <= 1e-9) return null;
       const expectedValue = projectedPoints / expectedHours;
       const wrTimeSeconds = lvl.wrTime ? parseTimeToSeconds(lvl.wrTime.time) : null;
@@ -2467,10 +2492,16 @@ function buildRecommendations(levels, player, avgTimePerPoint, avgAttemptsPerPoi
           String(lvl.tier || "").trim().toLowerCase() === "pending"
           || (Array.isArray(lvl.victors) && lvl.victors.length > 0)
         ),
-        rank: lvl.rank || null,
-        estimatedMainListRank: getEstimatedMainListRank(lvl, calibrationLevels),
+        rank: lvl.isVariant ? null : (lvl.displayRank || lvl.rank || null),
+        isVariant: lvl.isVariant === true,
+        variantParentName: lvl.variantParentName || "",
+        variantMultiplier,
+        repeatMultiplier,
+        estimatedMainListRank: lvl.isVariant ? null : getEstimatedMainListRank(lvl, calibrationLevels),
         estimatedMainListRankRange: lvl.tierEstimatedRankRange || null,
         basePoints,
+        effectiveBasePoints: basePoints * variantMultiplier * repeatMultiplier,
+        rawProjectedPoints,
         projectedMult,
         projectedPoints,
         skillFit: outcome.skillFit,
@@ -2662,7 +2693,7 @@ function optimizeParetoRoute(items, targetUnits, targetPoints, maxStates = 12000
 function getRoutePointValue(item) {
   return item?.isRebeat
     ? (item.projectedPoints || 0)
-    : (item.basePoints || item.projectedPoints || 0);
+    : (item.effectiveBasePoints ?? item.basePoints ?? item.projectedPoints ?? 0);
 }
 
 function optimizeRoute(recommendations, targetPoints, granularity = 20) {
@@ -3003,6 +3034,8 @@ function optimizeSequentialRoute(
     rec => -(rec.expectedHours || 0),
   ];
   const routes = [];
+  const packPointLevels = calibrationLevels.length ? calibrationLevels : levels;
+  const variantContext = VariantUtils.createPlayerContext(currentPlayer, packPointLevels);
 
   strategies.forEach(score => {
     const selected = [];
@@ -3012,20 +3045,41 @@ function optimizeSequentialRoute(
     let workingRecommendations = recommendations;
     let incrementalValid = true;
 
-    const packPointLevels = calibrationLevels.length ? calibrationLevels : levels;
     const packBonusScorer = currentPlayer && packCatalog.length && typeof PackUtils !== "undefined"
       ? PackUtils.createRouteBonusScorer(currentPlayer, packCatalog, packPointLevels)
       : null;
 
+    const getSelectedVariantNames = () => selected
+      .filter(pick => pick.isVariant && !pick.isRebeat)
+      .map(pick => pick.level);
+    const getDynamicBasePoints = (pick) => {
+      if (!pick.isVariant || pick.isRebeat) return Number(pick.projectedPoints) || 0;
+      const multiplier = VariantUtils.getNextVariantMultiplier(
+        currentPlayer,
+        { name: pick.level },
+        packPointLevels,
+        getSelectedVariantNames(),
+        variantContext,
+      );
+      return (Number(pick.rawProjectedPoints ?? pick.projectedPoints) || 0) * multiplier;
+    };
+
     const select = (pick) => {
       const pickId = String(pick.id || pick.level).trim().toLowerCase();
       if (selectedIds.has(pickId)) return;
-      const packBonusPoints = packBonusScorer?.addLevel(pick.level) || 0;
+      const baseProjectedPoints = Number.isFinite(pick.baseProjectedPoints)
+        ? pick.baseProjectedPoints
+        : getDynamicBasePoints(pick);
+      const hasKnownPackBonus = Number.isFinite(pick.packBonusPoints);
+      const packBonusPoints = packBonusScorer?.addLevel(
+        pick.level,
+        hasKnownPackBonus ? pick.packBonusPoints : undefined,
+      ) || 0;
       const scoredPick = {
         ...pick,
-        baseProjectedPoints: pick.baseProjectedPoints ?? pick.projectedPoints ?? 0,
+        baseProjectedPoints,
         packBonusPoints,
-        projectedPoints: (pick.baseProjectedPoints ?? pick.projectedPoints ?? 0) + packBonusPoints,
+        projectedPoints: baseProjectedPoints + packBonusPoints,
       };
       scoredPick.expectedValue = scoredPick.projectedPoints / Math.max(scoredPick.expectedHours || 1, 0.001);
       selected.push(scoredPick);
@@ -3039,19 +3093,32 @@ function optimizeSequentialRoute(
       .forEach(select);
 
     while (routePoints + 1e-9 < targetPoints) {
-      const next = workingRecommendations
-        .filter(rec => {
-          const recId = String(rec.id || rec.level).trim().toLowerCase();
-          return candidateIds.has(recId) && !selectedIds.has(recId) && !removedSet.has(recId);
-        })
-        .sort((a, b) => {
-          const bonusA = packBonusScorer?.getLevelAward(a.level) || 0;
-          const bonusB = packBonusScorer?.getLevelAward(b.level) || 0;
-          return score(b, bonusB) - score(a, bonusA);
-        })[0];
+      let next = null;
+      for (const recommendation of workingRecommendations) {
+        const recommendationId = String(recommendation.id || recommendation.level).trim().toLowerCase();
+        if (!candidateIds.has(recommendationId)
+          || selectedIds.has(recommendationId)
+          || removedSet.has(recommendationId)) continue;
+
+        const baseProjectedPoints = getDynamicBasePoints(recommendation);
+        const packBonusPoints = packBonusScorer?.getLevelAward(recommendation.level) || 0;
+        const routeScore = score({ ...recommendation, baseProjectedPoints }, packBonusPoints);
+        if (!next || routeScore > next.routeScore) {
+          next = {
+            recommendation,
+            baseProjectedPoints,
+            packBonusPoints,
+            routeScore,
+          };
+        }
+      }
       if (!next) break;
 
-      select(next);
+      select({
+        ...next.recommendation,
+        baseProjectedPoints: next.baseProjectedPoints,
+        packBonusPoints: next.packBonusPoints,
+      });
       if (incrementalValid) {
         workingRecommendations = updateRecommendationsIncrementally(
           workingRecommendations,

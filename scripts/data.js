@@ -3,6 +3,24 @@ const VERIFICATIONS_DRAFT_BASELINE_KEY = "pml_verifications_data_baseline";
 const MODEL_STATE_KEY = "pml_demon_system_state";
 const VERIFICATION_TIER_RESET_KEY = "pml_verification_tiers_reset_v1";
 const EDITOR_REMOTE_BASELINE_KEY = "pml_editor_remote_baseline";
+const MANUAL_LEVEL_TAGS = Object.freeze([
+  "Memory",
+  "Circles",
+  "2P",
+  "Unbalanced",
+  "Flow",
+  "Timings",
+  "Spam",
+  "TPS Switches",
+  "Swifts",
+  "Chokepoints",
+  "Bossfight",
+  "Pre-2.1",
+  "Tentative",
+  "Alignments",
+  "Snaps",
+  "Counters",
+]);
 let rawData = [];
 let levels = [];
 window.editorSessionActive = false;
@@ -11,8 +29,28 @@ let leaderboard = [];
 let maxScore = 1;
 let editingIndex = -1;
 let editorRemoteBaseline = null;
-let verificationLoadGeneration = 0;
+let verificationLoadPromise = null;
 let verificationsDataReady = false;
+let timelineDataPromise = null;
+
+function normalizeManualLevelTags(value) {
+  const selectedTags = new Set(
+    (Array.isArray(value) ? value : [])
+      .map((tag) => String(tag ?? "").trim().toLowerCase())
+      .filter(Boolean),
+  );
+  return MANUAL_LEVEL_TAGS.filter((tag) => selectedTags.has(tag.toLowerCase()));
+}
+
+function normalizeLevelTagOverrides(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+
+  return Object.fromEntries(
+    Object.entries(value).filter(([key, enabled]) => (
+      typeof key === "string" && typeof enabled === "boolean"
+    )),
+  );
+}
 
 function syncDemonSystemFromRawData() {
 }
@@ -24,6 +62,31 @@ function fetchWithTimeout(url, timeoutMs = 10000, cache = "default") {
     signal: controller.signal,
     cache,
   }).finally(() => clearTimeout(timeout));
+}
+
+function loadTimelineData() {
+  if (timelineDataPromise) return timelineDataPromise;
+
+  timelineDataPromise = fetchWithTimeout("data/timeline.json")
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      if (!Array.isArray(data)) {
+        throw new TypeError("timeline.json must contain a JSON array");
+      }
+      window.timelineLevels = data;
+      return data;
+    })
+    .catch((error) => {
+      console.error("Failed to load timeline.json", error);
+      window.timelineLevels = [];
+      timelineDataPromise = null;
+      return [];
+    });
+
+  return timelineDataPromise;
 }
 
 function getDemonSystem() {
@@ -87,6 +150,7 @@ function normalizeLevelEntry(item) {
       tier: "",
       ratio: "",
       iaPerSecond: "",
+      tags: [],
     };
   }
 
@@ -119,9 +183,6 @@ function normalizeLevelEntry(item) {
   const rawLength = item.length ?? item.levelLength;
   const parsedLength = parseDurationToSeconds(rawLength) ?? Number(rawLength);
   const normalizedLength = Number.isFinite(parsedLength) && parsedLength > 0 ? formatSecondsAsDuration(parsedLength) : "";
-  const rawPrecision = item.precision ?? item.Precision;
-  const precisionValue = rawPrecision === null || rawPrecision === undefined || (typeof rawPrecision === "string" && rawPrecision.trim() === "") ? null : Number(rawPrecision);
-  const normalizedPrecision = Number.isFinite(precisionValue) && precisionValue > 0 ? precisionValue : "";
   const rawIaPerSecond = item.iaPerSecond ?? item.inputActivityPerSecond;
   const iaPerSecondValue = rawIaPerSecond === null || rawIaPerSecond === undefined || (typeof rawIaPerSecond === "string" && rawIaPerSecond.trim() === "") ? null : Number(rawIaPerSecond);
   const normalizedIaPerSecond = Number.isFinite(iaPerSecondValue) && iaPerSecondValue > 0 ? iaPerSecondValue : "";
@@ -163,9 +224,10 @@ function normalizeLevelEntry(item) {
       : [],
     length: normalizedLength,
     tps: parsedTps,
-    precision: normalizedPrecision,
     iaPerSecond: normalizedIaPerSecond,
     ratio,
+    tags: normalizeManualLevelTags(item.tags),
+    tagOverrides: normalizeLevelTagOverrides(item.tagOverrides),
     rankRange,
   };
 
@@ -265,7 +327,6 @@ function loadEditorRemoteBaseline() {
 function processRawData(data, options = {}) {
   const { skipVerificationReload = false } = options;
   rawData = data;
-  const currentVerificationLoad = ++verificationLoadGeneration;
 
   const rawLevels = data
     .filter((item) => item && (item.name || item.levelName || item.id))
@@ -293,14 +354,13 @@ function processRawData(data, options = {}) {
     console.error("Failed to assign tiers", e);
   }
 
-  const rankValues = levels
-    .map((l) => Number(l.rank))
-    .filter((r) => Number.isFinite(r));
-  const maxRank = rankValues.length ? Math.max(...rankValues, 1) : 1;
-  levels.forEach((l) => {
-    const rankValue = Number(l.rank);
-    const safeRank = Number.isFinite(rankValue) ? rankValue : maxRank;
-    l.points = calculatePoints(safeRank, maxRank);
+  const variantContext = VariantUtils.assignRanklessRanks(levels);
+  const maxRank = variantContext.rankedLevels.length || 1;
+  variantContext.rankedLevels.forEach((level) => {
+    level.points = calculatePoints(level.displayRank, maxRank);
+  });
+  variantContext.parentByVariant.forEach((parent, variant) => {
+    variant.points = parent.points;
   });
 
   levels.forEach((level) => {
@@ -346,11 +406,18 @@ function processRawData(data, options = {}) {
     initializeTimeline();
   }
 
-  if (skipVerificationReload && verificationsDataReady) {
-    initializeVerifications({ skipPackRefresh: true });
+  if (verificationsDataReady) {
+    window.verifications = markPendingVictorLevels(window.verifications);
+    initializeVerifications({ skipPackRefresh: skipVerificationReload });
     syncDemonSystemFromRawData();
-    return;
+  } else if (window.editorSessionActive) {
+    loadVerificationsData();
   }
+}
+
+function loadVerificationsData() {
+  if (verificationsDataReady) return Promise.resolve(window.verifications);
+  if (verificationLoadPromise) return verificationLoadPromise;
 
   if (!localStorage.getItem(VERIFICATION_TIER_RESET_KEY)) {
     localStorage.removeItem("pml_verifications_data");
@@ -358,83 +425,62 @@ function processRawData(data, options = {}) {
   }
 
   const savedVerifications = localStorage.getItem("pml_verifications_data");
+  let savedData;
+  let hasSavedData = false;
   if (savedVerifications) {
     try {
-      const savedData = JSON.parse(savedVerifications);
-      fetchWithTimeout("data/verifications.json", 10000, "no-cache")
-        .then((r) => {
-          if (!r.ok) throw new Error(`HTTP ${r.status}`);
-          return r.json();
-        })
-        .then((remoteData) => {
-          if (!Array.isArray(remoteData)) {
-            throw new TypeError("verifications.json must contain a JSON array");
-          }
-          if (currentVerificationLoad !== verificationLoadGeneration) return;
-          const remoteVerifications = remoteData
-            .filter((item) => item && (item.name || item.levelName || item.id))
-            .map((item) => normalizeLevelEntry(item));
-          const remotePending = markPendingVictorLevels(remoteVerifications);
-          assignTiers(remotePending, false);
-          const savedBaseline = localStorage.getItem(VERIFICATIONS_DRAFT_BASELINE_KEY);
-          const hasCurrentDraft = isCurrentVerificationsDraft(
-            savedData, savedBaseline, remoteData
-          );
-
-          if (hasCurrentDraft || (!savedBaseline && Array.isArray(savedData))) {
-            window.verifications = markPendingVictorLevels(savedData);
-            assignTiers(window.verifications, false);
-          } else {
-            window.verifications = remotePending;
-            if (savedBaseline || savedVerifications) {
-              console.info(
-                "Discarded a stale local verifications.json draft because the remote file changed."
-              );
-              localStorage.removeItem("pml_verifications_data");
-            }
-          }
-
-          localStorage.setItem(
-            VERIFICATIONS_DRAFT_BASELINE_KEY,
-            EditorStateUtils.buildDataSignature(remoteData)
-          );
-          verificationsDataReady = true;
-          persistEditorRemoteBaseline(remoteData, "verifications");
-          initializeVerifications();
-          syncDemonSystemFromRawData();
-        })
-        .catch((err) => {
-          if (currentVerificationLoad !== verificationLoadGeneration) return;
-          console.error("Failed to load verifications.json", err);
-          window.verifications = [];
-          verificationsDataReady = true;
-          initializeVerifications();
-          syncDemonSystemFromRawData();
-        });
-      return;
-    } catch (e) { }
+      savedData = JSON.parse(savedVerifications);
+      hasSavedData = true;
+    } catch (error) {
+      console.warn("Failed to restore verifications.json from local storage", error);
+    }
   }
 
-  fetchWithTimeout("data/verifications.json", 10000, "no-cache")
-    .then((r) => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
+  verificationLoadPromise = fetchWithTimeout(
+    "data/verifications.json",
+    10000,
+    hasSavedData ? "no-cache" : "default"
+  )
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
     })
     .then((remoteData) => {
       if (!Array.isArray(remoteData)) {
         throw new TypeError("verifications.json must contain a JSON array");
       }
-      if (currentVerificationLoad !== verificationLoadGeneration) return;
-      const verificationsList = remoteData
+      const remoteVerifications = remoteData
         .filter((item) => item && (item.name || item.levelName || item.id))
         .map((item) => normalizeLevelEntry(item));
-      const pendingVerificationsList = markPendingVictorLevels(verificationsList);
-      try {
-        assignTiers(pendingVerificationsList, false);
-      } catch (e) {
-        console.error("Failed to assign tiers to verifications", e);
+      const remotePending = markPendingVictorLevels(remoteVerifications);
+
+      if (hasSavedData) {
+        const savedBaseline = localStorage.getItem(VERIFICATIONS_DRAFT_BASELINE_KEY);
+        const hasCurrentDraft = isCurrentVerificationsDraft(
+          savedData, savedBaseline, remoteData
+        );
+
+        if (hasCurrentDraft || (!savedBaseline && Array.isArray(savedData))) {
+          window.verifications = markPendingVictorLevels(savedData);
+          assignTiers(window.verifications, false);
+        } else {
+          window.verifications = remotePending;
+          if (savedBaseline || savedVerifications) {
+            console.info(
+              "Discarded a stale local verifications.json draft because the remote file changed."
+            );
+            localStorage.removeItem("pml_verifications_data");
+          }
+        }
+      } else {
+        window.verifications = remotePending;
+        try {
+          assignTiers(window.verifications, false);
+        } catch (error) {
+          console.error("Failed to assign tiers to verifications", error);
+        }
       }
-      window.verifications = pendingVerificationsList;
+
       localStorage.setItem(
         VERIFICATIONS_DRAFT_BASELINE_KEY,
         EditorStateUtils.buildDataSignature(remoteData)
@@ -443,15 +489,18 @@ function processRawData(data, options = {}) {
       persistEditorRemoteBaseline(remoteData, "verifications");
       initializeVerifications();
       syncDemonSystemFromRawData();
+      return window.verifications;
     })
-    .catch((err) => {
-      if (currentVerificationLoad !== verificationLoadGeneration) return;
-      console.error("Failed to load verifications.json", err);
+    .catch((error) => {
+      console.error("Failed to load verifications.json", error);
       window.verifications = [];
       verificationsDataReady = true;
       initializeVerifications();
       syncDemonSystemFromRawData();
+      return window.verifications;
     });
+
+  return verificationLoadPromise;
 }
 
 function refreshPackCatalog() {
@@ -558,7 +607,9 @@ function setLastPublishedSignature(signature) {
 }
 
 const VERIFICATION_EXPORT_TIER_ORDER = [
+  "empyrean",
   "ethereal",
+  "celestial",
   "transcendent",
   "divine",
   "master",

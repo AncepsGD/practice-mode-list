@@ -1,0 +1,5 @@
+/data/levels.json
+  Cache-Control: public, max-age=300, must-revalidate
+
+/data/verifications.json
+  Cache-Control: public, max-age=300, must-revalidate

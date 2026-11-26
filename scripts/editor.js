@@ -1,12 +1,12 @@
 let dragSrcIndex = null;
 let editingSource = "levels";
-let dataReady = false;
 let editorHasLocalChanges = false;
 let editorLastSavedSnapshot = null;
 let editorConflictNoticeShown = false;
 let editorBaselineData = null;
 let editorEstimatedNames = [];
 let editorEstimatedRankRange = null;
+let editorEstimatedNamesPromise = null;
 
 function updateEditorTierVisibility() {
   const table = document.getElementById("edit-level-table");
@@ -17,12 +17,19 @@ function updateEditorTierVisibility() {
   if (tierFieldGroup) {
     tierFieldGroup.style.display = editingSource === "verifications" ? "block" : "none";
   }
+  const variantFieldGroup = document.getElementById("variant-of-field-group");
+  if (variantFieldGroup) {
+    variantFieldGroup.style.display = editingSource === "verifications" ? "none" : "block";
+  }
 }
 
 function setEditingSource(source) {
   editingSource = source;
   updateEditorTierVisibility();
   syncEditorConflictState();
+  if (source === "verifications") {
+    loadVerificationsData().then(() => renderEditTable());
+  }
   renderEditTable();
 }
 
@@ -44,11 +51,14 @@ function normalizeEditorItem(item, fallbackRank = null) {
       name: "",
       creators: "",
       id: "",
+      variantOf: "",
       length: "",
       tps: "",
       precision: "",
       iaPerSecond: "",
       ratio: "",
+      tags: [],
+      tagOverrides: {},
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
@@ -70,6 +80,7 @@ function normalizeEditorItem(item, fallbackRank = null) {
   const creators = readString(item.creators, item.creator, item.author);
   const id = readString(item.id, item.levelId);
   const name = readString(item.name, item.levelName);
+  const variantOf = readString(item.variantOf);
   const showcaseVideo = readString(item.showcaseVideo, item.showcaseVideoUrl, item.video, item.showcase);
   const image = readString(item.image, item.thumbnail, item.thumb, item.levelImage);
   const twoPlayer = item.twoPlayer === true || item.twoPlayer === "2 Player" || item.twoPlayer === "2P" || item.twoPlayer === "true" || item.is2Player === true ? "2 Player" : "";
@@ -94,6 +105,8 @@ function normalizeEditorItem(item, fallbackRank = null) {
     ? String(iaPerSecondValue)
     : "";
   const ratio = typeof item.ratio === "string" ? item.ratio.trim() : "";
+  const tags = normalizeManualLevelTags(item.tags);
+  const tagOverrides = normalizeLevelTagOverrides(item.tagOverrides);
   const victors = Array.isArray(item.victors) ? item.victors : [];
   const rawTier = readString(item.tier, item.tierName);
   const legacyPendingTier = rawTier.toLowerCase() === "pending";
@@ -111,11 +124,14 @@ function normalizeEditorItem(item, fallbackRank = null) {
     name,
     creators,
     id,
+    variantOf,
     length,
     tps,
     precision,
     iaPerSecond,
     ratio,
+    tags,
+    tagOverrides,
     twoPlayer,
     showcaseVideo,
     image,
@@ -125,6 +141,113 @@ function normalizeEditorItem(item, fallbackRank = null) {
     verificationStatus: item.verificationStatus || (legacyPendingTier || victors.length ? "Pending" : ""),
     rankRange,
   };
+}
+
+function getAutomaticTagLabelsFromForm() {
+  return new Set(getLevelTagDefinitions({
+    length: document.getElementById("f-length").value,
+    ratio: document.getElementById("f-ratio").value,
+    tags: [],
+  }).filter(({ type }) => type === "auto").map(({ label }) => label));
+}
+
+function updateTagOptionState(input) {
+  const state = input.closest(".level-tag-option")?.querySelector(".level-tag-state");
+  if (!state) return;
+
+  const isAutomatic = input.dataset.autoTagMode === "auto";
+  state.textContent = isAutomatic ? "Auto" : "Override";
+  state.classList.toggle("level-tag-state-overridden", !isAutomatic);
+}
+
+function renderLevelTagOptions(selectedTags = [], tagOverrides = {}) {
+  const container = document.getElementById("level-tags-options");
+  if (!container) return;
+
+  const calculatedTags = getAutomaticTagLabelsFromForm();
+  const selectedManualTags = new Set(normalizeManualLevelTags(selectedTags));
+  const overrides = normalizeLevelTagOverrides(tagOverrides);
+  const automaticOptions = AUTOMATIC_LEVEL_TAG_OPTIONS.map(({ key, label }) => {
+    const automaticChecked = calculatedTags.has(label);
+    const hasOverride = Object.prototype.hasOwnProperty.call(overrides, key);
+    const overrideMatchesAutomatic = hasOverride && overrides[key] === automaticChecked;
+    const mode = !hasOverride || overrideMatchesAutomatic
+      ? "auto"
+      : overrides[key]
+        ? "include"
+        : "exclude";
+    const checked = mode === "auto" ? automaticChecked : mode === "include";
+    return `
+      <label class="level-tag-option">
+        <input type="checkbox" data-auto-tag-key="${escapeEditorText(key)}" data-auto-tag-mode="${mode}" aria-label="${escapeEditorText(label)}" ${checked ? "checked" : ""} />
+        <span>${escapeEditorText(label)}</span>
+        <span class="level-tag-state${mode === "auto" ? "" : " level-tag-state-overridden"}" aria-hidden="true">${mode === "auto" ? "Auto" : "Override"}</span>
+      </label>
+    `;
+  });
+  const manualOptions = MANUAL_LEVEL_TAGS.map((tag) => `
+    <label class="level-tag-option">
+      <input type="checkbox" data-manual-tag="${escapeEditorText(tag)}" aria-label="${escapeEditorText(tag)}" ${selectedManualTags.has(tag) ? "checked" : ""} />
+      <span>${escapeEditorText(tag)}</span>
+    </label>
+  `);
+  container.innerHTML = [...automaticOptions, ...manualOptions].join("");
+}
+
+function updateAutomaticTagCheckboxes() {
+  const container = document.getElementById("level-tags-options");
+  if (!container) return;
+
+  const calculatedTags = getAutomaticTagLabelsFromForm();
+  container.querySelectorAll("input[data-auto-tag-key]").forEach((input) => {
+    const option = AUTOMATIC_LEVEL_TAG_OPTIONS.find(({ key }) => key === input.dataset.autoTagKey);
+    if (!option) return;
+
+    const automaticChecked = calculatedTags.has(option.label);
+    const mode = input.dataset.autoTagMode;
+    if ((mode === "include" && !automaticChecked) || (mode === "exclude" && automaticChecked)) {
+      input.checked = mode === "include";
+    } else {
+      input.checked = automaticChecked;
+      input.dataset.autoTagMode = "auto";
+    }
+    updateTagOptionState(input);
+  });
+}
+
+function readLevelTagSelectionsFromForm() {
+  const tags = normalizeManualLevelTags(Array.from(
+    document.querySelectorAll("#level-tags-options input[data-manual-tag]:checked"),
+    (input) => input.dataset.manualTag,
+  ));
+  const tagOverrides = {};
+  document.querySelectorAll("#level-tags-options input[data-auto-tag-key]").forEach((input) => {
+    if (input.dataset.autoTagMode === "include") tagOverrides[input.dataset.autoTagKey] = true;
+    if (input.dataset.autoTagMode === "exclude") tagOverrides[input.dataset.autoTagKey] = false;
+  });
+  return { tags, tagOverrides: normalizeLevelTagOverrides(tagOverrides) };
+}
+
+document.getElementById("f-length")?.addEventListener("input", updateAutomaticTagCheckboxes);
+document.getElementById("f-ratio")?.addEventListener("input", updateAutomaticTagCheckboxes);
+document.getElementById("level-tags-options")?.addEventListener("change", (event) => {
+  const input = event.target;
+  if (!(input instanceof HTMLInputElement) || !input.dataset.autoTagKey) return;
+
+  const option = AUTOMATIC_LEVEL_TAG_OPTIONS.find(({ key }) => key === input.dataset.autoTagKey);
+  if (!option) return;
+
+  const automaticChecked = getAutomaticTagLabelsFromForm().has(option.label);
+  input.dataset.autoTagMode = input.checked === automaticChecked
+    ? "auto"
+    : input.checked
+      ? "include"
+      : "exclude";
+  updateTagOptionState(input);
+});
+
+function normalizeEditorLevelName(value) {
+  return String(value ?? "").trim().toLowerCase();
 }
 
 function validateEditorRankRange(listSize) {
@@ -175,7 +298,7 @@ function renderRankEstimateBasis(level, hasSecretEstimate) {
     const label = field === "tps"
       ? "TPS"
       : field === "iaPerSecond"
-        ? "IA/s"
+        ? "Input Activity"
         : field.charAt(0).toUpperCase() + field.slice(1);
     const value = field === "length" ? parseDurationToSeconds(level[field]) : Number(level[field]);
     if (Number.isFinite(value) && value > 0) used.push(label);
@@ -499,51 +622,27 @@ function renderPublishBanner(currentSignature = null) {
 }
 window.renderPublishBanner = renderPublishBanner;
 
-async function loadEditorEstimatedNames() {
-  try {
-    const response = await fetchWithTimeout("data/secret.txt");
-    if (response.ok) {
-      editorEstimatedNames = (await response.text())
+function loadEditorEstimatedNames() {
+  if (editorEstimatedNamesPromise) return editorEstimatedNamesPromise;
+
+  editorEstimatedNamesPromise = fetchWithTimeout("data/secret.txt")
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.text();
+    })
+    .then((text) => {
+      editorEstimatedNames = text
         .split(/\r?\n/)
-        .map(name => name.trim())
+        .map((name) => name.trim())
         .filter(Boolean);
-    }
-  } catch (err) {
-    console.warn("Unable to load secret.txt for estimated rank ranges", err);
-  }
+    })
+    .catch((error) => {
+      console.warn("Unable to load secret.txt for estimated rank ranges", error);
+    });
+
+  return editorEstimatedNamesPromise;
 }
 
-async function loadPlayerCountries() {
-  window.playerCountries = {};
-  try {
-    const response = await fetchWithTimeout("data/players_countries.json", 5000);
-    if (response.ok) {
-      const mapping = await response.json();
-      if (mapping && typeof mapping === "object") window.playerCountries = mapping;
-      if (dataReady && document.getElementById("page-leaderboard").classList.contains("active")) {
-        renderLeaderboard(leaderboard);
-      }
-    }
-  } catch (err) {
-    console.warn("Unable to load players_countries.json", err);
-  }
-}
-
-async function init() {
-  loadEditorEstimatedNames();
-  loadPlayerCountries();
-  const data = await loadData();
-
-  loadEditorRemoteBaseline();
-  restoreEditorDraftState();
-  refreshEditorRemoteBaseline().finally(() => {
-    syncEditorConflictState();
-  });
-  processRawData(data);
-  dataReady = true;
-}
-
-init();
 window.addEventListener("beforeunload", (e) => {
   persistCurrentEditorData();
   persistEditorDraftState();
@@ -561,6 +660,7 @@ function openEditMenu() {
   document.getElementById("reset-notice").classList.remove("show");
 
   showEditView("list");
+  loadEditorEstimatedNames();
   loadEditorRemoteBaseline();
   restoreEditorDraftState();
   refreshEditorRemoteBaseline().finally(() => {
@@ -699,6 +799,8 @@ function moveVerificationToMain(index) {
     tps: formItem.tps,
     precision: formItem.precision,
     ratio: formItem.ratio,
+    tags: formItem.tags,
+    tagOverrides: formItem.tagOverrides,
     twoPlayer: formItem.twoPlayer,
     showcaseVideo: formItem.showcaseVideo,
     image: formItem.image,
@@ -764,7 +866,17 @@ function moveCurrentLevelToVerifications() {
     alert(`Unverified rank must be a whole number between 1 and ${verificationData.length + 1}, or left blank for the bottom.`);
     return;
   }
-  if (!confirm(`Move "${formItem.name}" to the unverified list at rank ${rank}?`)) return;
+  const linkedVariants = rawData.filter((item, index) => (
+    index !== editingIndex
+    && normalizeEditorLevelName(item.variantOf) === normalizeEditorLevelName(level.name)
+  ));
+  const unlinkMessage = linkedVariants.length
+    ? ` This will unlink ${linkedVariants.length} variant${linkedVariants.length === 1 ? "" : "s"} from it.`
+    : "";
+  if (!confirm(`Move "${formItem.name}" to the unverified list at rank ${rank}?${unlinkMessage}`)) return;
+  linkedVariants.forEach((item) => {
+    item.variantOf = "";
+  });
 
   const movedVerification = {
     rank,
@@ -776,6 +888,8 @@ function moveCurrentLevelToVerifications() {
     precision: formItem.precision,
     iaPerSecond: formItem.iaPerSecond,
     ratio: formItem.ratio,
+    tags: formItem.tags,
+    tagOverrides: formItem.tagOverrides,
     twoPlayer: formItem.twoPlayer,
     showcaseVideo: formItem.showcaseVideo,
     image: formItem.image,
@@ -842,11 +956,14 @@ function openLevelForm(index) {
       name: "",
       creators: "",
       id: "",
+      variantOf: "",
       length: "",
       tps: "",
       precision: "",
       iaPerSecond: "",
       ratio: "",
+      tags: [],
+      tagOverrides: {},
       twoPlayer: "",
       showcaseVideo: "",
       image: "",
@@ -868,6 +985,7 @@ function openLevelForm(index) {
   document.getElementById("f-name").value = normalizedItem.name || "";
   document.getElementById("f-creators").value = normalizedItem.creators || "";
   document.getElementById("f-id").value = normalizedItem.id || "";
+  document.getElementById("f-variant-of").value = normalizedItem.variantOf || "";
   document.getElementById("f-rank").value = normalizedItem.rank || data.length + 1;
   document.getElementById("f-rank-min").value = normalizedItem.rankRange?.min || "";
   document.getElementById("f-rank-max").value = normalizedItem.rankRange?.max || "";
@@ -888,6 +1006,7 @@ function openLevelForm(index) {
   document.getElementById("f-showcase").value = normalizedItem.showcaseVideo || "";
   document.getElementById("f-image").value = normalizedItem.image || "";
   document.getElementById("f-packs").value = (normalizedItem.packs || []).join(", ");
+  renderLevelTagOptions(normalizedItem.tags, normalizedItem.tagOverrides);
   if (editingSource === "verifications") {
     document.getElementById("f-tier").value = normalizedItem.tier || "";
   } else {
@@ -1009,6 +1128,41 @@ function readLevelFormItem(data, existingItem, validateRankRange = true) {
   const parsedPrecision = precisionInput === "" ? "" : Number.parseFloat(precisionInput);
   const iaPerSecondInput = document.getElementById("f-ia-per-second").value.trim();
   const parsedIaPerSecond = iaPerSecondInput === "" ? "" : Number.parseFloat(iaPerSecondInput);
+  let variantOf = String(existingItem?.variantOf || "").trim();
+  if (editingSource !== "verifications") {
+    variantOf = document.getElementById("f-variant-of").value.trim();
+
+    if (variantOf) {
+      const variantParentKey = normalizeEditorLevelName(variantOf);
+      if (variantParentKey === normalizeEditorLevelName(name)) {
+        alert("A level cannot be a variant of itself.");
+        return null;
+      }
+
+      const parentIndex = data.findIndex((candidate, index) => (
+        index !== currentIndex
+        && normalizeEditorLevelName(normalizeEditorItem(candidate, index + 1).name) === variantParentKey
+      ));
+      if (parentIndex === -1) {
+        alert("Choose an existing level as the variant parent.");
+        return null;
+      }
+      if (normalizeEditorItem(data[parentIndex], parentIndex + 1).variantOf) {
+        alert("A variant cannot be used as a variant parent. Choose a base level instead.");
+        return null;
+      }
+
+      const currentNameKey = normalizeEditorLevelName(existingItem?.name);
+      const hasVariants = currentNameKey && data.some((candidate, index) => (
+        index !== currentIndex
+        && normalizeEditorLevelName(candidate.variantOf) === currentNameKey
+      ));
+      if (hasVariants) {
+        alert("Reassign this level's variants before making it a variant.");
+        return null;
+      }
+    }
+  }
 
   const item = {
     rank: parseInt(document.getElementById("f-rank").value) || data.length + 1,
@@ -1020,12 +1174,14 @@ function readLevelFormItem(data, existingItem, validateRankRange = true) {
     precision: Number.isFinite(parsedPrecision) && parsedPrecision > 0 ? parsedPrecision : "",
     iaPerSecond: Number.isFinite(parsedIaPerSecond) && parsedIaPerSecond > 0 ? parsedIaPerSecond : "",
     ratio: document.getElementById("f-ratio").value.trim(),
+    ...readLevelTagSelectionsFromForm(),
     twoPlayer: document.getElementById("f-twoplayer").value,
     showcaseVideo: document.getElementById("f-showcase").value.trim(),
     image: document.getElementById("f-image").value.trim(),
     packs: [...new Set(document.getElementById("f-packs").value.split(",").map((pack) => pack.trim()).filter(Boolean))],
     victors,
   };
+  if (variantOf) item.variantOf = variantOf;
 
   if (editingSource === "verifications") {
     item.tier = document.getElementById("f-tier").value;
@@ -1068,6 +1224,17 @@ function saveLevelForm() {
     alert("A level with this ID already exists. Saving anyway.");
   }
 
+  if (editingSource !== "verifications" && existingItem) {
+    const oldName = normalizeEditorLevelName(existingItem.name);
+    if (oldName && oldName !== normalizeEditorLevelName(item.name)) {
+      data.forEach((candidate, index) => {
+        if (index !== currentIndex && normalizeEditorLevelName(candidate.variantOf) === oldName) {
+          candidate.variantOf = item.name;
+        }
+      });
+    }
+  }
+
   if (editingSource !== "verifications") {
     const requestedRank = Math.max(1, item.rank);
     if (currentIndex !== -1) {
@@ -1100,7 +1267,20 @@ function deleteCurrentLevel() {
     alert("Level not found.");
     return;
   }
-  if (!confirm(`Delete "${data[editingIndex].name}"?`)) return;
+  const deletedLevel = data[editingIndex];
+  const deletedNameKey = normalizeEditorLevelName(deletedLevel.name);
+  const linkedVariants = editingSource === "verifications"
+    ? []
+    : data.filter((item, index) => (
+      index !== editingIndex && normalizeEditorLevelName(item.variantOf) === deletedNameKey
+    ));
+  const deleteMessage = linkedVariants.length
+    ? `Delete "${deletedLevel.name}" and unlink its ${linkedVariants.length} variant${linkedVariants.length === 1 ? "" : "s"}?`
+    : `Delete "${deletedLevel.name}"?`;
+  if (!confirm(deleteMessage)) return;
+  linkedVariants.forEach((item) => {
+    item.variantOf = "";
+  });
   data.splice(editingIndex, 1);
   if (editingSource !== "verifications") {
     data.forEach((item, i) => {

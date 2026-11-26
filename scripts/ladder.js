@@ -2,6 +2,16 @@ const { useMemo, useState, useEffect } = React;
 const MIN_UNVERIFIED_ROUTE_HOURS = 8 / 60;
 const UNVERIFIED_BASELINE_LEVEL = "Aeternus";
 const LADDER_STATE_STORAGE_KEY = "pml_ladder_state";
+const ROUTE_SORT_ORDERS = new Set([
+  "efficiency",
+  "time",
+  "points",
+  "skill",
+  "attempts",
+  "safest",
+  "hardest",
+  "established",
+]);
 
 function readSavedLadderState() {
   try {
@@ -50,33 +60,80 @@ function applyFullListPointValues(recommendations, targetPlayer) {
   if (!targetPlayer?.isFullList) return recommendations;
   return recommendations.map(recommendation => {
     const basePoints = Number(recommendation.basePoints) || 0;
+    if (recommendation.isRebeat) return recommendation;
+    const variantMultiplier = recommendation.isVariant
+      ? Number(recommendation.variantMultiplier) || 1
+      : 1;
+    const projectedPoints = basePoints * variantMultiplier;
     return {
       ...recommendation,
       projectedMult: 1,
-      projectedPoints: basePoints,
-      projectedPointsLower: basePoints,
-      projectedPointsUpper: basePoints,
-      expectedValue: basePoints / Math.max(recommendation.expectedHours || 1, 0.001),
+      rawProjectedPoints: basePoints,
+      effectiveBasePoints: projectedPoints,
+      projectedPoints,
+      projectedPointsLower: projectedPoints,
+      projectedPointsUpper: projectedPoints,
+      expectedValue: projectedPoints / Math.max(recommendation.expectedHours || 1, 0.001),
     };
   });
 }
 
-function buildSortedRoute(recommendations, sortOrder, pointsNeeded, lockedLevelIds, removedLevelIds) {
-  const sortRecommendations = (a, b) => {
-    if (sortOrder === "time") {
-      return a.expectedHours - b.expectedHours || (b.expectedValue || 0) - (a.expectedValue || 0);
-    }
-    if (sortOrder === "points") {
-      return (b.projectedPoints || 0) - (a.projectedPoints || 0)
-        || (b.expectedValue || 0) - (a.expectedValue || 0);
-    }
-    if (sortOrder === "skill") {
-      return (b.skillFit || 1) - (a.skillFit || 1)
-        || (b.projectedPoints || 0) - (a.projectedPoints || 0)
-        || a.level.localeCompare(b.level);
-    }
-    return (b.expectedValue || 0) - (a.expectedValue || 0);
-  };
+function compareRouteValues(a, b, ascending) {
+  const aHasValue = a !== null && a !== undefined && Number.isFinite(Number(a));
+  const bHasValue = b !== null && b !== undefined && Number.isFinite(Number(b));
+  if (!aHasValue && !bHasValue) return 0;
+  if (!aHasValue) return 1;
+  if (!bHasValue) return -1;
+  return (Number(a) - Number(b)) * (ascending ? 1 : -1);
+}
+
+function getSafestRouteValue(recommendation) {
+  const points = Number.isFinite(recommendation.projectedPointsLower)
+    ? recommendation.projectedPointsLower
+    : Number(recommendation.projectedPoints) || 0;
+  const hours = Number.isFinite(recommendation.expectedHoursUpper)
+    ? recommendation.expectedHoursUpper
+    : Number(recommendation.expectedHours) || 1;
+  return points / Math.max(hours, 0.001);
+}
+
+function compareRouteRecommendations(a, b, sortOrder, ascending) {
+  const comparePrimary = (aValue, bValue) => compareRouteValues(aValue, bValue, ascending);
+  const comparePoints = () => compareRouteValues(a.projectedPoints, b.projectedPoints, false);
+  const compareValue = () => compareRouteValues(a.expectedValue, b.expectedValue, false);
+  const compareName = () => String(a.level || "").localeCompare(String(b.level || ""));
+
+  if (sortOrder === "time") {
+    return comparePrimary(a.expectedHours, b.expectedHours) || compareValue() || compareName();
+  }
+  if (sortOrder === "attempts") {
+    return comparePrimary(a.expectedAttempts, b.expectedAttempts) || compareValue() || compareName();
+  }
+  if (sortOrder === "points") {
+    return comparePrimary(a.projectedPoints, b.projectedPoints) || compareValue() || compareName();
+  }
+  if (sortOrder === "skill") {
+    return comparePrimary(a.skillFit ?? 1, b.skillFit ?? 1) || comparePoints() || compareName();
+  }
+  if (sortOrder === "safest") {
+    return comparePrimary(getSafestRouteValue(a), getSafestRouteValue(b)) || compareValue() || compareName();
+  }
+  if (sortOrder === "hardest") {
+    return comparePrimary(a.effectiveBasePoints ?? a.basePoints ?? a.points, b.effectiveBasePoints ?? b.basePoints ?? b.points)
+      || compareRouteValues(a.rank, b.rank, true)
+      || compareName();
+  }
+  if (sortOrder === "established") {
+    return comparePrimary(a.victorCount, b.victorCount)
+      || comparePrimary(a.wrConfidence, b.wrConfidence)
+      || compareValue()
+      || compareName();
+  }
+  return comparePrimary(a.expectedValue, b.expectedValue) || comparePoints() || compareName();
+}
+
+function buildSortedRoute(recommendations, sortOrder, ascending, pointsNeeded, lockedLevelIds, removedLevelIds, currentPlayer, allLevels) {
+  const sortRecommendations = (a, b) => compareRouteRecommendations(a, b, sortOrder, ascending);
   const lockedIds = new Set(lockedLevelIds.map(id => String(id).trim().toLowerCase()));
   const removedIds = new Set(removedLevelIds.map(id => String(id).trim().toLowerCase()));
   const orderedRecommendations = [...recommendations]
@@ -90,11 +147,39 @@ function buildSortedRoute(recommendations, sortOrder, pointsNeeded, lockedLevelI
       return Number(bLocked) - Number(aLocked) || sortRecommendations(a, b);
     });
   const route = [];
+  const plannedVariantNames = [];
+  const variantContext = VariantUtils.createPlayerContext(currentPlayer, allLevels);
   let routePoints = 0;
   for (const recommendation of orderedRecommendations) {
     if (pointsNeeded <= 0) break;
-    route.push(recommendation);
-    routePoints += Number(recommendation.projectedPoints) || 0;
+    let variantMultiplier = 1;
+    if (recommendation.isVariant) {
+      variantMultiplier = recommendation.isRebeat
+        ? Number(recommendation.variantMultiplier) || 1
+        : VariantUtils.getNextVariantMultiplier(
+        currentPlayer,
+        { name: recommendation.level },
+        allLevels,
+        plannedVariantNames,
+        variantContext,
+        );
+    }
+    const projectedPoints = recommendation.isVariant && !recommendation.isRebeat
+      ? (Number(recommendation.rawProjectedPoints ?? recommendation.projectedPoints) || 0) * variantMultiplier
+      : Number(recommendation.projectedPoints) || 0;
+    const pointUncertainty = Number(recommendation.pointUncertainty) || 0;
+    route.push({
+      ...recommendation,
+      projectedPoints,
+      projectedPointsLower: projectedPoints * (1 - pointUncertainty),
+      projectedPointsUpper: projectedPoints * (1 + pointUncertainty),
+      expectedValue: projectedPoints / Math.max(recommendation.expectedHours || 1, 0.001),
+      variantMultiplier,
+    });
+    routePoints += projectedPoints;
+    if (recommendation.isVariant && !recommendation.isRebeat) {
+      plannedVariantNames.push(recommendation.level);
+    }
     if (routePoints >= pointsNeeded) break;
   }
   return route;
@@ -105,8 +190,21 @@ function getFullListRouteTarget(targetPlayer, currentPlayer, levels, scoringLeve
   const completedLevels = new Set(currentPlayer.levels);
   const remainingLevels = (Array.isArray(levels) ? levels : [])
     .filter(level => !completedLevels.has(level.name));
-  const remainingPoints = remainingLevels
-    .reduce((total, level) => total + (Number(level.points) || 0), 0);
+  const plannedVariantNames = [];
+  const variantContext = VariantUtils.createPlayerContext(currentPlayer, levels);
+  const remainingPoints = remainingLevels.reduce((total, level) => {
+    const variantMultiplier = level.isVariant
+      ? VariantUtils.getNextVariantMultiplier(
+        currentPlayer,
+        level,
+        levels,
+        plannedVariantNames,
+        variantContext,
+      )
+      : 1;
+    if (level.isVariant) plannedVariantNames.push(level.name);
+    return total + (Number(level.points) || 0) * variantMultiplier;
+  }, 0);
   const packBonusScorer = PackUtils.createRouteBonusScorer(
     currentPlayer,
     packCatalog,
@@ -152,11 +250,18 @@ function App() {
   const [excludeTwoPlayer, setExcludeTwoPlayer] = useState(
     typeof savedLadderState.excludeTwoPlayer === "boolean" ? savedLadderState.excludeTwoPlayer : true
   );
+  const initialRouteSortOrder = ROUTE_SORT_ORDERS.has(savedLadderState.routeSortOrder)
+    ? savedLadderState.routeSortOrder
+    : "efficiency";
   const [routeSortOrder, setRouteSortOrder] = useState(
-    ["time", "points", "skill"].includes(savedLadderState.routeSortOrder)
-      ? savedLadderState.routeSortOrder
-      : "efficiency"
+    initialRouteSortOrder
   );
+  const [routeSortAscending, setRouteSortAscending] = useState(
+    typeof savedLadderState.routeSortAscending === "boolean"
+      ? savedLadderState.routeSortAscending
+      : ["time", "attempts"].includes(initialRouteSortOrder)
+  );
+  const [showAllSortedLevels, setShowAllSortedLevels] = useState(false);
   const [showAllRatioExposure, setShowAllRatioExposure] = useState(false);
 
   useEffect(() => {
@@ -169,10 +274,11 @@ function App() {
         rebeatsOnly,
         excludeTwoPlayer,
         routeSortOrder,
+        routeSortAscending,
       }));
     } catch {
     }
-  }, [includeUnverified, unverifiedOnly, useFullSecretList, includeRebeats, rebeatsOnly, excludeTwoPlayer, routeSortOrder]);
+  }, [includeUnverified, unverifiedOnly, useFullSecretList, includeRebeats, rebeatsOnly, excludeTwoPlayer, routeSortOrder, routeSortAscending]);
 
   useEffect(() => {
     loadLadderData()
@@ -192,12 +298,9 @@ function App() {
     () => ladderSources ? processRawData(ladderSources.verified) : [],
     [ladderSources]
   );
-
-  const unverifiedCalibrationModel = useMemo(
-    () => ladderSources
-      ? buildUnverifiedCalibrationModel(processedVerified, ladderSources.estimatedNames)
-      : null,
-    [ladderSources, processedVerified]
+  const rankableVerifiedLevels = useMemo(
+    () => processedVerified.filter(level => !level.isVariant),
+    [processedVerified]
   );
 
   const processedUnverified = useMemo(() => {
@@ -212,12 +315,11 @@ function App() {
       unverifiedData,
       {
         preserveDistinctIds: true,
-        calibrationLevels: processedVerified,
+        calibrationLevels: rankableVerifiedLevels,
         estimatedNames: ladderSources.estimatedNames,
-        calibrationModel: unverifiedCalibrationModel,
       },
     );
-  }, [ladderSources, useFullSecretList, processedVerified, unverifiedCalibrationModel]);
+  }, [ladderSources, useFullSecretList, processedVerified, rankableVerifiedLevels]);
 
   const packCatalog = useMemo(() => {
     const packs = Object.keys(PACK_COLORS)
@@ -265,9 +367,13 @@ function App() {
     [levels]
   );
 
-  const avgTimePerPoint = useMemo(() => calculateAvgTimePerPoint(verifiedLevels), [verifiedLevels]);
-  const avgAttemptsPerPoint = useMemo(() => calculateAvgAttemptsPerPoint(verifiedLevels), [verifiedLevels]);
-  const maxPoints = useMemo(() => Math.max(...verifiedLevels.map(l => l.points), 1), [verifiedLevels]);
+  const rankableLevels = useMemo(
+    () => verifiedLevels.filter(level => !level.isVariant),
+    [verifiedLevels]
+  );
+  const avgTimePerPoint = useMemo(() => calculateAvgTimePerPoint(rankableLevels), [rankableLevels]);
+  const avgAttemptsPerPoint = useMemo(() => calculateAvgAttemptsPerPoint(rankableLevels), [rankableLevels]);
+  const maxPoints = useMemo(() => Math.max(...rankableLevels.map(l => l.points), 1), [rankableLevels]);
 
   const routeLevels = useMemo(() => {
     if (unverifiedOnly) return unverifiedLevels;
@@ -491,20 +597,14 @@ function App() {
     [verifiedLevels, currentPlayer]
   );
 
-  const skillClassification = useMemo(() => classifySkill(skillMultiplier), [skillMultiplier]);
-
-  const renderSkillExposure = (label, items, showAll, setShowAll, collapsible = true) => {
+  const renderSkillExposure = (items, showAll, setShowAll, collapsible = true) => {
     if (!items.length) return null;
     const strongestSkill = Math.max(...items.map(item => item.displaySkill ?? item.skill), 1);
     const visibleItems = !collapsible || showAll ? items : items.slice(0, 4);
 
     return (
       <div className="optimizer-skill-summary-section">
-        <div className="optimizer-skill-section-label">{label}</div>
         <div className="optimizer-skill-exposure">
-        <div className="optimizer-skill-exposure-header">
-          <span className="optimizer-skill-exposure-unit">Relative to average</span>
-        </div>
         <div className="optimizer-skill-exposure-list">
           {visibleItems.map(item => (
             <div
@@ -549,24 +649,25 @@ function App() {
     [targetPlayer, currentPlayer, levels, verifiedLevels, packCatalog]
   );
 
-  const recommendationsWith2P = useMemo(
+  const baseRecommendationsWith2P = useMemo(
     () => applyUnverifiedMinimumTime(
-      applyFullListPointValues(
-        buildRecommendations(
-          routeLevels,
-          currentPlayer,
-          avgTimePerPoint,
-          avgAttemptsPerPoint,
-          maxPoints,
-          routeLevels,
-          verifiedLevels,
-          includeRebeats || rebeatsOnly,
-        ).filter(level => !rebeatsOnly || level.isRebeat),
-        targetPlayer,
-      ),
+      buildRecommendations(
+        routeLevels,
+        currentPlayer,
+        avgTimePerPoint,
+        avgAttemptsPerPoint,
+        maxPoints,
+        routeLevels,
+        verifiedLevels,
+        includeRebeats || rebeatsOnly,
+      ).filter(level => !rebeatsOnly || level.isRebeat),
       unverifiedOnly,
     ),
-    [routeLevels, currentPlayer, targetPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, unverifiedOnly, includeRebeats, rebeatsOnly]
+    [routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, unverifiedOnly, includeRebeats, rebeatsOnly]
+  );
+  const recommendationsWith2P = useMemo(
+    () => applyFullListPointValues(baseRecommendationsWith2P, targetPlayer),
+    [baseRecommendationsWith2P, targetPlayer]
   );
 
   const recommendationsWithout2P = useMemo(
@@ -595,75 +696,24 @@ function App() {
   const rankTargetPoints = targetRankSurpassPoints(leaderboard, routeTargetPlayer);
   const initialPointsNeeded = Math.max(0, rankTargetPoints - (currentPlayer?.points || 0));
 
-  const hasModifications = lockedLevelIds.length > 0 || removedLevelIds.length > 0;
 
-  const optimizedWith2P = useMemo(
-    () => hasModifications
-      ? optimizeRouteWithProjectedTarget(
-          recommendationsWith2P,
-          routeTargetPlayer,
-          routeLevels,
-          currentPlayer?.points || 0,
-          lockedLevelIds,
-          removedLevelIds,
-          currentPlayer,
-          avgTimePerPoint,
-          avgAttemptsPerPoint,
-          maxPoints,
-          verifiedLevels,
-          packCatalog
-        )
-      : optimizeRouteWithProjectedTarget(
-          recommendationsWith2P,
-          routeTargetPlayer,
-          routeLevels,
-          currentPlayer?.points || 0,
-          [],
-          [],
-          currentPlayer,
-          avgTimePerPoint,
-          avgAttemptsPerPoint,
-          maxPoints,
-          verifiedLevels,
-          packCatalog
-        ),
-    [recommendationsWith2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, packCatalog, hasModifications, lockedLevelIds, removedLevelIds]
+  const optimized = useMemo(
+    () => optimizeRouteWithProjectedTarget(
+      recommendations,
+      routeTargetPlayer,
+      routeLevels,
+      currentPlayer?.points || 0,
+      lockedLevelIds,
+      removedLevelIds,
+      currentPlayer,
+      avgTimePerPoint,
+      avgAttemptsPerPoint,
+      maxPoints,
+      verifiedLevels,
+      packCatalog,
+    ),
+    [recommendations, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, packCatalog, lockedLevelIds, removedLevelIds],
   );
-
-  const optimizedWithout2P = useMemo(
-    () => hasModifications
-      ? optimizeRouteWithProjectedTarget(
-          recommendationsWithout2P,
-          routeTargetPlayer,
-          routeLevels,
-          currentPlayer?.points || 0,
-          lockedLevelIds,
-          removedLevelIds,
-          currentPlayer,
-          avgTimePerPoint,
-          avgAttemptsPerPoint,
-          maxPoints,
-          verifiedLevels,
-          packCatalog
-        )
-      : optimizeRouteWithProjectedTarget(
-          recommendationsWithout2P,
-          routeTargetPlayer,
-          routeLevels,
-          currentPlayer?.points || 0,
-          [],
-          [],
-          currentPlayer,
-          avgTimePerPoint,
-          avgAttemptsPerPoint,
-          maxPoints,
-          verifiedLevels,
-          packCatalog
-        ),
-    [recommendationsWithout2P, routeTargetPlayer, routeLevels, currentPlayer, avgTimePerPoint, avgAttemptsPerPoint, maxPoints, verifiedLevels, packCatalog, hasModifications, lockedLevelIds, removedLevelIds]
-  );
-
-  const optimized = excludeTwoPlayer ? optimizedWithout2P : optimizedWith2P;
   const pointsNeeded = optimized?.pointsNeeded ?? initialPointsNeeded;
   const optimizedPicks = optimized?.picks || [];
 
@@ -671,19 +721,36 @@ function App() {
     () => {
       if (routeSortOrder === "efficiency") {
         return [...optimizedPicks].sort((a, b) =>
-          (b.expectedValue || 0) - (a.expectedValue || 0)
+          compareRouteRecommendations(a, b, routeSortOrder, routeSortAscending)
         );
       }
       return buildSortedRoute(
         recommendations,
         routeSortOrder,
+        routeSortAscending,
         pointsNeeded,
         lockedLevelIds,
         removedLevelIds,
+        currentPlayer,
+        routeLevels,
       );
     },
-    [optimizedPicks, recommendations, routeSortOrder, pointsNeeded, lockedLevelIds, removedLevelIds]
+    [optimizedPicks, recommendations, routeSortOrder, routeSortAscending, pointsNeeded, lockedLevelIds, removedLevelIds]
   );
+  const allSortedLevels = useMemo(
+    () => buildSortedRoute(
+      recommendations,
+      routeSortOrder,
+      routeSortAscending,
+      Number.POSITIVE_INFINITY,
+      lockedLevelIds,
+      removedLevelIds,
+      currentPlayer,
+      routeLevels,
+    ),
+    [recommendations, routeSortOrder, routeSortAscending, lockedLevelIds, removedLevelIds, currentPlayer, routeLevels]
+  );
+  const displayedPath = showAllSortedLevels ? allSortedLevels : projectedPath;
   const fallbackRoute = optimized?.fallback || false;
   const totalPoints = projectedPath.reduce((total, pick) => total + pick.projectedPoints, 0);
   const totalHours = projectedPath.reduce((total, pick) => total + pick.expectedHours, 0);
@@ -715,6 +782,7 @@ function App() {
     );
   }
 
+  let leaderboardRank = 0;
   return (
     <div className="optimizer-two-column-layout">
       <section className="optimizer-card">
@@ -729,12 +797,9 @@ function App() {
           <div className="optimizer-empty">No player data found in levels.json.</div>
         ) : (
           <div className="optimizer-player-grid">
-            {leaderboard.map((player, i) => {
+            {leaderboard.map((player) => {
               const isFullList = player.isFullList === true;
-              const playerRank = leaderboard
-                .slice(0, i)
-                .filter(entry => entry.isFullList !== true)
-                .length + 1;
+            const playerRank = isFullList ? 0 : ++leaderboardRank;
               const isMe = player.name === selectedPlayer;
               const isTarget = player.name === targetPlayerName;
               return (
@@ -779,7 +844,7 @@ function App() {
       {currentPlayer && (
         <section className="optimizer-card">
           <div className="optimizer-card-head optimizer-card-head-stack">
-            <h2>{routeSortOrder === "efficiency" ? "Optimal Route" : "Available Levels"}</h2>
+            <h2>{showAllSortedLevels ? "All Eligible Levels" : routeSortOrder === "efficiency" ? "Optimal Route" : "Available Levels"}</h2>
             {targetPlayer ? (
               <span className="optimizer-target-caption">
                 <span>Targeting </span>
@@ -863,28 +928,6 @@ function App() {
               </button>
             </div>
           </div>
-          {includeUnverified && (
-            <div className="optimizer-note">
-              {useFullSecretList
-                ? "Special mode: the complete secret.txt list is used for unverified levels."
-                : "Estimated difficulty order is used for levels without verified completions."}
-            </div>
-          )}
-          <div className="optimizer-note">Pack level and completion bonuses are included in leaderboard scores and route estimates.</div>
-          {excludeTwoPlayer && (
-            <div className="optimizer-note">2-player levels are excluded from route generation.</div>
-          )}
-          {includeRebeats && (
-            <div className="optimizer-note">Rebeats show only the additional points available from improving an existing completion.</div>
-          )}
-          {rebeatsOnly && (
-            <div className="optimizer-note">Only rebeats with improvements in both time and attempts are shown.</div>
-          )}
-          {routeSortOrder !== "efficiency" && (
-            <div className="optimizer-note">
-              Levels are sorted by the selected option and included until their combined points meet the target.
-            </div>
-          )}
           <div className="optimizer-stats-grid">
             <div className="optimizer-stat-box">
               <span className="optimizer-stat-label">Your Points</span>
@@ -915,16 +958,47 @@ function App() {
               id="optimizer-route-sort-order"
               className="form-select"
               value={routeSortOrder}
-              title="Prioritizes levels that match your stronger skill areas, without considering predicted completion time."
-              onChange={event => setRouteSortOrder(event.target.value)}
+              onChange={event => {
+                const nextSortOrder = event.target.value;
+                setRouteSortOrder(nextSortOrder);
+                setRouteSortAscending(["time", "attempts"].includes(nextSortOrder));
+                setShowAllSortedLevels(false);
+              }}
             >
               <option value="efficiency">Efficiency</option>
-              <option value="time">Shortest predicted time</option>
+              <option value="time">Predicted time</option>
+              <option value="attempts">Predicted attempts</option>
+              <option value="safest">Safest value</option>
               <option value="points">Adjusted points</option>
               <option value="skill">Best skill fit</option>
+              <option value="hardest">Hardest first</option>
+              <option value="established">Established</option>
             </select>
+            <button
+              type="button"
+              className="ebtn ebtn-ghost ebtn-sm"
+              aria-label={`Sort ${routeSortAscending ? "ascending" : "descending"}; click to reverse`}
+              aria-pressed={routeSortAscending}
+              title="Reverse the current sort order"
+              onClick={() => setRouteSortAscending(ascending => !ascending)}
+            >
+              {routeSortAscending ? "Ascending" : "Descending"}
+            </button>
+            {allSortedLevels.length > projectedPath.length && (
+              <button
+                type="button"
+                className="ebtn ebtn-ghost ebtn-sm"
+                aria-expanded={showAllSortedLevels}
+                aria-label={showAllSortedLevels ? "Collapse full level list" : "Expand full level list"}
+                onClick={() => setShowAllSortedLevels(expanded => !expanded)}
+              >
+                {showAllSortedLevels
+                  ? "Collapse list"
+                  : `Expand list (+${allSortedLevels.length - projectedPath.length})`}
+              </button>
+            )}
           </div>
-          {projectedPath.length === 0 ? (
+          {displayedPath.length === 0 ? (
             <div className="optimizer-empty">
               {!targetPlayer
                 ? "Select a target player to generate a route."
@@ -936,30 +1010,6 @@ function App() {
             </div>
           ) : (
             <>
-              {hasModifications && (
-                <div className="optimizer-note" style={{backgroundColor: "#fff3cd00", borderColor: "#ffc107"}}>
-                  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                    <span>
-                      {lockedLevelIds.length > 0 && <span><i className="fa-solid fa-thumbtack" aria-hidden="true" /> {lockedLevelIds.length} locked</span>}
-                      {lockedLevelIds.length > 0 && removedLevelIds.length > 0 && <span> • </span>}
-                      {removedLevelIds.length > 0 && <span><i className="fa-solid fa-xmark" aria-hidden="true" /> {removedLevelIds.length} removed</span>}
-                    </span>
-                    <button
-                      onClick={clearModifications}
-                      style={{
-                        background: "none",
-                        border: "1px solid #ffc107",
-                        padding: "4px 8px",
-                        cursor: "pointer",
-                        borderRadius: "3px",
-                        fontSize: "0.9em",
-                      }}
-                    >
-                      Clear all
-                    </button>
-                  </div>
-                </div>
-              )}
               <div className="optimizer-table-wrap">
                 <table className="optimizer-table">
                   <thead>
@@ -989,11 +1039,22 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {projectedPath.map((rec, idx) => {
+                    {displayedPath.map((rec, idx) => {
                       const recId = String(rec.id || rec.level);
                       const isLocked = lockedLevelIds.includes(recId);
                       const isRemoved = removedLevelIds.includes(recId);
                       const keyVal = `${recId}-${idx}`;
+                      const rankLabel = rec.isVariant
+                        ? `Variant of ${rec.variantParentName}`
+                        : rec.isUnverified
+                          ? Number.isFinite(rec.estimatedMainListRankRange?.estimatedRank)
+                            ? `#${Math.round(rec.estimatedMainListRankRange.estimatedRank)}~`
+                            : rec.estimatedMainListRankRange
+                              ? rec.estimatedMainListRankRange.min === rec.estimatedMainListRankRange.max
+                                ? `#${rec.estimatedMainListRankRange.min}~`
+                                : `#${rec.estimatedMainListRankRange.min}-${rec.estimatedMainListRankRange.max}~`
+                              : rec.estimatedMainListRank ? `#${rec.estimatedMainListRank}~` : "—"
+                          : rec.rank ? `#${rec.rank}` : "—";
                       return (
                         <tr key={keyVal} style={{opacity: isRemoved ? 0.5 : 1}}>
                           <td style={{display: "flex", gap: "4px", justifyContent: "center"}}>
@@ -1032,16 +1093,8 @@ function App() {
                               <i className="fa-solid fa-xmark" aria-hidden="true" />
                             </button>
                           </td>
-                          <td style={{textAlign: "center"}}>
-                            {rec.isUnverified
-                              ? Number.isFinite(rec.estimatedMainListRankRange?.estimatedRank)
-                                ? `#${Math.round(rec.estimatedMainListRankRange.estimatedRank)}~`
-                                : rec.estimatedMainListRankRange
-                                  ? rec.estimatedMainListRankRange.min === rec.estimatedMainListRankRange.max
-                                    ? `#${rec.estimatedMainListRankRange.min}~`
-                                    : `#${rec.estimatedMainListRankRange.min}-${rec.estimatedMainListRankRange.max}~`
-                                  : rec.estimatedMainListRank ? `#${rec.estimatedMainListRank}~` : "—"
-                              : rec.rank ? `#${rec.rank}` : "—"}
+                          <td className="optimizer-rank-cell" title={rankLabel}>
+                            <span className="optimizer-rank-label">{rankLabel}</span>
                           </td>
                           <td>
                             <strong className="optimizer-level-name" title={rec.level}>
@@ -1063,6 +1116,9 @@ function App() {
                           <td>{rec.basePoints.toFixed(1)}</td>
                           <td title={[
                             rec.isRebeat ? `Current award: ${(rec.currentPoints || 0).toFixed(1)} pts` : "",
+                            rec.isRebeat && rec.repeatMultiplier < 1
+                              ? `Next repeat award: ${(rec.repeatMultiplier * 100).toFixed(1)}%`
+                              : "",
                             rec.packBonusPoints > 0 ? `Includes +${rec.packBonusPoints.toFixed(1)} pack bonus points` : "",
                           ].filter(Boolean).join("; ") || undefined}>
                             <strong>{rec.isRebeat ? "+" : ""}{rec.projectedPoints.toFixed(1)}</strong>
@@ -1083,7 +1139,6 @@ function App() {
               </div>
               <div className="optimizer-skill-summary">
                 <div className="optimizer-skill-main">
-                  <span className="optimizer-skill-label">Overall performance</span>
                   <span className="optimizer-skill-value">{formatSkillMultiplier(skillMultiplier)}</span>
                   <div className="optimizer-skill-meter" style={{ "--optimizer-skill-progress": `${Math.min(Math.max(skillMultiplier * 50, 0), 100)}%` }} aria-hidden="true">
                     <span
@@ -1095,8 +1150,6 @@ function App() {
                   </div>
                 </div>
                 <div className="optimizer-skill-details">
-                  <div className="optimizer-skill-unit">Performance relative to average</div>
-                  <div className="optimizer-skill-classification">{skillClassification} vs. average victor</div>
                   <div className="optimizer-skill-exposure optimizer-skill-ratio-exposure-block">
                     <div className="optimizer-skill-exposure-header">
                       <div>
@@ -1143,7 +1196,7 @@ function App() {
                       <span className="optimizer-skill-exposure-empty">{ratioExposureSummary.emptyMessage}</span>
                     )}
                   </div>
-                  {renderSkillExposure("Skill metrics", skillMetrics, false, null, false)}
+                  {renderSkillExposure(skillMetrics, false, null, false)}
                 </div>
               </div>
             </>

@@ -25,7 +25,7 @@ function parseTimeToSeconds(timeStr) {
     return Number.isFinite(total) ? total : null;
 }
 
-const DIFFICULTY_CURVE_EXPONENT = 1.6;
+const DIFFICULTY_CURVE_EXPONENT = 2;
 
 function isEligibleVictor(victor) {
     const playerName = String(victor && victor.name || "").trim();
@@ -64,15 +64,15 @@ function getVictorSortValue(victor) {
 }
 
 function sortVictorsByDate(victors) {
-    return [...victors].sort((a, b) => {
-        const aValue = getVictorSortValue(a);
-        const bValue = getVictorSortValue(b);
-
-        if (aValue == null && bValue == null) return 0;
-        if (aValue == null) return 1;
-        if (bValue == null) return -1;
-        return aValue - bValue;
-    });
+    return [...victors]
+        .map((victor, index) => ({ victor, index, value: getVictorSortValue(victor) }))
+        .sort((a, b) => {
+            if (a.value == null && b.value == null) return a.index - b.index;
+            if (a.value == null) return 1;
+            if (b.value == null) return -1;
+            return a.value - b.value || a.index - b.index;
+        })
+        .map(entry => entry.victor);
 }
 
 const FASTEST_COMPLETION_BONUS = 0.2;
@@ -80,6 +80,81 @@ const LOWEST_ATTEMPTS_BONUS = 0.2;
 const FIRST_VICTOR_BONUS = 0.1;
 const TIME_PERFORMANCE_WEIGHT = 0.7;
 const ATTEMPTS_PERFORMANCE_WEIGHT = 0.3;
+const PERFORMANCE_POINTS_MULTIPLIER = 1.1;
+
+function createTimelineLevelLookup(timelineLevels = typeof window !== "undefined" ? window.timelineLevels : []) {
+    const levels = Array.isArray(timelineLevels) ? timelineLevels : [];
+    const datedLevels = levels.map((level, index) => ({
+        level,
+        index,
+        start: parseTimelineTimestamp(level?.date),
+    }));
+    const byId = new Map();
+    const byName = new Map();
+
+    function addPeriod(map, key, period) {
+        if (!key) return;
+        const periods = map.get(key) || [];
+        periods.push(period);
+        map.set(key, periods);
+    }
+
+    datedLevels.forEach(({ level, index, start }) => {
+        if (start === null) return;
+        const end = index === 0 ? null : datedLevels[index - 1].start;
+        if (index > 0 && end === null) return;
+
+        const period = { start, end };
+        const id = String(level?.id || level?.levelId || "").trim();
+        const name = String(level?.name || level?.levelName || "").trim().toLowerCase().replace(/\s+/g, " ");
+        addPeriod(byId, id, period);
+        addPeriod(byName, name, period);
+    });
+
+    return {
+        byId,
+        byName,
+    };
+}
+
+function parseTimelineTimestamp(value) {
+    const date = String(value || "").trim();
+    const match = date.match(/^(\d{4})-(\d{2})-(\d{2})(?:T.*)?$/);
+    if (!match) return null;
+
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    const dateOnly = new Date(Date.UTC(year, month - 1, day));
+    if (dateOnly.getUTCFullYear() !== year
+        || dateOnly.getUTCMonth() !== month - 1
+        || dateOnly.getUTCDate() !== day) {
+        return null;
+    }
+
+    const timestamp = Date.parse(date);
+    return Number.isFinite(timestamp) ? timestamp : null;
+}
+
+function getTimelineMultiplier(
+    level,
+    victorDate,
+    timelineLookup = createTimelineLevelLookup(),
+) {
+    const timestamp = parseTimelineTimestamp(victorDate);
+    if (timestamp === null) return 1;
+
+    const id = String(level?.id || level?.levelId || "").trim();
+    const name = String(level?.name || level?.levelName || "").trim().toLowerCase().replace(/\s+/g, " ");
+    const periods = [
+        ...(timelineLookup.byId.get(id) || []),
+        ...(timelineLookup.byName.get(name) || []),
+    ];
+    return periods.some(period => (
+        timestamp >= period.start
+        && (period.end === null || timestamp < period.end)
+    )) ? 2 : 1;
+}
 
 function getTimeScore(playerSeconds, bestSeconds) {
     if (!Number.isFinite(playerSeconds) || playerSeconds <= 0) return 0;
@@ -108,7 +183,7 @@ function getScoringBaseline(level, players) {
     };
 }
 
-function buildLevelVictorAwards(level) {
+function buildLevelVictorAwards(level, timelineLookup) {
     const players = (level.victors || []).filter(isEligibleVictor);
     const hasMultipleVictors = new Set(
         players.map((victor) => String(victor.name || "").trim().toLowerCase())
@@ -129,6 +204,7 @@ function buildLevelVictorAwards(level) {
     players.forEach((victor) => {
         const seconds = Number(victor.seconds);
         const attempts = Number(victor.attempts);
+        const timelineMultiplier = getTimelineMultiplier(level, victor.date, timelineLookup);
         const performanceContributions = [];
         if (Number.isFinite(seconds) && seconds > 0 && baseline.timeSeconds !== null) {
             performanceContributions.push({
@@ -146,9 +222,11 @@ function buildLevelVictorAwards(level) {
         }
         const availableMetricWeight = performanceContributions.reduce((total, item) => total + item.weight, 0);
         const timePerformancePoints = performanceContributions.find(item => item.key === "time")?.score
-            * (levelPoints * TIME_PERFORMANCE_WEIGHT / (availableMetricWeight || 1)) || 0;
+            * (levelPoints * TIME_PERFORMANCE_WEIGHT / (availableMetricWeight || 1))
+            * PERFORMANCE_POINTS_MULTIPLIER || 0;
         const attemptsPerformancePoints = performanceContributions.find(item => item.key === "attempts")?.score
-            * (levelPoints * ATTEMPTS_PERFORMANCE_WEIGHT / (availableMetricWeight || 1)) || 0;
+            * (levelPoints * ATTEMPTS_PERFORMANCE_WEIGHT / (availableMetricWeight || 1))
+            * PERFORMANCE_POINTS_MULTIPLIER || 0;
         const performancePoints = timePerformancePoints + attemptsPerformancePoints;
         const timeRecordBonus = hasMultipleVictors
             && bestTimeSeconds !== null
@@ -166,7 +244,7 @@ function buildLevelVictorAwards(level) {
             ? levelPoints * FIRST_VICTOR_BONUS
             : 0;
         const recordBonusPoints = timeRecordBonus + attemptsRecordBonus;
-        const points = performancePoints + recordBonusPoints + firstVictorBonus;
+        const points = (performancePoints + recordBonusPoints + firstVictorBonus) * timelineMultiplier;
 
         levelAwards.set(victor, {
             points,
@@ -179,15 +257,96 @@ function buildLevelVictorAwards(level) {
             firstVictorBonus,
             timeRecordBonus,
             attemptsRecordBonus,
+            timelineMultiplier,
         });
     });
 
     return levelAwards;
 }
 
-function buildVictorPointAwards(lvls) {
+function getPlayerCompletionMultipliers(levels) {
+    const completionDetailsByPlayer = new Map();
+    const variantRelations = VariantUtils.getVariantRelations(levels);
+    levels.forEach((level) => {
+        (level.victors || []).filter(isEligibleVictor).forEach((victor) => {
+            const playerKey = String(victor.name || "").trim().toLowerCase();
+            if (!playerKey) return;
+            if (!completionDetailsByPlayer.has(playerKey)) completionDetailsByPlayer.set(playerKey, []);
+            completionDetailsByPlayer.get(playerKey).push({
+                name: level.name,
+                date: victor.date || "",
+                level,
+                victor,
+            });
+        });
+    });
+
+    return new Map(
+        [...completionDetailsByPlayer].map(([playerKey, completionDetails]) => {
+            const variantMultipliers = VariantUtils.getPlayerVariantProgress(
+                { completionDetails },
+                levels,
+                variantRelations,
+            ).multiplierByVariantName;
+            const repeatMultipliers = VariantUtils.getPlayerRepeatMultipliers(completionDetails);
+            return [
+                playerKey,
+                new Map(completionDetails.map((completion) => [
+                    completion.victor,
+                    {
+                        variantMultiplier: variantMultipliers.get(
+                            VariantUtils.normalizeName(completion.name),
+                        ) ?? 1,
+                        repeatMultiplier: repeatMultipliers.get(completion) ?? 1,
+                    },
+                ])),
+            ];
+        })
+    );
+}
+
+function applyCompletionAwardMultipliers(award, multipliers) {
+    const variantMultiplier = multipliers?.variantMultiplier ?? 1;
+    const repeatMultiplier = multipliers?.repeatMultiplier ?? 1;
+    const totalMultiplier = variantMultiplier * repeatMultiplier;
+    const timelineMultiplier = award.timelineMultiplier ?? 1;
+    return {
+        ...award,
+        points: award.points * totalMultiplier,
+        multiplier: award.multiplier * totalMultiplier,
+        variantMultiplier,
+        repeatMultiplier,
+        timelineMultiplier,
+        performancePoints: award.performancePoints * timelineMultiplier * totalMultiplier,
+        timePerformancePoints: award.timePerformancePoints * timelineMultiplier * totalMultiplier,
+        attemptsPerformancePoints: award.attemptsPerformancePoints * timelineMultiplier * totalMultiplier,
+        recordBonusPoints: award.recordBonusPoints * timelineMultiplier * totalMultiplier,
+        firstVictorBonus: award.firstVictorBonus * timelineMultiplier * totalMultiplier,
+        timeRecordBonus: award.timeRecordBonus * timelineMultiplier * totalMultiplier,
+        attemptsRecordBonus: award.attemptsRecordBonus * timelineMultiplier * totalMultiplier,
+    };
+}
+
+function buildVictorPointAwards(
+    lvls,
+    allLevels = lvls,
+    timelineLevels = typeof window !== "undefined" ? window.timelineLevels : [],
+) {
     const awards = new WeakMap();
-    lvls.forEach((level) => awards.set(level, buildLevelVictorAwards(level)));
+    const multipliersByPlayer = getPlayerCompletionMultipliers(allLevels);
+    const timelineLookup = createTimelineLevelLookup(timelineLevels);
+    lvls.forEach((level) => {
+        const levelAwards = buildLevelVictorAwards(level, timelineLookup);
+        const playerName = name => String(name || "").trim().toLowerCase();
+        (level.victors || []).forEach((victor) => {
+            const multipliers = multipliersByPlayer
+                .get(playerName(victor.name))
+                ?.get(victor) ?? { variantMultiplier: 1, repeatMultiplier: 1 };
+            const award = levelAwards.get(victor);
+            if (award) levelAwards.set(victor, applyCompletionAwardMultipliers(award, multipliers));
+        });
+        awards.set(level, levelAwards);
+    });
     return awards;
 }
 
@@ -203,10 +362,14 @@ function getVictorPointAward(awards, level, victor) {
         firstVictorBonus: 0,
         timeRecordBonus: 0,
         attemptsRecordBonus: 0,
+        timelineMultiplier: 1,
     };
 }
 
-function buildLeaderboard(lvls) {
+function buildLeaderboard(
+    lvls,
+    timelineLevels = typeof window !== "undefined" ? window.timelineLevels : [],
+) {
     const map = {};
     const levelOrder = new Map(
         [...lvls].map((lvl, index) => [String(lvl.name || "").trim().toLowerCase(), index])
@@ -217,11 +380,11 @@ function buildLeaderboard(lvls) {
         if (tierA !== tierB) return tierA.localeCompare(tierB);
         return (b.points || 0) - (a.points || 0);
     });
+    const variantPointAwards = buildVictorPointAwards(orderedLevels, lvls, timelineLevels);
 
     orderedLevels.forEach((lvl) => {
-        const sortedVictors = sortVictorsByDate(lvl.victors);
-        const players = sortedVictors.filter(isEligibleVictor);
-        const levelAwards = buildLevelVictorAwards(lvl);
+        const players = (lvl.victors || []).filter(isEligibleVictor);
+        const levelAwards = variantPointAwards.get(lvl);
 
         players.forEach((victor) => {
             const playerName = String(victor.name || "").trim();
@@ -253,8 +416,10 @@ function buildLeaderboard(lvls) {
             map[playerName].levels.push(levelName);
             map[playerName].completionDetails.push({
                 name: levelName,
-                points: Number(lvl.points) || 0,
+                points: (Number(lvl.points) || 0) * (award.variantMultiplier ?? 1),
                 basePoints: award.basePoints,
+                variantMultiplier: award.variantMultiplier ?? 1,
+                repeatMultiplier: award.repeatMultiplier ?? 1,
                 earnedPoints: award.points,
                 performancePoints: award.performancePoints,
                 timePerformancePoints: award.timePerformancePoints,
@@ -263,6 +428,7 @@ function buildLeaderboard(lvls) {
                 firstVictorBonus: award.firstVictorBonus,
                 timeRecordBonus: award.timeRecordBonus,
                 attemptsRecordBonus: award.attemptsRecordBonus,
+                timelineMultiplier: award.timelineMultiplier ?? 1,
                 date: victor.date || "",
                 seconds: Number.isFinite(victor.seconds) ? victor.seconds : null,
                 attempts: Number.isFinite(victor.attempts) ? victor.attempts : null,
@@ -299,12 +465,22 @@ function buildFullListLeaderboardEntry(lvls) {
     const levels = Array.isArray(lvls) ? lvls : [];
     if (!levels.length) return null;
 
-    const completionDetails = levels.map((level, index) => ({
-        name: String(level.name || "").trim(),
-        points: Number(level.points) || 0,
-        tier: String(level.tier || "unknown").trim() || "unknown",
-        listIndex: index,
-    }));
+    const fullListCompletions = levels.map((level) => ({ name: level.name }));
+    const fullListMultipliers = VariantUtils.getPlayerVariantProgress(
+        { completionDetails: fullListCompletions },
+        levels,
+    ).multiplierByVariantName;
+    const completionDetails = levels.map((level, index) => {
+        const name = String(level.name || "").trim();
+        const variantMultiplier = fullListMultipliers.get(VariantUtils.normalizeName(name)) ?? 1;
+        return {
+            name,
+            points: (Number(level.points) || 0) * variantMultiplier,
+            variantMultiplier,
+            tier: String(level.tier || "unknown").trim() || "unknown",
+            listIndex: index,
+        };
+    });
     const points = completionDetails.reduce((total, level) => total + level.points, 0);
 
     return {
