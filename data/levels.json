@@ -17778,6 +17778,8 @@
     "precision": 367.22,
     "iaPerSecond": 4.14,
     "ratio": "C39.1(12) SH33.8(12) U10.7(5) W10.4(9) B5.9(3) D4.0(1) S96.0(1) IM0.0(0) NM100.0(0) 4X34(17) 1X33.8(5) 0.5X19.4(4) 3X8.1(13) 2X4.7(2)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=H0WIku2Yjg8",
     "image": "",
@@ -18008,6 +18010,20 @@
         "time": "24m 35s",
         "attempts": 1970,
         "video": "https://youtu.be/9wfyp69vmfk"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-11-26",
+        "time": "12m 56s",
+        "attempts": 955,
+        "video": "https://youtu.be/Oo4koyLFpqo?si=87E14ZIFGLU6QoOp"
+      },
+      {
+        "name": "RMGD",
+        "date": "2026-11-26",
+        "time": "12m 24s",
+        "attempts": 916,
+        "video": "https://youtu.be/sTOsRHVDYR0?si=ZhFqRLAsyLJxPRPo"
       }
     ],
     "scoringBaseline": {
