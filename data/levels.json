@@ -7582,8 +7582,11 @@
     "id": "151825257",
     "length": "1m 25s",
     "tps": 240,
+    "precision": 683.19,
     "iaPerSecond": 4.9,
     "ratio": "C70.3(21) W17.2(22) SH7.4(6) R1.9(4) SP1.6(3) B1.3(3) U0.2(1) D9.7(8) S90.3(8) IM0.0(0) NM100.0(0) 4X43.3(9) 1X35.7(4) 3X16.2(7) 2X2.6(3) 0.5X2.1(1)",
+    "tags": [],
+    "tagOverrides": {},
     "twoPlayer": "",
     "showcaseVideo": "https://www.youtube.com/watch?v=vfrZBKC8C4s",
     "image": "",
@@ -7602,13 +7605,19 @@
         "time": "43m 1s",
         "attempts": 10864,
         "video": "https://youtube.com/live/qUvkCSGrEbI"
+      },
+      {
+        "name": "hakcqc3",
+        "date": "2026-11-28",
+        "time": "1h 29m 46s",
+        "attempts": 3305,
+        "video": "https://youtube.com/live/T_bsvbwBBNY?feature=share"
       }
     ],
     "scoringBaseline": {
       "timeSeconds": 2522,
       "attempts": 3526
-    },
-    "precision": 683.19
+    }
   },
   {
     "rank": 220,
